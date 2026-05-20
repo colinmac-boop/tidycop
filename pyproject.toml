@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "tidycop"
+version = "0.1.0"
+description = "City-agnostic interface for public police incident data"
+authors = ["Colin Drane <colin@spotcrime.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.0"
+requests = "^2.31"
+pyyaml = "^6.0"
+python-dateutil = "^2.8"
+pytz = "^2024.1"
+geopandas = {version = "^0.14", optional = true}
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-cov = "^5.0"
+black = "^24.0"
+ruff = "^0.4"
+mypy = "^1.10"
+
+[tool.poetry.extras]
+geo = ["geopandas"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
