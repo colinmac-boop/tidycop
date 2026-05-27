@@ -1,0 +1,197 @@
+# tidycop city registry
+# Ported from R/incident_registry.R in https://github.com/Steal-This-Code/tidycops (MIT)
+# Schema: see tidycop/schema.py — 23 std_* columns
+#
+# Notes on field_map:
+#   - A value may be a string (single source field) or a list (coalesce fallbacks, left-to-right)
+#   - null means the source does not expose that column
+#
+# Aliases live in tidycop/registry.py (normalize_city_key)
+# MVP cities (Week 1): chicago, seattle, san_francisco, detroit, pittsburgh
+
+schema_version: 1
+
+cities:
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # CHICAGO — Socrata
+  # ──────────────────────────────────────────────────────────────────────────
+  chicago:
+    display_name: "Chicago"
+    timezone: "America/Chicago"
+    sources:
+      - source_id: "chicago_crimes"
+        display_name: "Crimes - 2001 to Present"
+        provider: "socrata"
+        dataset_id: "ijzp-q8t2"
+        base_url: "https://data.cityofchicago.org/resource/ijzp-q8t2.json"
+        date_field: "date"
+        active_from: null
+        active_to: null
+        field_map:
+          std_source_record_id: "id"
+          std_incident_id: "id"
+          std_incident_number: "case_number"
+          std_incident_date: "date"
+          std_reported_date: "date"
+          std_offense_code: "iucr"
+          std_offense_description: "description"
+          std_offense_category: "primary_type"
+          std_disposition: null
+          std_address: "block"
+          std_zip_code: null
+          std_neighborhood: "community_area"
+          std_district: "district"
+          std_beat: "beat"
+          std_division: null
+          std_latitude: "latitude"
+          std_longitude: "longitude"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # SEATTLE — Socrata
+  # ──────────────────────────────────────────────────────────────────────────
+  seattle:
+    display_name: "Seattle"
+    timezone: "America/Los_Angeles"
+    sources:
+      - source_id: "seattle_spd_crime"
+        display_name: "SPD Crime Data: 2008-Present"
+        provider: "socrata"
+        dataset_id: "tazs-3rd5"
+        base_url: "https://data.seattle.gov/resource/tazs-3rd5.json"
+        date_field: "offense_date"
+        active_from: "2008-01-01"
+        active_to: null
+        field_map:
+          std_source_record_id: "offense_id"
+          std_incident_id: "offense_id"
+          std_incident_number: "report_number"
+          std_incident_date: "offense_date"
+          std_reported_date: "report_date_time"
+          std_offense_code: "nibrs_offense_code"
+          std_offense_description: "nibrs_offense_code_description"
+          std_offense_category: "offense_category"
+          std_disposition: null
+          std_address: "block_address"
+          std_zip_code: null
+          std_neighborhood: "neighborhood"
+          std_district: "precinct"
+          std_beat: "beat"
+          std_division: "sector"
+          std_latitude: "latitude"
+          std_longitude: "longitude"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # SAN FRANCISCO — Socrata
+  # ──────────────────────────────────────────────────────────────────────────
+  san_francisco:
+    display_name: "San Francisco"
+    timezone: "America/Los_Angeles"
+    aliases: ["sf"]
+    sources:
+      - source_id: "san_francisco_incidents"
+        display_name: "Police Department Incident Reports: 2018 to Present"
+        provider: "socrata"
+        dataset_id: "wg3w-h783"
+        base_url: "https://data.sfgov.org/resource/wg3w-h783.json"
+        date_field: "incident_datetime"
+        active_from: "2018-01-01"
+        active_to: null
+        field_map:
+          std_source_record_id: "row_id"
+          std_incident_id: "incident_id"
+          std_incident_number: "incident_number"
+          std_incident_date: "incident_datetime"
+          std_reported_date: "report_datetime"
+          std_offense_code: "incident_code"
+          std_offense_description: "incident_description"
+          std_offense_category: "incident_category"
+          std_disposition: "resolution"
+          std_address: "intersection"
+          std_zip_code: null
+          std_neighborhood: "analysis_neighborhood"
+          std_district: "police_district"
+          std_beat: null
+          std_division: null
+          std_latitude: "latitude"
+          std_longitude: "longitude"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # DETROIT — ArcGIS
+  # ──────────────────────────────────────────────────────────────────────────
+  detroit:
+    display_name: "Detroit"
+    timezone: "America/New_York"
+    aliases: ["detroit_mi"]
+    sources:
+      - source_id: "detroit_rms_crime_incidents"
+        display_name: "Detroit RMS Crime Incidents"
+        provider: "arcgis"
+        dataset_id: "8e532daeec1149879bd5e67fdd9c8be0"
+        base_url: "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/RMS_Crime_Incidents/FeatureServer/0"
+        date_field: "incident_occurred_at"
+        arcgis_date_field_type: "date"
+        object_id_field: "ESRI_OID"
+        order_by: "ESRI_OID DESC"
+        return_geometry: false
+        active_from: "2016-12-13"
+        active_to: null
+        scope_status: "offense_rows"
+        scope_note: "Each row is an incident-offense entry; one incident/report number may appear in multiple rows."
+        field_map:
+          std_source_record_id: ["incident_entry_id", "crime_id", "ESRI_OID"]
+          std_incident_id: ["case_id", "report_number"]
+          std_incident_number: "report_number"
+          std_incident_date: "incident_occurred_at"
+          std_reported_date: ["updated_in_ibr_at", "updated_at", "case_status_updated_at"]
+          std_offense_code: "state_offense_code"
+          std_offense_description: "offense_description"
+          std_offense_category: "offense_category"
+          std_disposition: "case_status"
+          std_address: "nearest_intersection"
+          std_zip_code: "zip_code"
+          std_neighborhood: "neighborhood"
+          std_district: "police_precinct"
+          std_beat: "scout_car_area"
+          std_division: "council_district"
+          std_latitude: "latitude"
+          std_longitude: "longitude"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # PITTSBURGH — CKAN (WPRDC)
+  # ──────────────────────────────────────────────────────────────────────────
+  pittsburgh:
+    display_name: "Pittsburgh"
+    timezone: "America/New_York"
+    aliases: ["pgh", "pittsburgh_pa"]
+    sources:
+      - source_id: "pittsburgh_monthly_criminal_activity"
+        display_name: "Monthly Criminal Activity"
+        provider: "ckan"
+        dataset_id: "bd41992a-987a-4cca-8798-fbe1cd946b07"
+        base_url: "https://data.wprdc.org"
+        date_field: "ReportedDate"
+        ckan_date_field_type: "date"
+        order_by: '"ReportedDate" DESC'
+        active_from: "2024-01-01"
+        active_to: null
+        source_status: "rolling_window"
+        source_note: "Monthly incident feed on WPRDC (current resource updates monthly and supersedes prior blotter archive)."
+        field_map:
+          std_source_record_id: ["Report_Number", "_id"]
+          std_incident_id: "Report_Number"
+          std_incident_number: "Report_Number"
+          std_incident_date: "ReportedDate"
+          std_reported_date: "ReportedDate"
+          std_offense_code: "NIBRS_Offense_Code"
+          std_offense_description: ["NIBRS_Coded_Offense", "NIBRS_Offense_Type"]
+          std_offense_category: ["NIBRS_Offense_Category", "NIBRS_Crime_Against"]
+          std_disposition: null
+          std_address: "Block_Address"
+          std_zip_code: null
+          std_neighborhood: "Neighborhood"
+          std_district: "Zone"
+          std_beat: "Tract"
+          std_division: null
+          std_latitude: "YCOORD"
+          std_longitude: "XCOORD"

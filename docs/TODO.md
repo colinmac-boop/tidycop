@@ -1,8 +1,8 @@
 # TODO — Week 1 (2026-05-20 → 2026-05-27)
 
 ## Day 1-2: Registry + Schema
-- [ ] Port `incident_registry.R` city specs to `registry/cities.yaml`
-- [ ] Start with 5 MVP cities: Chicago, Seattle, SF, Detroit, Pittsburgh
+- [x] Port `incident_registry.R` city specs to `registry/cities.yaml` (2026-05-27)
+- [x] Start with 5 MVP cities: Chicago, Seattle, SF, Detroit, Pittsburgh (2026-05-27)
 - [ ] Implement `tidycop/registry.py` (load YAML, normalize city keys)
 - [ ] Implement `tidycop/schema.py` (STD_COLUMNS, field coalescing)
 
