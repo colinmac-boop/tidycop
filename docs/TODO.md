@@ -10,11 +10,13 @@
   - Date parsing: naive Socrata strings → city tz; ArcGIS epoch ms → city tz
 
 ## Day 3-4: Socrata Fetcher
-- [ ] Implement `tidycop/platform/socrata.py`
-- [ ] SoQL $where date filtering
-- [ ] Paging (resultOffset or $offset)
-- [ ] Rate limiting + retry (requests Session + backoff)
-- [ ] Test against Chicago (ijzp-q8t2)
+- [x] Implement `tidycop/platform/socrata.py` (2026-05-27)
+- [x] SoQL $where date filtering (end-exclusive day boundary) (2026-05-27)
+- [x] Paging via $offset (PAGE_SIZE=1000, terminates on short page) (2026-05-27)
+- [x] Rate limiting + retry (429/5xx, exponential backoff, Retry-After) (2026-05-27)
+- [x] Test against Chicago (ijzp-q8t2) — live smoke + end-to-end normalize (2026-05-27)
+  - 21 unit tests (mocked HTTP) + 3 live smoke tests (Chicago/Seattle/SF)
+  - End-to-end fetch → normalize verified on all 3 Socrata cities, 2026-04-15
 
 ## Day 5: Core Integration
 - [ ] Wire `tidycop/core.py` → registry → fetcher → schema
