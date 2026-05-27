@@ -3,8 +3,11 @@
 ## Day 1-2: Registry + Schema
 - [x] Port `incident_registry.R` city specs to `registry/cities.yaml` (2026-05-27)
 - [x] Start with 5 MVP cities: Chicago, Seattle, SF, Detroit, Pittsburgh (2026-05-27)
-- [ ] Implement `tidycop/registry.py` (load YAML, normalize city keys)
-- [ ] Implement `tidycop/schema.py` (STD_COLUMNS, field coalescing)
+- [x] Implement `tidycop/registry.py` (load YAML, normalize city keys) (2026-05-27)
+- [x] Implement `tidycop/schema.py` (STD_COLUMNS, field coalescing) (2026-05-27)
+  - 40 unit tests passing (registry: 23, schema: 16, core placeholder: 1)
+  - Coalesce-fallback verified against Detroit's 3-way std_source_record_id
+  - Date parsing: naive Socrata strings → city tz; ArcGIS epoch ms → city tz
 
 ## Day 3-4: Socrata Fetcher
 - [ ] Implement `tidycop/platform/socrata.py`
