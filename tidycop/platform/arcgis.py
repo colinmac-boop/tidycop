@@ -199,7 +199,10 @@ class ArcGISFetcher(BaseFetcher):
 
         field_type = source.extras.get("arcgis_date_field_type", "date")
         where = _build_where(source.date_field, start, end, field_type)
-        order_by = source.extras.get("order_by") or f"{source.extras.get('object_id_field', 'OBJECTID')} ASC"
+        order_by = (
+            source.extras.get("order_by")
+            or f"{source.extras.get('object_id_field', 'OBJECTID')} ASC"
+        )
         return_geometry = bool(source.extras.get("return_geometry", False))
 
         # Endpoint is <base_url>/query — base_url points at the layer.
@@ -286,9 +289,7 @@ class ArcGISFetcher(BaseFetcher):
                     )
                 payload = response.json()
                 if not isinstance(payload, dict):
-                    raise ArcGISHTTPError(
-                        f"Expected JSON object, got {type(payload).__name__}"
-                    )
+                    raise ArcGISHTTPError(f"Expected JSON object, got {type(payload).__name__}")
                 return payload
 
             if status in RETRYABLE_STATUS:

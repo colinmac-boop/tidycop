@@ -21,7 +21,6 @@ from tidycop.platform.socrata import (
 )
 from tidycop.registry import SourceSpec
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
@@ -41,8 +40,13 @@ def chicago_source() -> SourceSpec:
 
 
 def _mock_response(
-    *, status: int = 200, json_payload: Any = None, content_type: str = "application/json",
-    reason: str = "OK", text: str = "", headers: dict[str, str] | None = None,
+    *,
+    status: int = 200,
+    json_payload: Any = None,
+    content_type: str = "application/json",
+    reason: str = "OK",
+    text: str = "",
+    headers: dict[str, str] | None = None,
 ) -> MagicMock:
     resp = MagicMock(spec=requests.Response)
     resp.status_code = status
@@ -295,9 +299,7 @@ def test_fetch_handles_request_exception_with_retry(chicago_source):
 def test_fetch_rejects_non_json_content_type(chicago_source):
     session = MagicMock(spec=requests.Session)
     session.headers = {}
-    session.get.return_value = _mock_response(
-        json_payload=[], content_type="text/html"
-    )
+    session.get.return_value = _mock_response(json_payload=[], content_type="text/html")
     fetcher = _make_fetcher(session)
     with pytest.raises(SocrataHTTPError, match="non-JSON"):
         fetcher.fetch(chicago_source, "2026-04-01", "2026-04-30", limit=10)
@@ -319,8 +321,13 @@ def test_fetch_rejects_non_list_payload(chicago_source):
 
 def test_fetch_rejects_non_socrata_source():
     arcgis_source = SourceSpec(
-        source_id="x", display_name="x", provider="arcgis",
-        dataset_id="abc", base_url="https://example/", date_field="d", field_map={},
+        source_id="x",
+        display_name="x",
+        provider="arcgis",
+        dataset_id="abc",
+        base_url="https://example/",
+        date_field="d",
+        field_map={},
     )
     session = MagicMock(spec=requests.Session)
     session.headers = {}

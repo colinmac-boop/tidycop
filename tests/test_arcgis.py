@@ -22,7 +22,6 @@ from tidycop.platform.arcgis import (
 )
 from tidycop.registry import SourceSpec
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
@@ -187,9 +186,14 @@ def test_fetch_uses_explicit_order_by_from_extras(detroit_source):
 
 def test_fetch_falls_back_to_object_id_field_when_no_order_by():
     src = SourceSpec(
-        source_id="x", display_name="x", provider="arcgis", dataset_id="d",
-        base_url="https://example/Layer/0", date_field="dt",
-        field_map={}, extras={"arcgis_date_field_type": "date", "object_id_field": "MY_OID"},
+        source_id="x",
+        display_name="x",
+        provider="arcgis",
+        dataset_id="d",
+        base_url="https://example/Layer/0",
+        date_field="dt",
+        field_map={},
+        extras={"arcgis_date_field_type": "date", "object_id_field": "MY_OID"},
     )
     session = MagicMock(spec=requests.Session)
     session.headers = {}
@@ -201,8 +205,13 @@ def test_fetch_falls_back_to_object_id_field_when_no_order_by():
 
 def test_fetch_sets_geometry_params_when_requested():
     src = SourceSpec(
-        source_id="x", display_name="x", provider="arcgis", dataset_id="d",
-        base_url="https://example/Layer/0", date_field="dt", field_map={},
+        source_id="x",
+        display_name="x",
+        provider="arcgis",
+        dataset_id="d",
+        base_url="https://example/Layer/0",
+        date_field="dt",
+        field_map={},
         extras={"arcgis_date_field_type": "date", "return_geometry": True},
     )
     session = MagicMock(spec=requests.Session)
@@ -384,8 +393,13 @@ def test_fetch_rejects_non_dict_payload(detroit_source):
 
 def test_fetch_rejects_non_arcgis_source():
     src = SourceSpec(
-        source_id="x", display_name="x", provider="socrata", dataset_id="d",
-        base_url="https://example/", date_field="d", field_map={},
+        source_id="x",
+        display_name="x",
+        provider="socrata",
+        dataset_id="d",
+        base_url="https://example/",
+        date_field="d",
+        field_map={},
     )
     session = MagicMock(spec=requests.Session)
     session.headers = {}

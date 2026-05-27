@@ -35,9 +35,7 @@ def _coerce_date(value: date | str) -> date:
         return value
     if isinstance(value, str):
         return datetime.fromisoformat(value.split("T")[0]).date()
-    raise TypeError(
-        f"start_date/end_date must be date or ISO string, got {type(value).__name__}"
-    )
+    raise TypeError(f"start_date/end_date must be date or ISO string, got {type(value).__name__}")
 
 
 def _source_overlaps(source: SourceSpec, start: date, end: date) -> bool:

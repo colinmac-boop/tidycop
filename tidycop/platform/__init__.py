@@ -6,11 +6,13 @@ from typing import Callable
 
 from tidycop.platform.arcgis import ArcGISFetcher
 from tidycop.platform.base import BaseFetcher
+from tidycop.platform.ckan import CKANFetcher
 from tidycop.platform.socrata import SocrataFetcher
 
 __all__ = [
     "ArcGISFetcher",
     "BaseFetcher",
+    "CKANFetcher",
     "SocrataFetcher",
     "get_fetcher",
     "register_fetcher",
@@ -23,6 +25,7 @@ __all__ = [
 _REGISTRY: dict[str, Callable[[], BaseFetcher]] = {
     "socrata": SocrataFetcher,
     "arcgis": ArcGISFetcher,
+    "ckan": CKANFetcher,
 }
 
 

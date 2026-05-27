@@ -9,7 +9,6 @@ from __future__ import annotations
 from datetime import date
 from typing import Any
 
-import pandas as pd
 import pytest
 
 import tidycop
@@ -17,7 +16,6 @@ from tidycop.core import _select_source, get_incidents
 from tidycop.platform.base import BaseFetcher
 from tidycop.registry import CitySpec, SourceSpec, get_city_spec
 from tidycop.schema import STD_COLUMNS
-
 
 # ---------------------------------------------------------------------------
 # Fake fetcher
@@ -120,9 +118,7 @@ def test_get_incidents_resolves_alias():
 
 def test_get_incidents_accepts_date_objects():
     fake = FakeFetcher(CHICAGO_ROWS)
-    df = get_incidents(
-        "chicago", date(2026, 4, 15), date(2026, 4, 16), fetcher=fake
-    )
+    df = get_incidents("chicago", date(2026, 4, 15), date(2026, 4, 16), fetcher=fake)
     assert len(df) == 2
 
 
@@ -182,10 +178,39 @@ def test_inverted_date_range_raises():
         get_incidents("chicago", "2026-04-30", "2026-04-01", fetcher=fake)
 
 
-def test_unwired_provider_raises_not_implemented():
-    """CKAN (Pittsburgh) isn't wired yet — ArcGIS landed Day 6."""
+def test_unwired_provider_raises_not_implemented(monkeypatch):
+    """Provider → fetcher dispatch must raise NotImplementedError for unknown providers.
+
+    All 5 MVP cities now have working providers (socrata/arcgis/ckan).
+    Patch the registry to verify the not-implemented path still fires.
+    """
+    from tidycop import platform
+
+    monkeypatch.setitem(platform._REGISTRY, "madeup", platform._REGISTRY["socrata"])  # noqa: SLF001
+    monkeypatch.delitem(platform._REGISTRY, "madeup")
+
+    fake_city = type(get_city_spec("chicago"))(
+        city="x",
+        display_name="X",
+        timezone="UTC",
+        sources=(
+            SourceSpec(
+                source_id="x",
+                display_name="x",
+                provider="madeup",
+                dataset_id="d",
+                base_url="https://example/",
+                date_field="d",
+                field_map={},
+            ),
+        ),
+    )
+    # Patch get_city_spec to return our fake.
+    import tidycop.core as core_mod
+
+    monkeypatch.setattr(core_mod, "get_city_spec", lambda c: fake_city)
     with pytest.raises(NotImplementedError, match="no fetcher registered for provider"):
-        get_incidents("pittsburgh", "2026-04-15", "2026-04-16")
+        get_incidents("anything", "2026-04-15", "2026-04-16")
 
 
 # ---------------------------------------------------------------------------

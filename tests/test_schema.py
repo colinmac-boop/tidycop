@@ -7,7 +7,6 @@ import pytest
 
 from tidycop.schema import STD_COLUMNS, empty_frame, normalize
 
-
 # ---------------------------------------------------------------------------
 # STD_COLUMNS contract
 # ---------------------------------------------------------------------------

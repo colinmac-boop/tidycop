@@ -37,13 +37,17 @@
   - Known gotcha: ArcGIS TIMESTAMP literals are interpreted in server tz (usually UTC), not city-local; documented in `_build_where` docstring
 
 ## Day 7: Polish + Docs
-- [ ] Add type hints + docstrings
-- [ ] Run black + ruff
-- [ ] Write basic usage examples in README
-- [ ] Tag v0.1.0
+- [x] CKAN fetcher (Pittsburgh) — promoted from stretch, landed first (2026-05-27)
+- [x] Run black + ruff (2026-05-27)
+- [x] Write usage examples in README (2026-05-27)
+- [x] Tag v0.1.0 (2026-05-27)
+- [ ] More type hints + docstrings on internal helpers (deferred to v0.2)
 
-## Stretch Goals
-- [ ] CKAN fetcher (Pittsburgh)
-- [ ] `view="city_full"` mode
+## Stretch Goals (still open)
+- [x] CKAN fetcher (Pittsburgh) — done Day 7
+- [x] `view="city_full"` mode — done Day 5 (also `city_raw`)
 - [ ] CLI: `tidycop fetch chicago --start 2026-04-01`
 - [ ] SpotCrime category classifier integration
+- [ ] Port remaining 20 cities from upstream R registry
+- [ ] Deduplication layer (sqlite state, track seen `(city, source_id, content_hash)`)
+- [ ] SFTP delivery mode for spotcops producer

@@ -14,7 +14,7 @@ Coalesce-fallback rule (matches R behavior):
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any, Iterable, Mapping
 from zoneinfo import ZoneInfo
 

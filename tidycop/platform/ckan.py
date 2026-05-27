@@ -1,22 +1,26 @@
-"""Socrata API fetcher.
+"""CKAN datastore fetcher.
 
-Socrata Open Data API (SODA 2.0) datasets — e.g. Chicago `ijzp-q8t2`,
-Seattle `tazs-3rd5`, San Francisco `wg3w-h783`.
+CKAN exposes datasets through ``/api/3/action/datastore_search_sql``, which
+accepts a single ``sql`` query parameter. Identifiers (resource_id and
+column names) are SQL identifiers — wrapped in double quotes, with literal
+quotes escaped by doubling.
 
-Reference:
-  - https://dev.socrata.com/docs/queries/
-  - https://dev.socrata.com/docs/paging.html
-  - https://dev.socrata.com/docs/app-tokens.html
+Used by Pittsburgh (WPRDC) and San Antonio. Reference:
+  - https://docs.ckan.org/en/latest/maintaining/datastore.html
 
-Behavior (ported from tidycops R `fetch_socrata_dataset` + `.fetch_with_retry`):
-  - Page size 1000 (Socrata default cap without app token; we never exceed).
-  - Paged via ``$offset`` until either ``limit`` is reached or the page is short.
-  - Date filter: ``date_field >= 'YYYY-MM-DDT00:00:00' AND
-                 date_field < '<end+1>T00:00:00'`` (end-exclusive).
-  - Ordered by ``date_field ASC`` for stable paging.
-  - Retry on 429/500/502/503/504 with exponential backoff; honor Retry-After.
-  - 4xx (non-429) fail fast with descriptive errors.
-  - Optional app token via env ``SOCRATA_APP_TOKEN`` → ``X-App-Token`` header.
+Behavior (ported from tidycops R ``fetch_ckan_dataset``):
+  - SQL shape:
+        SELECT * FROM "<resource_id>"
+        WHERE <field> >= 'YYYY-MM-DD' AND <field> < 'YYYY-MM-DD+1'
+        ORDER BY <order_by>
+        LIMIT n OFFSET m
+  - Date WHERE uses string literals; ``ckan_date_field_type`` of "datetime"
+    appends ``00:00:00`` (matches R), "date" and "text" use plain dates.
+  - Page size up to 10000 (CKAN's default cap).
+  - Terminate on short page, empty records, or overall limit reached.
+  - CKAN error envelope: HTTP 200 with ``{"success": false, ...}`` body.
+    Treated as failure with code+message surfaced.
+  - Retry/backoff: 429/5xx, Retry-After honored. Same shape as Socrata/ArcGIS.
 """
 
 from __future__ import annotations
@@ -40,12 +44,12 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 
 USER_AGENT = "tidycop/0.1.0 (+https://neighborhoodcrimemap.com)"
-PAGE_SIZE = 1000
-DEFAULT_TIMEOUT = 30.0  # seconds, per-request
+PAGE_SIZE = 10_000
+DEFAULT_TIMEOUT = 30.0
 DEFAULT_MAX_RETRIES = 4
-DEFAULT_INITIAL_BACKOFF = 1.0  # seconds
+DEFAULT_INITIAL_BACKOFF = 1.0
 DEFAULT_BACKOFF_FACTOR = 2.0
-MAX_BACKOFF = 30.0  # cap a single sleep at 30s
+MAX_BACKOFF = 30.0
 RETRYABLE_STATUS = {429, 500, 502, 503, 504}
 
 
@@ -64,18 +68,45 @@ def _coerce_date(value: date | str) -> date:
     raise TypeError(f"start_date/end_date must be date or ISO string, got {type(value).__name__}")
 
 
-def _build_where(date_field: str, start: date, end: date) -> str:
-    """Compose the SoQL ``$where`` for an inclusive day range.
+def _quote_ident(name: str) -> str:
+    """Escape a SQL identifier per CKAN/PostgreSQL conventions."""
+    return '"' + name.replace('"', '""') + '"'
 
-    Matches R behavior: end-exclusive at midnight on (end+1), so a full day
-    of records on ``end`` is included regardless of intraday timestamps.
+
+def _build_where(date_field: str, start: date, end: date, field_type: str) -> str:
+    """Compose the CKAN SQL ``WHERE`` clause for an inclusive day range.
+
+    end is treated as exclusive at midnight of (end+1). ``field_type``:
+      - "date" / "text" → plain 'YYYY-MM-DD'
+      - "datetime"      → 'YYYY-MM-DD HH:MM:SS'
     """
     if end < start:
         raise ValueError(f"end_date ({end}) is before start_date ({start})")
-    start_s = f"{start.isoformat()}T00:00:00"
-    end_exclusive = (end + timedelta(days=1)).isoformat()
-    end_s = f"{end_exclusive}T00:00:00"
-    return f"{date_field} >= '{start_s}' AND {date_field} < '{end_s}'"
+    end_exclusive = end + timedelta(days=1)
+    field_sql = _quote_ident(date_field)
+    if field_type == "datetime":
+        start_s = f"{start.isoformat()} 00:00:00"
+        end_s = f"{end_exclusive.isoformat()} 00:00:00"
+    elif field_type in ("date", "text"):
+        start_s = start.isoformat()
+        end_s = end_exclusive.isoformat()
+    else:
+        raise ValueError(
+            f"unsupported ckan_date_field_type={field_type!r}; "
+            "expected 'date', 'datetime', or 'text'"
+        )
+    return f"{field_sql} >= '{start_s}' AND {field_sql} < '{end_s}'"
+
+
+def _build_sql(resource_id: str, where: str, order_by: str | None, limit: int, offset: int) -> str:
+    parts = [
+        f"SELECT * FROM {_quote_ident(resource_id)}",
+        f"WHERE {where}",
+    ]
+    if order_by:
+        parts.append(f"ORDER BY {order_by}")
+    parts.append(f"LIMIT {int(limit)} OFFSET {int(offset)}")
+    return " ".join(parts)
 
 
 def _sleep_for_retry(
@@ -84,7 +115,6 @@ def _sleep_for_retry(
     initial_backoff: float,
     backoff_factor: float,
 ) -> float:
-    """Compute backoff seconds, honoring Retry-After when present."""
     retry_after: float | None = None
     if response is not None:
         ra = response.headers.get("Retry-After")
@@ -92,15 +122,14 @@ def _sleep_for_retry(
             try:
                 retry_after = float(ra)
             except ValueError:
-                # HTTP-date form — fall back to exponential.
                 retry_after = None
     if retry_after is None:
         retry_after = initial_backoff * (backoff_factor ** (attempt - 1))
     return min(retry_after, MAX_BACKOFF)
 
 
-class SocrataHTTPError(RuntimeError):
-    """Raised when Socrata returns an unrecoverable HTTP error."""
+class CKANHTTPError(RuntimeError):
+    """Raised when CKAN returns an unrecoverable HTTP or API error."""
 
 
 # ---------------------------------------------------------------------------
@@ -108,14 +137,14 @@ class SocrataHTTPError(RuntimeError):
 # ---------------------------------------------------------------------------
 
 
-class SocrataFetcher(BaseFetcher):
-    """Fetch records from a Socrata-hosted dataset."""
+class CKANFetcher(BaseFetcher):
+    """Fetch records from a CKAN datastore via datastore_search_sql."""
 
     def __init__(
         self,
         *,
         session: requests.Session | None = None,
-        app_token: str | None = None,
+        api_key: str | None = None,
         timeout: float = DEFAULT_TIMEOUT,
         max_retries: int = DEFAULT_MAX_RETRIES,
         initial_backoff: float = DEFAULT_INITIAL_BACKOFF,
@@ -123,17 +152,17 @@ class SocrataFetcher(BaseFetcher):
         sleep: Any = time.sleep,
     ) -> None:
         self.session = session or requests.Session()
-        self.app_token = app_token or os.environ.get("SOCRATA_APP_TOKEN") or None
+        self.api_key = api_key or os.environ.get("CKAN_API_KEY") or None
         self.timeout = timeout
         self.max_retries = max_retries
         self.initial_backoff = initial_backoff
         self.backoff_factor = backoff_factor
-        self._sleep = sleep  # injectable for tests
+        self._sleep = sleep
 
         self.session.headers.setdefault("User-Agent", USER_AGENT)
         self.session.headers.setdefault("Accept", "application/json")
-        if self.app_token:
-            self.session.headers["X-App-Token"] = self.app_token
+        if self.api_key:
+            self.session.headers["Authorization"] = self.api_key
 
     # ---- Public API ------------------------------------------------------
 
@@ -145,7 +174,6 @@ class SocrataFetcher(BaseFetcher):
         *,
         limit: int = 1000,
     ) -> list[dict[str, Any]]:
-        """Fetch records, page through results, return a single list."""
         return list(self.iter_fetch(source, start_date, end_date, limit=limit))
 
     def iter_fetch(
@@ -156,45 +184,56 @@ class SocrataFetcher(BaseFetcher):
         *,
         limit: int = 1000,
     ) -> Iterator[dict[str, Any]]:
-        """Stream records one at a time across pages."""
-        if source.provider != "socrata":
-            raise ValueError(f"SocrataFetcher cannot fetch provider={source.provider!r}")
+        if source.provider != "ckan":
+            raise ValueError(f"CKANFetcher cannot fetch provider={source.provider!r}")
         if not source.date_field:
             raise ValueError(f"source {source.source_id!r} missing date_field")
+        if not source.dataset_id:
+            raise ValueError(f"source {source.source_id!r} missing dataset_id (CKAN resource_id)")
         if limit <= 0:
             return
 
         start = _coerce_date(start_date)
         end = _coerce_date(end_date)
-        where = _build_where(source.date_field, start, end)
+
+        field_type = source.extras.get("ckan_date_field_type", "date")
+        where = _build_where(source.date_field, start, end, field_type)
+        order_by = source.extras.get("order_by") or None
+
+        endpoint = source.base_url.rstrip("/") + "/api/3/action/datastore_search_sql"
 
         retrieved = 0
         offset = 0
         while retrieved < limit:
             page_limit = min(PAGE_SIZE, limit - retrieved)
-            params = {
-                "$where": where,
-                "$order": f"{source.date_field} ASC",
-                "$limit": page_limit,
-                "$offset": offset,
-            }
-            page = self._get_page(source.base_url, params)
-            if not page:
+            sql = _build_sql(source.dataset_id, where, order_by, page_limit, offset)
+            payload = self._get_page(endpoint, {"sql": sql})
+
+            # CKAN error envelope (HTTP 200 with success=false body).
+            if not payload.get("success"):
+                err = payload.get("error") or {}
+                err_type = err.get("__type") or "Unknown"
+                err_msg = err.get("message") or payload.get("help") or "no detail"
+                raise CKANHTTPError(f"CKAN query failed ({err_type}): {err_msg}")
+
+            result = payload.get("result") or {}
+            records = result.get("records") or []
+            if not records:
                 return
-            for rec in page:
+
+            for rec in records:
                 yield rec
                 retrieved += 1
                 if retrieved >= limit:
                     return
-            if len(page) < page_limit:
-                # Short page → server has nothing more.
+
+            if len(records) < page_limit:
                 return
-            offset += len(page)
+            offset += len(records)
 
     # ---- Internals -------------------------------------------------------
 
-    def _get_page(self, url: str, params: dict[str, Any]) -> list[dict[str, Any]]:
-        """Issue one GET with retry/backoff, return decoded JSON list."""
+    def _get_page(self, url: str, params: dict[str, Any]) -> dict[str, Any]:
         last_exc: Exception | None = None
         for attempt in range(1, self.max_retries + 1):
             response: requests.Response | None = None
@@ -203,14 +242,14 @@ class SocrataFetcher(BaseFetcher):
             except requests.RequestException as e:
                 last_exc = e
                 logger.warning(
-                    "socrata: request error on attempt %d/%d (%s)",
+                    "ckan: request error on attempt %d/%d (%s)",
                     attempt,
                     self.max_retries,
                     e,
                 )
                 if attempt >= self.max_retries:
-                    raise SocrataHTTPError(
-                        f"Socrata request failed after {self.max_retries} attempts: {e}"
+                    raise CKANHTTPError(
+                        f"CKAN request failed after {self.max_retries} attempts: {e}"
                     ) from e
                 self._sleep(
                     _sleep_for_retry(None, attempt, self.initial_backoff, self.backoff_factor)
@@ -221,24 +260,20 @@ class SocrataFetcher(BaseFetcher):
             if 200 <= status < 300:
                 ct = response.headers.get("Content-Type", "")
                 if "json" not in ct.lower():
-                    raise SocrataHTTPError(
-                        f"Socrata returned non-JSON response (Content-Type={ct!r})"
-                    )
+                    raise CKANHTTPError(f"CKAN returned non-JSON response (Content-Type={ct!r})")
                 payload = response.json()
-                if not isinstance(payload, list):
-                    raise SocrataHTTPError(f"Expected JSON list, got {type(payload).__name__}")
+                if not isinstance(payload, dict):
+                    raise CKANHTTPError(f"Expected JSON object, got {type(payload).__name__}")
                 return payload
 
             if status in RETRYABLE_STATUS:
                 if attempt >= self.max_retries:
-                    raise SocrataHTTPError(
-                        f"Socrata returned {status} after {self.max_retries} attempts"
-                    )
+                    raise CKANHTTPError(f"CKAN returned {status} after {self.max_retries} attempts")
                 delay = _sleep_for_retry(
                     response, attempt, self.initial_backoff, self.backoff_factor
                 )
                 logger.warning(
-                    "socrata: HTTP %d, sleeping %.2fs before retry %d/%d",
+                    "ckan: HTTP %d, sleeping %.2fs before retry %d/%d",
                     status,
                     delay,
                     attempt + 1,
@@ -247,13 +282,11 @@ class SocrataFetcher(BaseFetcher):
                 self._sleep(delay)
                 continue
 
-            # Non-retryable 4xx
             body = (response.text or "")[:500]
-            raise SocrataHTTPError(
-                f"Socrata HTTP {status}: {response.reason!r}. URL={response.url} body={body!r}"
+            raise CKANHTTPError(
+                f"CKAN HTTP {status}: {response.reason!r}. URL={response.url} body={body!r}"
             )
 
-        # Should be unreachable, but keep mypy happy.
         if last_exc:
-            raise SocrataHTTPError(str(last_exc))
-        raise SocrataHTTPError("Exhausted retries with no response")
+            raise CKANHTTPError(str(last_exc))
+        raise CKANHTTPError("Exhausted retries with no response")
