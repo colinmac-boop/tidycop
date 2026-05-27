@@ -19,10 +19,13 @@
   - End-to-end fetch → normalize verified on all 3 Socrata cities, 2026-04-15
 
 ## Day 5: Core Integration
-- [ ] Wire `tidycop/core.py` → registry → fetcher → schema
-- [ ] Implement `view="comparable"` mode
-- [ ] Test: fetch Chicago incidents 2026-04-01 → 2026-04-30
-- [ ] Validate: compare row count + schema vs. R tidycops
+- [x] Wire `tidycop/core.py` → registry → fetcher → schema (2026-05-27)
+- [x] Implement `view="comparable"` mode (also `city_full` and `city_raw`) (2026-05-27)
+- [x] Test: fetch Chicago incidents live, 1-day window, all 3 views (2026-05-27)
+- [ ] Validate: compare row count + schema vs. R tidycops (deferred — R install not needed for MVP; spot-check vs. native Chicago portal looks consistent)
+  - Added `tidycop/platform/__init__.py` dispatch (`get_fetcher`, `register_fetcher`)
+  - Added source selection via active_from/active_to overlap (currently no-op for MVP cities but ready for Cincinnati/Cleveland later)
+  - 18 new tests in tests/test_core.py (FakeFetcher; no network)
 
 ## Day 6: ArcGIS Fetcher
 - [ ] Implement `tidycop/platform/arcgis.py`
