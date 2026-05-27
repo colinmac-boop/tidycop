@@ -28,10 +28,13 @@
   - 18 new tests in tests/test_core.py (FakeFetcher; no network)
 
 ## Day 6: ArcGIS Fetcher
-- [ ] Implement `tidycop/platform/arcgis.py`
-- [ ] Feature layer query (where clause, outFields)
-- [ ] resultOffset paging
-- [ ] Test against Detroit (RMS Crime Incidents)
+- [x] Implement `tidycop/platform/arcgis.py` (2026-05-27)
+- [x] Feature layer query (where clause, outFields, returnGeometry) (2026-05-27)
+- [x] resultOffset + resultRecordCount paging (PAGE_SIZE 2000) (2026-05-27)
+- [x] Test against Detroit RMS Crime Incidents — live + e2e via `tidycop.get_incidents('detroit', ...)` (2026-05-27)
+  - 27 unit tests (HTTP mocked) + 1 live smoke test (opt-in)
+  - End-to-end e2e: 500 rows for 1 week (2024-04-01..07), all 500 with lat/lon, coalesce-fallback on `std_source_record_id` working
+  - Known gotcha: ArcGIS TIMESTAMP literals are interpreted in server tz (usually UTC), not city-local; documented in `_build_where` docstring
 
 ## Day 7: Polish + Docs
 - [ ] Add type hints + docstrings

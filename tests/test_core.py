@@ -183,9 +183,7 @@ def test_inverted_date_range_raises():
 
 
 def test_unwired_provider_raises_not_implemented():
-    """Detroit (ArcGIS) and Pittsburgh (CKAN) aren't wired yet."""
-    with pytest.raises(NotImplementedError, match="no fetcher registered for provider"):
-        get_incidents("detroit", "2026-04-15", "2026-04-16")
+    """CKAN (Pittsburgh) isn't wired yet — ArcGIS landed Day 6."""
     with pytest.raises(NotImplementedError, match="no fetcher registered for provider"):
         get_incidents("pittsburgh", "2026-04-15", "2026-04-16")
 

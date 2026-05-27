@@ -4,10 +4,17 @@ from __future__ import annotations
 
 from typing import Callable
 
+from tidycop.platform.arcgis import ArcGISFetcher
 from tidycop.platform.base import BaseFetcher
 from tidycop.platform.socrata import SocrataFetcher
 
-__all__ = ["BaseFetcher", "SocrataFetcher", "get_fetcher", "register_fetcher"]
+__all__ = [
+    "ArcGISFetcher",
+    "BaseFetcher",
+    "SocrataFetcher",
+    "get_fetcher",
+    "register_fetcher",
+]
 
 
 # Provider → factory callable that returns a fresh BaseFetcher instance.
@@ -15,6 +22,7 @@ __all__ = ["BaseFetcher", "SocrataFetcher", "get_fetcher", "register_fetcher"]
 # own session / token / retry config if a caller passes one in later.
 _REGISTRY: dict[str, Callable[[], BaseFetcher]] = {
     "socrata": SocrataFetcher,
+    "arcgis": ArcGISFetcher,
 }
 
 
