@@ -629,3 +629,279 @@ cities:
           std_division: "Geo_Zones"
           std_latitude: "Latitude"
           std_longitude: "Longitude"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # DENVER — ArcGIS (rolling 5 years + current)
+  # ──────────────────────────────────────────────────────────────────────────
+  denver:
+    display_name: "Denver"
+    timezone: "America/Denver"
+    aliases: ["denver_co"]
+    sources:
+      - source_id: "denver_crime_offenses"
+        display_name: "Denver Crime Offenses (Rolling 5 Years + Current)"
+        provider: "arcgis"
+        dataset_id: "1e080d3ce2ae4e2698745a0d02345d4a"
+        base_url: "https://services1.arcgis.com/zdB7qR0BtYrg0Xpl/arcgis/rest/services/ODC_CRIME_OFFENSES_P/FeatureServer/324"
+        date_field: "FIRST_OCCURRENCE_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2021-01-01"
+        active_to: null
+        source_status: "rolling_window"
+        source_note: "City publishes a rolling crime feed covering about the previous five years plus the current year-to-date."
+        field_map:
+          std_source_record_id: ["OFFENSE_ID", "OBJECTID"]
+          std_incident_id: ["INCIDENT_ID", "OFFENSE_ID"]
+          std_incident_number: "INCIDENT_ID"
+          std_incident_date: "FIRST_OCCURRENCE_DATE"
+          std_reported_date: "REPORTED_DATE"
+          std_offense_code: "OFFENSE_CODE"
+          std_offense_description: "OFFENSE_TYPE_ID"
+          std_offense_category: "OFFENSE_CATEGORY_ID"
+          std_disposition: null
+          std_address: "INCIDENT_ADDRESS"
+          std_zip_code: null
+          std_neighborhood: "NEIGHBORHOOD_ID"
+          std_district: "DISTRICT_ID"
+          std_beat: "PRECINCT_ID"
+          std_division: null
+          std_latitude: "GEO_LAT"
+          std_longitude: "GEO_LON"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # MINNEAPOLIS — ArcGIS (rolling last 2 years)
+  # ──────────────────────────────────────────────────────────────────────────
+  minneapolis:
+    display_name: "Minneapolis"
+    timezone: "America/Chicago"
+    aliases: ["mpls", "minneapolis_mn"]
+    sources:
+      - source_id: "minneapolis_incidents_last_2_years"
+        display_name: "Police Incidents Last 2 Years"
+        provider: "arcgis"
+        dataset_id: "e83a2845d2384759a0a08614fc3fe812"
+        base_url: "https://services.arcgis.com/afSMGVsC7QlRK1kZ/arcgis/rest/services/Police_Incidents_Last_2Years/FeatureServer/0"
+        date_field: "reportedDateTime"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2024-04-30"
+        active_to: null
+        source_status: "rolling_window"
+        source_note: "City feed represents a rolling last-two-years window with daily refresh."
+        field_map:
+          std_source_record_id: ["caseNumber", "OBJECTID"]
+          std_incident_id: "caseNumber"
+          std_incident_number: "caseNumber"
+          std_incident_date: "reportedDateTime"
+          std_reported_date: ["reportedDate", "enteredDate"]
+          std_offense_code: "UCRCode"
+          std_offense_description: "description"
+          std_offense_category: "offense"
+          std_disposition: null
+          std_address: "publicaddress"
+          std_zip_code: null
+          std_neighborhood: "neighborhood"
+          std_district: "precinct"
+          std_beat: null
+          std_division: null
+          std_latitude: "centerLat"
+          std_longitude: "centerLong"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # GRAND RAPIDS — ArcGIS
+  # ──────────────────────────────────────────────────────────────────────────
+  grand_rapids:
+    display_name: "Grand Rapids"
+    timezone: "America/Detroit"
+    aliases: ["grandrapids", "grand_rapids_mi", "gr"]
+    sources:
+      - source_id: "grand_rapids_incident_reports"
+        display_name: "Incident Reports"
+        provider: "arcgis"
+        dataset_id: "a7dc3002434d4ab6869feb02ec9f7a30"
+        base_url: "https://services2.arcgis.com/L81TiOwAPO1ZvU9b/arcgis/rest/services/incident_reports/FeatureServer/0"
+        date_field: "DATEOFOFFENSE"
+        arcgis_date_field_type: "date"
+        object_id_field: "FID"
+        order_by: "FID DESC"
+        return_geometry: false
+        active_from: "2023-01-01"
+        active_to: null
+        source_note: "ArcGIS layer metadata reports `hasStaticData=true`; update cadence may vary."
+        field_map:
+          std_source_record_id: ["INCNUMBER", "FID"]
+          std_incident_id: "INCNUMBER"
+          std_incident_number: "INCNUMBER"
+          std_incident_date: "DATEOFOFFENSE"
+          std_reported_date: "DATEOFOFFENSE"
+          std_offense_code: ["MICRCODE", "OFFENSECODE"]
+          std_offense_description: ["OFFENSETITLE", "Offense_Description", "NIBRS_Maping"]
+          std_offense_category: ["NIBRS_Category", "NIBRS_GRP"]
+          std_disposition: null
+          std_address: "BLOCK_ADDRESS__INCIDENT_LOCATIONS"
+          std_zip_code: null
+          std_neighborhood: null
+          std_district: "Service_Area"
+          std_beat: "Beat__"
+          std_division: null
+          std_latitude: "X"
+          std_longitude: "Y"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # NAPERVILLE — ArcGIS (legacy 2010-2021 + NIBRS 2021-2024)
+  # ──────────────────────────────────────────────────────────────────────────
+  naperville:
+    display_name: "Naperville"
+    timezone: "America/Chicago"
+    aliases: ["naperville_il"]
+    sources:
+      - source_id: "naperville_incidents_legacy"
+        display_name: "Police Department Incidents 2010 to 06_03_2021"
+        provider: "arcgis"
+        dataset_id: "584e8dcdd12649fe97a1ddb774705092"
+        base_url: "https://services1.arcgis.com/rXJ6QApc2sOtl1Pd/arcgis/rest/services/Police_Department_Incidents_2010_to_06_03_2021/FeatureServer/0"
+        date_field: "DATE_OCCU"
+        arcgis_date_field_type: "string"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2010-01-01"
+        active_to: "2021-06-02"
+        field_map:
+          std_source_record_id: ["INCIKEY", "INCI_ID", "OBJECTID"]
+          std_incident_id: ["INCI_ID", "INCIKEY"]
+          std_incident_number: ["INCI_ID", "INCIKEY"]
+          std_incident_date: "DATE_OCCU"
+          std_reported_date: "DATE_REPT"
+          std_offense_code: "UCR_CODE"
+          std_offense_description: "OFFENSE"
+          std_offense_category: ["CATEGORY", "REPORTEDAS"]
+          std_disposition: null
+          std_address: ["STREETMASKED", "STREET"]
+          std_zip_code: null
+          std_neighborhood: null
+          std_district: null
+          std_beat: null
+          std_division: null
+          std_latitude: "GEOX"
+          std_longitude: "GEOY"
+      - source_id: "naperville_incidents_nibrs"
+        display_name: "Police Department Incidents 06_03_2021 to 12_01_2024"
+        provider: "arcgis"
+        dataset_id: "8eb05471b7d740b8b5b610060cef6118"
+        base_url: "https://services1.arcgis.com/rXJ6QApc2sOtl1Pd/arcgis/rest/services/NPD_DailyBulletinBlockNIBRSFinal_view/FeatureServer/0"
+        date_field: "DATE_OCCU"
+        arcgis_date_field_type: "string"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2021-06-03"
+        active_to: "2024-12-01"
+        source_status: "historical_capped"
+        source_note: "Published as a historical slice ending 2024-12-01 while newer system is in progress."
+        field_map:
+          std_source_record_id: ["INCIKEY", "INCI_ID", "OBJECTID"]
+          std_incident_id: ["INCI_ID", "INCIKEY"]
+          std_incident_number: ["INCI_ID", "INCIKEY"]
+          std_incident_date: "DATE_OCCU"
+          std_reported_date: "DATE_REPT"
+          std_offense_code: "NIBRS"
+          std_offense_description: "OFFENSE"
+          std_offense_category: ["CATEGORY", "REPORTEDAS"]
+          std_disposition: null
+          std_address: ["STREETMASKED", "STREET"]
+          std_zip_code: null
+          std_neighborhood: null
+          std_district: null
+          std_beat: null
+          std_division: null
+          std_latitude: "GEOX"
+          std_longitude: "GEOY"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # HOUSTON — ArcGIS, four NIBRS group layers (rolling recent window)
+  # ──────────────────────────────────────────────────────────────────────────
+  houston:
+    display_name: "Houston"
+    timezone: "America/Chicago"
+    aliases: ["houston_tx", "htx"]
+    sources:
+      - source_id: "houston_group_a_person"
+        display_name: "HPD NIBRS Recent Crime Reports - Group A Person"
+        provider: "arcgis"
+        dataset_id: "hpd_nibrs_recent_crime_reports_layer_0"
+        base_url: "https://mycity2.houstontx.gov/pubgis02/rest/services/HPD/NIBRS_Recent_Crime_Reports/FeatureServer/0"
+        date_field: "USER_RMSOccurrenceDate"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: true
+        active_from: "2026-03-29"
+        active_to: null
+        source_status: "rolling_window"
+        source_note: "HPD ArcGIS feed is a recent rolling window (observed earliest date 2026-03-29 as of 2026-04-30); all layers are point geometry. Location context is street/block + beat/district, not areal geometries."
+        field_map: &houston_fields
+          std_source_record_id: ["USER_Incident", "OBJECTID"]
+          std_incident_id: ["USER_Incident", "OBJECTID"]
+          std_incident_number: "USER_Incident"
+          std_incident_date: "USER_RMSOccurrenceDate"
+          std_reported_date: "USER_RMSOccurrenceDate"
+          std_offense_code: "USER_NIBRSClass"
+          std_offense_description: "USER_NIBRSDescription"
+          std_offense_category: ["USER_NIBRSDescription", "USER_NIBRSClass"]
+          std_disposition: null
+          std_address: ["USER_OffenseAddressMiddle", "USER_BlockRange", "USER_StreetName"]
+          std_zip_code: "USER_ZIPCode"
+          std_neighborhood: "SNBNAME"
+          std_district: "USER_District"
+          std_beat: "USER_Beat"
+          std_division: null
+          std_latitude: "geometry_y"
+          std_longitude: "geometry_x"
+      - source_id: "houston_group_a_property"
+        display_name: "HPD NIBRS Recent Crime Reports - Group A Property"
+        provider: "arcgis"
+        dataset_id: "hpd_nibrs_recent_crime_reports_layer_1"
+        base_url: "https://mycity2.houstontx.gov/pubgis02/rest/services/HPD/NIBRS_Recent_Crime_Reports/FeatureServer/1"
+        date_field: "USER_RMSOccurrenceDate"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: true
+        active_from: "2026-03-29"
+        active_to: null
+        source_status: "rolling_window"
+        field_map: *houston_fields
+      - source_id: "houston_group_a_society"
+        display_name: "HPD NIBRS Recent Crime Reports - Group A Society"
+        provider: "arcgis"
+        dataset_id: "hpd_nibrs_recent_crime_reports_layer_2"
+        base_url: "https://mycity2.houstontx.gov/pubgis02/rest/services/HPD/NIBRS_Recent_Crime_Reports/FeatureServer/2"
+        date_field: "USER_RMSOccurrenceDate"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: true
+        active_from: "2026-03-29"
+        active_to: null
+        source_status: "rolling_window"
+        field_map: *houston_fields
+      - source_id: "houston_group_b"
+        display_name: "HPD NIBRS Recent Crime Reports - Group B"
+        provider: "arcgis"
+        dataset_id: "hpd_nibrs_recent_crime_reports_layer_3"
+        base_url: "https://mycity2.houstontx.gov/pubgis02/rest/services/HPD/NIBRS_Recent_Crime_Reports/FeatureServer/3"
+        date_field: "USER_RMSOccurrenceDate"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: true
+        active_from: "2026-03-29"
+        active_to: null
+        source_status: "rolling_window"
+        field_map: *houston_fields
