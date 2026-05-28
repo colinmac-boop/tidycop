@@ -103,6 +103,7 @@ def cmd_fetch(args: argparse.Namespace) -> int:
             args.end,
             view=args.view,
             limit=args.limit,
+            classify_spotcrime=args.classify_spotcrime,
         )
     except KeyError as e:
         # unknown city
@@ -189,6 +190,11 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=1000,
         help="Maximum records to return overall (not per-page). Default: 1000.",
+    )
+    pf.add_argument(
+        "--classify-spotcrime",
+        action="store_true",
+        help="Add std_spotcrime_category column using the source's mapping.",
     )
     pf.set_defaults(func=cmd_fetch)
 

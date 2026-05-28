@@ -47,7 +47,7 @@ def test_fetch_csv_to_stdout(capsys):
     assert args[0] == "chicago"
     assert args[1] == date(2026, 4, 1)
     assert args[2] == date(2026, 4, 2)
-    assert kwargs == {"view": "comparable", "limit": 1000}
+    assert kwargs == {"view": "comparable", "limit": 1000, "classify_spotcrime": False}
 
     captured = capsys.readouterr()
     # CSV header on stdout
@@ -133,6 +133,24 @@ def test_fetch_passes_view_and_limit():
     kwargs = m.call_args.kwargs
     assert kwargs["view"] == "city_raw"
     assert kwargs["limit"] == 50
+    assert kwargs["classify_spotcrime"] is False
+
+
+def test_fetch_passes_classify_spotcrime():
+    with patch("tidycop.cli.get_incidents", return_value=_fake_df(0)) as m:
+        rc = cli.main(
+            [
+                "fetch",
+                "chicago",
+                "--start",
+                "2026-04-01",
+                "--end",
+                "2026-04-02",
+                "--classify-spotcrime",
+            ]
+        )
+    assert rc == 0
+    assert m.call_args.kwargs["classify_spotcrime"] is True
 
 
 # ---------------------------------------------------------------------------

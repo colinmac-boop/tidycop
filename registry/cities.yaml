@@ -28,6 +28,21 @@ cities:
         date_field: "date"
         active_from: null
         active_to: null
+        # std_offense_category is Chicago's IUCR primary_type (uppercase).
+        spotcrime_category_map:
+          HOMICIDE: "Shooting"        # fatal shootings collapse here (2026-05-26)
+          ROBBERY: "Robbery"
+          BATTERY: "Assault"
+          ASSAULT: "Assault"
+          BURGLARY: "Burglary"
+          THEFT: "Theft"
+          MOTOR VEHICLE THEFT: "Theft"
+          ARSON: "Arson"
+          CRIMINAL DAMAGE: "Vandalism"
+          CRIMINAL TRESPASS: "Vandalism"
+          WEAPONS VIOLATION: "Shooting"  # discharge / brandishing, no separate code
+          # TODO classifier: KIDNAPPING/CRIM SEXUAL ASSAULT/OFFENSE INVOLVING CHILDREN
+          # are violent but not in the 8-category taxonomy; leaving unmapped.
         field_map:
           std_source_record_id: "id"
           std_incident_id: "id"
@@ -62,6 +77,18 @@ cities:
         date_field: "offense_date"
         active_from: "2008-01-01"
         active_to: null
+        # Seattle uses NIBRS offense_category labels.
+        spotcrime_category_map:
+          HOMICIDE OFFENSES: "Shooting"
+          ROBBERY: "Robbery"
+          ASSAULT OFFENSES: "Assault"
+          BURGLARY/BREAKING&ENTERING: "Burglary"
+          LARCENY/THEFT OFFENSES: "Theft"
+          MOTOR VEHICLE THEFT: "Theft"
+          ARSON: "Arson"
+          DESTRUCTION/DAMAGE/VANDALISM OF PROPERTY: "Vandalism"
+          WEAPON LAW VIOLATIONS: "Shooting"
+          # TODO classifier: KIDNAPPING/ABDUCTION, SEX OFFENSES intentionally unmapped.
         field_map:
           std_source_record_id: "offense_id"
           std_incident_id: "offense_id"
@@ -97,6 +124,24 @@ cities:
         date_field: "incident_datetime"
         active_from: "2018-01-01"
         active_to: null
+        # SF uses its own incident_category labels (title-case but matched
+        # case-insensitively).
+        spotcrime_category_map:
+          HOMICIDE: "Shooting"
+          ROBBERY: "Robbery"
+          ASSAULT: "Assault"
+          BURGLARY: "Burglary"
+          LARCENY THEFT: "Theft"
+          MOTOR VEHICLE THEFT: "Theft"
+          MOTOR VEHICLE THEFT?: "Theft"   # SF literally publishes the trailing '?' on some rows
+          STOLEN PROPERTY: "Theft"
+          ARSON: "Arson"
+          MALICIOUS MISCHIEF: "Vandalism"
+          VANDALISM: "Vandalism"
+          WEAPONS OFFENSE: "Shooting"
+          WEAPONS CARRYING ETC: "Shooting"
+          # TODO classifier: Recovered Vehicle / Suspicious Occ / Other Offenses
+          # are too broad to map cleanly; left null.
         field_map:
           std_source_record_id: "row_id"
           std_incident_id: "incident_id"
@@ -127,6 +172,21 @@ cities:
       - source_id: "detroit_rms_crime_incidents"
         display_name: "Detroit RMS Crime Incidents"
         provider: "arcgis"
+        # Detroit RMS exposes its own offense_category labels.
+        spotcrime_category_map:
+          HOMICIDE: "Shooting"
+          ROBBERY: "Robbery"
+          ASSAULT: "Assault"
+          AGGRAVATED ASSAULT: "Assault"
+          BURGLARY: "Burglary"
+          LARCENY: "Theft"
+          MOTOR VEHICLE THEFT: "Theft"
+          STOLEN VEHICLE: "Theft"
+          ARSON: "Arson"
+          DAMAGE TO PROPERTY: "Vandalism"
+          VANDALISM: "Vandalism"
+          WEAPONS OFFENSES: "Shooting"
+          # TODO classifier: SEX OFFENSES, KIDNAPING, FRAUD intentionally null.
         dataset_id: "8e532daeec1149879bd5e67fdd9c8be0"
         base_url: "https://services2.arcgis.com/qvkbeam7Wirps6zC/arcgis/rest/services/RMS_Crime_Incidents/FeatureServer/0"
         date_field: "incident_occurred_at"
@@ -168,6 +228,19 @@ cities:
       - source_id: "pittsburgh_monthly_criminal_activity"
         display_name: "Monthly Criminal Activity"
         provider: "ckan"
+        # WPRDC publishes NIBRS_Offense_Category labels.
+        spotcrime_category_map:
+          MURDER/HOMICIDE: "Shooting"
+          HOMICIDE OFFENSES: "Shooting"
+          ROBBERY: "Robbery"
+          ASSAULT OFFENSES: "Assault"
+          BURGLARY/BREAKING & ENTERING: "Burglary"
+          LARCENY/THEFT OFFENSES: "Theft"
+          MOTOR VEHICLE THEFT: "Theft"
+          ARSON: "Arson"
+          DESTRUCTION/DAMAGE/VANDALISM OF PROPERTY: "Vandalism"
+          WEAPON LAW VIOLATIONS: "Shooting"
+          # TODO classifier: SEX OFFENSES, KIDNAPING/ABDUCTION, FRAUD OFFENSES null.
         dataset_id: "bd41992a-987a-4cca-8798-fbe1cd946b07"
         base_url: "https://data.wprdc.org"
         date_field: "ReportedDate"

@@ -44,6 +44,11 @@ class SourceSpec:
     active_from: date | None = None
     active_to: date | None = None
 
+    # Optional SpotCrime category mapping: native offense label → SpotCrime
+    # bucket (Shooting/Robbery/Assault/Burglary/Theft/Arson/Vandalism/Arrest).
+    # Empty / None means classifier output stays null for this source.
+    spotcrime_category_map: dict[str, str] = field(default_factory=dict)
+
     # Provider-specific extras (kept loose; fetchers consume what they need)
     extras: dict[str, Any] = field(default_factory=dict)
 
@@ -74,6 +79,7 @@ _SOURCE_CORE_FIELDS = {
     "field_map",
     "active_from",
     "active_to",
+    "spotcrime_category_map",
 }
 
 
@@ -108,6 +114,7 @@ def _build_source(raw: dict[str, Any]) -> SourceSpec:
         field_map=dict(raw["field_map"]),
         active_from=_coerce_date(raw.get("active_from")),
         active_to=_coerce_date(raw.get("active_to")),
+        spotcrime_category_map=dict(raw.get("spotcrime_category_map") or {}),
         extras=extras,
     )
 

@@ -84,6 +84,7 @@ def get_incidents(
     limit: int = 1000,
     fetcher: BaseFetcher | None = None,
     dedup_db: Path | str | None = None,
+    classify_spotcrime: bool = False,
 ) -> pd.DataFrame:
     """Fetch incidents for a supported city.
 
@@ -105,6 +106,10 @@ def get_incidents(
             (and every hash from this call is recorded for next time).
             Only applies to the normalized ``comparable`` and ``city_full``
             views; ``city_raw`` bypasses dedup entirely.
+        classify_spotcrime: when True, adds a ``std_spotcrime_category``
+            column populated from the source's ``spotcrime_category_map``.
+            Rows whose native category doesn't map remain null. Only
+            applies to ``comparable`` and ``city_full`` views.
 
     Returns:
         ``pandas.DataFrame``. Column shape depends on ``view``.
@@ -143,6 +148,12 @@ def get_incidents(
             keep_mask = [not store.has_seen(city_spec.city, source.source_id, h) for h in hashes]
             store.record_many(city_spec.city, source.source_id, hashes)
         normalized = normalized.loc[keep_mask].reset_index(drop=True)
+
+    if classify_spotcrime:
+        # Lazy import: keep classifier optional.
+        from tidycop.classifier import classify_frame
+
+        normalized = classify_frame(normalized, source.spotcrime_category_map)
 
     if view == "comparable":
         return normalized
