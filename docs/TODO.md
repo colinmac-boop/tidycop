@@ -46,8 +46,19 @@
 ## Stretch Goals (still open)
 - [x] CKAN fetcher (Pittsburgh) — done Day 7
 - [x] `view="city_full"` mode — done Day 5 (also `city_raw`)
-- [ ] CLI: `tidycop fetch chicago --start 2026-04-01`
-- [ ] SpotCrime category classifier integration
-- [ ] Port remaining 20 cities from upstream R registry
-- [ ] Deduplication layer (sqlite state, track seen `(city, source_id, content_hash)`)
-- [ ] SFTP delivery mode for spotcops producer
+- [x] CLI: `tidycop fetch chicago --start 2026-04-01` (v0.2.0 — csv/json/parquet, `tidycop cities`)
+- [x] SpotCrime category classifier integration (v0.2.0 — 8-category, MVP-5 mapped)
+- [x] Port remaining 20 cities from upstream R registry (v0.2.0 — 25 cities total)
+- [x] Deduplication layer (v0.2.0 — `tidycop.dedup`, `get_incidents(..., dedup_db=...)`)
+- [ ] SFTP delivery mode for spotcops producer (deferred to spotcops side; couples too tightly)
+
+## v0.2.0 — Phase 2 (2026-05-28)
+- [x] 5 Socrata cities ported: dallas, cincinnati, providence, gainesville, fort_lauderdale
+- [x] 5 ArcGIS cities ported: cleveland, rochester, boston, hartford, indianapolis
+- [x] 5 more cities ported: denver, minneapolis, grand_rapids, naperville, houston
+- [x] Final 5 cities ported: washington_dc, kansas_city, new_orleans, san_antonio, new_york
+- [x] CLI entry point + tests
+- [x] sqlite dedup module + tests (18 unit + integration)
+- [x] SpotCrime classifier + per-source mapping for 5 MVP cities (20 tests)
+- [x] Per-city live smoke tests (parametrized, opt-in via `TIDYCOP_LIVE_ALL=1`)
+- [x] Tag v0.2.0

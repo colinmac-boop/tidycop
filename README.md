@@ -5,10 +5,10 @@ city-agnostic interface for public police incident data.
 
 ## Status
 
-**v0.1.0 (MVP)** — Working end-to-end across 5 U.S. cities (Chicago, Seattle,
-San Francisco, Detroit, Pittsburgh). Three platform fetchers (Socrata,
-ArcGIS, CKAN). 23-column standardized schema with timezone-aware date
-parsing and coalesce-fallback field mapping. 133 unit tests, all passing.
+**v0.2.0** — 25 U.S. cities live across Socrata / ArcGIS / CKAN.
+Command-line interface (`tidycop fetch ...`). Optional sqlite-backed
+dedup layer. SpotCrime 8-category classifier wired for the 5 MVP cities.
+182 unit tests, all passing.
 
 ## What It Does
 
@@ -79,18 +79,35 @@ tidycop.normalize_city_key("PGH")  # → 'pittsburgh'
 tidycop.STD_COLUMNS
 ```
 
-## Supported Cities (MVP — v0.1.0)
+## Supported Cities (v0.2.0 — 25 total)
 
-| City | Provider | Dataset | Timezone | Aliases |
-|---|---|---|---|---|
-| Chicago | Socrata | `ijzp-q8t2` | America/Chicago | — |
-| Seattle | Socrata | `tazs-3rd5` | America/Los_Angeles | — |
-| San Francisco | Socrata | `wg3w-h783` | America/Los_Angeles | `sf` |
-| Detroit | ArcGIS | `8e532daee…` | America/New_York | `detroit_mi` |
-| Pittsburgh | CKAN (WPRDC) | `bd41992a-…` | America/New_York | `pgh`, `pittsburgh_pa` |
-
-More cities live in `registry/cities.yaml` once the upstream R registry is
-fully ported (Phase 2).
+| City | Provider(s) | Sources | Aliases |
+|---|---|---|---|
+| Boston | ArcGIS | 1 | — |
+| Chicago | Socrata | 1 | — |
+| Cincinnati | Socrata | 2 (legacy + current) | `cincy`, `cincinnati_oh` |
+| Cleveland | ArcGIS | 2 (legacy + P1RMS) | `cleveland_oh` |
+| Dallas | Socrata | 1 | — |
+| Denver | ArcGIS | 1 (rolling 5y) | `denver_co` |
+| Detroit | ArcGIS | 1 | `detroit_mi` |
+| Fort Lauderdale | Socrata | 1 (historical capped) | `ft_lauderdale`, `fortlauderdale`, `fort_lauderdale_fl` |
+| Gainesville | Socrata | 1 | `gainesville_fl` |
+| Grand Rapids | ArcGIS | 1 | `grandrapids`, `grand_rapids_mi`, `gr` |
+| Hartford | ArcGIS | 1 (rolling) | `hartford_ct` |
+| Houston | ArcGIS | 4 NIBRS layers | `houston_tx`, `htx` |
+| Indianapolis | ArcGIS | 1 | `indy`, `indianapolis_in` |
+| Kansas City | Socrata | 12 per-year | `kansas_city_mo`, `kansascity`, `kc` |
+| Minneapolis | ArcGIS | 1 (2yr rolling) | `mpls`, `minneapolis_mn` |
+| Naperville | ArcGIS | 2 (legacy + NIBRS) | `naperville_il` |
+| New Orleans | Socrata | 16 per-year (CFS) | `nola`, `new_orleans_la` |
+| New York City | Socrata | 2 (historic + current) | `nyc`, `new_york_city` |
+| Pittsburgh | CKAN (WPRDC) | 1 | `pgh`, `pittsburgh_pa` |
+| Providence | Socrata | 1 (rolling 180d) | — |
+| Rochester | ArcGIS | 1 (Part I only) | `rochester_ny` |
+| San Antonio | CKAN | 1 | `sanantonio`, `sa`, `satx`, `san_antonio_tx` |
+| San Francisco | Socrata | 1 | `sf` |
+| Seattle | Socrata | 1 | — |
+| Washington, DC | ArcGIS | 19 per-year MPD | `dc`, `washington`, `district_of_columbia` |
 
 ## Why This Exists
 
@@ -102,6 +119,72 @@ Public police data is fragmented:
   fallback across `incident_entry_id`, `crime_id`, and `ESRI_OID`)
 
 **tidycop** handles all of that. One call, one schema out.
+
+## Command-Line Interface
+
+```bash
+# Fetch one week of Chicago incidents as CSV to stdout
+tidycop fetch chicago --start 2026-04-01 --end 2026-04-07
+
+# JSON output to a file
+tidycop fetch sf --start 2026-04-01 --end 2026-04-07 \
+    --output json --out-path /tmp/sf.json
+
+# Parquet output (requires --out-path; pyarrow or fastparquet must be installed)
+tidycop fetch nyc --start 2026-04-01 --end 2026-04-07 \
+    --output parquet --out-path /tmp/nyc.parquet
+
+# city_full view with the SpotCrime 8-category classifier
+tidycop fetch detroit --start 2026-04-01 --end 2026-04-07 \
+    --view city_full --classify-spotcrime
+
+# List supported cities (optionally filter by provider)
+tidycop cities
+tidycop cities --provider arcgis
+tidycop cities --json
+```
+
+## Deduplication (opt-in)
+
+For incremental pulls — e.g. a daily producer that should only ship rows
+it hasn't already shipped — pass a sqlite path:
+
+```python
+from pathlib import Path
+import tidycop
+
+db = Path("./state/seen.sqlite")
+new = tidycop.get_incidents(
+    "chicago",
+    "2026-04-01",
+    "2026-04-07",
+    dedup_db=db,
+)
+# First call: every row. Second call with the same window: only newly
+# published / edited rows. (city, source_id, content_hash) is the key;
+# provenance columns are intentionally excluded from the hash so a row
+# that migrates between source slices is not seen as a new record.
+```
+
+## SpotCrime category classifier (opt-in)
+
+The SpotCrime product groups every incident into 8 buckets (Shooting,
+Robbery, Assault, Burglary, Theft, Arson, Vandalism, Arrest). The 5 MVP
+cities ship per-source mappings. Pass `classify_spotcrime=True` to add
+a `std_spotcrime_category` column; unmapped natives stay null.
+
+```python
+df = tidycop.get_incidents(
+    "chicago",
+    "2026-04-01",
+    "2026-04-07",
+    classify_spotcrime=True,
+)
+df[["std_offense_category", "std_spotcrime_category"]].head()
+```
+
+Fatal shootings collapse into `Shooting` (the separate `Homicide` bucket
+was removed 2026-05-26).
 
 ## Installation
 
@@ -159,6 +242,9 @@ tidycop/
     ├── arcgis.py         # ArcGIS REST query, resultOffset paging, error
     │                     #   envelope handling, geometry promotion
     └── ckan.py           # datastore_search_sql, SQL identifier escaping
+├── cli.py                # 'tidycop' entry point: fetch + cities subcommands
+├── classifier.py         # SpotCrime 8-category mapping
+└── dedup.py              # sqlite-backed (city, source_id, content_hash)
 
 registry/
 └── cities.yaml           # Source-of-truth city → endpoint config
