@@ -398,3 +398,234 @@ cities:
           std_division: ["zonedesc", "zone"]
           std_latitude: "geox"
           std_longitude: "geoy"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # CLEVELAND — ArcGIS (split: legacy → 2025-11-11; current 2025-11-12+)
+  # ──────────────────────────────────────────────────────────────────────────
+  cleveland:
+    display_name: "Cleveland"
+    timezone: "America/New_York"
+    aliases: ["cleveland_oh"]
+    sources:
+      - source_id: "cleveland_incidents_legacy"
+        display_name: "Crime Incidents [2016 to 11/11/25]"
+        provider: "arcgis"
+        dataset_id: "c749e34199c1425cbbc5959308658ec3"
+        base_url: "https://services3.arcgis.com/dty2kHktVXHrqO8i/arcgis/rest/services/Crime_Incidents/FeatureServer/0"
+        date_field: "OffenseDate"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2016-01-01"
+        active_to: "2025-11-11"
+        field_map:
+          std_source_record_id: ["PrimaryKey", "CaseNumber", "OBJECTID"]
+          std_incident_id: ["CaseNumber", "PrimaryKey"]
+          std_incident_number: "CaseNumber"
+          std_incident_date: "OffenseDate"
+          std_reported_date: "ReportedDate"
+          std_offense_code: "Statute"
+          std_offense_description: "UCRdesc"
+          std_offense_category: ["UCRdesc", "StatDesc"]
+          std_disposition: null
+          std_address: "Address_Public"
+          std_zip_code: "Zip"
+          std_neighborhood: "NEIGHBORHOOD"
+          std_district: "District"
+          std_beat: null
+          std_division: ["WARD_2026", "WARD", "WARD_2014"]
+          std_latitude: "LAT"
+          std_longitude: "LON"
+      - source_id: "cleveland_incidents_current"
+        display_name: "Crime Incidents"
+        provider: "arcgis"
+        dataset_id: "e15e8989c83e4cbd841fb171a6c62f68"
+        base_url: "https://services3.arcgis.com/dty2kHktVXHrqO8i/arcgis/rest/services/Crime_Incidents_P1RMS/FeatureServer/0"
+        date_field: "OffenseDate"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2025-11-12"
+        active_to: null
+        scope_status: "highest_offense_only"
+        scope_note: "Current RMS feed reports the highest offense per incident and omits lesser-included offenses."
+        source_note: "City indicates RMS transition around 2025-11-11; pre-cutover records are in legacy source."
+        field_map:
+          std_source_record_id: ["PrimaryKey", "CaseNumber", "OBJECTID"]
+          std_incident_id: ["CaseNumber", "PrimaryKey"]
+          std_incident_number: "CaseNumber"
+          std_incident_date: "OffenseDate"
+          std_reported_date: "ReportedDate"
+          std_offense_code: "Statute"
+          std_offense_description: "IncidentDesc"
+          std_offense_category: ["IncidentDesc", "StatDesc"]
+          std_disposition: null
+          std_address: "Address_Public"
+          std_zip_code: "Zip"
+          std_neighborhood: "NEIGHBORHOOD"
+          std_district: "District"
+          std_beat: null
+          std_division: ["WARD_2026", "WARD", "WARD_2014"]
+          std_latitude: "LAT"
+          std_longitude: "LON"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # ROCHESTER — ArcGIS (Part I crime only)
+  # ──────────────────────────────────────────────────────────────────────────
+  rochester:
+    display_name: "Rochester"
+    timezone: "America/New_York"
+    aliases: ["rochester_ny"]
+    sources:
+      - source_id: "rochester_part1_2011_present"
+        display_name: "RPD - Part I Crime 2011 to Present"
+        provider: "arcgis"
+        dataset_id: "74c62e65e3b347e289a07d02d4b8c899"
+        base_url: "https://maps.cityofrochester.gov/arcgis/rest/services/RPD/RPD_Part_I_Crime/FeatureServer/3"
+        date_field: "OccurredFrom_Timestamp"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: true
+        active_from: "2011-01-01"
+        active_to: null
+        scope_status: "part_i_only"
+        scope_note: "Portal currently exposes Part I crime only; no Part II counterpart found in catalog."
+        field_map:
+          std_source_record_id: ["Case_Number", "OBJECTID"]
+          std_incident_id: ["Case_Number", "OBJECTID"]
+          std_incident_number: "Case_Number"
+          std_incident_date: "OccurredFrom_Timestamp"
+          std_reported_date: "Reported_Timestamp"
+          std_offense_code: ["Statute_Section", "Statute_Subsection"]
+          std_offense_description: "Statute_Description"
+          std_offense_category: ["Statute_Text", "Larceny_Type"]
+          std_disposition: "Case_Status"
+          std_address: "Address_StreetFull"
+          std_zip_code: null
+          std_neighborhood: null
+          std_district: "Patrol_Section"
+          std_beat: "Patrol_Beat"
+          std_division: "Geo_Section"
+          std_latitude: "geometry_y"
+          std_longitude: "geometry_x"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # BOSTON — ArcGIS
+  # ──────────────────────────────────────────────────────────────────────────
+  boston:
+    display_name: "Boston"
+    timezone: "America/New_York"
+    sources:
+      - source_id: "boston_incidents"
+        display_name: "Boston Police Incidents"
+        provider: "arcgis"
+        dataset_id: "d42bd4040bca419a824ae5062488aced"
+        base_url: "https://services.arcgis.com/sFnw0xNflSi8J0uh/arcgis/rest/services/Boston_Incidents_View/FeatureServer/0"
+        date_field: "FROM_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: null
+        active_to: null
+        field_map:
+          std_source_record_id: ["INC_NUM", "OBJECTID"]
+          std_incident_id: ["INC_NUM", "OBJECTID"]
+          std_incident_number: "INC_NUM"
+          std_incident_date: "FROM_DATE"
+          std_reported_date: "REPORT_DATE"
+          std_offense_code: "OFFENSE_CODE"
+          std_offense_description: "OFFENSE_DESC"
+          std_offense_category: ["CRIME_CATEGORY", "CRIME"]
+          std_disposition: null
+          std_address: "BLOCK"
+          std_zip_code: "ZIP"
+          std_neighborhood: "NEIGHBORHOOD"
+          std_district: "DISTRICT"
+          std_beat: null
+          std_division: null
+          std_latitude: null
+          std_longitude: null
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # HARTFORD — ArcGIS (rolling current-year, ~10-day lag)
+  # ──────────────────────────────────────────────────────────────────────────
+  hartford:
+    display_name: "Hartford"
+    timezone: "America/New_York"
+    aliases: ["hartford_ct"]
+    sources:
+      - source_id: "hartford_incidents_current"
+        display_name: "Police Incidents Current Year to 10 Days before Current Date"
+        provider: "arcgis"
+        dataset_id: "4bc28c820ebd45df8a62feae6dc8822d"
+        base_url: "https://utility.arcgis.com/usrsvcs/servers/4bc28c820ebd45df8a62feae6dc8822d/rest/services/OpenData_PublicSafety/FeatureServer/21"
+        date_field: "Date"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: true
+        active_from: null
+        active_to: null
+        source_status: "rolling_window"
+        source_note: "Feed is current-year with about a 10-day lag; it does not contain full historical years."
+        field_map:
+          std_source_record_id: ["CaseNum", "OBJECTID"]
+          std_incident_id: ["CaseNum", "OBJECTID"]
+          std_incident_number: "CaseNum"
+          std_incident_date: "Date"
+          std_reported_date: "Date"
+          std_offense_code: "NibrsCode"
+          std_offense_description: ["OffenseDesc", "NibrsDesc"]
+          std_offense_category: "NibrsDesc"
+          std_disposition: null
+          std_address: "Address"
+          std_zip_code: null
+          std_neighborhood: null
+          std_district: null
+          std_beat: null
+          std_division: null
+          std_latitude: "geometry_y"
+          std_longitude: "geometry_x"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # INDIANAPOLIS — ArcGIS
+  # ──────────────────────────────────────────────────────────────────────────
+  indianapolis:
+    display_name: "Indianapolis"
+    timezone: "America/Indiana/Indianapolis"
+    aliases: ["indy", "indianapolis_in"]
+    sources:
+      - source_id: "indy_incidents_public"
+        display_name: "IMPD Incidents Public"
+        provider: "arcgis"
+        dataset_id: "2017ad323ea444ea92590254f08629a9"
+        base_url: "https://gis.indy.gov/server/rest/services/IMPD/IMPD_Public_Data/FeatureServer/1"
+        date_field: "OccurredFrom"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2020-01-01"
+        active_to: null
+        field_map:
+          std_source_record_id: ["CaseNum", "OBJECTID"]
+          std_incident_id: ["CaseNum", "CAD"]
+          std_incident_number: "CaseNum"
+          std_incident_date: "OccurredFrom"
+          std_reported_date: ["sOccDate", "OccurredFrom"]
+          std_offense_code: ["NIBRSClassCode", "NIBRSClassID"]
+          std_offense_description: ["CR_Desc", "NIBRSClassCodeDesc"]
+          std_offense_category: ["NIBRSClassDesc", "CAIU_ClassType"]
+          std_disposition: "Disposition"
+          std_address: "sAddress"
+          std_zip_code: "sZip"
+          std_neighborhood: null
+          std_district: "Geo_Districts"
+          std_beat: "Geo_Beats"
+          std_division: "Geo_Zones"
+          std_latitude: "Latitude"
+          std_longitude: "Longitude"
