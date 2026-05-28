@@ -1668,3 +1668,64 @@ cities:
         active_from: "2026-01-01"
         active_to: null
         field_map: *nyc_fields
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # BOISE — ArcGIS (BPD Crimes, NIBRS)
+  # Added 2026-05-28 for SpotCrime data2 daily feed.
+  # Source: City of Boise Open Data Portal; published from BPD's RMS as a
+  # redacted "Charge" feed. ~12-day lag between OccurredDateTime and
+  # publication; OBJECTID DESC paging keeps recent rows first.
+  # CrimeCodeGroup is NIBRS Group A category text.
+  # ──────────────────────────────────────────────────────────────────────────
+  boise:
+    display_name: "Boise"
+    timezone: "America/Boise"
+    aliases: ["boise_id"]
+    sources:
+      - source_id: "boise_bpd_crimes"
+        display_name: "BPD Crimes"
+        provider: "arcgis"
+        dataset_id: "1e325c7475c74641bbc781299658b25c"
+        base_url: "https://services1.arcgis.com/WHM6qC35aMtyAAlN/arcgis/rest/services/BPD_Crimes_Public/FeatureServer/0"
+        date_field: "ReportedDate"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2021-01-01"
+        active_to: null
+        scope_status: "offense_rows"
+        scope_note: "Each row is an offense/charge entry; one incident (DRNumber) may appear in multiple rows."
+        source_note: "Publication lags ~12 days behind OccurredDateTime; ReportedDate is the public-feed timestamp."
+        # NIBRS Group A category names per Boise's CrimeCodeGroup. Sex Offenses
+        # / Kidnapping / Fraud / Drug / Animal Cruelty intentionally unmapped —
+        # outside the 8-category taxonomy. Weapon Law Violations also unmapped:
+        # those are charges (illegal carry, prohibited possessor, etc.), not
+        # necessarily a shooting incident, so we don't blanket-classify as Shooting.
+        spotcrime_category_map:
+          ARSON: "Arson"
+          ASSAULT OFFENSES: "Assault"
+          BURGLARY/BREAKING AND ENTERING: "Burglary"
+          DESTRUCTION/DAMAGE/VANDALISM OF PROPERTY: "Vandalism"
+          LARCENY/THEFT OFFENSES: "Theft"
+          MOTOR VEHICLE THEFT: "Theft"
+          ROBBERY: "Robbery"
+          STOLEN PROPERTY OFFENSES: "Theft"
+        field_map:
+          std_source_record_id: ["ChargeID", "OBJECTID"]
+          std_incident_id: "DRNumber"
+          std_incident_number: "DRNumber"
+          std_incident_date: "OccurredDateTime"
+          std_reported_date: "ReportedDate"
+          std_offense_code: "CrimeCode"
+          std_offense_description: "CrimeCodeDescription"
+          std_offense_category: "CrimeCodeGroup"
+          std_disposition: null
+          std_address: "IncidentAddress"
+          std_zip_code: null
+          std_neighborhood: "PatrolArea"
+          std_district: "District"
+          std_beat: null
+          std_division: null
+          std_latitude: null
+          std_longitude: null
