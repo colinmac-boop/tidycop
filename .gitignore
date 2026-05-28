@@ -47,3 +47,14 @@ Thumbs.db
 state/
 *.sqlite
 *.db
+
+# OpenClaw / agent workspace
+.openclaw/
+AGENTS.md
+SOUL.md
+USER.md
+TOOLS.md
+IDENTITY.md
+HEARTBEAT.md
+MEMORY.md
+memory/

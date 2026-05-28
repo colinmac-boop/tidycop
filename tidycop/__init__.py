@@ -3,7 +3,7 @@
 Python port of tidycops (MIT, Anthony Galvan).
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from tidycop.core import get_incidents
 from tidycop.registry import (

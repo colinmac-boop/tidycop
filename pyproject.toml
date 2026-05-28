@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tidycop"
-version = "0.1.0"
+version = "0.2.0"
 description = "City-agnostic interface for public police incident data"
 authors = ["Colin Drane <colin@spotcrime.com>"]
 license = "MIT"
@@ -24,6 +24,9 @@ mypy = "^1.10"
 
 [tool.poetry.extras]
 geo = ["geopandas"]
+
+[tool.poetry.scripts]
+tidycop = "tidycop.cli:main"
 
 [build-system]
 requires = ["poetry-core"]
