@@ -131,9 +131,10 @@ def test_get_city_spec_via_alias():
 
 def test_list_supported_cities_shape():
     cities = list_supported_cities()
-    assert len(cities) == len(MVP_CITIES)
+    # Registry grew past the MVP-5 in v0.2.x; assert MVP is a subset only.
+    assert len(cities) >= len(MVP_CITIES)
     keys = {c["city"] for c in cities}
-    assert keys == MVP_CITIES
+    assert MVP_CITIES.issubset(keys)
     for c in cities:
         assert set(c.keys()) >= {
             "city",

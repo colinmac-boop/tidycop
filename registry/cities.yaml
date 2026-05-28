@@ -195,3 +195,206 @@ cities:
           std_division: null
           std_latitude: "YCOORD"
           std_longitude: "XCOORD"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # DALLAS — Socrata
+  # ──────────────────────────────────────────────────────────────────────────
+  dallas:
+    display_name: "Dallas"
+    timezone: "America/Chicago"
+    sources:
+      - source_id: "dallas_incidents"
+        display_name: "Dallas Police Incidents"
+        provider: "socrata"
+        dataset_id: "qv6i-rri7"
+        base_url: "https://www.dallasopendata.com/resource/qv6i-rri7.json"
+        date_field: "date1"
+        active_from: null
+        active_to: null
+        field_map:
+          std_source_record_id: "incidentnum"
+          std_incident_id: "servnumid"
+          std_incident_number: "incidentnum"
+          std_incident_date: "date1"
+          std_reported_date: "reporteddate"
+          std_offense_code: "nibrs_code"
+          std_offense_description: "offincident"
+          std_offense_category: "nibrs_group"
+          std_disposition: "status"
+          std_address: "incident_address"
+          std_zip_code: "zip_code"
+          std_neighborhood: "ra"
+          std_district: "district"
+          std_beat: "beat"
+          std_division: "division"
+          std_latitude: null
+          std_longitude: null
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # CINCINNATI — Socrata (split: legacy → 2024-06-02; current 2024-06-03+)
+  # ──────────────────────────────────────────────────────────────────────────
+  cincinnati:
+    display_name: "Cincinnati"
+    timezone: "America/New_York"
+    aliases: ["cincy", "cincinnati_oh"]
+    sources:
+      - source_id: "cincinnati_incidents_legacy"
+        display_name: "PDI Crime Incidents (through 2024-06-02)"
+        provider: "socrata"
+        dataset_id: "k59e-2pvf"
+        base_url: "https://data.cincinnati-oh.gov/resource/k59e-2pvf.json"
+        date_field: "date_from"
+        active_from: null
+        active_to: "2024-06-02"
+        field_map:
+          std_source_record_id: ["instanceid", "incident_no"]
+          std_incident_id: ["incident_no", "instanceid"]
+          std_incident_number: "incident_no"
+          std_incident_date: "date_from"
+          std_reported_date: "date_reported"
+          std_offense_code: "ucr"
+          std_offense_description: ["stars_category", "offense"]
+          std_offense_category: ["ucr_group", "crime"]
+          std_disposition: "clsd"
+          std_address: "street_block"
+          std_zip_code: ["zip", "zip_code"]
+          std_neighborhood: ["sna_neighborhood", "cpd_neighborhood", "community_council_neighborhood"]
+          std_district: "dst"
+          std_beat: "beat"
+          std_division: null
+          std_latitude: ["latitude_x", "latitude"]
+          std_longitude: ["longitude_x", "longitude"]
+      - source_id: "cincinnati_incidents_current"
+        display_name: "Reported Crime (STARS Category Offenses) on or after 2024-06-03"
+        provider: "socrata"
+        dataset_id: "7aqy-xrv9"
+        base_url: "https://data.cincinnati-oh.gov/resource/7aqy-xrv9.json"
+        date_field: "datefrom"
+        active_from: "2024-06-03"
+        active_to: null
+        field_map:
+          std_source_record_id: "incident_no"
+          std_incident_id: "incident_no"
+          std_incident_number: "incident_no"
+          std_incident_date: "datefrom"
+          std_reported_date: "datereported"
+          std_offense_code: null
+          std_offense_description: ["stars_category", "offense"]
+          std_offense_category: ["type", "crime"]
+          std_disposition: "clsd"
+          std_address: "address_x"
+          std_zip_code: null
+          std_neighborhood: ["sna_neighborhood", "cpd_neighborhood", "cc_neighborhood"]
+          std_district: null
+          std_beat: "beat"
+          std_division: null
+          std_latitude: ["latitude_x", "latitude"]
+          std_longitude: ["longitude_x", "longitude"]
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # PROVIDENCE — Socrata (rolling 180-day case log)
+  # ──────────────────────────────────────────────────────────────────────────
+  providence:
+    display_name: "Providence"
+    timezone: "America/New_York"
+    sources:
+      - source_id: "providence_case_log"
+        display_name: "Providence Police Case Log - Past 180 days"
+        provider: "socrata"
+        dataset_id: "rz3y-pz8v"
+        base_url: "https://data.providenceri.gov/resource/rz3y-pz8v.json"
+        date_field: "reported_date"
+        active_from: null
+        active_to: null
+        source_status: "rolling_window"
+        source_note: "Feed publishes a rolling case log (about the past 180 days), not full historical coverage."
+        field_map:
+          std_source_record_id: "casenumber"
+          std_incident_id: "casenumber"
+          std_incident_number: "casenumber"
+          std_incident_date: "reported_date"
+          std_reported_date: "reported_date"
+          std_offense_code: "statute_code"
+          std_offense_description: "offense_desc"
+          std_offense_category: "statute_desc"
+          std_disposition: null
+          std_address: "location"
+          std_zip_code: null
+          std_neighborhood: null
+          std_district: null
+          std_beat: null
+          std_division: null
+          std_latitude: null
+          std_longitude: null
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # GAINESVILLE — Socrata
+  # ──────────────────────────────────────────────────────────────────────────
+  gainesville:
+    display_name: "Gainesville"
+    timezone: "America/New_York"
+    aliases: ["gainesville_fl"]
+    sources:
+      - source_id: "gainesville_crime_responses"
+        display_name: "Crime Responses"
+        provider: "socrata"
+        dataset_id: "gvua-xt9q"
+        base_url: "https://data.cityofgainesville.org/resource/gvua-xt9q.json"
+        date_field: "offense_date"
+        active_from: null
+        active_to: null
+        field_map:
+          std_source_record_id: "id"
+          std_incident_id: "id"
+          std_incident_number: "id"
+          std_incident_date: "offense_date"
+          std_reported_date: "report_date"
+          std_offense_code: null
+          std_offense_description: "narrative"
+          std_offense_category: null
+          std_disposition: null
+          std_address: "address"
+          std_zip_code: null
+          std_neighborhood: null
+          std_district: null
+          std_beat: null
+          std_division: null
+          std_latitude: "latitude"
+          std_longitude: "longitude"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # FORT LAUDERDALE — Socrata (historical_capped at 2022-09-18)
+  # ──────────────────────────────────────────────────────────────────────────
+  fort_lauderdale:
+    display_name: "Fort Lauderdale"
+    timezone: "America/New_York"
+    aliases: ["ft_lauderdale", "fortlauderdale", "fort_lauderdale_fl"]
+    sources:
+      - source_id: "fort_lauderdale_incidents"
+        display_name: "Incident"
+        provider: "socrata"
+        dataset_id: "4gb7-f88q"
+        base_url: "https://fortlauderdale.data.socrata.com/resource/4gb7-f88q.json"
+        date_field: "date_occu"
+        active_from: "2014-01-01"
+        active_to: "2022-09-18"
+        source_status: "historical_capped"
+        source_note: "Portal incident feed appears to stop at 2022-09-18; monitor for replacement source."
+        field_map:
+          std_source_record_id: "incidentid"
+          std_incident_id: "incidentid"
+          std_incident_number: "incidentid"
+          std_incident_date: "date_occu"
+          std_reported_date: "date_rept"
+          std_offense_code: null
+          std_offense_description: ["offense", "reportedas"]
+          std_offense_category: ["reportedas", "offense"]
+          std_disposition: ["dispostndesc", "dispostn"]
+          std_address: "street"
+          std_zip_code: "zip"
+          std_neighborhood: ["neighborhddesc", "neighborhd"]
+          std_district: "district"
+          std_beat: "reportarea"
+          std_division: ["zonedesc", "zone"]
+          std_latitude: "geox"
+          std_longitude: "geoy"
