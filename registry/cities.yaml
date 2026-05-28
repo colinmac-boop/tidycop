@@ -905,3 +905,693 @@ cities:
         active_to: null
         source_status: "rolling_window"
         field_map: *houston_fields
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # WASHINGTON, DC — ArcGIS, per-year MPD layers (2008..2026)
+  # ──────────────────────────────────────────────────────────────────────────
+  washington_dc:
+    display_name: "Washington, DC"
+    timezone: "America/New_York"
+    aliases: ["dc", "washington", "district_of_columbia"]
+    sources:
+      - source_id: "dc_crime_2026"
+        display_name: "Crime Incidents - 2026"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_41"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/41"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2026-01-01"
+        active_to: null
+        field_map: &dc_fields
+          std_source_record_id: ["CCN", "OCTO_RECORD_ID", "OBJECTID"]
+          std_incident_id: ["CCN", "OCTO_RECORD_ID"]
+          std_incident_number: "CCN"
+          std_incident_date: "START_DATE"
+          std_reported_date: "REPORT_DAT"
+          std_offense_code: null
+          std_offense_description: "OFFENSE"
+          std_offense_category: ["OFFENSE", "METHOD"]
+          std_disposition: null
+          std_address: "BLOCK"
+          std_zip_code: null
+          std_neighborhood: "NEIGHBORHOOD_CLUSTER"
+          std_district: "DISTRICT"
+          std_beat: "PSA"
+          std_division: ["WARD", "SHIFT"]
+          std_latitude: "LATITUDE"
+          std_longitude: "LONGITUDE"
+      - source_id: "dc_crime_2025"
+        display_name: "Crime Incidents - 2025"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_7"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/7"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2025-01-01"
+        active_to: "2025-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2024"
+        display_name: "Crime Incidents - 2024"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_6"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/6"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2024-01-01"
+        active_to: "2024-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2023"
+        display_name: "Crime Incidents - 2023"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_5"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/5"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2023-01-01"
+        active_to: "2023-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2022"
+        display_name: "Crime Incidents - 2022"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_4"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/4"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2022-01-01"
+        active_to: "2022-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2021"
+        display_name: "Crime Incidents - 2021"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_3"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/3"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2021-01-01"
+        active_to: "2021-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2020"
+        display_name: "Crime Incidents - 2020"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_2"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/2"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2020-01-01"
+        active_to: "2020-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2019"
+        display_name: "Crime Incidents - 2019"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_1"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/1"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2019-01-01"
+        active_to: "2019-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2018"
+        display_name: "Crime Incidents - 2018"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_0"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/0"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2018-01-01"
+        active_to: "2018-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2017"
+        display_name: "Crime Incidents - 2017"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_38"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/38"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2017-01-01"
+        active_to: "2017-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2016"
+        display_name: "Crime Incidents - 2016"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_26"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/26"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2016-01-01"
+        active_to: "2016-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2015"
+        display_name: "Crime Incidents - 2015"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_27"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/27"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2015-01-01"
+        active_to: "2015-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2014"
+        display_name: "Crime Incidents - 2014"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_40"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/40"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2014-01-01"
+        active_to: "2014-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2013"
+        display_name: "Crime Incidents - 2013"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_10"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/10"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2013-01-01"
+        active_to: "2013-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2012"
+        display_name: "Crime Incidents - 2012"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_11"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/11"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2012-01-01"
+        active_to: "2012-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2011"
+        display_name: "Crime Incidents - 2011"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_35"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/35"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2011-01-01"
+        active_to: "2011-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2010"
+        display_name: "Crime Incidents - 2010"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_34"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/34"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2010-01-01"
+        active_to: "2010-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2009"
+        display_name: "Crime Incidents - 2009"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_33"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/33"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2009-01-01"
+        active_to: "2009-12-31"
+        field_map: *dc_fields
+      - source_id: "dc_crime_2008"
+        display_name: "Crime Incidents - 2008"
+        provider: "arcgis"
+        dataset_id: "dc_mpd_layer_32"
+        base_url: "https://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/MPD/FeatureServer/32"
+        date_field: "START_DATE"
+        arcgis_date_field_type: "date"
+        object_id_field: "OBJECTID"
+        order_by: "OBJECTID DESC"
+        return_geometry: false
+        active_from: "2008-01-01"
+        active_to: "2008-12-31"
+        field_map: *dc_fields
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # KANSAS CITY — Socrata, per-year KCPD datasets (2015..2026)
+  # ──────────────────────────────────────────────────────────────────────────
+  kansas_city:
+    display_name: "Kansas City"
+    timezone: "America/Chicago"
+    aliases: ["kansas_city_mo", "kansascity", "kc"]
+    sources:
+      - source_id: "kc_crime_2026"
+        display_name: "KCPD Crime Data 2026"
+        provider: "socrata"
+        dataset_id: "f7wj-ckmw"
+        base_url: "https://data.kcmo.org/resource/f7wj-ckmw.json"
+        date_field: "from_date"
+        active_from: "2026-01-01"
+        active_to: null
+        field_map: &kc_fields
+          std_source_record_id: ["report_no", "report"]
+          std_incident_id: ["report_no", "report"]
+          std_incident_number: ["report_no", "report"]
+          std_incident_date: "from_date"
+          std_reported_date: ["reported_date", "report_date"]
+          std_offense_code: "ibrs"
+          std_offense_description: "description"
+          std_offense_category: "offense"
+          std_disposition: null
+          std_address: "address"
+          std_zip_code: ["zip_code", "zipcode", "zip_code_1"]
+          std_neighborhood: null
+          std_district: ["rep_dist", "rep_dist_1"]
+          std_beat: "beat"
+          std_division: ["area", "area_1"]
+          std_latitude: "latitude"
+          std_longitude: "longitude"
+      - source_id: "kc_crime_2025"
+        display_name: "KCPD Crime Data 2025"
+        provider: "socrata"
+        dataset_id: "dmnp-9ajg"
+        base_url: "https://data.kcmo.org/resource/dmnp-9ajg.json"
+        date_field: "from_date"
+        active_from: "2025-01-01"
+        active_to: "2025-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2024"
+        display_name: "KCPD Crime Data 2024"
+        provider: "socrata"
+        dataset_id: "isbe-v4d8"
+        base_url: "https://data.kcmo.org/resource/isbe-v4d8.json"
+        date_field: "from_date"
+        active_from: "2024-01-01"
+        active_to: "2024-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2023"
+        display_name: "KCPD Crime Data 2023"
+        provider: "socrata"
+        dataset_id: "bfyq-5nh6"
+        base_url: "https://data.kcmo.org/resource/bfyq-5nh6.json"
+        date_field: "from_date"
+        active_from: "2023-01-01"
+        active_to: "2023-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2022"
+        display_name: "KCPD Crime Data 2022"
+        provider: "socrata"
+        dataset_id: "x39y-7d3m"
+        base_url: "https://data.kcmo.org/resource/x39y-7d3m.json"
+        date_field: "from_date"
+        active_from: "2022-01-01"
+        active_to: "2022-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2021"
+        display_name: "KCPD Crime Data 2021"
+        provider: "socrata"
+        dataset_id: "w795-ffu6"
+        base_url: "https://data.kcmo.org/resource/w795-ffu6.json"
+        date_field: "from_date"
+        active_from: "2021-01-01"
+        active_to: "2021-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2020"
+        display_name: "KCPD Crime Data 2020"
+        provider: "socrata"
+        dataset_id: "vsgj-uufz"
+        base_url: "https://data.kcmo.org/resource/vsgj-uufz.json"
+        date_field: "from_date"
+        active_from: "2020-01-01"
+        active_to: "2020-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2019"
+        display_name: "KCPD Crime Data 2019"
+        provider: "socrata"
+        dataset_id: "pxaa-ahcm"
+        base_url: "https://data.kcmo.org/resource/pxaa-ahcm.json"
+        date_field: "from_date"
+        active_from: "2019-01-01"
+        active_to: "2019-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2018"
+        display_name: "KCPD Crime Data 2018"
+        provider: "socrata"
+        dataset_id: "dmjw-d28i"
+        base_url: "https://data.kcmo.org/resource/dmjw-d28i.json"
+        date_field: "from_date"
+        active_from: "2018-01-01"
+        active_to: "2018-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2017"
+        display_name: "KCPD Crime Data 2017"
+        provider: "socrata"
+        dataset_id: "98is-shjt"
+        base_url: "https://data.kcmo.org/resource/98is-shjt.json"
+        date_field: "from_date"
+        active_from: "2017-01-01"
+        active_to: "2017-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2016"
+        display_name: "KCPD Crime Data 2016"
+        provider: "socrata"
+        dataset_id: "wbz8-pdv7"
+        base_url: "https://data.kcmo.org/resource/wbz8-pdv7.json"
+        date_field: "from_date"
+        active_from: "2016-01-01"
+        active_to: "2016-12-31"
+        field_map: *kc_fields
+      - source_id: "kc_crime_2015"
+        display_name: "KCPD Crime Data 2015"
+        provider: "socrata"
+        dataset_id: "kbzx-7ehe"
+        base_url: "https://data.kcmo.org/resource/kbzx-7ehe.json"
+        date_field: "from_date"
+        active_from: "2015-01-01"
+        active_to: "2015-12-31"
+        field_map: *kc_fields
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # NEW ORLEANS — Socrata, per-year calls-for-service (2011..2026)
+  # ──────────────────────────────────────────────────────────────────────────
+  new_orleans:
+    display_name: "New Orleans"
+    timezone: "America/Chicago"
+    aliases: ["nola", "new_orleans_la"]
+    sources:
+      - source_id: "nola_calls_2026"
+        display_name: "Calls for Service 2026"
+        provider: "socrata"
+        dataset_id: "es9j-6y5d"
+        base_url: "https://data.nola.gov/resource/es9j-6y5d.json"
+        date_field: "timecreate"
+        active_from: "2026-01-01"
+        active_to: null
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: &nola_fields
+          std_source_record_id: "nopd_item"
+          std_incident_id: "nopd_item"
+          std_incident_number: "nopd_item"
+          std_incident_date: "timecreate"
+          std_reported_date: ["timedispatch", "timecreate"]
+          std_offense_code: ["type_", "type", "initialtype"]
+          std_offense_description: ["typetext", "initialtypetext"]
+          std_offense_category: ["typetext", "initialtypetext"]
+          std_disposition: ["dispositiontext", "disposition"]
+          std_address: "block_address"
+          std_zip_code: "zip"
+          std_neighborhood: null
+          std_district: "policedistrict"
+          std_beat: "beat"
+          std_division: null
+          std_latitude: "location.latitude"
+          std_longitude: "location.longitude"
+      - source_id: "nola_calls_2025"
+        display_name: "Calls for Service 2025"
+        provider: "socrata"
+        dataset_id: "4xwx-sfte"
+        base_url: "https://data.nola.gov/resource/4xwx-sfte.json"
+        date_field: "timecreate"
+        active_from: "2025-01-01"
+        active_to: "2025-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2024"
+        display_name: "Calls for Service 2024"
+        provider: "socrata"
+        dataset_id: "2zcj-b6ts"
+        base_url: "https://data.nola.gov/resource/2zcj-b6ts.json"
+        date_field: "timecreate"
+        active_from: "2024-01-01"
+        active_to: "2024-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2023"
+        display_name: "Calls for Service 2023"
+        provider: "socrata"
+        dataset_id: "pc5d-tvaw"
+        base_url: "https://data.nola.gov/resource/pc5d-tvaw.json"
+        date_field: "timecreate"
+        active_from: "2023-01-01"
+        active_to: "2023-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2022"
+        display_name: "Calls for Service 2022"
+        provider: "socrata"
+        dataset_id: "nci8-thrr"
+        base_url: "https://data.nola.gov/resource/nci8-thrr.json"
+        date_field: "timecreate"
+        active_from: "2022-01-01"
+        active_to: "2022-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2021"
+        display_name: "Calls for Service 2021"
+        provider: "socrata"
+        dataset_id: "3pha-hum9"
+        base_url: "https://data.nola.gov/resource/3pha-hum9.json"
+        date_field: "timecreate"
+        active_from: "2021-01-01"
+        active_to: "2021-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2020"
+        display_name: "Calls for Service 2020"
+        provider: "socrata"
+        dataset_id: "hp7u-i9hf"
+        base_url: "https://data.nola.gov/resource/hp7u-i9hf.json"
+        date_field: "timecreate"
+        active_from: "2020-01-01"
+        active_to: "2020-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2019"
+        display_name: "Calls for Service 2019"
+        provider: "socrata"
+        dataset_id: "qf6q-pp4b"
+        base_url: "https://data.nola.gov/resource/qf6q-pp4b.json"
+        date_field: "timecreate"
+        active_from: "2019-01-01"
+        active_to: "2019-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2018"
+        display_name: "Calls for Service 2018"
+        provider: "socrata"
+        dataset_id: "9san-ivhk"
+        base_url: "https://data.nola.gov/resource/9san-ivhk.json"
+        date_field: "timecreate"
+        active_from: "2018-01-01"
+        active_to: "2018-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2017"
+        display_name: "Calls for Service 2017"
+        provider: "socrata"
+        dataset_id: "bqmt-f3jk"
+        base_url: "https://data.nola.gov/resource/bqmt-f3jk.json"
+        date_field: "timecreate"
+        active_from: "2017-01-01"
+        active_to: "2017-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2016"
+        display_name: "Calls for Service 2016"
+        provider: "socrata"
+        dataset_id: "wgrp-d3ma"
+        base_url: "https://data.nola.gov/resource/wgrp-d3ma.json"
+        date_field: "timecreate"
+        active_from: "2016-01-01"
+        active_to: "2016-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2015"
+        display_name: "Calls for Service 2015"
+        provider: "socrata"
+        dataset_id: "w68y-xmk6"
+        base_url: "https://data.nola.gov/resource/w68y-xmk6.json"
+        date_field: "timecreate"
+        active_from: "2015-01-01"
+        active_to: "2015-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2014"
+        display_name: "Calls for Service 2014"
+        provider: "socrata"
+        dataset_id: "jsyu-nz5r"
+        base_url: "https://data.nola.gov/resource/jsyu-nz5r.json"
+        date_field: "timecreate"
+        active_from: "2014-01-01"
+        active_to: "2014-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2013"
+        display_name: "Calls for Service 2013"
+        provider: "socrata"
+        dataset_id: "5fn8-vtui"
+        base_url: "https://data.nola.gov/resource/5fn8-vtui.json"
+        date_field: "timecreate"
+        active_from: "2013-01-01"
+        active_to: "2013-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2012"
+        display_name: "Calls for Service 2012"
+        provider: "socrata"
+        dataset_id: "rv3g-ypg7"
+        base_url: "https://data.nola.gov/resource/rv3g-ypg7.json"
+        date_field: "timecreate"
+        active_from: "2012-01-01"
+        active_to: "2012-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+      - source_id: "nola_calls_2011"
+        display_name: "Calls for Service 2011"
+        provider: "socrata"
+        dataset_id: "28ec-c8d6"
+        base_url: "https://data.nola.gov/resource/28ec-c8d6.json"
+        date_field: "timecreate"
+        active_from: "2011-01-01"
+        active_to: "2011-12-31"
+        scope_status: "calls_for_service"
+        scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        field_map: *nola_fields
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # SAN ANTONIO — CKAN
+  # ──────────────────────────────────────────────────────────────────────────
+  san_antonio:
+    display_name: "San Antonio"
+    timezone: "America/Chicago"
+    aliases: ["sanantonio", "sa", "satx", "san_antonio_tx"]
+    sources:
+      - source_id: "san_antonio_sapd_offenses"
+        display_name: "SAPD Offenses"
+        provider: "ckan"
+        dataset_id: "f36bb931-8fb4-481c-83d9-a3589108bb20"
+        base_url: "https://data.sanantonio.gov"
+        date_field: "Report_Date"
+        ckan_date_field_type: "text"
+        order_by: '"Report_Date" DESC'
+        active_from: null
+        active_to: null
+        field_map:
+          std_source_record_id: ["Report_ID", "_id"]
+          std_incident_id: "Report_ID"
+          std_incident_number: "Report_ID"
+          std_incident_date: "Report_Date"
+          std_reported_date: ["DateTime", "Report_Date"]
+          std_offense_code: null
+          std_offense_description: "NIBRS_Code_Name"
+          std_offense_category: ["NIBRS_Group", "NIBRS_Crime_Against"]
+          std_disposition: null
+          std_address: null
+          std_zip_code: "Zip_Code"
+          std_neighborhood: null
+          std_district: "Service_Area"
+          std_beat: null
+          std_division: null
+          std_latitude: null
+          std_longitude: null
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # NEW YORK CITY — Socrata, historic + current YTD
+  # ──────────────────────────────────────────────────────────────────────────
+  new_york:
+    display_name: "New York City"
+    timezone: "America/New_York"
+    aliases: ["nyc", "new_york_city"]
+    sources:
+      - source_id: "nyc_nypd_complaints_historic"
+        display_name: "NYPD Complaint Data Historic"
+        provider: "socrata"
+        dataset_id: "qgea-i56i"
+        base_url: "https://data.cityofnewyork.us/resource/qgea-i56i.json"
+        date_field: "cmplnt_fr_dt"
+        active_from: null
+        active_to: "2025-12-31"
+        field_map: &nyc_fields
+          std_source_record_id: "cmplnt_num"
+          std_incident_id: "cmplnt_num"
+          std_incident_number: "cmplnt_num"
+          std_incident_date: "cmplnt_fr_dt"
+          std_reported_date: "rpt_dt"
+          std_offense_code: "pd_cd"
+          std_offense_description: "pd_desc"
+          std_offense_category: "ofns_desc"
+          std_disposition: "crm_atpt_cptd_cd"
+          std_address: null
+          std_zip_code: null
+          std_neighborhood: null
+          std_district: "addr_pct_cd"
+          std_beat: null
+          std_division: "patrol_boro"
+          std_latitude: "latitude"
+          std_longitude: "longitude"
+      - source_id: "nyc_nypd_complaints_current"
+        display_name: "NYPD Complaint Data Current (Year To Date)"
+        provider: "socrata"
+        dataset_id: "5uac-w243"
+        base_url: "https://data.cityofnewyork.us/resource/5uac-w243.json"
+        date_field: "cmplnt_fr_dt"
+        active_from: "2026-01-01"
+        active_to: null
+        field_map: *nyc_fields
