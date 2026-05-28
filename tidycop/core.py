@@ -12,6 +12,7 @@ cities currently exercise that split, but Cincinnati and Cleveland will.
 from __future__ import annotations
 
 from datetime import date, datetime
+from pathlib import Path
 from typing import Any, Literal
 
 import pandas as pd
@@ -82,6 +83,7 @@ def get_incidents(
     view: View = "comparable",
     limit: int = 1000,
     fetcher: BaseFetcher | None = None,
+    dedup_db: Path | str | None = None,
 ) -> pd.DataFrame:
     """Fetch incidents for a supported city.
 
@@ -97,6 +99,12 @@ def get_incidents(
         fetcher: Optional pre-built fetcher instance (used by tests + advanced
             callers who want custom session/auth/retry). When ``None`` we
             dispatch on the source's provider.
+        dedup_db: Optional path to a sqlite DB used by ``tidycop.dedup`` to
+            track ``(city, source_id, content_hash)`` triples. When supplied,
+            only rows whose hash hasn't been recorded before are returned
+            (and every hash from this call is recorded for next time).
+            Only applies to the normalized ``comparable`` and ``city_full``
+            views; ``city_raw`` bypasses dedup entirely.
 
     Returns:
         ``pandas.DataFrame``. Column shape depends on ``view``.
@@ -124,6 +132,18 @@ def get_incidents(
     provenance = _build_provenance(city_spec, source)
     normalized = normalize(raw, source.field_map, city_spec.timezone, provenance=provenance)
 
+    # Track which raw rows survive dedup so view='city_full' stays aligned.
+    keep_mask: list[bool] | None = None
+    if dedup_db is not None:
+        # Lazy import so the optional sqlite layer doesn't load on every call.
+        from tidycop.dedup import DedupStore, content_hash
+
+        with DedupStore(dedup_db) as store:
+            hashes = [content_hash(r) for r in normalized.to_dict(orient="records")]
+            keep_mask = [not store.has_seen(city_spec.city, source.source_id, h) for h in hashes]
+            store.record_many(city_spec.city, source.source_id, hashes)
+        normalized = normalized.loc[keep_mask].reset_index(drop=True)
+
     if view == "comparable":
         return normalized
 
@@ -133,6 +153,8 @@ def get_incidents(
         if not raw:
             return normalized
         raw_df = pd.DataFrame(raw)
+        if keep_mask is not None:
+            raw_df = raw_df.loc[keep_mask].reset_index(drop=True)
         clashes = [c for c in raw_df.columns if c in STD_COLUMNS]
         if clashes:
             raw_df = raw_df.rename(columns={c: f"{c}__raw" for c in clashes})
