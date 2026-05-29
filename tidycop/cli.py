@@ -113,6 +113,10 @@ def cmd_fetch(args: argparse.Namespace) -> int:
     except ValueError as e:
         print(f"error: {e}", file=sys.stderr)
         return 2
+    except ImportError as e:
+        # e.g. --classify-spotcrime without tidycop-spotcrime installed.
+        print(f"error: {e}", file=sys.stderr)
+        return 2
 
     print(
         f"tidycop: {args.city} {args.start}..{args.end} → {len(df):,} rows "

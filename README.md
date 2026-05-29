@@ -166,25 +166,34 @@ new = tidycop.get_incidents(
 # that migrates between source slices is not seen as a new record.
 ```
 
-## SpotCrime category classifier (opt-in)
+## SpotCrime category classifier (opt-in, extension package)
 
 The SpotCrime product groups every incident into 8 buckets (Shooting,
-Robbery, Assault, Burglary, Theft, Arson, Vandalism, Arrest). The 5 MVP
-cities ship per-source mappings. Pass `classify_spotcrime=True` to add
-a `std_spotcrime_category` column; unmapped natives stay null.
+Robbery, Assault, Burglary, Theft, Arson, Vandalism, Arrest). The
+classifier lives in a separate package,
+[`tidycop-spotcrime`](https://github.com/colinmac-boop/tidycop-spotcrime),
+so `tidycop` stays city-agnostic. The 5 MVP cities ship per-source
+mappings in `registry/cities.yaml` under `spotcrime_category_map`.
+
+```bash
+pip install tidycop-spotcrime
+```
 
 ```python
 df = tidycop.get_incidents(
     "chicago",
     "2026-04-01",
     "2026-04-07",
-    classify_spotcrime=True,
+    classify_spotcrime=True,  # adds std_spotcrime_category column
 )
 df[["std_offense_category", "std_spotcrime_category"]].head()
 ```
 
-Fatal shootings collapse into `Shooting` (the separate `Homicide` bucket
-was removed 2026-05-26).
+Without `tidycop-spotcrime` installed, `classify_spotcrime=True` (and
+`tidycop fetch --classify-spotcrime`) raises a clear `ImportError`
+pointing at the install command. Unmapped natives stay null. Fatal
+shootings collapse into `Shooting` (the separate `Homicide` bucket was
+removed 2026-05-26).
 
 ## Installation
 
@@ -193,7 +202,7 @@ was removed 2026-05-26).
 #   pip install tidycop
 
 # For now, from source:
-git clone https://github.com/<org>/tidycop
+git clone https://github.com/colinmac-boop/tidycop
 cd tidycop
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
@@ -243,8 +252,11 @@ tidycop/
     │                     #   envelope handling, geometry promotion
     └── ckan.py           # datastore_search_sql, SQL identifier escaping
 ├── cli.py                # 'tidycop' entry point: fetch + cities subcommands
-├── classifier.py         # SpotCrime 8-category mapping
 └── dedup.py              # sqlite-backed (city, source_id, content_hash)
+
+# SpotCrime classifier lives in the separate tidycop-spotcrime package
+# (see https://github.com/colinmac-boop/tidycop-spotcrime). It's an
+# optional extension; tidycop soft-imports it when classify_spotcrime=True.
 
 registry/
 └── cities.yaml           # Source-of-truth city → endpoint config

@@ -47,10 +47,23 @@
 - [x] CKAN fetcher (Pittsburgh) — done Day 7
 - [x] `view="city_full"` mode — done Day 5 (also `city_raw`)
 - [x] CLI: `tidycop fetch chicago --start 2026-04-01` (v0.2.0 — csv/json/parquet, `tidycop cities`)
-- [x] SpotCrime category classifier integration (v0.2.0 — 8-category, MVP-5 mapped)
+- [x] SpotCrime category classifier integration (v0.2.0 — 8-category, MVP-5 mapped; **extracted to tidycop-spotcrime in v0.3.0**)
 - [x] Port remaining 20 cities from upstream R registry (v0.2.0 — 25 cities total)
 - [x] Deduplication layer (v0.2.0 — `tidycop.dedup`, `get_incidents(..., dedup_db=...)`)
 - [ ] SFTP delivery mode for spotcops producer (deferred to spotcops side; couples too tightly)
+
+## v0.3.0 — Boundary cleanup (2026-05-29)
+- [x] Public GitHub remote: `colinmac-boop/tidycop` (MIT, tags v0.1.0/v0.2.0/v0.3.0 pushed)
+- [x] Extracted `tidycop/classifier.py` → separate `tidycop-spotcrime` package (`colinmac-boop/tidycop-spotcrime` v0.1.0)
+- [x] `tidycop.core` swapped to soft-import seam: `classify_spotcrime=True` works transparently when `tidycop-spotcrime` is installed; raises clear `ImportError` otherwise
+- [x] CLI translates `ImportError` → exit-2 with install hint
+- [x] AGENTS.md "Hard Boundary" section updated: classifier is no longer the grandfathered exception
+- [x] CHANGELOG documents the breaking change + migration path
+
+## v0.4.0+ — Deferred
+- [ ] Per-city `spotcrime_category_map` fills for the 20 non-MVP cities (incremental, downstream-driven)
+- [ ] Upstream parity watch: periodic re-clone of `Steal-This-Code/tidycops` and diff vs. `registry/cities.yaml`
+- [ ] PyPI release of `tidycop` and `tidycop-spotcrime` (no timeline; GitHub source-install is fine for now)
 
 ## v0.2.0 — Phase 2 (2026-05-28)
 - [x] 5 Socrata cities ported: dallas, cincinnati, providence, gainesville, fort_lauderdale

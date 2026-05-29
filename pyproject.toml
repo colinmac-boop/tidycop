@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tidycop"
-version = "0.2.0"
+version = "0.3.0"
 description = "City-agnostic interface for public police incident data"
 authors = ["Colin Drane <colin@spotcrime.com>"]
 license = "MIT"
@@ -21,6 +21,9 @@ pytest-cov = "^5.0"
 black = "^24.0"
 ruff = "^0.4"
 mypy = "^1.10"
+# Installed so the in-tree classifier integration tests can exercise the
+# soft-import seam end-to-end. Not a runtime dep of tidycop itself.
+tidycop-spotcrime = "^0.1.0"
 
 [tool.poetry.extras]
 geo = ["geopandas"]

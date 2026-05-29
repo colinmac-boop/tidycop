@@ -159,8 +159,16 @@ def get_incidents(
         normalized = normalized.loc[keep_mask].reset_index(drop=True)
 
     if classify_spotcrime:
-        # Lazy import: keep classifier optional.
-        from tidycop.classifier import classify_frame
+        # Soft import: the SpotCrime classifier lives in the separate
+        # tidycop-spotcrime package (extracted from this repo in v0.3.0
+        # to keep tidycop city-agnostic — see AGENTS.md "Hard Boundary").
+        try:
+            from tidycop_spotcrime import classify_frame
+        except ImportError as e:
+            raise ImportError(
+                "classify_spotcrime=True requires the tidycop-spotcrime package. "
+                "Install it with `pip install tidycop-spotcrime`."
+            ) from e
 
         normalized = classify_frame(normalized, source.spotcrime_category_map)
 

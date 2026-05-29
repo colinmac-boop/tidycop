@@ -4,6 +4,47 @@ All notable changes to **tidycop** are documented here. Format loosely
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versioning is [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] — 2026-05-29
+
+### Changed (breaking)
+
+- **SpotCrime classifier extracted** to a separate package,
+  [`tidycop-spotcrime`](https://github.com/colinmac-boop/tidycop-spotcrime).
+  `tidycop/classifier.py` and its `SPOTCRIME_CATEGORIES` /
+  `classify_frame` / `classify_row` exports are gone. This closes the
+  v0.2.0 grandfathered boundary exception (AGENTS.md "Hard Boundary").
+
+  Public API behavior is preserved through a soft-import seam in
+  `tidycop.core`:
+
+  - `get_incidents(..., classify_spotcrime=True)` and
+    `tidycop fetch --classify-spotcrime` keep working **as long as
+    `tidycop-spotcrime` is installed alongside tidycop**
+    (`pip install tidycop tidycop-spotcrime`).
+  - Without the extension installed, both paths raise `ImportError`
+    (or exit 2 on the CLI) with a message pointing at the install
+    command.
+
+  Migration for direct importers:
+  `from tidycop.classifier import classify_frame` →
+  `from tidycop_spotcrime import classify_frame`.
+
+### Kept
+
+- `SourceSpec.spotcrime_category_map` stays on the registry source. It's
+  data (lives in `registry/cities.yaml`), not behavior. tidycop doesn't
+  consume it; `tidycop-spotcrime` does, when the user opts in.
+- `tidycop/schema.py::SPOTCRIME_COLUMNS` (the
+  `["std_spotcrime_category"]` constant) stays as a column-naming
+  convention. Importing it has no runtime cost and adds no dependency.
+
+### Notes
+
+- This is the first public release on
+  [github.com/colinmac-boop/tidycop](https://github.com/colinmac-boop/tidycop)
+  (added 2026-05-29 alongside the extraction). Tags `v0.1.0`, `v0.2.0`,
+  `v0.3.0` are all pushed.
+
 ## [0.2.0] — 2026-05-28
 
 ### Added

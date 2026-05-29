@@ -1,124 +1,41 @@
-"""Tests for tidycop.classifier (SpotCrime 8-category mapping)."""
+"""Tests for tidycop's SpotCrime classifier integration.
+
+The classifier itself lives in the separate ``tidycop-spotcrime`` package
+(extracted in v0.3.0 to honor the city-agnostic library boundary — see
+AGENTS.md "Hard Boundary"). What stays here:
+
+1. **Registry coverage** — every MVP city ships a valid
+   ``spotcrime_category_map`` in ``registry/cities.yaml``. The map is
+   data living in this repo, so it gets validated here.
+2. **Soft-import seam** — ``get_incidents(..., classify_spotcrime=True)``
+   transparently calls ``tidycop_spotcrime.classify_frame`` when the
+   extension package is installed, and raises a clear ``ImportError``
+   when it isn't.
+"""
 
 from __future__ import annotations
 
+import sys
 from datetime import date
+from unittest.mock import patch
 
 import pandas as pd
 import pytest
 
 from tidycop import get_incidents
-from tidycop.classifier import (
-    SPOTCRIME_CATEGORIES,
-    classify_frame,
-    classify_row,
-)
 from tidycop.registry import _reset_cache, get_city_spec
-from tidycop.schema import STD_COLUMNS
-
-# ---------------------------------------------------------------------------
-# Constants / sanity
-# ---------------------------------------------------------------------------
 
 
-def test_eight_canonical_categories():
-    # Homicide was removed 2026-05-26 — fatal shootings collapse into Shooting.
-    assert "Homicide" not in SPOTCRIME_CATEGORIES
-    assert "Shooting" in SPOTCRIME_CATEGORIES
-    assert len(SPOTCRIME_CATEGORIES) == 8
-    assert set(SPOTCRIME_CATEGORIES) == {
-        "Shooting",
-        "Robbery",
-        "Assault",
-        "Burglary",
-        "Theft",
-        "Arson",
-        "Vandalism",
-        "Arrest",
-    }
-
-
-# ---------------------------------------------------------------------------
-# classify_row
-# ---------------------------------------------------------------------------
-
-
-CHI_MAP = {
-    "THEFT": "Theft",
-    "ROBBERY": "Robbery",
-    "BURGLARY": "Burglary",
-    "ARSON": "Arson",
-    "BATTERY": "Assault",
-}
-
-
-def test_classify_row_hits_offense_category():
-    assert classify_row({"std_offense_category": "THEFT"}, CHI_MAP) == "Theft"
-
-
-def test_classify_row_falls_back_to_description():
-    row = {"std_offense_category": None, "std_offense_description": "Robbery"}
-    assert classify_row(row, CHI_MAP) == "Robbery"
-
-
-def test_classify_row_case_insensitive():
-    assert classify_row({"std_offense_category": "theft"}, CHI_MAP) == "Theft"
-    assert classify_row({"std_offense_category": "  Theft  "}, CHI_MAP) == "Theft"
-
-
-def test_classify_row_unmapped_returns_none():
-    assert classify_row({"std_offense_category": "KIDNAPPING"}, CHI_MAP) is None
-
-
-def test_classify_row_handles_missing_fields():
-    assert classify_row({}, CHI_MAP) is None
-    assert classify_row({"std_offense_category": None}, CHI_MAP) is None
-    assert classify_row({"std_offense_category": ""}, CHI_MAP) is None
-
-
-def test_classify_row_works_on_pandas_series():
-    s = pd.Series({"std_offense_category": "ARSON"})
-    assert classify_row(s, CHI_MAP) == "Arson"
-
-
-# ---------------------------------------------------------------------------
-# classify_frame
-# ---------------------------------------------------------------------------
-
-
-def _frame(categories: list[str]) -> pd.DataFrame:
-    rows = []
-    for c in categories:
-        rec = {col: None for col in STD_COLUMNS}
-        rec["std_offense_category"] = c
-        rows.append(rec)
-    return pd.DataFrame(rows, columns=STD_COLUMNS)
-
-
-def test_classify_frame_adds_column():
-    df = _frame(["THEFT", "ROBBERY", "KIDNAPPING"])
-    out = classify_frame(df, CHI_MAP)
-    assert "std_spotcrime_category" in out.columns
-    assert list(out["std_spotcrime_category"]) == ["Theft", "Robbery", None]
-
-
-def test_classify_frame_empty_mapping_returns_null_column():
-    df = _frame(["THEFT", "ROBBERY"])
-    out = classify_frame(df, None)
-    assert "std_spotcrime_category" in out.columns
-    assert out["std_spotcrime_category"].isna().all()
-
-
-def test_classify_frame_rejects_invalid_categories():
-    with pytest.raises(ValueError, match="invalid target categories"):
-        classify_frame(_frame(["THEFT"]), {"THEFT": "Petty Larceny"})
-
-
-def test_classify_frame_handles_empty_dataframe():
-    df = pd.DataFrame(columns=STD_COLUMNS)
-    out = classify_frame(df, CHI_MAP)
-    assert "std_spotcrime_category" in out.columns
-    assert len(out) == 0
+# Pull the canonical category tuple from the extension package. This test
+# file imports it for the registry-coverage assertions; if the extension
+# isn't installed, those parametrized tests are skipped (the integration
+# tests below cover the missing-extension path explicitly).
+try:
+    from tidycop_spotcrime import SPOTCRIME_CATEGORIES
+    HAS_SPOTCRIME_EXT = True
+except ImportError:  # pragma: no cover — exercised only on bare installs
+    SPOTCRIME_CATEGORIES = ()
+    HAS_SPOTCRIME_EXT = False
 
 
 # ---------------------------------------------------------------------------
@@ -126,7 +43,13 @@ def test_classify_frame_handles_empty_dataframe():
 # ---------------------------------------------------------------------------
 
 
-@pytest.mark.parametrize("city", ["chicago", "seattle", "san_francisco", "detroit", "pittsburgh"])
+@pytest.mark.skipif(
+    not HAS_SPOTCRIME_EXT,
+    reason="tidycop-spotcrime not installed; classifier-side validation skipped",
+)
+@pytest.mark.parametrize(
+    "city", ["chicago", "seattle", "san_francisco", "detroit", "pittsburgh"]
+)
 def test_mvp_cities_have_spotcrime_map(city: str):
     _reset_cache()
     spec = get_city_spec(city)
@@ -134,9 +57,15 @@ def test_mvp_cities_have_spotcrime_map(city: str):
     assert src.spotcrime_category_map, f"{city}: missing spotcrime_category_map"
     # All targets must be in the 8 valid categories.
     for native, target in src.spotcrime_category_map.items():
-        assert target in SPOTCRIME_CATEGORIES, f"{city}: {native!r} maps to invalid {target!r}"
+        assert target in SPOTCRIME_CATEGORIES, (
+            f"{city}: {native!r} maps to invalid {target!r}"
+        )
 
 
+@pytest.mark.skipif(
+    not HAS_SPOTCRIME_EXT,
+    reason="tidycop-spotcrime not installed; classifier-side validation skipped",
+)
 def test_mvp_cities_cover_core_buckets():
     """Every MVP city should at least cover Theft, Robbery, Assault, Burglary."""
     _reset_cache()
@@ -149,7 +78,7 @@ def test_mvp_cities_cover_core_buckets():
 
 
 # ---------------------------------------------------------------------------
-# get_incidents() integration
+# get_incidents() integration — soft-import seam
 # ---------------------------------------------------------------------------
 
 
@@ -190,6 +119,10 @@ def test_get_incidents_classify_spotcrime_off_by_default():
     assert "std_spotcrime_category" not in df.columns
 
 
+@pytest.mark.skipif(
+    not HAS_SPOTCRIME_EXT,
+    reason="tidycop-spotcrime not installed; end-to-end classify path skipped",
+)
 def test_get_incidents_classify_spotcrime_on():
     fetcher = _StubFetcher(_chicago_raw(["THEFT", "ROBBERY", "ARSON", "KIDNAPPING"]))
     df = get_incidents(
@@ -200,9 +133,18 @@ def test_get_incidents_classify_spotcrime_on():
         classify_spotcrime=True,
     )
     assert "std_spotcrime_category" in df.columns
-    assert list(df["std_spotcrime_category"]) == ["Theft", "Robbery", "Arson", None]
+    # Tolerate pandas 2.x None vs 3.x NaN for the unmapped slot.
+    got = [
+        None if (v is None or (isinstance(v, float) and pd.isna(v))) else v
+        for v in df["std_spotcrime_category"]
+    ]
+    assert got == ["Theft", "Robbery", "Arson", None]
 
 
+@pytest.mark.skipif(
+    not HAS_SPOTCRIME_EXT,
+    reason="tidycop-spotcrime not installed; end-to-end classify path skipped",
+)
 def test_get_incidents_classify_fatal_shootings_collapse_to_shooting():
     """Pre-2026-05-26 we had a 'Homicide' bucket; now fatal shootings → Shooting."""
     fetcher = _StubFetcher(_chicago_raw(["HOMICIDE"]))
@@ -214,3 +156,44 @@ def test_get_incidents_classify_fatal_shootings_collapse_to_shooting():
         classify_spotcrime=True,
     )
     assert df["std_spotcrime_category"].iat[0] == "Shooting"
+
+
+def test_get_incidents_classify_spotcrime_without_extension_raises():
+    """When tidycop-spotcrime isn't importable, classify_spotcrime=True must
+    raise a clear ImportError pointing at the install command.
+
+    We simulate the missing-extension case by stubbing the module out of
+    sys.modules and blocking its re-import — this exercises the
+    soft-import branch in tidycop.core regardless of whether the package
+    is actually installed in this venv.
+    """
+    import builtins
+
+    fetcher = _StubFetcher(_chicago_raw(["THEFT"]))
+
+    # Make `import tidycop_spotcrime` fail inside get_incidents.
+    blocked = {k: v for k, v in sys.modules.items() if k.startswith("tidycop_spotcrime")}
+    for k in blocked:
+        sys.modules.pop(k)
+
+    real_import = builtins.__import__
+
+    def fake_import(name, *args, **kwargs):
+        if name == "tidycop_spotcrime" or name.startswith("tidycop_spotcrime."):
+            raise ImportError(f"No module named {name!r} (simulated)")
+        return real_import(name, *args, **kwargs)
+
+    try:
+        with patch("builtins.__import__", side_effect=fake_import):
+            with pytest.raises(ImportError, match="tidycop-spotcrime"):
+                get_incidents(
+                    "chicago",
+                    date(2026, 4, 1),
+                    date(2026, 4, 1),
+                    fetcher=fetcher,
+                    classify_spotcrime=True,
+                )
+    finally:
+        # Restore anything we removed so other tests can use the extension.
+        for k, v in blocked.items():
+            sys.modules[k] = v
