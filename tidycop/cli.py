@@ -36,7 +36,7 @@ import pandas as pd
 
 from tidycop import __version__
 from tidycop.core import get_incidents
-from tidycop.registry import list_supported_cities
+from tidycop.registry import list_supported_cities, load_registry
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -104,6 +104,7 @@ def cmd_fetch(args: argparse.Namespace) -> int:
             view=args.view,
             limit=args.limit,
             classify_spotcrime=args.classify_spotcrime,
+            registry_path=args.registry_path,
         )
     except KeyError as e:
         # unknown city
@@ -123,7 +124,23 @@ def cmd_fetch(args: argparse.Namespace) -> int:
 
 
 def cmd_cities(args: argparse.Namespace) -> int:
-    cities = list_supported_cities()
+    if args.registry_path:
+        # Render the overlay registry directly (bypasses the default cache).
+        from tidycop.registry import _build_city  # noqa: F401  (already loaded)
+        overlay = load_registry(args.registry_path)
+        cities = [
+            {
+                "city": key,
+                "display_name": spec.display_name,
+                "timezone": spec.timezone,
+                "aliases": list(spec.aliases),
+                "providers": sorted({s.provider for s in spec.sources}),
+                "source_count": len(spec.sources),
+            }
+            for key, spec in overlay.items()
+        ]
+    else:
+        cities = list_supported_cities()
     if args.provider:
         cities = [c for c in cities if args.provider in c["providers"]]
 
@@ -196,6 +213,15 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Add std_spotcrime_category column using the source's mapping.",
     )
+    pf.add_argument(
+        "--registry-path",
+        default=None,
+        help=(
+            "Path to a downstream registry YAML (e.g. SpotCrime data2 "
+            "overlay). When set, the city is resolved from that file "
+            "instead of the bundled registry/cities.yaml."
+        ),
+    )
     pf.set_defaults(func=cmd_fetch)
 
     # ----------------------------------------------------------------- cities
@@ -207,6 +233,11 @@ def build_parser() -> argparse.ArgumentParser:
         help="Filter by platform provider.",
     )
     pc.add_argument("--json", action="store_true", help="Emit JSON instead of a table.")
+    pc.add_argument(
+        "--registry-path",
+        default=None,
+        help="List cities defined in a downstream overlay YAML instead of the bundled registry.",
+    )
     pc.set_defaults(func=cmd_cities)
 
     return p

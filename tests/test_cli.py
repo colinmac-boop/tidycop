@@ -47,7 +47,12 @@ def test_fetch_csv_to_stdout(capsys):
     assert args[0] == "chicago"
     assert args[1] == date(2026, 4, 1)
     assert args[2] == date(2026, 4, 2)
-    assert kwargs == {"view": "comparable", "limit": 1000, "classify_spotcrime": False}
+    assert kwargs == {
+        "view": "comparable",
+        "limit": 1000,
+        "classify_spotcrime": False,
+        "registry_path": None,
+    }
 
     captured = capsys.readouterr()
     # CSV header on stdout

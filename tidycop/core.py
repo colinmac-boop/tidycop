@@ -18,7 +18,7 @@ from typing import Any, Literal
 import pandas as pd
 
 from tidycop.platform import BaseFetcher, get_fetcher
-from tidycop.registry import CitySpec, SourceSpec, get_city_spec
+from tidycop.registry import CitySpec, SourceSpec, get_city_spec, get_city_spec_from_path
 from tidycop.schema import STD_COLUMNS, normalize
 
 View = Literal["comparable", "city_full", "city_raw"]
@@ -85,6 +85,7 @@ def get_incidents(
     fetcher: BaseFetcher | None = None,
     dedup_db: Path | str | None = None,
     classify_spotcrime: bool = False,
+    registry_path: Path | str | None = None,
 ) -> pd.DataFrame:
     """Fetch incidents for a supported city.
 
@@ -110,6 +111,11 @@ def get_incidents(
             column populated from the source's ``spotcrime_category_map``.
             Rows whose native category doesn't map remain null. Only
             applies to ``comparable`` and ``city_full`` views.
+        registry_path: Optional path to a downstream registry YAML. When
+            supplied, the city is resolved from that file instead of the
+            bundled ``registry/cities.yaml`` (used by downstream consumers
+            like SpotCrime data2 wrappers to keep product-specific city
+            entries out of the upstream-parity library).
 
     Returns:
         ``pandas.DataFrame``. Column shape depends on ``view``.
@@ -125,7 +131,10 @@ def get_incidents(
     if end < start:
         raise ValueError(f"end_date ({end}) is before start_date ({start})")
 
-    city_spec = get_city_spec(city)  # raises KeyError on unknown city
+    if registry_path is not None:
+        city_spec = get_city_spec_from_path(city, registry_path)
+    else:
+        city_spec = get_city_spec(city)  # raises KeyError on unknown city
     source = _select_source(city_spec, start, end)
     fetcher = fetcher or get_fetcher(source.provider)
 

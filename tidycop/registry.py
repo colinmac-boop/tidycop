@@ -145,6 +145,33 @@ def load_registry(path: Path | str | None = None) -> dict[str, CitySpec]:
     return {key: _build_city(key, spec) for key, spec in cities_raw.items()}
 
 
+def get_city_spec_from_path(city: str, registry_path: Path | str) -> CitySpec:
+    """Resolve a city spec from a caller-supplied registry YAML.
+
+    Bypasses the cached default registry — used by downstream consumers
+    (e.g. SpotCrime data2 wrappers) that maintain their own city/source
+    overlays outside the upstream-parity ``registry/cities.yaml``.
+
+    The overlay file is the *full* registry for this call: cities defined in
+    the default registry are NOT auto-merged. Callers who want both must
+    pass a YAML that already includes the cities they need (or load both
+    registries themselves).
+    """
+    if not isinstance(city, str) or not city.strip():
+        raise KeyError(f"invalid city key: {city!r}")
+    cities = load_registry(registry_path)
+    # alias resolution within the overlay
+    index: dict[str, str] = {}
+    for canonical, spec in cities.items():
+        index[canonical] = canonical
+        for alias in spec.aliases:
+            index[alias] = canonical
+    key = city.strip().lower().replace("-", "_").replace(" ", "_")
+    if key not in index:
+        raise KeyError(f"unsupported city: {city!r} (overlay={registry_path})")
+    return cities[index[key]]
+
+
 # ---------------------------------------------------------------------------
 # Public API (cached lookups against the default registry)
 # ---------------------------------------------------------------------------
