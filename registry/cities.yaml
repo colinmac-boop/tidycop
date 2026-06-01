@@ -77,18 +77,46 @@ cities:
         date_field: "offense_date"
         active_from: "2008-01-01"
         active_to: null
-        # Seattle uses NIBRS offense_category labels.
+        # Seattle: classify on nibrs_offense_code_description (granular
+        # NIBRS labels) — std_offense_description in the field_map below.
+        # The coarse offense_category column only carries 3 buckets
+        # (PROPERTY CRIME / VIOLENT CRIME / ALL OTHER), so the classifier's
+        # std_offense_category lookup misses; the fallback to
+        # std_offense_description (these keys) does the work.
+        # Keys are matched case-insensitively by the classifier.
         spotcrime_category_map:
-          HOMICIDE OFFENSES: "Shooting"
-          ROBBERY: "Robbery"
-          ASSAULT OFFENSES: "Assault"
-          BURGLARY/BREAKING&ENTERING: "Burglary"
-          LARCENY/THEFT OFFENSES: "Theft"
-          MOTOR VEHICLE THEFT: "Theft"
-          ARSON: "Arson"
-          DESTRUCTION/DAMAGE/VANDALISM OF PROPERTY: "Vandalism"
-          WEAPON LAW VIOLATIONS: "Shooting"
-          # TODO classifier: KIDNAPPING/ABDUCTION, SEX OFFENSES intentionally unmapped.
+          # Shooting — fatal incidents collapse here per 2026-05-26 rule;
+          # weapon law violations also bucket here for visibility.
+          "Murder & Nonnegligent Manslaughter": "Shooting"
+          "Negligent Manslaughter": "Shooting"
+          "Justifiable Homicide": "Shooting"
+          "Weapon Law Violations": "Shooting"
+          # Robbery
+          "Robbery": "Robbery"
+          # Assault — aggravated, simple, threats
+          "Aggravated Assault": "Assault"
+          "Simple Assault": "Assault"
+          "Intimidation": "Assault"
+          # Burglary — forced/unlawful entry
+          "Burglary/Breaking & Entering": "Burglary"
+          # Theft — larceny variants, MVT, theft from vehicle, parts theft
+          "Motor Vehicle Theft": "Theft"
+          "Theft From Motor Vehicle": "Theft"
+          "Theft of Motor Vehicle Parts or Accessories": "Theft"
+          "Theft From Building": "Theft"
+          "Theft From Coin-Operated Machine or Device": "Theft"
+          "Shoplifting": "Theft"
+          "All Other Larceny": "Theft"
+          "Pocket-picking": "Theft"
+          "Purse-snatching": "Theft"
+          # Arson
+          "Arson": "Arson"
+          # Vandalism
+          "Destruction/Damage/Vandalism of Property": "Vandalism"
+          # TODO classifier: KIDNAPPING/ABDUCTION, SEX OFFENSES (Rape,
+          # Fondling, Sodomy, Sexual Assault With An Object, Statutory
+          # Rape, Incest) intentionally unmapped — no Sexual Assault
+          # bucket since 2026-05-20.
         field_map:
           std_source_record_id: "offense_id"
           std_incident_id: "offense_id"
