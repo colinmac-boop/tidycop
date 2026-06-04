@@ -4,6 +4,33 @@ All notable changes to **tidycop** are documented here. Format loosely
 follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/);
 versioning is [SemVer](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`web/` directory** — CityCrimeMap static site, deployed at
+  [citycrimemap.us](https://citycrimemap.us) (Vercel project
+  `citymaps`, preview alias `citymaps.vercel.app`). Worked example
+  of consuming `tidycop` + `tidycop-spotcrime` to render Leaflet
+  maps + incident tables for Chicago, Seattle, San Francisco,
+  Detroit, Pittsburgh. Previously lived in a separate workspace
+  directory; consolidated here on 2026-06-04 so the library and
+  its first consumer share one repo and one history.
+- **`BASE_URL` env var** in `web/scripts/generate_site.py` for
+  absolute canonical / `og:url` emission. Default is
+  `https://citycrimemap.us`.
+- **README § "Library / product boundary"** — documents the
+  `--registry-path` overlay pattern for downstream consumers.
+
+### Changed
+
+- `README.md` status section bumped to v0.3.0; mentions the
+  `web/` directory.
+- `AGENTS.md` rewritten to describe the unified repo (library half
+  `tidycop/` stays upstream-parity; frontend half `web/` is
+  product-specific and that's fine). The pre-commit guard's scope
+  clarified as library-half-only.
+
 ## [0.3.0] — 2026-05-29
 
 ### Changed (breaking)

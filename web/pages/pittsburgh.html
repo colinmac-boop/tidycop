@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pittsburgh, PA Crime Map | Recent Incidents & Free Alerts</title>
+  <meta name="description" content="Pittsburgh crime map and incident table — last 75 days of reported crime in Pittsburgh, PA. Sign up for free crime alerts.">
+  <link rel="canonical" href="https://citycrimemap.us/pittsburgh">
+  <meta property="og:title" content="Pittsburgh, PA Crime Map | Recent Incidents & Free Alerts">
+  <meta property="og:description" content="Pittsburgh crime map and incident table — last 75 days of reported crime in Pittsburgh, PA. Sign up for free crime alerts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://citycrimemap.us/pittsburgh">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="./index.html" class="text-xl font-bold tracking-tight">🚨 CityCrimeMaps</a>
+    <nav class="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+      <a href="./index.html" class="hover:text-brand-100 text-brand-100/80">All cities</a><a href="./chicago.html" class="text-brand-100/80 hover:text-brand-100">Chicago</a><a href="./seattle.html" class="text-brand-100/80 hover:text-brand-100">Seattle</a><a href="./san-francisco.html" class="text-brand-100/80 hover:text-brand-100">San Francisco</a><a href="./detroit.html" class="text-brand-100/80 hover:text-brand-100">Detroit</a><a href="./pittsburgh.html" class="font-bold text-white">Pittsburgh</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Pittsburgh, PA crime map</h1>
+    <p class="text-slate-600">991 incidents · last 75 days · source: <a href="https://data.wprdc.org/dataset/uniform-crime-reporting-data" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Western Pennsylvania Regional Data Center (WPRDC)</a></p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded"></div>
+    <div class="mt-3"><div class="flex flex-wrap"><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#475569"></span><span class="text-slate-700">Unclassified</span><span class="text-slate-400 ml-1">(418)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#0891b2"></span><span class="text-slate-700">Theft</span><span class="text-slate-400 ml-1">(238)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ea580c"></span><span class="text-slate-700">Assault</span><span class="text-slate-400 ml-1">(148)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#7c3aed"></span><span class="text-slate-700">Vandalism</span><span class="text-slate-400 ml-1">(135)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#7f1d1d"></span><span class="text-slate-700">Shooting</span><span class="text-slate-400 ml-1">(21)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ca8a04"></span><span class="text-slate-700">Burglary</span><span class="text-slate-400 ml-1">(18)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#dc2626"></span><span class="text-slate-700">Robbery</span><span class="text-slate-400 ml-1">(10)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#be185d"></span><span class="text-slate-700">Arson</span><span class="text-slate-400 ml-1">(3)</span></span></div></div>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+      <h2 class="text-lg font-bold">Recent incidents</h2>
+      <div class="flex flex-wrap gap-2 items-center">
+        <label class="text-sm text-slate-600">Filter:</label>
+        <select id="catFilter" class="border border-slate-300 rounded px-2 py-1 text-sm">
+          <option value="">All categories</option>
+        </select>
+        <input id="searchFilter" type="search" placeholder="Search address or offense…" class="border border-slate-300 rounded px-2 py-1 text-sm w-56">
+        <span id="rowCount" class="text-xs text-slate-500 font-mono"></span>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700">
+          <tr>
+            <th class="px-3 py-2 text-left">Date</th>
+            <th class="px-3 py-2 text-left">Category</th>
+            <th class="px-3 py-2 text-left">Offense</th>
+            <th class="px-3 py-2 text-left">Address</th>
+          </tr>
+        </thead>
+        <tbody id="incidentTable"></tbody>
+      </table>
+    </div>
+    <div class="flex items-center justify-between mt-3 text-sm">
+      <button id="prevPage" class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50">← Prev</button>
+      <span id="pageInfo" class="text-slate-600"></span>
+      <button id="nextPage" class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50">Next →</button>
+    </div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Pittsburgh crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends you a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/pa/pittsburgh" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Pittsburgh alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-8 grid md:grid-cols-3 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">CityCrimeMaps</p>
+      <p>Free public-data crime maps for five US cities, refreshed from city open-data portals via <a href="https://github.com/Steal-This-Code/tidycops" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a>.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Want alerts for another city?</p>
+      <p><a href="https://spotcrime.com" target="_blank" rel="noopener" class="text-brand-500 hover:text-brand-100">SpotCrime covers thousands of cities →</a></p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p>Last generated: <span class="font-mono">2026-06-01T11:07:36.894628+00:00</span></p>
+      <p class="text-slate-400 text-xs mt-2">Crime data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a href="https://spotcrime.com" target="_blank" rel="noopener" class="text-brand-500">SpotCrime</a>.</p>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(async function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const res = await fetch('./data/pittsburgh.json');
+  const data = await res.json();
+  const incidents = data.incidents;
+
+  // ── Map ─────────────────────────────────────────────────────────────────
+  const map = L.map('map').setView([40.4406, -79.9959], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+  for (const inc of incidents) {
+    const color = CAT_COLORS[inc.category || 'Unclassified'] || '#64748b';
+    const m = L.circleMarker([inc.lat, inc.lng], {
+      radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6,
+    });
+    m.bindPopup(`<div class="text-sm">
+      <div class="font-bold">${inc.category || 'Unclassified'}</div>
+      <div>${inc.description || ''}</div>
+      <div class="text-slate-600">${inc.address || ''}</div>
+      <div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div>
+    </div>`);
+    m.addTo(map);
+  }
+
+  // ── Table ───────────────────────────────────────────────────────────────
+  const PAGE_SIZE = 25;
+  let filtered = incidents.slice();
+  let page = 0;
+  const catFilter = document.getElementById('catFilter');
+  const searchFilter = document.getElementById('searchFilter');
+  const tbody = document.getElementById('incidentTable');
+  const rowCount = document.getElementById('rowCount');
+  const pageInfo = document.getElementById('pageInfo');
+  const prev = document.getElementById('prevPage');
+  const next = document.getElementById('nextPage');
+
+  const allCats = new Set(incidents.map(i => i.category || 'Unclassified'));
+  for (const c of [...allCats].sort()) {
+    const opt = document.createElement('option'); opt.value = c; opt.textContent = c; catFilter.appendChild(opt);
+  }
+
+  function applyFilters() {
+    const cat = catFilter.value;
+    const q = searchFilter.value.toLowerCase().trim();
+    filtered = incidents.filter(i => {
+      if (cat && (i.category || 'Unclassified') !== cat) return false;
+      if (q) {
+        const hay = ((i.address || '') + ' ' + (i.description || '')).toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    page = 0;
+    render();
+  }
+
+  function render() {
+    const total = filtered.length;
+    const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    page = Math.min(page, pages - 1);
+    const slice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+    tbody.innerHTML = slice.map(i => {
+      const color = CAT_COLORS[i.category || 'Unclassified'] || '#64748b';
+      const dt = i.datetime ? new Date(i.datetime) : null;
+      const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+      return `<tr class="border-b border-slate-100 hover:bg-slate-50">
+        <td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td>
+        <td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:${color}"></span>${i.category || 'Unclassified'}</span></td>
+        <td class="px-3 py-2 text-slate-700">${i.description || ''}</td>
+        <td class="px-3 py-2 text-slate-700">${i.address || ''}</td>
+      </tr>`;
+    }).join('');
+    rowCount.textContent = `${total.toLocaleString()} matching`;
+    pageInfo.textContent = `Page ${page + 1} of ${pages}`;
+    prev.disabled = page <= 0;
+    next.disabled = page >= pages - 1;
+  }
+
+  catFilter.addEventListener('change', applyFilters);
+  searchFilter.addEventListener('input', applyFilters);
+  prev.addEventListener('click', () => { page--; render(); });
+  next.addEventListener('click', () => { page++; render(); });
+  render();
+})();
+</script>

@@ -1,0 +1,9 @@
+# Vercel CLI link state — project ID + org ID, not secret but not git-tracked
+pages/.vercel/
+
+# Python build artefacts
+scripts/__pycache__/
+**/__pycache__/
+
+# Regenerated build output (re-created by generate_site.py from data/*.json)
+pages/data/

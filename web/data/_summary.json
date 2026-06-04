@@ -1,0 +1,99 @@
+{
+  "cities": [
+    {
+      "slug": "chicago",
+      "name": "Chicago",
+      "state_abbrev": "IL",
+      "spotcrime_alerts_url": "https://spotcrime.com/il/chicago",
+      "row_count": 1000,
+      "window_days": 45,
+      "category_counts": {
+        "Theft": 301,
+        "Assault": 299,
+        "Unclassified": 168,
+        "Vandalism": 133,
+        "Burglary": 56,
+        "Shooting": 28,
+        "Robbery": 13,
+        "Arson": 2
+      },
+      "generated_at": "2026-06-01T11:07:29.496759+00:00"
+    },
+    {
+      "slug": "seattle",
+      "name": "Seattle",
+      "state_abbrev": "WA",
+      "spotcrime_alerts_url": "https://spotcrime.com/wa/seattle",
+      "row_count": 835,
+      "window_days": 14,
+      "category_counts": {
+        "Theft": 352,
+        "Unclassified": 210,
+        "Burglary": 83,
+        "Assault": 79,
+        "Vandalism": 73,
+        "Robbery": 22,
+        "Shooting": 12,
+        "Arson": 4
+      },
+      "generated_at": "2026-06-01T11:07:30.200903+00:00"
+    },
+    {
+      "slug": "san-francisco",
+      "name": "San Francisco",
+      "state_abbrev": "CA",
+      "spotcrime_alerts_url": "https://spotcrime.com/ca/san-francisco",
+      "row_count": 968,
+      "window_days": 14,
+      "category_counts": {
+        "Unclassified": 584,
+        "Theft": 182,
+        "Assault": 76,
+        "Vandalism": 56,
+        "Burglary": 40,
+        "Robbery": 20,
+        "Shooting": 7,
+        "Arson": 3
+      },
+      "generated_at": "2026-06-01T11:07:31.788526+00:00"
+    },
+    {
+      "slug": "detroit",
+      "name": "Detroit",
+      "state_abbrev": "MI",
+      "spotcrime_alerts_url": "https://spotcrime.com/mi/detroit",
+      "row_count": 999,
+      "window_days": 14,
+      "category_counts": {
+        "Assault": 322,
+        "Unclassified": 221,
+        "Theft": 210,
+        "Vandalism": 130,
+        "Burglary": 51,
+        "Shooting": 50,
+        "Robbery": 11,
+        "Arson": 4
+      },
+      "generated_at": "2026-06-01T11:07:33.063969+00:00"
+    },
+    {
+      "slug": "pittsburgh",
+      "name": "Pittsburgh",
+      "state_abbrev": "PA",
+      "spotcrime_alerts_url": "https://spotcrime.com/pa/pittsburgh",
+      "row_count": 991,
+      "window_days": 75,
+      "category_counts": {
+        "Unclassified": 418,
+        "Theft": 238,
+        "Assault": 148,
+        "Vandalism": 135,
+        "Shooting": 21,
+        "Burglary": 18,
+        "Robbery": 10,
+        "Arson": 3
+      },
+      "generated_at": "2026-06-01T11:07:36.894628+00:00"
+    }
+  ]
+}

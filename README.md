@@ -5,10 +5,18 @@ city-agnostic interface for public police incident data.
 
 ## Status
 
-**v0.2.0** — 25 U.S. cities live across Socrata / ArcGIS / CKAN.
+**v0.3.0** — 25 U.S. cities live across Socrata / ArcGIS / CKAN.
 Command-line interface (`tidycop fetch ...`). Optional sqlite-backed
-dedup layer. SpotCrime 8-category classifier wired for the 5 MVP cities.
-182 unit tests, all passing.
+dedup layer. SpotCrime 8-category classifier extracted to the
+separate [`tidycop-spotcrime`](https://github.com/colinmac-boop/tidycop-spotcrime)
+package (soft-imported when `--classify-spotcrime` is requested).
+172 unit tests pass, 30 network-gated tests skipped by default.
+
+The repo also ships **`web/`** — the static site for
+[citycrimemap.us](https://citycrimemap.us), a worked example of
+consuming `tidycop` + `tidycop-spotcrime` to render Leaflet maps for
+5 cities. See [`web/README.md`](web/README.md) for the refresh /
+redeploy flow.
 
 ## What It Does
 
@@ -282,12 +290,40 @@ registry/
 
 ## Integration Targets
 
-- **SpotCrime / spotcops producer** — replace email ingest with tidycop +
-  SFTP delivery
-- **HomeStoop** — pull local incidents for user's address, filter by radius
-- **CrimeGrade.org** — cross-city comparable data for grading
-- **Standalone library** — pip-installable for researchers, journalists,
-  civic tech
+- **CityCrimeMap** (`web/` in this repo, live at
+  [citycrimemap.us](https://citycrimemap.us)) — worked example of
+  a static map site consuming the library.
+- **SpotCrime / spotcops producer** — replace email ingest with
+  tidycop + SFTP delivery.
+- **HomeStoop** — pull local incidents for user's address, filter
+  by radius.
+- **CrimeGrade.org** — cross-city comparable data for grading.
+- **Standalone library** — pip-installable for researchers,
+  journalists, civic tech.
+
+### Library / product boundary
+
+`tidycop/` (the library) stays city-agnostic and in upstream parity
+with the R `tidycops`. Cities not in upstream R
+`incident_registry.R` belong in a downstream **overlay YAML** loaded
+at call time:
+
+```bash
+tidycop fetch <city> --registry-path /path/to/your-overlay.yaml
+```
+
+or in Python:
+
+```python
+tidycop.get_incidents("yourcity", "2026-04-01", "2026-04-07",
+                      registry_path="/path/to/your-overlay.yaml")
+```
+
+This lets downstream consumers (including `web/` if it ever needed
+a non-upstream city) extend the registry without polluting the
+library. The pre-commit guard at
+`scripts/check_no_downstream_cities.py` enforces this on the
+library half.
 
 ## Credits
 
