@@ -138,17 +138,21 @@ def index_page(summary: list[dict]) -> str:
           <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> {top_cats}</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View map and table →</p>
         </a>""")
+    n = len(summary)
+    city_list_short = ", ".join(c["name"] for c in summary[:6])
+    if n > 6:
+        city_list_short += f", and {n - 6} more"
     html = head(
-        "Five-City Crime Maps | Chicago, Seattle, SF, Detroit, Pittsburgh",
-        "Interactive crime maps and incident tables for Chicago, Seattle, San Francisco, Detroit, and Pittsburgh. Free crime alerts powered by SpotCrime.",
+        f"City Crime Maps | Interactive maps for {n} US cities",
+        f"Interactive crime maps and incident tables for {n} US cities ({city_list_short}). Free crime alerts powered by SpotCrime.",
         f"{BASE_URL}/",
     )
     html += "<body class=\"bg-slate-50 text-slate-900\">"
     html += nav(None, summary)
-    html += """
+    html += f"""
 <main class="max-w-7xl mx-auto px-4 py-10">
   <section class="text-center mb-10">
-    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">Crime maps for five US cities</h1>
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">Crime maps for {n} US cities</h1>
     <p class="text-slate-600 max-w-2xl mx-auto text-lg">Interactive maps and incident tables from open city data. Updated regularly. Want crime alerts for your neighborhood? <a href="https://spotcrime.com" target="_blank" rel="noopener" class="text-brand-700 font-semibold hover:underline">Sign up free at SpotCrime</a>.</p>
   </section>
   <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -173,14 +177,22 @@ def legend(cats: dict[str, int]) -> str:
     return "<div class=\"flex flex-wrap\">" + "".join(items) + "</div>"
 
 
+def _city_with_state(name: str, state: str) -> str:
+    """Avoid duplicating state when name already includes it (e.g. "Washington, DC")."""
+    if name.endswith(f", {state}"):
+        return name
+    return f"{name}, {state}"
+
+
 def city_page(city: dict, summary: list[dict]) -> str:
     name = city["city"]
     slug = city["slug"]
     state = city["state_abbrev"]
     cats = city["category_counts"]
+    name_state = _city_with_state(name, state)
     html = head(
-        f"{name}, {state} Crime Map | Recent Incidents & Free Alerts",
-        f"{name} crime map and incident table — last {city['window_days']} days of reported crime in {name}, {state}. Sign up for free crime alerts.",
+        f"{name_state} Crime Map | Recent Incidents & Free Alerts",
+        f"{name} crime map and incident table — last {city['window_days']} days of reported crime in {name_state}. Sign up for free crime alerts.",
         f"{BASE_URL}/{slug}",
     )
     html += "<body class=\"bg-slate-50 text-slate-900\">"
@@ -188,7 +200,7 @@ def city_page(city: dict, summary: list[dict]) -> str:
     html += f"""
 <main class="max-w-7xl mx-auto px-4 py-8">
   <section class="mb-6">
-    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">{name}, {state} crime map</h1>
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">{name_state} crime map</h1>
     <p class="text-slate-600">{city['row_count']:,} incidents · last {city['window_days']} days · source: <a href="{city['data_source_url']}" target="_blank" rel="noopener" class="text-brand-700 hover:underline">{city['data_source']}</a></p>
   </section>
 

@@ -520,6 +520,38 @@ cities:
         return_geometry: false
         active_from: "2016-01-01"
         active_to: "2025-11-11"
+        # Cleveland NIBRS-style descriptions; legacy and current sources
+        # share the same vocabulary for the buckets we care about.
+        spotcrime_category_map: &cleveland_spotcrime
+          # Violent crimes against persons
+          Murder & Nonnegligent Manslaughter: "Shooting"
+          Negligent Manslaughter: "Shooting"
+          Justifiable Homicide: "Shooting"
+          Simple Assault: "Assault"
+          Aggravated Assault: "Assault"
+          Intimidation: "Assault"
+          # Robbery
+          Robbery: "Robbery"
+          # Burglary
+          Burglary/Breaking and Entering: "Burglary"
+          # Theft
+          All Other Larceny: "Theft"
+          Theft From Motor Vehicle: "Theft"
+          Theft From Building: "Theft"
+          Theft of Motor Vehicle Parts/Accessories: "Theft"
+          Motor Vehicle Theft: "Theft"
+          Stolen Property Offenses: "Theft"
+          Shoplifting: "Theft"
+          Pocket-Picking: "Theft"
+          Purse-Snatching: "Theft"
+          Identity Theft: "Theft"
+          # Arson, vandalism
+          Arson: "Arson"
+          Destruction/Damage/Vandalism of Property: "Vandalism"
+          # Weapons
+          Weapon Law Violations: "Shooting"
+          # All Other Offenses / Family Offenses / drug / traffic / DUI / etc.
+          # — not in 8-cat taxonomy.
         field_map:
           std_source_record_id: ["PrimaryKey", "CaseNumber", "OBJECTID"]
           std_incident_id: ["CaseNumber", "PrimaryKey"]
@@ -553,6 +585,7 @@ cities:
         scope_status: "highest_offense_only"
         scope_note: "Current RMS feed reports the highest offense per incident and omits lesser-included offenses."
         source_note: "City indicates RMS transition around 2025-11-11; pre-cutover records are in legacy source."
+        spotcrime_category_map: *cleveland_spotcrime
         field_map:
           std_source_record_id: ["PrimaryKey", "CaseNumber", "OBJECTID"]
           std_incident_id: ["CaseNumber", "PrimaryKey"]
@@ -594,6 +627,15 @@ cities:
         active_to: null
         scope_status: "part_i_only"
         scope_note: "Portal currently exposes Part I crime only; no Part II counterpart found in catalog."
+        # RPD publishes only Part I crimes (5 categories). All cleanly map.
+        spotcrime_category_map:
+          Larceny: "Theft"
+          Motor Vehicle Theft: "Theft"
+          Aggravated Assault: "Assault"
+          Burglary: "Burglary"
+          Robbery: "Robbery"
+          # No Homicide rows currently in the Part I feed; if/when one
+          # appears, add: Murder: "Shooting" / Manslaughter: "Shooting".
         field_map:
           std_source_record_id: ["Case_Number", "OBJECTID"]
           std_incident_id: ["Case_Number", "OBJECTID"]
@@ -946,6 +988,40 @@ cities:
         active_to: null
         source_status: "rolling_window"
         source_note: "HPD ArcGIS feed is a recent rolling window (observed earliest date 2026-03-29 as of 2026-04-30); all layers are point geometry. Location context is street/block + beat/district, not areal geometries."
+        # NIBRS-clean. Houston exposes NIBRS_Description directly; values are
+        # canonical NIBRS group names ("Simple assault", "Aggravated Assault",
+        # "Murder, non-negligent", etc.). Same vocabulary across all 4 Houston
+        # layers (Person/Property/Society/Group B), so anchor it once.
+        # NOTE: tidycop's _select_source picks only one source per request;
+        # for Houston that's currently group_a_person. Property/Society/
+        # Group-B rows aren't reached today — if/when tidycop grows source
+        # fanout, this map will cover those layers too.
+        spotcrime_category_map: &houston_spotcrime
+          # Violent crimes against persons
+          Murder, non-negligent: "Shooting"
+          Negligent manslaughter: "Shooting"
+          Simple assault: "Assault"
+          Aggravated Assault: "Assault"
+          Intimidation: "Assault"
+          # Robbery, burglary, theft (Group A Property, when reachable)
+          Robbery: "Robbery"
+          Burglary/Breaking & Entering: "Burglary"
+          Pocket-picking: "Theft"
+          Purse-snatching: "Theft"
+          Shoplifting: "Theft"
+          Theft From Building: "Theft"
+          Theft From Coin Operated Machine or Device: "Theft"
+          Theft From Motor Vehicle: "Theft"
+          Theft of Motor Vehicle Parts or Accessories: "Theft"
+          All Other Larceny: "Theft"
+          Motor Vehicle Theft: "Theft"
+          Stolen Property Offenses: "Theft"
+          # Arson, vandalism
+          Arson: "Arson"
+          Destruction/Damage/Vandalism of Property: "Vandalism"
+          # Weapons (NIBRS Group A Society)
+          Weapon Law Violations: "Shooting"
+          # Sex offenses, kidnapping, trafficking, Group B — not in 8-cat taxonomy
         field_map: &houston_fields
           std_source_record_id: ["USER_Incident", "OBJECTID"]
           std_incident_id: ["USER_Incident", "OBJECTID"]
@@ -977,6 +1053,7 @@ cities:
         active_from: "2026-03-29"
         active_to: null
         source_status: "rolling_window"
+        spotcrime_category_map: *houston_spotcrime
         field_map: *houston_fields
       - source_id: "houston_group_a_society"
         display_name: "HPD NIBRS Recent Crime Reports - Group A Society"
@@ -991,6 +1068,7 @@ cities:
         active_from: "2026-03-29"
         active_to: null
         source_status: "rolling_window"
+        spotcrime_category_map: *houston_spotcrime
         field_map: *houston_fields
       - source_id: "houston_group_b"
         display_name: "HPD NIBRS Recent Crime Reports - Group B"
@@ -1005,6 +1083,7 @@ cities:
         active_from: "2026-03-29"
         active_to: null
         source_status: "rolling_window"
+        spotcrime_category_map: *houston_spotcrime
         field_map: *houston_fields
 
   # ──────────────────────────────────────────────────────────────────────────
@@ -1027,6 +1106,19 @@ cities:
         return_geometry: false
         active_from: "2026-01-01"
         active_to: null
+        # DC MPD publishes a tight 9-value OFFENSE vocabulary that maps
+        # cleanly onto the SpotCrime 8-category taxonomy. Same vocabulary
+        # across all 19 per-year layers, so anchor it once.
+        spotcrime_category_map: &dc_spotcrime
+          HOMICIDE: "Shooting"               # fatal shootings collapse here (2026-05-26)
+          ROBBERY: "Robbery"
+          ASSAULT W/DANGEROUS WEAPON: "Assault"
+          BURGLARY: "Burglary"
+          THEFT/OTHER: "Theft"
+          THEFT F/AUTO: "Theft"
+          MOTOR VEHICLE THEFT: "Theft"
+          ARSON: "Arson"
+          # SEX ABUSE is violent but not in the 8-category taxonomy; left null.
         field_map: &dc_fields
           std_source_record_id: ["CCN", "OCTO_RECORD_ID", "OBJECTID"]
           std_incident_id: ["CCN", "OCTO_RECORD_ID"]
@@ -1057,6 +1149,7 @@ cities:
         return_geometry: false
         active_from: "2025-01-01"
         active_to: "2025-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2024"
         display_name: "Crime Incidents - 2024"
@@ -1070,6 +1163,7 @@ cities:
         return_geometry: false
         active_from: "2024-01-01"
         active_to: "2024-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2023"
         display_name: "Crime Incidents - 2023"
@@ -1083,6 +1177,7 @@ cities:
         return_geometry: false
         active_from: "2023-01-01"
         active_to: "2023-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2022"
         display_name: "Crime Incidents - 2022"
@@ -1096,6 +1191,7 @@ cities:
         return_geometry: false
         active_from: "2022-01-01"
         active_to: "2022-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2021"
         display_name: "Crime Incidents - 2021"
@@ -1109,6 +1205,7 @@ cities:
         return_geometry: false
         active_from: "2021-01-01"
         active_to: "2021-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2020"
         display_name: "Crime Incidents - 2020"
@@ -1122,6 +1219,7 @@ cities:
         return_geometry: false
         active_from: "2020-01-01"
         active_to: "2020-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2019"
         display_name: "Crime Incidents - 2019"
@@ -1135,6 +1233,7 @@ cities:
         return_geometry: false
         active_from: "2019-01-01"
         active_to: "2019-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2018"
         display_name: "Crime Incidents - 2018"
@@ -1148,6 +1247,7 @@ cities:
         return_geometry: false
         active_from: "2018-01-01"
         active_to: "2018-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2017"
         display_name: "Crime Incidents - 2017"
@@ -1161,6 +1261,7 @@ cities:
         return_geometry: false
         active_from: "2017-01-01"
         active_to: "2017-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2016"
         display_name: "Crime Incidents - 2016"
@@ -1174,6 +1275,7 @@ cities:
         return_geometry: false
         active_from: "2016-01-01"
         active_to: "2016-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2015"
         display_name: "Crime Incidents - 2015"
@@ -1187,6 +1289,7 @@ cities:
         return_geometry: false
         active_from: "2015-01-01"
         active_to: "2015-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2014"
         display_name: "Crime Incidents - 2014"
@@ -1200,6 +1303,7 @@ cities:
         return_geometry: false
         active_from: "2014-01-01"
         active_to: "2014-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2013"
         display_name: "Crime Incidents - 2013"
@@ -1213,6 +1317,7 @@ cities:
         return_geometry: false
         active_from: "2013-01-01"
         active_to: "2013-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2012"
         display_name: "Crime Incidents - 2012"
@@ -1226,6 +1331,7 @@ cities:
         return_geometry: false
         active_from: "2012-01-01"
         active_to: "2012-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2011"
         display_name: "Crime Incidents - 2011"
@@ -1239,6 +1345,7 @@ cities:
         return_geometry: false
         active_from: "2011-01-01"
         active_to: "2011-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2010"
         display_name: "Crime Incidents - 2010"
@@ -1252,6 +1359,7 @@ cities:
         return_geometry: false
         active_from: "2010-01-01"
         active_to: "2010-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2009"
         display_name: "Crime Incidents - 2009"
@@ -1265,6 +1373,7 @@ cities:
         return_geometry: false
         active_from: "2009-01-01"
         active_to: "2009-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
       - source_id: "dc_crime_2008"
         display_name: "Crime Incidents - 2008"
@@ -1278,6 +1387,7 @@ cities:
         return_geometry: false
         active_from: "2008-01-01"
         active_to: "2008-12-31"
+        spotcrime_category_map: *dc_spotcrime
         field_map: *dc_fields
 
   # ──────────────────────────────────────────────────────────────────────────
@@ -1634,6 +1744,20 @@ cities:
         order_by: '"Report_Date" DESC'
         active_from: null
         active_to: null
+        # NIBRS_Group values — standard NIBRS top-level offense groups.
+        spotcrime_category_map:
+          Homicide Offenses: "Shooting"        # fatal: collapse here (2026-05-26)
+          Assault Offenses: "Assault"
+          Robbery: "Robbery"
+          Breaking & Entering: "Burglary"
+          Larceny/Theft Offenses: "Theft"
+          Motor Vehicle Theft: "Theft"
+          Stolen Property Offenses: "Theft"
+          Arson: "Arson"
+          Destruction/Damage/Vandalism of Property: "Vandalism"
+          Weapon Law Violations: "Shooting"
+          # Sex offenses, drug/narcotics, fraud, kidnapping, trafficking,
+          # animal cruelty, counterfeiting — not in 8-cat taxonomy.
         field_map:
           std_source_record_id: ["Report_ID", "_id"]
           std_incident_id: "Report_ID"

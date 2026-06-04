@@ -1,10 +1,15 @@
-"""Configuration for the five-city crime map site.
+"""Configuration for the CityCrimeMap site (citycrimemap.us).
 
-Cities are the MVP-5 with populated tidycop-spotcrime classifier maps:
-chicago, seattle, san_francisco, detroit, pittsburgh.
+Cities listed here are the ones currently shipped on the site. A city
+belongs in this file only when its tidycop registry source has a
+populated spotcrime_category_map (so the renderer doesn't show a sea
+of Unclassified dots) and the upstream open-data feed is actively
+publishing recent rows.
 
 The window_days field is tuned per-city to compensate for upstream
 publishing lag (chicago/pittsburgh especially lag 2-6 weeks).
+
+Wave order tracked in docs/citymap-rollout-plan.md.
 """
 
 CITIES = [
@@ -80,5 +85,67 @@ CITIES = [
         "spotcrime_alerts_url": "https://spotcrime.com/pa/pittsburgh",
         "data_source": "Western Pennsylvania Regional Data Center (WPRDC)",
         "data_source_url": "https://data.wprdc.org/dataset/uniform-crime-reporting-data",
+    },
+    # ---- Wave 1 (2026-06-04) ----
+    {
+        "key": "washington_dc",
+        "name": "Washington, DC",
+        "slug": "washington-dc",
+        "state_abbrev": "DC",
+        "state_name": "District of Columbia",
+        "timezone": "America/New_York",
+        "window_days": 21,
+        "map_center": [38.9072, -77.0369],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/dc/washington",
+        "data_source": "DC MPD Crime Incidents (ArcGIS)",
+        "data_source_url": "https://opendata.dc.gov/datasets/DCGIS::crime-incidents-in-2026/about",
+    },
+    {
+        "key": "houston",
+        "name": "Houston",
+        "slug": "houston",
+        "state_abbrev": "TX",
+        "state_name": "Texas",
+        "timezone": "America/Chicago",
+        "window_days": 21,
+        "map_center": [29.7604, -95.3698],
+        "map_zoom": 11,
+        "spotcrime_alerts_url": "https://spotcrime.com/tx/houston",
+        "data_source": "HPD NIBRS Recent Crime Reports (ArcGIS)",
+        "data_source_url": "https://mycity2.houstontx.gov/pubgis02/rest/services/HPD/NIBRS_Recent_Crime_Reports/FeatureServer",
+    },
+    # San Antonio: classifier map landed in registry, but SAPD CKAN
+    # dataset publishes only zip_code (no lat/lng, no street address)
+    # so it can't render on a Leaflet map. Library entry stays; the
+    # frontend defers until a geocoded SA feed surfaces. See
+    # docs/citymap-rollout-plan.md § "Blocked".
+    {
+        "key": "rochester",
+        "name": "Rochester",
+        "slug": "rochester",
+        "state_abbrev": "NY",
+        "state_name": "New York",
+        "timezone": "America/New_York",
+        "window_days": 21,
+        "map_center": [43.1566, -77.6088],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/ny/rochester",
+        "data_source": "RPD Part I Crime (ArcGIS)",
+        "data_source_url": "https://data-rpdny.opendata.arcgis.com/datasets/rpd-part-i-crime-2011-to-present",
+    },
+    {
+        "key": "cleveland",
+        "name": "Cleveland",
+        "slug": "cleveland",
+        "state_abbrev": "OH",
+        "state_name": "Ohio",
+        "timezone": "America/New_York",
+        "window_days": 21,
+        "map_center": [41.4993, -81.6944],
+        "map_zoom": 11,
+        "spotcrime_alerts_url": "https://spotcrime.com/oh/cleveland",
+        "data_source": "Cleveland Division of Police P1RMS Crime Incidents (ArcGIS)",
+        "data_source_url": "https://data.clevelandohio.gov/datasets/crime-incidents",
     },
 ]
