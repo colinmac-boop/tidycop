@@ -5,6 +5,25 @@ description = "City-agnostic interface for public police incident data"
 authors = ["Colin Drane <colin@spotcrime.com>"]
 license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/colinmac-boop/tidycop"
+repository = "https://github.com/colinmac-boop/tidycop"
+documentation = "https://github.com/colinmac-boop/tidycop#readme"
+keywords = ["police", "crime", "open-data", "socrata", "arcgis", "ckan"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/colinmac-boop/tidycop/issues"
+"Changelog" = "https://github.com/colinmac-boop/tidycop/blob/main/CHANGELOG.md"
+"Upstream R port" = "https://github.com/Steal-This-Code/tidycops"
 
 [tool.poetry.dependencies]
 python = "^3.10"
