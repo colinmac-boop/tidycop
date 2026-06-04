@@ -43,7 +43,7 @@ logger = logging.getLogger(__name__)
 # Tunables
 # ---------------------------------------------------------------------------
 
-USER_AGENT = "tidycop/0.1.0 (+https://neighborhoodcrimemap.com)"
+USER_AGENT = "tidycop/0.3.0 (+https://citycrimemap.us)"
 PAGE_SIZE = 10_000
 DEFAULT_TIMEOUT = 30.0
 DEFAULT_MAX_RETRIES = 4

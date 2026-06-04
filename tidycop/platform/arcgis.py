@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 # Tunables
 # ---------------------------------------------------------------------------
 
-USER_AGENT = "tidycop/0.1.0 (+https://neighborhoodcrimemap.com)"
+USER_AGENT = "tidycop/0.3.0 (+https://citycrimemap.us)"
 PAGE_SIZE = 2000  # Esri default is often 2000; we honor short pages anyway.
 DEFAULT_TIMEOUT = 30.0
 DEFAULT_MAX_RETRIES = 4

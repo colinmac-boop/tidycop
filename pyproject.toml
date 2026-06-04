@@ -21,6 +21,7 @@ classifiers = [
 ]
 
 [tool.poetry.urls]
+"Project site" = "https://citycrimemap.us"
 "Bug Tracker" = "https://github.com/colinmac-boop/tidycop/issues"
 "Changelog" = "https://github.com/colinmac-boop/tidycop/blob/main/CHANGELOG.md"
 "Upstream R port" = "https://github.com/Steal-This-Code/tidycops"
