@@ -120,6 +120,11 @@ CITIES = [
     # so it can't render on a Leaflet map. Library entry stays; the
     # frontend defers until a geocoded SA feed surfaces. See
     # docs/citymap-rollout-plan.md § "Blocked".
+    # Boston: same problem — ArcGIS Boston_Incidents_View is type=Table
+    # with no geometry and no Lat/Long columns (only BLOCK address
+    # strings). Library entry stays; frontend deferred. Could be
+    # unblocked with geocoding (separate project) or by adding a
+    # second Boston source if upstream R tidycops gains one.
     {
         "key": "rochester",
         "name": "Rochester",
@@ -147,5 +152,49 @@ CITIES = [
         "spotcrime_alerts_url": "https://spotcrime.com/oh/cleveland",
         "data_source": "Cleveland Division of Police P1RMS Crime Incidents (ArcGIS)",
         "data_source_url": "https://data.clevelandohio.gov/datasets/crime-incidents",
+    },
+    # ---- Wave 2 (2026-06-04) ----
+    {
+        "key": "indianapolis",
+        "name": "Indianapolis",
+        "slug": "indianapolis",
+        "state_abbrev": "IN",
+        "state_name": "Indiana",
+        "timezone": "America/Indiana/Indianapolis",
+        "window_days": 21,
+        "map_center": [39.7684, -86.1581],
+        "map_zoom": 11,
+        "spotcrime_alerts_url": "https://spotcrime.com/in/indianapolis",
+        "data_source": "IMPD Incidents Public (ArcGIS)",
+        "data_source_url": "https://data.indy.gov/datasets/IndyGIS::impd-incidents-public/about",
+    },
+    {
+        "key": "hartford",
+        "name": "Hartford",
+        "slug": "hartford",
+        "state_abbrev": "CT",
+        "state_name": "Connecticut",
+        "timezone": "America/New_York",
+        # 10-day reporting lag per registry note; 30d window for density.
+        "window_days": 30,
+        "map_center": [41.7658, -72.6734],
+        "map_zoom": 13,
+        "spotcrime_alerts_url": "https://spotcrime.com/ct/hartford",
+        "data_source": "Hartford Open Data — Police Incidents (ArcGIS)",
+        "data_source_url": "https://data.hartford.gov/datasets/police-incidents",
+    },
+    {
+        "key": "minneapolis",
+        "name": "Minneapolis",
+        "slug": "minneapolis",
+        "state_abbrev": "MN",
+        "state_name": "Minnesota",
+        "timezone": "America/Chicago",
+        "window_days": 21,
+        "map_center": [44.9778, -93.2650],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/mn/minneapolis",
+        "data_source": "MPD Police Incidents — Last 2 Years (ArcGIS)",
+        "data_source_url": "https://opendata.minneapolismn.gov/datasets/cityoflakes::police-incidents-last-2-years/about",
     },
 ]

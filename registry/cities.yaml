@@ -715,6 +715,34 @@ cities:
         active_to: null
         source_status: "rolling_window"
         source_note: "Feed is current-year with about a 10-day lag; it does not contain full historical years."
+        # Hartford publishes NibrsDesc (uppercase NIBRS descriptions). The
+        # ~43% "NOT NIBRS REPORTABLE" rows are admin/non-crime; they stay
+        # null and render as Unclassified.
+        spotcrime_category_map:
+          # Violent
+          MURDER & NON-NEGLIGENT MANSLAUGHTER: "Shooting"
+          SIMPLE ASSAULT: "Assault"
+          AGGRAVATED ASSAULT: "Assault"
+          INTIMIDATION: "Assault"
+          # Robbery
+          ROBBERY: "Robbery"
+          # Burglary
+          BURGLARY/BREAKING AND ENTERING: "Burglary"
+          # Theft
+          ALL OTHER LARCENY: "Theft"
+          THEFT FROM MOTOR VEHICLE: "Theft"
+          THEFT FROM BUILDINGS: "Theft"
+          THEFT OF MOTOR VEHICLE PARTS OR ACCESSORIES: "Theft"
+          MOTOR VEHICLE THEFT: "Theft"
+          SHOPLIFTING: "Theft"
+          PURSE SNATCHING: "Theft"
+          # Arson, vandalism
+          ARSON: "Arson"
+          DESTRUCTIVE/DAMAGE/VANDALISM OF PROPERTY: "Vandalism"
+          # Weapons
+          WEAPON LAW VIOLATIONS: "Shooting"
+          # NOT NIBRS REPORTABLE / ALL OTHER OFFENSES / disorderly / drug /
+          # DUI / fraud / kidnap / family-nonviolent — not in 8-cat taxonomy.
         field_map:
           std_source_record_id: ["CaseNum", "OBJECTID"]
           std_incident_id: ["CaseNum", "OBJECTID"]
@@ -754,6 +782,43 @@ cities:
         return_geometry: false
         active_from: "2020-01-01"
         active_to: null
+        # IMPD NIBRSClassDesc — own naming, but mostly NIBRS-ish. Top 40
+        # categories cover ~90% of rows.
+        spotcrime_category_map:
+          # Violent crimes against persons
+          Murder/Intentional Manslaughter: "Shooting"     # fatal: collapse (2026-05-26)
+          Simple Assault: "Assault"
+          Aggravated Assault: "Assault"
+          Intimidation: "Assault"
+          Harassment: "Assault"
+          Criminal Recklessness: "Assault"
+          # Robbery
+          Robbery: "Robbery"
+          # Burglary / trespass
+          Burglary: "Burglary"
+          Trespass/Residential Entry: "Burglary"
+          # Theft
+          Larceny-Other: "Theft"
+          Larceny From Motor Vehicle: "Theft"
+          Larceny From Building: "Theft"
+          Larceny-Shoplifting: "Theft"
+          Larceny Of Motor Vehicle Parts/Accessories: "Theft"
+          Larceny-Pocket-Picking: "Theft"
+          Larceny-Purse-Snatching: "Theft"
+          Larceny-Embezzlement: "Theft"
+          Motor Vehicle Theft: "Theft"
+          Motor Vehicle Theft-Previous Permission Granted Or Assumed: "Theft"
+          Stolen Property: "Theft"
+          # Arson, vandalism
+          Fire-Arson: "Arson"
+          Vandalism Under $2500 No Hate Crime: "Vandalism"
+          Vandalism Over $2500 Or Hate Crime: "Vandalism"
+          Damage To Property: "Vandalism"
+          # Weapons
+          Weapon/Explosive/Firearm Violation: "Shooting"
+          # Hit-and-run, traffic, DUI, drug, fraud, warrant, missing person,
+          # found/lost property, sex-offender violation, kidnapping, etc.
+          # — not in 8-cat taxonomy.
         field_map:
           std_source_record_id: ["CaseNum", "OBJECTID"]
           std_incident_id: ["CaseNum", "CAD"]
@@ -836,6 +901,47 @@ cities:
         active_to: null
         source_status: "rolling_window"
         source_note: "City feed represents a rolling last-two-years window with daily refresh."
+        # MPD uses internal short codes in `offense`. The classifier matches
+        # case-insensitively; codes are uppercase. Top ~25 codes cover ~98%
+        # of rows. Maps below are based on city's published code dictionary
+        # cross-referenced with current row descriptions.
+        spotcrime_category_map:
+          # Violent (fatal collapses to Shooting per 2026-05-26)
+          MURDR: "Shooting"           # murder
+          # Assaults
+          ASLT1: "Assault"            # 1st degree
+          ASLT2: "Assault"            # assault w/ dangerous weapon
+          ASLT3: "Assault"            # significant bodily harm
+          ASLT4: "Assault"            # less than substantial harm
+          DASLT2: "Assault"           # 2nd-deg domestic
+          DASLT3: "Assault"           # 3rd-deg domestic
+          DASTR: "Assault"            # domestic strangulation
+          # Sex offenses (CSC, CSCR) are violent but outside the 8-cat
+          # taxonomy; left null.
+          # Robberies
+          ROBPER: "Robbery"           # robbery of person
+          ROBPAG: "Robbery"           # robbery person aggravated
+          ROBBIZ: "Robbery"           # robbery of business
+          CARJCK: "Robbery"           # carjacking
+          # Burglary
+          BURGB: "Burglary"           # business
+          BURGD: "Burglary"           # dwelling
+          # Theft
+          THEFT: "Theft"
+          AUTOTH: "Theft"             # auto theft
+          MVTHFT: "Theft"             # motor vehicle theft (variant)
+          TFMV: "Theft"               # theft from motor vehicle
+          TMVP: "Theft"               # theft motor vehicle parts
+          TBLDG: "Theft"              # theft from building
+          TFPER: "Theft"              # theft from person
+          SHOPLF: "Theft"             # shoplifting
+          BIKETF: "Theft"             # bike theft
+          THFTSW: "Theft"             # theft by swindle
+          POCKET: "Theft"             # pocket-picking
+          COINOP: "Theft"             # coin-op theft
+          # Arson
+          ARSON: "Arson"
+          # COMPUT (computer crime) etc. — not in 8-cat taxonomy.
         field_map:
           std_source_record_id: ["caseNumber", "OBJECTID"]
           std_incident_id: "caseNumber"
