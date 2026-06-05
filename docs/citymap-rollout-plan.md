@@ -129,8 +129,8 @@ Living checklist; tick as we ship.
 
 - [x] **Wave 1:** washington_dc, houston, rochester, cleveland (san_antonio classified but blocked by no-coords; see Tier 4)
 - [x] **Wave 2:** indianapolis, hartford, minneapolis (boston blocked by no-coords; see Tier 4)
-- [ ] **Wave 3:** dallas, denver, gainesville, cincinnati, providence, new_orleans
-- [ ] **Blocked:** fort_lauderdale, naperville, new_york, kansas_city, grand_rapids
-- [ ] Index-page rename "Five-City Crime Maps" → "City Crime Maps"
+- [x] **Wave 3:** cincinnati, gainesville, denver (2026-06-05). dallas / providence / new_orleans bumped to Tier 4 — all three publish without lat/lng.
+- [ ] **Blocked:** dallas, providence, new_orleans, fort_lauderdale, naperville, new_york, kansas_city, grand_rapids, san_antonio, boston
+- [x] Index-page rename "Five-City Crime Maps" → "City Crime Maps"
 
 Updated daily-log entries: `memory/2026-06-04.md` (this plan filed).

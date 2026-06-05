@@ -197,4 +197,52 @@ CITIES = [
         "data_source": "MPD Police Incidents — Last 2 Years (ArcGIS)",
         "data_source_url": "https://opendata.minneapolismn.gov/datasets/cityoflakes::police-incidents-last-2-years/about",
     },
+    # ---- Wave 3 (2026-06-05) ----
+    # Coord pre-check dropped dallas / providence / new_orleans — all
+    # three publish without lat/lng. See docs/citymap-rollout-plan.md
+    # § "Blocked". Cincinnati / gainesville / denver passed.
+    {
+        "key": "cincinnati",
+        "name": "Cincinnati",
+        "slug": "cincinnati",
+        "state_abbrev": "OH",
+        "state_name": "Ohio",
+        "timezone": "America/New_York",
+        "window_days": 21,
+        "map_center": [39.1031, -84.5120],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/oh/cincinnati",
+        "data_source": "City of Cincinnati — STARS Crime Incidents (Socrata)",
+        "data_source_url": "https://data.cincinnati-oh.gov/safety/-PDI-Police-Data-Initiative-Crime-Incidents/7aqy-xrv9",
+    },
+    {
+        "key": "gainesville",
+        "name": "Gainesville",
+        "slug": "gainesville",
+        "state_abbrev": "FL",
+        "state_name": "Florida",
+        "timezone": "America/New_York",
+        # Gainesville CFS feed is mostly admin calls; ≈56% of rows
+        # classify into 8-cat. The classified rows are real crimes.
+        "window_days": 21,
+        "map_center": [29.6516, -82.3248],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/fl/gainesville",
+        "data_source": "City of Gainesville — Crime Responses (Socrata)",
+        "data_source_url": "https://data.cityofgainesville.org/Public-Safety/Crime-Responses/gvua-xt9q",
+    },
+    {
+        "key": "denver",
+        "name": "Denver",
+        "slug": "denver",
+        "state_abbrev": "CO",
+        "state_name": "Colorado",
+        "timezone": "America/Denver",
+        "window_days": 14,
+        "map_center": [39.7392, -104.9903],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/co/denver",
+        "data_source": "Denver Open Data — Crime Offenses (ArcGIS)",
+        "data_source_url": "https://opendata-geospatialdenver.hub.arcgis.com/datasets/crime/about",
+    },
 ]

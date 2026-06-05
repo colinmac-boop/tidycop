@@ -347,6 +347,52 @@ cities:
         date_field: "date_from"
         active_from: null
         active_to: "2024-06-02"
+        # Cincinnati legacy uses Ohio Revised Code-style uppercase descriptions
+        # in stars_category / offense. Different vocabulary from the current
+        # STARS feed, so each source ships its own map.
+        spotcrime_category_map:
+          # Theft family
+          THEFT: "Theft"
+          TAKING THE IDENTITY OF ANOTHER: "Theft"
+          UNAUTHORIZED USE OF MOTOR VEHICLE: "Theft"
+          MISUSE OF CREDIT CARD: "Theft"
+          TELECOMMUNICATIONS FRAUD: "Theft"
+          FORGERY: "Theft"
+          EXTORTION: "Theft"
+          # Robbery
+          ROBBERY: "Robbery"
+          AGGRAVATED ROBBERY: "Robbery"
+          # Burglary / B&E
+          BURGLARY: "Burglary"
+          AGGRAVATED BURGLARY: "Burglary"
+          BREAKING AND ENTERING: "Burglary"
+          # Assault family
+          ASSAULT: "Assault"
+          AGGRAVATED ASSAULT: "Assault"
+          FELONIOUS ASSAULT: "Assault"
+          AGG VEH HOM/VEH HOM/VEH MNSLGHTER: "Assault"
+          DOMESTIC VIOLENCE: "Assault"
+          AGGRAVATED MENACING: "Assault"
+          MENACING: "Assault"
+          ABDUCTION: "Assault"
+          KIDNAPPING: "Assault"
+          UNLAWFUL RESTRAINT: "Assault"
+          ENDANGERING CHILDREN: "Assault"
+          AGGRAVATED VEHICULAR ASSAULT: "Assault"
+          ETHNIC INTIMIDATION: "Assault"
+          TELEPHONE HARASSMENT: "Assault"
+          VIOLATE PROTECTION ORDER/CONSENT AGREEMENT: "Assault"
+          # Shooting (firearm-specific) + homicide
+          IMPROPERLY DISCHARGING FIREARM AT/INTO HABITATION/SCHOOL: "Shooting"
+          MURDER: "Shooting"
+          # Vandalism
+          CRIMINAL DAMAGING/ENDANGERING: "Vandalism"
+          CRIMINAL MISCHIEF: "Vandalism"
+          VANDALISM: "Vandalism"
+          VEHICULAR VANDALISM: "Vandalism"
+          DISRUPTING PUBLIC SERVICE: "Vandalism"
+          # Sex offenses, public-indecency, custody, importuning — not in
+          # 8-cat taxonomy.
         field_map:
           std_source_record_id: ["instanceid", "incident_no"]
           std_incident_id: ["incident_no", "instanceid"]
@@ -373,6 +419,19 @@ cities:
         date_field: "datefrom"
         active_from: "2024-06-03"
         active_to: null
+        # Cincinnati current STARS feed: small vocabulary (~10 distinct
+        # values). "Part 2" is a catchall admin bucket (~44% of volume)
+        # that we deliberately leave unmapped so it filters out.
+        spotcrime_category_map:
+          Personal/Other Theft: "Theft"
+          Theft from Auto: "Theft"
+          Auto Theft: "Theft"
+          Burglary/BE: "Burglary"
+          Robbery: "Robbery"
+          Agg Assault: "Assault"
+          Strangulation: "Assault"
+          Homicide: "Shooting"
+          # "Rape" and "Part 2" intentionally unmapped (not in 8-cat).
         field_map:
           std_source_record_id: "incident_no"
           std_incident_id: "incident_no"
@@ -444,6 +503,134 @@ cities:
         date_field: "offense_date"
         active_from: null
         active_to: null
+        # Gainesville Crime Responses feed has no std_offense_category;
+        # mapping is driven entirely by the narrative description. Plenty
+        # of non-criminal admin entries (Suspicious Incident, Information,
+        # Found/Lost Property, Tow Report, Sick/Injured Person, Baker Act,
+        # DCF Investigations, Death Investigation, Assist Citizen/Other
+        # Agency, etc.) are intentionally left unmapped.
+        spotcrime_category_map:
+          # ---- Theft ----
+          Theft Petit - Retail: "Theft"
+          Theft Petit - Other: "Theft"
+          Theft Petit - Bicycle: "Theft"
+          Theft Petit - From Building: "Theft"
+          Theft Petit - From Vehicle/not Parts: "Theft"
+          Theft Petit - From Vehicle (vehicle Parts): "Theft"
+          Theft Petit - Pocket-picking: "Theft"
+          Theft Petit - Purse Snatching: "Theft"
+          Theft Grand - Other: "Theft"
+          Theft Grand - Retail: "Theft"
+          Theft Grand - Bicycle: "Theft"
+          Theft Grand - From Building: "Theft"
+          Theft Grand - Trailer: "Theft"
+          Theft Grand -firearm: "Theft"
+          Theft Grand - Purse Snatching: "Theft"
+          Stolen Vehicle (auto): "Theft"
+          Stolen Vehicle (scooter): "Theft"
+          Stolen Vehicle (motorcycle): "Theft"
+          Stolen Vehicle (other): "Theft"
+          Identity Theft: "Theft"
+          Lost/stolen Vehicle Tag / Decal: "Theft"
+          Fraud (all Other): "Theft"
+          Fraud (obtain Money/property by False Pretense): "Theft"
+          Fraud (credit Card/atm): "Theft"
+          Fraud (forgery): "Theft"
+          Fraud (impersonation): "Theft"
+          Fraud (worthless Check): "Theft"
+          Extortion/threats: "Theft"
+          Have Forged Note in Possession: "Theft"
+          Utter Forged/counterfeit Bill: "Theft"
+          Unlawful Possession of Another`s Personal Id Info: "Theft"
+          Unauthorized Poss Manuf Fl Dl: "Theft"
+          Exploitation of the Elderly/disabled: "Theft"
+          # ---- Robbery ----
+          Robbery: "Robbery"
+          Robbery (armed): "Robbery"
+          Robbery (strong Arm): "Robbery"
+          Robbery by Sudden Snatching: "Robbery"
+          # ---- Burglary ----
+          Burglary to Residence: "Burglary"
+          Burglary to Business: "Burglary"
+          Burglary to Conveyance: "Burglary"
+          Burglary to a Structure: "Burglary"
+          # ---- Assault (battery, simple/agg, domestic, dating, threats) ----
+          Battery (simple): "Assault"
+          Battery (felony): "Assault"
+          Battery (aggravated): "Assault"
+          Battery (police Officer): "Assault"
+          Battery (security Guard/officer): "Assault"
+          Battery (simple – With Other Weapon): "Assault"
+          Battery on a Person 65 Yoa or Older: "Assault"
+          Battery on a Emergency Medicalcare Provider: "Assault"
+          Battery on a School Board Employee: "Assault"
+          Battery on Detention or Commitment Facility Staff (simple): "Assault"
+          Assault (simple): "Assault"
+          Assault (aggravated): "Assault"
+          Aggravated Assault: "Assault"
+          Assault on Leo: "Assault"
+          Affray: "Assault"
+          Domestic Simple Battery: "Assault"
+          Domestic Aggravated Battery: "Assault"
+          Domestic Felony Battery Repeat Offender: "Assault"
+          Domestic Battery by Strangulation: "Assault"
+          Domestic Assault: "Assault"
+          Domestic Aggravated Assault: "Assault"
+          Domestic Disturbance: "Assault"
+          Domestic Simple Stalking: "Assault"
+          Domestic Agg Stalking: "Assault"
+          Domestic Violence Injunction Violation: "Assault"
+          Domestic Violence Violation of Pretrial Release-no Contact: "Assault"
+          Dating Violence Simple Battery: "Assault"
+          Dating Violence Aggravated Battery: "Assault"
+          Dating Violence Aggravated Battery by Strangulation: "Assault"
+          Dating Violence False Imprisonment: "Assault"
+          Dating Violence Simple Assault: "Assault"
+          Dating Violence Aggravated Assault: "Assault"
+          Dating Violence Aggravated Stalking: "Assault"
+          Dating Violence Felony Battery: "Assault"
+          Dating Violence Cyber Stalking: "Assault"
+          Dating Violence Kidnapping: "Assault"
+          Dating Felony Battery Repeat Offender: "Assault"
+          Assault/battery During Burglary: "Assault"
+          Stalking (simple): "Assault"
+          Cyber Stalking: "Assault"
+          Sexual Cyber Harassment: "Assault"
+          Harassment: "Assault"
+          Harassing/ Obscene Calls: "Assault"
+          Threatening Phone Calls: "Assault"
+          Verbal Threats: "Assault"
+          Threats: "Assault"
+          Written Threat to Kill or Injure: "Assault"
+          False Imprisonment(kidnap): "Assault"
+          Child Abuse: "Assault"
+          Child Neglect: "Assault"
+          Crimes Against the Elderly: "Assault"
+          # ---- Shooting / homicide ----
+          Homicide: "Shooting"
+          Homicide (attempted): "Shooting"
+          Suicide: "Shooting"
+          Discharge Firearm in Public: "Shooting"
+          Shooting/throwing a Deadly Missile Into a Dwelling/vehicle: "Shooting"
+          Weapons Violation: "Shooting"
+          Weapons Violation (possessing/concealing): "Shooting"
+          Possess Firearm/concealed Weapon by Convicted Felon: "Shooting"
+          Possession of Firearm/weapon by Delinquent Under 24 Yrs Age: "Shooting"
+          # ---- Arson ----
+          Arson: "Arson"
+          # ---- Vandalism ----
+          Criminal Mischief (misdemeanor): "Vandalism"
+          Criminal Mischief (felony): "Vandalism"
+          Damage to Property: "Vandalism"
+          Damage to City Property: "Vandalism"
+          Trash Dumping: "Vandalism"
+          # Suspicious Incident, Information, Found/Lost Property,
+          # Baker Act, DCF Investigations, Death Investigation, Sick/Injured,
+          # Assist Citizen/Other Agency, Marchman Act, Drug offenses,
+          # DUI, Trespass, Disturbance, Disorderly, Sex offenses,
+          # Resisting, VOP, Traffic, Tow, Lewd/Lasc, Public Indecency,
+          # Open House Party, Loitering, etc. — not in 8-cat taxonomy,
+          # intentionally unmapped.
         field_map:
           std_source_record_id: "id"
           std_incident_id: "id"
@@ -860,6 +1047,66 @@ cities:
         active_to: null
         source_status: "rolling_window"
         source_note: "City publishes a rolling crime feed covering about the previous five years plus the current year-to-date."
+        # Denver has clean per-row categories for ~70% of volume, plus a few
+        # admin catchalls (all-other-crimes, public-disorder, other-crimes-
+        # against-persons, drug-alcohol, white-collar-crime) where the
+        # interesting buckets live one level down in OFFENSE_TYPE_ID.
+        # Classifier checks category first then description, so we ship both.
+        spotcrime_category_map:
+          # ---- Top-level OFFENSE_CATEGORY_ID values ----
+          larceny: "Theft"
+          theft-from-motor-vehicle: "Theft"
+          auto-theft: "Theft"
+          burglary: "Burglary"
+          robbery: "Robbery"
+          aggravated-assault: "Assault"
+          arson: "Arson"
+          murder: "Shooting"
+          # all-other-crimes, public-disorder, drug-alcohol, white-collar,
+          # other-crimes-against-persons — see description-level mapping below.
+
+          # ---- OFFENSE_TYPE_ID drilldown (under catchall categories) ----
+          # under all-other-crimes
+          criminal-trespassing: "Burglary"
+          weapon-unlawful-discharge-of: "Shooting"
+          weapon-poss-illegal-dangerous: "Shooting"
+          weapon-flourishing: "Shooting"
+          weapon-other-viol: "Shooting"
+          weapon-carrying-concealed: "Shooting"
+          weapon-by-prev-offender-powpo: "Shooting"
+          public-fighting: "Assault"
+          # police-interference / police-false-information / public-order-
+          # crimes-other / violation-of-court-order — not in 8-cat.
+
+          # under public-disorder
+          criminal-mischief-mtr-veh: "Vandalism"
+          criminal-mischief-other: "Vandalism"
+          criminal-mischief-graffiti: "Vandalism"
+          threats-to-injure: "Assault"
+          harassment: "Assault"
+          harassment-sexual-in-nature: "Assault"
+          # disturbing-the-peace / prostitution / public-peace-other —
+          # not in 8-cat.
+
+          # under other-crimes-against-persons
+          assault-simple: "Assault"
+          assault-police-simple: "Assault"
+          # indecent-exposure — not in 8-cat.
+
+          # under white-collar-crime
+          fraud-by-telephone: "Theft"
+          fraud-by-use-of-computer: "Theft"
+          fraud-criminal-impersonation: "Theft"
+          fraud-nsf-closed-account: "Theft"
+          theft-unauth-use-of-ftd: "Theft"
+          theft-fail-return-rent-veh: "Theft"
+          forgery-posses-forge-device: "Theft"
+          forgery-poss-of-forged-ftd: "Theft"
+          forgery-checks: "Theft"
+          forgery-poss-of-forged-inst: "Theft"
+
+          # Drug offenses, liquor offenses, contraband-into-prison —
+          # not in 8-cat taxonomy, intentionally unmapped.
         field_map:
           std_source_record_id: ["OFFENSE_ID", "OBJECTID"]
           std_incident_id: ["INCIDENT_ID", "OFFENSE_ID"]

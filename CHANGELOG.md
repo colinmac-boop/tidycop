@@ -8,6 +8,12 @@ versioning is [SemVer](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- **`spotcrime_category_map` for cincinnati (legacy + current), gainesville,
+  and denver** — Wave 3 of the citycrimemap.us rollout. Cincinnati
+  classifies 99.1% of current STARS rows and 97.1% of legacy ORC rows;
+  Denver 81.1%; Gainesville 56.4% (the rest of Gainesville is
+  non-criminal CFS admin entries, intentionally left unmapped).
+  Each map is data only; tidycop itself never reads it. (2026-06-05)
 - **`web/` directory** — CityCrimeMap static site, deployed at
   [citycrimemap.us](https://citycrimemap.us) (Vercel project
   `citymaps`, preview alias `citymaps.vercel.app`). Worked example
