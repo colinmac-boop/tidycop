@@ -245,4 +245,29 @@ CITIES = [
         "data_source": "Denver Open Data — Crime Offenses (ArcGIS)",
         "data_source_url": "https://opendata-geospatialdenver.hub.arcgis.com/datasets/crime/about",
     },
+    # ──────────────────────────────────────────────────────────────────
+    # Wave 4 (geocoded): Boston. BPD publishes block-level addresses but
+    # no coordinates. web/scripts/geocode.py resolves "N BLOCK MAIN ST"
+    # to lat/lng via the Census batch geocoder (cached in
+    # web/data/geocode_cache.sqlite).
+    # ──────────────────────────────────────────────────────────────────
+    {
+        "key": "boston",
+        "name": "Boston",
+        "slug": "boston",
+        "state_abbrev": "MA",
+        "state_name": "Massachusetts",
+        "timezone": "America/New_York",
+        "window_days": 21,
+        "map_center": [42.3601, -71.0589],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/ma/boston",
+        "data_source": "Boston Police Incidents (ArcGIS, geocoded via Census)",
+        "data_source_url": "https://data.boston.gov/dataset/boston-incidents",
+        # BPD’s feed is ~75% non-criminal admin calls (MEDICAL ASSISTANCE,
+        # MV CRASH RESPONSE, INVESTIGATE PERSON, TOWED, etc.). Drop
+        # Unclassified rows pre-geocode to (a) avoid a sea of slate dots
+        # on the map and (b) save Census batch calls.
+        "drop_unclassified": True,
+    },
 ]

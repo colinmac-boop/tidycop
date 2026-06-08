@@ -64,8 +64,8 @@ flagged for Colin, not worked on.
 
 | City | Problem |
 |---|---|
-| **san_antonio** | SAPD CKAN dataset publishes only `Zip_Code` (no lat/lng, no street address). Classifier map is in place (83% classified on 3,000 rows) so the library is useful, but Leaflet needs coordinates so the frontend can't render. Need a geocoded SA feed; meanwhile zip-level aggregation would be the only way to put SA on a map. (Discovered 2026-06-04 during Wave 1 deploy.) |
-| **boston** | ArcGIS `Boston_Incidents_View` is `type=Table` with no geometry and no Lat/Long columns (only `BLOCK` street-string). Can't render markers without geocoding. There's a richer `data.boston.gov` CKAN dataset that does include Lat/Long, but it's not in upstream R `tidycops` so adding it would violate the boundary. Library entry stays; frontend deferred. (Discovered 2026-06-04 during Wave 2 deploy.) |
+| **san_antonio** | All three SAPD CKAN datasets (Offenses, Arrests, Calls for Service) publish only ZIP. Verified 2026-06-08 by walking the schemas: SAPD redacts city-wide. No alternative feed exists (ArcGIS hub publishes only boundary polygons). ZIP-centroid map dots would imply precision we don't have and Colin said no. **Indefinitely blocked.** |
+| ~~boston~~ | **SHIPPED 2026-06-08.** Resolved via Census batch geocoder. BPD publishes block-level `BLOCK` strings ("100 BLOCK MASSACHUSETTS AVE"); `web/scripts/geocode.py` normalizes to "100 MASSACHUSETTS AVE" and resolves to lat/lng via the Census Bureau batch endpoint, cached in `web/data/geocode_cache.sqlite`. 92.5% match rate. 45 unlocated rows surfaced via honest "could not be located" counter on the page. |
 | **fort_lauderdale** | Upstream Socrata feed stopped 2022-09-18. Likely city retired the dataset. Tidycop registry shows it as the only source. Need to either find a replacement dataset or drop the city from the site. |
 | **naperville** | Upstream ArcGIS layer stopped 2024-12-01. Same story — find replacement or drop. |
 | **new_york** | NYPD Socrata complaint feed (`5uac-w243`) returned 0 rows for last 21 days. Either the feed is severely lagged or our query is wrong. Need investigation; NYPD has notoriously slow publishing. |
@@ -130,7 +130,9 @@ Living checklist; tick as we ship.
 - [x] **Wave 1:** washington_dc, houston, rochester, cleveland (san_antonio classified but blocked by no-coords; see Tier 4)
 - [x] **Wave 2:** indianapolis, hartford, minneapolis (boston blocked by no-coords; see Tier 4)
 - [x] **Wave 3:** cincinnati, gainesville, denver (2026-06-05). dallas / providence / new_orleans bumped to Tier 4 — all three publish without lat/lng.
-- [ ] **Blocked:** dallas, providence, new_orleans, fort_lauderdale, naperville, new_york, kansas_city, grand_rapids, san_antonio, boston
+- [x] **Wave 4 (geocoded):** boston (2026-06-08). dallas / providence / new_orleans still pending Census-batch verification.
+- [ ] **Blocked:** fort_lauderdale, naperville, new_york, kansas_city, grand_rapids, san_antonio
+- [ ] **Geocoder candidates (need address-shape survey):** dallas, providence, new_orleans
 - [x] Index-page rename "Five-City Crime Maps" → "City Crime Maps"
 
 Updated daily-log entries: `memory/2026-06-04.md` (this plan filed).

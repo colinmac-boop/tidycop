@@ -861,6 +861,52 @@ cities:
         return_geometry: false
         active_from: null
         active_to: null
+        # Boston exposes two parallel category fields:
+        #   CRIME_CATEGORY  — fine-grained labels ("SIMPLE ASSAULT",
+        #                     "VANDALISM", "DRUG VIOLATION", "MEDICAL
+        #                     ASSISTANCE"). Many are non-crime.
+        #   CRIME           — coarse rollup ("Property", "Violent",
+        #                     "OTHER"). Only useful when paired with
+        #                     the description.
+        # field_map prefers CRIME_CATEGORY then falls back to CRIME, so
+        # std_offense_category can be either form. The classifier checks
+        # category first then description, so mapping both keeps coverage
+        # high. Non-criminal admin labels (medical, towed, lost prop) are
+        # intentionally omitted — they fall through to Unclassified and
+        # the frontend filters them out.
+        spotcrime_category_map:
+          # CRIME_CATEGORY (fine-grained) entries
+          SIMPLE ASSAULT: "Assault"
+          AGGRAVATED ASSAULT: "Assault"
+          CRIMINAL HARASSMENT: "Assault"
+          VANDALISM: "Vandalism"
+          AUTO THEFT: "Theft"
+          AUTO THEFT RECOVERY: "Theft"
+          FIREARM DISCOVERY: "Shooting"
+          FIREARM VIOLATIONS: "Shooting"
+          BALLISTICS: "Shooting"
+          # CRIME (coarse) — fall through to description-level mapping
+          # via the std_offense_description axis the classifier consults
+          # second. Mapping the literal description strings here covers
+          # the "Property"/"Violent" cases.
+          # Larceny / theft descriptions:
+          LARCENY SHOPLIFTING: "Theft"
+          LARCENY ALL OTHERS: "Theft"
+          LARCENY THEFT FROM BUILDING: "Theft"
+          LARCENY THEFT FROM MV - NON-ACCESSORY: "Theft"
+          LARCENY THEFT FROM MV - ACCESSORY: "Theft"
+          LARCENY THEFT OF BICYCLE: "Theft"
+          LARCENY THEFT OF MV PARTS & ACCESSORIES: "Theft"
+          # Burglary / B&E:
+          BURGLARY - RESIDENTIAL: "Burglary"
+          BURGLARY - COMMERICAL: "Burglary"  # sic, BPD's typo
+          BURGLARY - COMMERCIAL: "Burglary"
+          BREAKING AND ENTERING (B&E) MOTOR VEHICLE: "Burglary"
+          # Violence:
+          ASSAULT - AGGRAVATED: "Assault"
+          ASSAULT SIMPLE - BATTERY: "Assault"
+          ROBBERY: "Robbery"
+          # Sex offenses don't have an 8-cat bucket; leave unmapped.
         field_map:
           std_source_record_id: ["INC_NUM", "OBJECTID"]
           std_incident_id: ["INC_NUM", "OBJECTID"]

@@ -202,6 +202,7 @@ def city_page(city: dict, summary: list[dict]) -> str:
   <section class="mb-6">
     <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">{name_state} crime map</h1>
     <p class="text-slate-600">{city['row_count']:,} incidents · last {city['window_days']} days · source: <a href="{city['data_source_url']}" target="_blank" rel="noopener" class="text-brand-700 hover:underline">{city['data_source']}</a></p>
+    {("<p class='text-xs text-slate-500 mt-1'>" + f"{city.get('unlocated_count', 0):,} additional incidents could not be located on the map (address could not be geocoded).</p>") if city.get('unlocated_count') else ""}
   </section>
 
   <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">

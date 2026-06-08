@@ -42,6 +42,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from tidycop import get_incidents  # noqa: E402
 
+from geocode import CITY_CONFIGS as GEOCODE_CITIES, geocode_addresses  # noqa: E402
+
 OUTPUT_DIR = Path(__file__).parent.parent / "data"
 MAX_INCIDENTS_PER_CITY = 1500  # cap payload so /data/*.json stays browser-friendly
 
@@ -84,6 +86,54 @@ def normalize_incident(row: dict) -> dict | None:
     }
 
 
+def _apply_geocoding(city_key: str, df):
+    """For cities with no upstream lat/lng, geocode addresses via Census.
+
+    Mutates ``df`` in place by writing into std_latitude / std_longitude
+    for rows whose normalized address matched. Returns the count of rows
+    that could not be located (for the honest "N could not be located"
+    counter on the page).
+    """
+    from geocode import normalize_address  # local import keeps this opt-in
+
+    if "std_address" not in df.columns:
+        return 0
+    addr_iter = zip(
+        df["std_address"].tolist(),
+        df["std_zip_code"].tolist() if "std_zip_code" in df.columns else [None] * len(df),
+    )
+    addrs = list(addr_iter)
+    results = geocode_addresses(city_key, addrs, verbose=True)
+
+    # Ensure the std_latitude/std_longitude columns exist.
+    if "std_latitude" not in df.columns:
+        df["std_latitude"] = None
+    if "std_longitude" not in df.columns:
+        df["std_longitude"] = None
+
+    located = 0
+    unlocated = 0
+    for idx, (raw, zc) in enumerate(addrs):
+        norm = normalize_address(raw)
+        if norm is None:
+            unlocated += 1
+            continue
+        zc_norm = (str(zc).strip() if zc else None) or None
+        hit = results.get((norm, zc_norm))
+        if hit is None:
+            unlocated += 1
+            continue
+        lat, lng = hit
+        df.iat[idx, df.columns.get_loc("std_latitude")] = lat
+        df.iat[idx, df.columns.get_loc("std_longitude")] = lng
+        located += 1
+    print(
+        f"[geocode] {city_key}: located {located} / {len(addrs)} rows "
+        f"({unlocated} could not be located)"
+    )
+    return unlocated
+
+
 def fetch_city(city: dict) -> dict:
     end = date.today()
     start = end - timedelta(days=city["window_days"])
@@ -95,6 +145,21 @@ def fetch_city(city: dict) -> dict:
         classify_spotcrime=True,
     )
     print(f"[fetch] {city['key']}: {len(df)} raw rows")
+
+    # Optionally drop rows the classifier left Unclassified. Used for
+    # cities whose feed is mostly non-criminal admin (boston).
+    if city.get("drop_unclassified") and "std_spotcrime_category" in df.columns:
+        before = len(df)
+        df = df[df["std_spotcrime_category"].notna()].reset_index(drop=True)
+        print(
+            f"[fetch] {city['key']}: drop_unclassified pruned "
+            f"{before - len(df)} rows, {len(df)} remain"
+        )
+
+    # Cities without upstream coords get a Census geocoding pass.
+    unlocated = 0
+    if city["key"] in GEOCODE_CITIES:
+        unlocated = _apply_geocoding(city["key"], df)
 
     # Drop rows with no coordinates first (try std_latitude then std_lat for compat)
     lat_col = "std_latitude" if "std_latitude" in df.columns else ("std_lat" if "std_lat" in df.columns else None)
@@ -139,6 +204,7 @@ def fetch_city(city: dict) -> dict:
         "window_start": start.isoformat(),
         "window_end": end.isoformat(),
         "row_count": len(incidents),
+        "unlocated_count": unlocated,
         "category_counts": dict(sorted(cat_counts.items(), key=lambda kv: -kv[1])),
         "incidents": incidents,
     }
@@ -163,6 +229,7 @@ def main() -> int:
                 "state_abbrev": city["state_abbrev"],
                 "spotcrime_alerts_url": city["spotcrime_alerts_url"],
                 "row_count": data["row_count"],
+                "unlocated_count": data.get("unlocated_count", 0),
                 "window_days": city["window_days"],
                 "category_counts": data["category_counts"],
                 "generated_at": data["generated_at"],
