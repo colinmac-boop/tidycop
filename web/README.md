@@ -5,9 +5,11 @@ The frontend that consumes `tidycop` and renders city crime maps.
 - **Live:** https://citycrimemap.us (canonical)
 - **Vercel preview:** https://citymaps.vercel.app
 - **Vercel project:** `citymaps` (team `colinmac-1018`)
-- **Cities:** Chicago, Seattle, San Francisco, Detroit, Pittsburgh
-  (the 5 with populated `tidycop-spotcrime` classifier maps as of
-  `tidycop` v0.3.0 / `tidycop-spotcrime` v0.1.0)
+- **Cities (16 live):** Chicago, Seattle, San Francisco, Detroit,
+  Pittsburgh, Washington DC, Houston, Rochester, Cleveland,
+  Indianapolis, Hartford, Minneapolis, Cincinnati, Gainesville,
+  Denver, Boston. See `docs/citymap-rollout-plan.md` for the
+  remaining 9 and their blockers.
 - **Old domain:** `neighborhoodcrimemap.com` — redirects to the canonical
   domain. We own it for squat-prevention.
 
@@ -59,16 +61,35 @@ Open-data portals lag the real world by days to weeks. Windows per
 | Detroit | 14 days | near-real-time |
 | Pittsburgh | 75 days | WPRDC lags ~45 days |
 
+## Scheduled refresh
+
+Weekly automatic refresh via launchd (Mondays 06:00 America/New_York):
+
+- Wrapper: `scripts/refresh_site.sh` (fetch + generate + `vercel --prod`)
+- launchd job: `scripts/us.citycrimemap.refresh.plist`
+- Logs: `logs/refresh.log` (rotates at 2 MB), `logs/launchd.{out,err}`
+- Single-instance lock via `flock` on `logs/refresh.lock`
+
+Install:
+
+```bash
+cp scripts/us.citycrimemap.refresh.plist ~/Library/LaunchAgents/
+launchctl load ~/Library/LaunchAgents/us.citycrimemap.refresh.plist
+launchctl list | grep citycrimemap   # should show the job
+```
+
+The refresh path is **token-free**: tidycop + tidycop-spotcrime are
+rule-based (no LLM calls anywhere). The only network calls are to
+city open-data portals (Socrata / ArcGIS / CKAN), the U.S. Census
+geocoder for cities in `geocode.CITY_CONFIGS`, and Vercel.
+
 ## Known limitations
 
-- Seattle's `tidycop-spotcrime` classifier map keys on NIBRS categories
-  (`BURGLARY/BREAKING&ENTERING`) but the dataset returns `PROPERTY
-  CRIME`, so a chunk of Seattle rows still land in "Unclassified". Fix
-  belongs in `tidycop-spotcrime` registry, not here.
+- Seattle still has ~16% Unclassified after the 2026-06-28 classifier
+  pass: drugs/DUI/all-other-offenses don't fit the 8 SpotCrime
+  buckets. These are visible-but-grey on the map.
 - Tables cap at 1,500 incidents per city per fetch to keep
   `/data/<slug>.json` browser-friendly (largest is Chicago at ~176 KB).
-- No incremental refresh — each fetch overwrites. Cron is not yet
-  scheduled; refresh manually for now.
 
 ## Adding a 6th city
 

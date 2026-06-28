@@ -156,6 +156,22 @@ def fetch_city(city: dict) -> dict:
             f"{before - len(df)} rows, {len(df)} remain"
         )
 
+    # Optionally drop rows whose std_offense_description matches a
+    # known-admin label. Used for seattle ("Not Reportable to NIBRS")
+    # where the feed literally tags admin records but those records
+    # would otherwise bloat the Unclassified bucket.
+    drop_descs = city.get("drop_descriptions")
+    if drop_descs and "std_offense_description" in df.columns:
+        before = len(df)
+        mask = ~df["std_offense_description"].astype(str).str.casefold().isin(
+            {d.casefold() for d in drop_descs}
+        )
+        df = df[mask].reset_index(drop=True)
+        print(
+            f"[fetch] {city['key']}: drop_descriptions pruned "
+            f"{before - len(df)} rows, {len(df)} remain"
+        )
+
     # Cities without upstream coords get a Census geocoding pass.
     unlocated = 0
     if city["key"] in GEOCODE_CITIES:

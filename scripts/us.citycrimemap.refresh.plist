@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  us.citycrimemap.refresh — scheduled refresh + redeploy of citycrimemap.us.
+
+  Install:
+    cp scripts/us.citycrimemap.refresh.plist ~/Library/LaunchAgents/
+    launchctl unload  ~/Library/LaunchAgents/us.citycrimemap.refresh.plist 2>/dev/null || true
+    launchctl load   ~/Library/LaunchAgents/us.citycrimemap.refresh.plist
+
+  Trigger ad-hoc (mostly for testing — normal runs come from StartCalendarInterval):
+    launchctl start us.citycrimemap.refresh
+
+  Inspect:
+    launchctl list | grep citycrimemap
+    tail -F ~/Projects/tidycop/logs/refresh.log
+
+  Schedule: Mondays at 06:00 America/New_York. Mondays because most
+  city open-data portals reconcile on weekends; 06:00 because Vercel
+  is quiet then and Colin sees a fresh site before his workday.
+
+  Token-cost guarantee: the wrapper script invokes only tidycop +
+  tidycop-spotcrime (rule-based, no LLM) plus the Vercel CLI. No
+  OpenAI / Anthropic / etc. API is touched on this schedule.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>us.citycrimemap.refresh</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/mac/Projects/tidycop/scripts/refresh_site.sh</string>
+  </array>
+
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>1</integer>
+    <key>Hour</key>
+    <integer>6</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <!-- Catch missed runs (e.g. iMac was asleep at 06:00 Monday). -->
+  <key>RunAtLoad</key>
+  <false/>
+
+  <!-- launchd-side log fallback (the wrapper has its own log too). -->
+  <key>StandardOutPath</key>
+  <string>/Users/mac/Projects/tidycop/logs/launchd.out</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/mac/Projects/tidycop/logs/launchd.err</string>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/mac/Projects/tidycop</string>
+
+  <!-- Keep launchd's default narrow PATH; the wrapper uses absolute
+       paths for everything, so PATH augmentation isn't necessary. -->
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>/Users/mac</string>
+  </dict>
+</dict>
+</plist>

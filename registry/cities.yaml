@@ -109,6 +109,18 @@ cities:
           "All Other Larceny": "Theft"
           "Pocket-picking": "Theft"
           "Purse-snatching": "Theft"
+          # Theft — fraud + identity theft variants (added 2026-06-28
+          # to close the Seattle Unclassified gap). All of these are
+          # property crimes against a person via deception; SpotCrime
+          # has historically bucketed identity theft + fraud as Theft.
+          "Identity Theft": "Theft"
+          "Stolen Property Offenses": "Theft"
+          "False Pretenses/Swindle/Confidence Game": "Theft"
+          "Credit Card/Automated Teller Machine Fraud": "Theft"
+          "Wire Fraud": "Theft"
+          "Counterfeiting/Forgery": "Theft"
+          "Impersonation": "Theft"
+          "Extortion/Blackmail": "Robbery"
           # Arson
           "Arson": "Arson"
           # Vandalism
@@ -117,6 +129,12 @@ cities:
           # Fondling, Sodomy, Sexual Assault With An Object, Statutory
           # Rape, Incest) intentionally unmapped — no Sexual Assault
           # bucket since 2026-05-20.
+          # Intentionally unmapped: Drug/Narcotic Violations, Drug
+          # Equipment Violations, Driving Under the Influence,
+          # All Other Offenses, Animal Cruelty, Hacking/Computer
+          # Invasion, Trespass — none fit the 8 SpotCrime buckets.
+          # "Not Reportable to NIBRS" is admin noise; the web/
+          # frontend filters it via drop_unclassified (2026-06-28).
         field_map:
           std_source_record_id: "offense_id"
           std_incident_id: "offense_id"

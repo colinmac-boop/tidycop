@@ -42,6 +42,11 @@ CITIES = [
         "spotcrime_alerts_url": "https://spotcrime.com/wa/seattle",
         "data_source": "Seattle Police Department SPD Crime Data",
         "data_source_url": "https://data.seattle.gov/Public-Safety/SPD-Crime-Data-2008-Present/tazs-3rd5",
+        # SPD publishes a "Not Reportable to NIBRS" bucket for admin
+        # records (warrants served, court orders, etc.). Drop pre-map
+        # to stop them inflating the Unclassified count. Added
+        # 2026-06-28 alongside the Seattle classifier expansion.
+        "drop_descriptions": ["Not Reportable to NIBRS"],
     },
     {
         "key": "san_francisco",
