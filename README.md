@@ -325,6 +325,13 @@ library. The pre-commit guard at
 `scripts/check_no_downstream_cities.py` enforces this on the
 library half.
 
+## Companion Packages
+
+| Package | Description |
+|---------|-------------|
+| [`tidycop-spotcrime`](https://github.com/colinmac-boop/tidycop-spotcrime) | SpotCrime 8-category classifier (extracted v0.3.0) |
+| [`tidycop-hotspots`](https://github.com/colinmac-boop/tidycop-hotspots) | Crime hot spot forecasting with random forests (Wheeler & Steenbeek 2021) |
+
 ## Credits
 
 Ported from [tidycops](https://github.com/Steal-This-Code/tidycops) (MIT,
