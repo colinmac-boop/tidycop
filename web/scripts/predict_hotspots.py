@@ -1,0 +1,315 @@
+#!/usr/bin/env python3
+"""Train per-city hot spot models and emit a GeoJSON risk grid.
+
+For each city in cities.py that has ``hotspots_enabled=True``:
+
+1. Load the incidents that fetch_data.py already wrote to
+   ``web/data/<slug>.json``.
+2. Reconstruct a DataFrame in the shape tidycop-hotspots expects
+   (``std_latitude`` / ``std_longitude`` / ``std_datetime``).
+3. Split ~2/3 train / ~1/3 test by date (best we can do with the
+   short windows the site currently pulls).
+4. Build a grid via ``th.from_tidycop`` and train a
+   ``HotspotForest`` on the KDE feature.
+5. Predict per-cell risk on ALL rows (train + test combined) and
+   emit ``web/data/<slug>_hotspots.geojson`` with one Feature per
+   cell whose ``risk`` property is a 0..1-scaled risk score.
+
+Design choices (documented for future readers):
+
+- We fit on training-window KDE only (Wheeler-style leakage-free
+  setup), but the exported risk surface is scored on the KDE built
+  from *all* rows so the user sees where things are hot right now,
+  not where they were hot last month. This is a per-cell inference
+  step: the fitted tree is applied to a freshly-computed feature
+  matrix.
+- Cells with 0 predicted risk are dropped before writing to keep
+  the GeoJSON payload small — a full square grid over Chicago at
+  250 m has ~15k cells, but only a few hundred carry meaningful
+  risk.
+- We DON'T use the CityCrimeMap-side incidents as the whole training
+  set forever. Once we have longer history stored somewhere, the
+  right move is to train on 6-12 months at a time. This script is
+  designed to swap in that training set later via
+  ``TRAIN_HISTORY_LOADER``.
+
+Run with the tidycop venv:
+  ~/Projects/tidycop/.venv/bin/python web/scripts/predict_hotspots.py
+"""
+from __future__ import annotations
+
+import json
+import math
+import sys
+from pathlib import Path
+from datetime import datetime, timezone
+
+import numpy as np
+import pandas as pd
+import geopandas as gpd
+from shapely.geometry import mapping
+
+sys.path.insert(0, str(Path(__file__).parent))
+
+from cities import CITIES  # type: ignore
+
+import tidycop_hotspots as th  # noqa: E402
+
+DATA_DIR = Path(__file__).parent.parent / "data"
+
+# City-level knobs. Only cities present here get hotspot layers.
+# Grid cell size trades off resolution vs. payload size / model
+# variance. 250 m is Wheeler's default for DC-scale cities; 300 m
+# is a comfortable default for cities with fewer than a few
+# thousand incidents in the window.
+HOTSPOT_CONFIG: dict[str, dict] = {
+    "chicago": {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+}
+
+# Minimum share of the window that must have gone by before we
+# split anything into "test". Guards against a scenario where the
+# window is short and all the data lives in the last few days.
+_MIN_TEST_ROWS = 30
+
+
+def _load_incidents(slug: str) -> pd.DataFrame | None:
+    path = DATA_DIR / f"{slug}.json"
+    if not path.exists():
+        return None
+    payload = json.loads(path.read_text())
+    incidents = payload.get("incidents") or []
+    if not incidents:
+        return None
+    df = pd.DataFrame(incidents)
+    df = df.rename(columns={"lat": "std_latitude", "lng": "std_longitude"})
+    if "datetime" in df.columns:
+        df["std_datetime"] = pd.to_datetime(df["datetime"], errors="coerce", utc=True)
+    return df
+
+
+def _pick_train_end(df: pd.DataFrame) -> pd.Timestamp | None:
+    """Pick a 2/3 cutoff by row count that also leaves a real test set."""
+    if "std_datetime" not in df.columns:
+        return None
+    dt = df["std_datetime"].dropna().sort_values()
+    if len(dt) < 50:
+        return None
+    idx = int(len(dt) * 2 / 3)
+    candidate = dt.iloc[idx]
+    # Sanity-check that the test side has at least _MIN_TEST_ROWS
+    test_rows = (df["std_datetime"] > candidate).sum()
+    if test_rows < _MIN_TEST_ROWS:
+        return None
+    return candidate
+
+
+def _normalize_risk(pred: np.ndarray) -> np.ndarray:
+    """0..1 scaling that preserves relative contrast.
+
+    Uses max as the reference point when the distribution is not
+    too skewed; falls back to the 99.5th percentile only when a
+    single monster cell dominates (>3× the p95 value). This keeps
+    the risk surface from collapsing to a plateau of 1.0.
+    """
+    if len(pred) == 0:
+        return pred
+    hi = float(pred.max())
+    if hi <= 0:
+        return np.zeros_like(pred)
+    if len(pred) > 200:
+        p95 = float(np.percentile(pred, 95))
+        if p95 > 0 and hi > 3.0 * p95:
+            # heavy tail — clip to p99.5 so the map has contrast
+            hi = float(np.percentile(pred, 99.5))
+            if hi <= 0:
+                hi = float(pred.max())
+    return np.clip(pred / hi, 0.0, 1.0)
+
+
+def predict_city(city: dict, cfg: dict) -> dict | None:
+    slug = city["slug"]
+    key = city["key"]
+    df = _load_incidents(slug)
+    if df is None or len(df) < 100:
+        print(f"[hotspots] {key}: skip (need ≥100 incidents, got {0 if df is None else len(df)})")
+        return None
+
+    print(f"[hotspots] {key}: {len(df)} incidents")
+
+    train_end = _pick_train_end(df)
+    if train_end is None:
+        # Not enough temporal spread → treat it all as training
+        bundle = th.from_tidycop(
+            df,
+            cell_size_m=cfg["cell_size_m"],
+            bandwidth_m=cfg["bandwidth_m"],
+        )
+        print(f"[hotspots] {key}: no split (short window), fitting on full set")
+    else:
+        bundle = th.from_tidycop(
+            df,
+            train_end=train_end.isoformat(),
+            cell_size_m=cfg["cell_size_m"],
+            bandwidth_m=cfg["bandwidth_m"],
+        )
+        print(
+            f"[hotspots] {key}: split @ {train_end.date()} "
+            f"train={bundle.metadata['train_rows']} test={bundle.metadata['test_rows']}"
+        )
+
+    if bundle.y_train.sum() == 0:
+        print(f"[hotspots] {key}: no training targets in grid, skipping")
+        return None
+
+    # KDE from scipy comes out in the 1e-10 range for city-scale
+    # grids — rescale to something the RF can actually split on.
+    # Log1p keeps zeros as zeros and compresses the heavy tail.
+    def _rescale(s):
+        v = s.to_numpy(dtype=float)
+        if v.max() > 0:
+            v = v / v.max()
+        return np.log1p(v * 1000.0)
+
+    # Add centroid X/Y and lagged train count as features (Wheeler
+    # 2020: XY coords are legitimate when we're forecasting the
+    # same city we trained on).
+    # Compute centroids in a metric CRS to silence the geographic-
+    # CRS warning and get real metres, then use whatever units the
+    # RF wants — relative ordering is what matters here.
+    metric_grid = bundle.grid.to_crs(3857)
+    centroids = metric_grid.geometry.centroid
+    feature_matrix = bundle.features.copy()
+    feature_matrix["kde_train"] = _rescale(feature_matrix["kde_train"])
+    feature_matrix["cent_x"] = centroids.x.to_numpy()
+    feature_matrix["cent_y"] = centroids.y.to_numpy()
+    feature_matrix["train_count"] = bundle.y_train.to_numpy()
+
+    # Train on the enriched features
+    model = th.HotspotForest(
+        n_estimators=400,
+        max_depth=None,
+        min_samples_leaf=5,
+        random_state=42,
+    )
+    model.fit(feature_matrix, bundle.y_train)
+
+    # For inference, refresh KDE against *all* rows so the risk
+    # surface reflects "now", not just the training slice.
+    all_points = gpd.GeoDataFrame(
+        geometry=gpd.points_from_xy(
+            df["std_longitude"].dropna().to_numpy(),
+            df["std_latitude"].dropna().to_numpy(),
+        ),
+        crs="EPSG:4326",
+    )
+    if len(all_points) > 0:
+        current_kde = th.kernel_density(
+            bundle.grid, all_points, bandwidth_m=cfg["bandwidth_m"]
+        )
+        infer_features = feature_matrix.copy()
+        infer_features["kde_train"] = _rescale(current_kde)
+    else:
+        infer_features = feature_matrix
+
+    pred = np.asarray(model.predict(infer_features))
+    risk = _normalize_risk(pred)
+
+    # Report a validation number if we had a test split
+    metrics: dict = {}
+    if bundle.y_test is not None and bundle.y_test.sum() > 0:
+        try:
+            pai = th.predictive_accuracy_index(
+                bundle.y_test.to_numpy(),
+                pred,
+                area_pct=cfg.get("top_pct", 0.10),
+            )
+            metrics["pai"] = float(pai)
+            print(f"[hotspots] {key}: PAI@{int(cfg.get('top_pct', 0.10)*100)}% = {pai:.2f}")
+        except Exception as e:  # noqa: BLE001
+            print(f"[hotspots] {key}: PAI failed ({e})")
+
+    # Ensure WGS84 for Leaflet consumption, then keep only the
+    # top ~10% of positive-risk cells so the overlay stays
+    # compact and reads as "where things are hot" instead of
+    # "every cell in the grid."
+    grid = bundle.grid.to_crs("EPSG:4326").copy()
+    grid["risk"] = risk
+    positive = grid[grid["risk"] > 0].copy()
+    if len(positive) == 0:
+        print(f"[hotspots] {key}: no positive-risk cells, skipping")
+        return None
+    top_n = max(1, int(len(positive) * 0.10))
+    hot = positive.nlargest(top_n, "risk")
+    print(f"[hotspots] {key}: emitting top {len(hot)} of {len(positive)} positive cells")
+
+    features = []
+    for _, row in hot.iterrows():
+        geom = row.geometry
+        if geom is None or geom.is_empty:
+            continue
+        features.append({
+            "type": "Feature",
+            "properties": {
+                "cell_id": int(row["cell_id"]),
+                "risk": round(float(row["risk"]), 4),
+            },
+            "geometry": mapping(geom),
+        })
+
+    payload = {
+        "type": "FeatureCollection",
+        "features": features,
+        "properties": {
+            "city": city["name"],
+            "slug": slug,
+            "generated_at": datetime.now(timezone.utc).isoformat(),
+            "cell_size_m": cfg["cell_size_m"],
+            "bandwidth_m": cfg["bandwidth_m"],
+            "grid_shape": "square",
+            "model": "RandomForestRegressor",
+            "n_train": bundle.metadata["train_rows"],
+            "n_test": bundle.metadata["test_rows"],
+            "n_cells_total": int(len(grid)),
+            "n_cells_hot": len(features),
+            "metrics": metrics,
+            "notes": (
+                "Risk = model-predicted incident count per cell, "
+                "clipped at the 99th percentile and scaled to [0, 1]. "
+                "Training window is ~2/3 of the fetched data by date. "
+                "Inference re-scores against KDE of the full window."
+            ),
+        },
+    }
+    return payload
+
+
+def main() -> int:
+    out_summary = []
+    for city in CITIES:
+        key = city["key"]
+        cfg = HOTSPOT_CONFIG.get(key)
+        if not cfg:
+            continue
+        try:
+            payload = predict_city(city, cfg)
+        except Exception as e:  # noqa: BLE001
+            print(f"[hotspots] {key}: ERROR {e}", file=sys.stderr)
+            import traceback; traceback.print_exc(file=sys.stderr)
+            continue
+        if payload is None:
+            continue
+        out_path = DATA_DIR / f"{city['slug']}_hotspots.geojson"
+        out_path.write_text(json.dumps(payload, separators=(",", ":")))
+        print(f"[hotspots] {key}: wrote {out_path.name} ({len(payload['features'])} cells)")
+        out_summary.append({
+            "slug": city["slug"],
+            "cells": len(payload["features"]),
+            "metrics": payload["properties"].get("metrics", {}),
+        })
+
+    print(f"[hotspots] done: {len(out_summary)} cities")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -19,10 +19,15 @@ The frontend that consumes `tidycop` and renders city crime maps.
 # 1. pull fresh data via the tidycop library
 .venv/bin/python web/scripts/fetch_data.py
 
-# 2. regenerate HTML (uses BASE_URL=https://citycrimemap.us by default)
+# 2. (optional) train hot spot models and emit risk-grid GeoJSON
+#    Only cities present in HOTSPOT_CONFIG (predict_hotspots.py)
+#    get a hotspots file; other cities are unaffected.
+.venv/bin/python web/scripts/predict_hotspots.py
+
+# 3. regenerate HTML (uses BASE_URL=https://citycrimemap.us by default)
 .venv/bin/python web/scripts/generate_site.py
 
-# 3. push to Vercel
+# 4. push to Vercel
 cd web/pages && vercel --prod
 ```
 
@@ -37,9 +42,10 @@ BASE_URL=https://citymaps.vercel.app .venv/bin/python web/scripts/generate_site.
 ```
 web/
 ├── scripts/
-│   ├── cities.py          # the 5 cities + windows + map centers + alerts URLs
-│   ├── fetch_data.py      # tidycop → data/<slug>.json (+ _summary.json)
-│   └── generate_site.py   # data → pages/<slug>.html + pages/index.html
+│   ├── cities.py             # cities + windows + map centers + alerts URLs
+│   ├── fetch_data.py         # tidycop → data/<slug>.json (+ _summary.json)
+│   ├── predict_hotspots.py   # tidycop-hotspots → data/<slug>_hotspots.geojson
+│   └── generate_site.py      # data → pages/<slug>.html + pages/index.html
 ├── data/                  # raw fetched JSON (committed for traceability)
 └── pages/                 # static site root deployed to Vercel
     ├── index.html
@@ -61,11 +67,41 @@ Open-data portals lag the real world by days to weeks. Windows per
 | Detroit | 14 days | near-real-time |
 | Pittsburgh | 75 days | WPRDC lags ~45 days |
 
+## Predicted risk overlay (tidycop-hotspots)
+
+As of 2026-07-03, Chicago's page has a toggleable **Predicted risk**
+layer built with [tidycop-hotspots](https://github.com/colinmac-boop/tidycop-hotspots).
+
+- **Script:** `web/scripts/predict_hotspots.py`. Reads the already-
+  fetched `web/data/<slug>.json`, splits ~2/3 train / ~1/3 test by
+  date, trains a `HotspotForest` (random-forest regressor), and
+  writes `web/data/<slug>_hotspots.geojson` — top 10% of
+  positive-risk cells, ~55 cells for Chicago at 300 m.
+- **Adding a city:** add one dict entry to `HOTSPOT_CONFIG` at the
+  top of `predict_hotspots.py`:
+  ```python
+  HOTSPOT_CONFIG = {
+      "chicago":    {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+      "detroit":    {"cell_size_m": 250, "bandwidth_m": 400, "top_pct": 0.10},
+      # ...
+  }
+  ```
+- **Frontend:** `generate_site.py` emits identical JS on every
+  page; the JS tries to fetch the hotspots GeoJSON and silently
+  no-ops on 404. So new cities light up automatically once they
+  have a hotspots file.
+- **Validation:** PAI@10% is printed at training time and stored
+  in the GeoJSON `properties.metrics` so it's visible from the
+  page's "What is this?" popup.
+- **Method reference:** Wheeler & Steenbeek (2021), "Mapping the
+  Risk Terrain for Crime Using Machine Learning," *Journal of
+  Quantitative Criminology* 37(2): 445-480.
+
 ## Scheduled refresh
 
 Weekly automatic refresh via launchd (Mondays 06:00 America/New_York):
 
-- Wrapper: `scripts/refresh_site.sh` (fetch + generate + `vercel --prod`)
+- Wrapper: `scripts/refresh_site.sh` (fetch + predict + generate + `vercel --prod`)
 - launchd job: `scripts/us.citycrimemap.refresh.plist`
 - Logs: `logs/refresh.log` (rotates at 2 MB), `logs/launchd.{out,err}`
 - Single-instance lock via `flock` on `logs/refresh.lock`

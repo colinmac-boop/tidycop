@@ -3,8 +3,9 @@
 #
 # Pipeline:
 #   1) fetch fresh incidents via tidycop (rule-based, no LLM, no tokens)
-#   2) regenerate static HTML
-#   3) deploy to Vercel production
+#   2) train hot spot models and emit per-city risk-grid GeoJSON
+#   3) regenerate static HTML
+#   4) deploy to Vercel production
 #
 # Designed for launchd. Cron-equivalent without surprises:
 #   * absolute paths everywhere (launchd has a minimal PATH)
@@ -63,13 +64,18 @@ exec_with_lock
 
   cd "$REPO"
 
-  echo "[refresh] step 1/3 fetch_data.py"
+  echo "[refresh] step 1/4 fetch_data.py"
   "$VENV_PY" web/scripts/fetch_data.py
 
-  echo "[refresh] step 2/3 generate_site.py"
+  echo "[refresh] step 2/4 predict_hotspots.py"
+  # Non-fatal: hotspots are an add-on layer, not the whole site.
+  "$VENV_PY" web/scripts/predict_hotspots.py || \
+    echo "[refresh] predict_hotspots.py failed — continuing without fresh hotspots"
+
+  echo "[refresh] step 3/4 generate_site.py"
   "$VENV_PY" web/scripts/generate_site.py
 
-  echo "[refresh] step 3/3 vercel --prod"
+  echo "[refresh] step 4/4 vercel --prod"
   cd web/pages
   # --yes accepts the project link non-interactively; .vercel/project.json
   # already pins the citymaps project so no prompts should appear.

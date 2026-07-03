@@ -208,6 +208,11 @@ def city_page(city: dict, summary: list[dict]) -> str:
   <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
     <div id="map" style="height: 520px;" class="rounded"></div>
     <div class="mt-3">{legend(cats)}</div>
+    <div id="hotspotInfo" class="mt-2 text-xs text-slate-500 hidden">
+      <span class="inline-block w-3 h-3 align-middle mr-1" style="background:#dc2626;opacity:0.5;border:1px solid #7f1d1d;"></span>
+      Predicted risk overlay: top 10% of grid cells by modelled risk. Toggle via the layers control on the map.
+      <a href="#" id="hotspotHelp" class="text-brand-700 hover:underline">What is this?</a>
+    </div>
   </section>
 
   <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
@@ -265,6 +270,8 @@ def city_page(city: dict, summary: list[dict]) -> str:
     maxZoom: 19,
     attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   }}).addTo(map);
+
+  const incidentLayer = L.layerGroup();
   for (const inc of incidents) {{
     const color = CAT_COLORS[inc.category || 'Unclassified'] || '#64748b';
     const m = L.circleMarker([inc.lat, inc.lng], {{
@@ -276,8 +283,64 @@ def city_page(city: dict, summary: list[dict]) -> str:
       <div class="text-slate-600">${{inc.address || ''}}</div>
       <div class="text-slate-500 text-xs">${{inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}}</div>
     </div>`);
-    m.addTo(map);
+    incidentLayer.addLayer(m);
   }}
+  incidentLayer.addTo(map);
+
+  // ── Predicted risk overlay (optional, per-city) ───────────────────
+  try {{
+    const hRes = await fetch('./data/{slug}_hotspots.geojson');
+    if (hRes.ok) {{
+      const hGeo = await hRes.json();
+      function riskColor(r) {{
+        if (r >= 0.85) return '#7f1d1d';
+        if (r >= 0.65) return '#b91c1c';
+        if (r >= 0.45) return '#dc2626';
+        return '#f87171';
+      }}
+      const hotspotLayer = L.geoJSON(hGeo, {{
+        style: (feature) => ({{
+          fillColor: riskColor(feature.properties.risk),
+          fillOpacity: 0.45,
+          color: riskColor(feature.properties.risk),
+          weight: 0.5,
+          opacity: 0.8,
+        }}),
+        onEachFeature: (feature, layer) => {{
+          const r = feature.properties.risk;
+          layer.bindPopup(
+            `<div class="text-sm"><div class="font-bold">Predicted risk</div>` +
+            `<div>Score: ${{(r * 100).toFixed(0)}} / 100</div>` +
+            `<div class="text-slate-500 text-xs">Random-forest model on ${{hGeo.properties.n_train || '?'}} training incidents</div></div>`
+          );
+        }},
+      }});
+      L.control.layers(null, {{
+        'Incidents': incidentLayer,
+        'Predicted risk': hotspotLayer,
+      }}, {{ collapsed: false }}).addTo(map);
+      hotspotLayer.addTo(map);
+      document.getElementById('hotspotInfo').classList.remove('hidden');
+      const help = document.getElementById('hotspotHelp');
+      if (help) {{
+        help.addEventListener('click', (e) => {{
+          e.preventDefault();
+          const pai = hGeo.properties.metrics && hGeo.properties.metrics.pai;
+          const paiStr = pai ? `PAI = ${{pai.toFixed(2)}} (a random baseline is 1.0)` : 'Validation PAI not available.';
+          alert(
+            'The Predicted risk layer highlights grid cells the model rates as ' +
+            'most likely to see incidents in the near future.\n\n' +
+            'Method: random-forest regression on kernel density, XY, and ' +
+            'lagged counts (Wheeler & Steenbeek 2021, "Mapping the Risk ' +
+            'Terrain for Crime Using Machine Learning").\n\n' +
+            paiStr + '\n\n' +
+            'Grid: ' + (hGeo.properties.cell_size_m || '?') + 'm cells, ' +
+            (hGeo.properties.n_cells_hot || 0) + ' shown.'
+          );
+        }});
+      }}
+    }}
+  }} catch (e) {{ /* hotspots file not present for this city; ignore */ }}
 
   // ── Table ───────────────────────────────────────────────────────────────
   const PAGE_SIZE = 25;
@@ -361,6 +424,11 @@ def main() -> int:
             print(f"[gen] skip {slug}: no data file")
             continue
         shutil.copy(src, OUT_DATA_DIR / f"{slug}.json")
+        # Copy optional hotspots layer if predict_hotspots.py has emitted one
+        hs_src = DATA_DIR / f"{slug}_hotspots.geojson"
+        if hs_src.exists():
+            shutil.copy(hs_src, OUT_DATA_DIR / f"{slug}_hotspots.geojson")
+            print(f"[gen] copied {slug}_hotspots.geojson")
         full = json.loads(src.read_text())
         page_html = city_page(full, summary)
         (OUT_DIR / f"{slug}.html").write_text(page_html)

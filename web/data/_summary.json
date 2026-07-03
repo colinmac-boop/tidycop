@@ -9,76 +9,76 @@
       "unlocated_count": 0,
       "window_days": 45,
       "category_counts": {
-        "Assault": 283,
-        "Theft": 273,
-        "Unclassified": 149,
-        "Vandalism": 133,
-        "Burglary": 111,
-        "Shooting": 28,
-        "Robbery": 22,
+        "Theft": 295,
+        "Assault": 288,
+        "Unclassified": 171,
+        "Vandalism": 140,
+        "Burglary": 74,
+        "Robbery": 17,
+        "Shooting": 14,
         "Arson": 1
       },
-      "generated_at": "2026-06-29T10:00:07.817093+00:00"
+      "generated_at": "2026-07-03T16:18:44.952312+00:00"
     },
     {
       "slug": "seattle",
       "name": "Seattle",
       "state_abbrev": "WA",
       "spotcrime_alerts_url": "https://spotcrime.com/wa/seattle",
-      "row_count": 742,
+      "row_count": 748,
       "unlocated_count": 0,
       "window_days": 14,
       "category_counts": {
-        "Theft": 354,
-        "Unclassified": 128,
-        "Assault": 80,
-        "Vandalism": 72,
-        "Burglary": 68,
-        "Shooting": 19,
-        "Robbery": 16,
-        "Arson": 5
+        "Theft": 387,
+        "Unclassified": 97,
+        "Assault": 92,
+        "Vandalism": 77,
+        "Burglary": 62,
+        "Robbery": 18,
+        "Shooting": 12,
+        "Arson": 3
       },
-      "generated_at": "2026-06-29T10:00:09.613034+00:00"
+      "generated_at": "2026-07-03T16:18:45.571368+00:00"
     },
     {
       "slug": "san-francisco",
       "name": "San Francisco",
       "state_abbrev": "CA",
       "spotcrime_alerts_url": "https://spotcrime.com/ca/san-francisco",
-      "row_count": 968,
+      "row_count": 978,
       "unlocated_count": 0,
       "window_days": 14,
       "category_counts": {
-        "Unclassified": 607,
-        "Theft": 165,
-        "Assault": 73,
-        "Vandalism": 54,
-        "Burglary": 32,
-        "Robbery": 19,
-        "Shooting": 16,
-        "Arson": 2
+        "Unclassified": 542,
+        "Theft": 200,
+        "Assault": 105,
+        "Vandalism": 68,
+        "Burglary": 33,
+        "Robbery": 15,
+        "Shooting": 14,
+        "Arson": 1
       },
-      "generated_at": "2026-06-29T10:00:12.019001+00:00"
+      "generated_at": "2026-07-03T16:18:46.141254+00:00"
     },
     {
       "slug": "detroit",
       "name": "Detroit",
       "state_abbrev": "MI",
       "spotcrime_alerts_url": "https://spotcrime.com/mi/detroit",
-      "row_count": 998,
+      "row_count": 995,
       "unlocated_count": 0,
       "window_days": 14,
       "category_counts": {
-        "Assault": 333,
-        "Unclassified": 245,
-        "Theft": 199,
-        "Vandalism": 127,
-        "Burglary": 50,
-        "Shooting": 30,
+        "Assault": 349,
+        "Unclassified": 207,
+        "Theft": 177,
+        "Vandalism": 156,
+        "Shooting": 52,
+        "Burglary": 39,
         "Robbery": 11,
-        "Arson": 3
+        "Arson": 4
       },
-      "generated_at": "2026-06-29T10:00:13.950393+00:00"
+      "generated_at": "2026-07-03T16:18:47.042336+00:00"
     },
     {
       "slug": "pittsburgh",
@@ -89,15 +89,15 @@
       "unlocated_count": 0,
       "window_days": 75,
       "category_counts": {
-        "Unclassified": 485,
-        "Theft": 179,
+        "Unclassified": 484,
+        "Theft": 180,
         "Assault": 167,
-        "Vandalism": 109,
-        "Shooting": 26,
+        "Vandalism": 110,
+        "Shooting": 25,
         "Burglary": 16,
         "Robbery": 10
       },
-      "generated_at": "2026-06-29T10:00:14.542183+00:00"
+      "generated_at": "2026-07-03T16:18:54.573678+00:00"
     },
     {
       "slug": "washington-dc",
@@ -108,14 +108,14 @@
       "unlocated_count": 0,
       "window_days": 21,
       "category_counts": {
-        "Theft": 829,
+        "Theft": 820,
         "Robbery": 74,
-        "Assault": 49,
-        "Burglary": 37,
-        "Shooting": 7,
-        "Unclassified": 4
+        "Assault": 55,
+        "Burglary": 38,
+        "Unclassified": 8,
+        "Shooting": 5
       },
-      "generated_at": "2026-06-29T10:00:15.098357+00:00"
+      "generated_at": "2026-07-03T16:18:55.150902+00:00"
     },
     {
       "slug": "houston",
@@ -126,28 +126,28 @@
       "unlocated_count": 0,
       "window_days": 21,
       "category_counts": {
-        "Assault": 960,
-        "Unclassified": 37,
-        "Shooting": 3
+        "Assault": 964,
+        "Unclassified": 34,
+        "Shooting": 2
       },
-      "generated_at": "2026-06-29T10:00:15.798253+00:00"
+      "generated_at": "2026-07-03T16:18:55.904657+00:00"
     },
     {
       "slug": "rochester",
       "name": "Rochester",
       "state_abbrev": "NY",
       "spotcrime_alerts_url": "https://spotcrime.com/ny/rochester",
-      "row_count": 279,
+      "row_count": 311,
       "unlocated_count": 0,
       "window_days": 21,
       "category_counts": {
-        "Theft": 197,
-        "Assault": 50,
-        "Robbery": 16,
-        "Burglary": 14,
+        "Theft": 221,
+        "Assault": 51,
+        "Burglary": 19,
+        "Robbery": 18,
         "Unclassified": 2
       },
-      "generated_at": "2026-06-29T10:00:16.164329+00:00"
+      "generated_at": "2026-07-03T16:18:56.320015+00:00"
     },
     {
       "slug": "cleveland",
@@ -158,55 +158,55 @@
       "unlocated_count": 0,
       "window_days": 21,
       "category_counts": {
-        "Unclassified": 379,
-        "Assault": 262,
-        "Theft": 158,
-        "Vandalism": 93,
-        "Burglary": 43,
-        "Shooting": 30,
-        "Robbery": 27,
-        "Arson": 4
+        "Unclassified": 372,
+        "Assault": 267,
+        "Theft": 167,
+        "Vandalism": 90,
+        "Burglary": 45,
+        "Shooting": 28,
+        "Robbery": 26,
+        "Arson": 1
       },
-      "generated_at": "2026-06-29T10:00:16.970165+00:00"
+      "generated_at": "2026-07-03T16:18:56.867283+00:00"
     },
     {
       "slug": "indianapolis",
       "name": "Indianapolis",
       "state_abbrev": "IN",
       "spotcrime_alerts_url": "https://spotcrime.com/in/indianapolis",
-      "row_count": 945,
+      "row_count": 952,
       "unlocated_count": 0,
       "window_days": 21,
       "category_counts": {
-        "Unclassified": 352,
-        "Assault": 241,
-        "Theft": 223,
-        "Vandalism": 59,
-        "Burglary": 51,
-        "Robbery": 9,
-        "Shooting": 9,
-        "Arson": 1
+        "Unclassified": 383,
+        "Assault": 242,
+        "Theft": 186,
+        "Vandalism": 78,
+        "Burglary": 43,
+        "Shooting": 11,
+        "Arson": 5,
+        "Robbery": 4
       },
-      "generated_at": "2026-06-29T10:00:18.235302+00:00"
+      "generated_at": "2026-07-03T16:18:57.768022+00:00"
     },
     {
       "slug": "hartford",
       "name": "Hartford",
       "state_abbrev": "CT",
       "spotcrime_alerts_url": "https://spotcrime.com/ct/hartford",
-      "row_count": 995,
+      "row_count": 998,
       "unlocated_count": 0,
       "window_days": 30,
       "category_counts": {
-        "Unclassified": 756,
-        "Vandalism": 77,
-        "Theft": 73,
-        "Assault": 63,
-        "Shooting": 18,
-        "Burglary": 6,
-        "Robbery": 2
+        "Unclassified": 793,
+        "Assault": 66,
+        "Theft": 64,
+        "Vandalism": 51,
+        "Shooting": 12,
+        "Burglary": 7,
+        "Robbery": 5
       },
-      "generated_at": "2026-06-29T10:00:18.919599+00:00"
+      "generated_at": "2026-07-03T16:18:58.252332+00:00"
     },
     {
       "slug": "minneapolis",
@@ -217,51 +217,51 @@
       "unlocated_count": 0,
       "window_days": 21,
       "category_counts": {
-        "Theft": 702,
-        "Burglary": 121,
-        "Assault": 109,
+        "Theft": 685,
+        "Assault": 140,
+        "Burglary": 99,
         "Robbery": 42,
-        "Unclassified": 22,
+        "Unclassified": 30,
         "Shooting": 4
       },
-      "generated_at": "2026-06-29T10:00:19.509493+00:00"
+      "generated_at": "2026-07-03T16:18:58.658173+00:00"
     },
     {
       "slug": "cincinnati",
       "name": "Cincinnati",
       "state_abbrev": "OH",
       "spotcrime_alerts_url": "https://spotcrime.com/oh/cincinnati",
-      "row_count": 991,
+      "row_count": 761,
       "unlocated_count": 0,
       "window_days": 21,
       "category_counts": {
-        "Theft": 452,
-        "Unclassified": 414,
-        "Assault": 54,
-        "Burglary": 46,
-        "Robbery": 21,
-        "Shooting": 4
+        "Theft": 350,
+        "Unclassified": 313,
+        "Assault": 42,
+        "Burglary": 37,
+        "Robbery": 16,
+        "Shooting": 3
       },
-      "generated_at": "2026-06-29T10:00:20.146774+00:00"
+      "generated_at": "2026-07-03T16:18:59.204715+00:00"
     },
     {
       "slug": "gainesville",
       "name": "Gainesville",
       "state_abbrev": "FL",
       "spotcrime_alerts_url": "https://spotcrime.com/fl/gainesville",
-      "row_count": 424,
+      "row_count": 538,
       "unlocated_count": 0,
       "window_days": 21,
       "category_counts": {
-        "Unclassified": 186,
-        "Assault": 95,
-        "Theft": 82,
-        "Vandalism": 30,
-        "Burglary": 25,
-        "Robbery": 5,
+        "Unclassified": 236,
+        "Assault": 126,
+        "Theft": 92,
+        "Vandalism": 43,
+        "Burglary": 30,
+        "Robbery": 10,
         "Shooting": 1
       },
-      "generated_at": "2026-06-29T10:00:20.620071+00:00"
+      "generated_at": "2026-07-03T16:18:59.692401+00:00"
     },
     {
       "slug": "denver",
@@ -272,16 +272,16 @@
       "unlocated_count": 0,
       "window_days": 14,
       "category_counts": {
-        "Theft": 450,
-        "Assault": 158,
-        "Unclassified": 154,
-        "Burglary": 129,
-        "Vandalism": 70,
-        "Shooting": 28,
-        "Robbery": 8,
-        "Arson": 3
+        "Theft": 351,
+        "Unclassified": 181,
+        "Assault": 172,
+        "Vandalism": 130,
+        "Burglary": 119,
+        "Shooting": 25,
+        "Robbery": 20,
+        "Arson": 2
       },
-      "generated_at": "2026-06-29T10:00:20.993769+00:00"
+      "generated_at": "2026-07-03T16:19:00.062856+00:00"
     },
     {
       "slug": "boston",
@@ -289,17 +289,17 @@
       "state_abbrev": "MA",
       "spotcrime_alerts_url": "https://spotcrime.com/ma/boston",
       "row_count": 207,
-      "unlocated_count": 74,
+      "unlocated_count": 62,
       "window_days": 21,
       "category_counts": {
-        "Theft": 106,
-        "Assault": 59,
-        "Vandalism": 25,
-        "Robbery": 8,
-        "Shooting": 5,
-        "Burglary": 4
+        "Theft": 108,
+        "Assault": 57,
+        "Vandalism": 27,
+        "Burglary": 6,
+        "Robbery": 5,
+        "Shooting": 4
       },
-      "generated_at": "2026-06-29T10:00:26.224359+00:00"
+      "generated_at": "2026-07-03T16:19:01.258749+00:00"
     }
   ]
 }
