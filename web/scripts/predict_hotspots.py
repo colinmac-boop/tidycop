@@ -181,12 +181,13 @@ def _pick_train_end(df: pd.DataFrame) -> pd.Timestamp | None:
 
 
 def _normalize_risk(pred: np.ndarray) -> np.ndarray:
-    """0..1 scaling that preserves relative contrast.
+    """Grid-wide 0..1 scaling for the initial risk surface.
 
-    Uses max as the reference point when the distribution is not
-    too skewed; falls back to the 99.5th percentile only when a
-    single monster cell dominates (>3× the p95 value). This keeps
-    the risk surface from collapsing to a plateau of 1.0.
+    Used only to decide which cells make the top-10% cut. The final
+    display value is a rank-based recomputation on the emitted
+    subset (see ``_rank_scale``) because RF predictions on aggregated
+    counts often collapse the top cells to indistinguishable ties
+    when normalized against the global max.
     """
     if len(pred) == 0:
         return pred
@@ -201,6 +202,32 @@ def _normalize_risk(pred: np.ndarray) -> np.ndarray:
             if hi <= 0:
                 hi = float(pred.max())
     return np.clip(pred / hi, 0.0, 1.0)
+
+
+def _rank_scale(values: np.ndarray) -> np.ndarray:
+    """Map values to (0, 1] by rank: highest = 1.0, lowest = 1/n.
+
+    Motivation: a RandomForestRegressor trained on aggregated crime
+    counts often produces predictions that all round to the same
+    value at the top of the distribution (many trees average to the
+    same leaf mean). When we then normalize against the max, the
+    top-10% slice ends up with 40+ cells all coloured identically
+    (see Cleveland/Detroit/Pittsburgh: every hot cell was exactly
+    1.000 before this fix). Rank-based scaling guarantees a distinct
+    display value per cell so the map has visible contrast, at the
+    cost of implying more precision between adjacent ranks than the
+    underlying model actually has. That trade is worth it for a
+    top-N heatmap where the user needs to see contour, not decimals.
+    """
+    if len(values) == 0:
+        return values
+    n = len(values)
+    # argsort ascending, then invert so highest gets rank n-1
+    order = np.argsort(values)
+    ranks = np.empty(n, dtype=float)
+    ranks[order] = np.arange(n)
+    # Map 0..n-1 -> 1/n .. 1.0. Lowest still visible, highest = 1.
+    return (ranks + 1.0) / n
 
 
 def predict_city(city: dict, cfg: dict) -> dict | None:
@@ -310,14 +337,23 @@ def predict_city(city: dict, cfg: dict) -> dict | None:
     # compact and reads as "where things are hot" instead of
     # "every cell in the grid."
     grid = bundle.grid.to_crs("EPSG:4326").copy()
-    grid["risk"] = risk
-    positive = grid[grid["risk"] > 0].copy()
+    grid["risk_raw"] = risk           # global 0..1 (max-normalized)
+    grid["pred_count"] = pred          # RF raw prediction (≈ incidents/cell)
+    positive = grid[grid["risk_raw"] > 0].copy()
     if len(positive) == 0:
         print(f"[hotspots] {key}: no positive-risk cells, skipping")
         return None
     top_n = max(1, int(len(positive) * 0.10))
-    hot = positive.nlargest(top_n, "risk")
-    print(f"[hotspots] {key}: emitting top {len(hot)} of {len(positive)} positive cells")
+    hot = positive.nlargest(top_n, "pred_count").copy()
+    # Rank-scale the emitted subset so the map has visible contrast
+    # even when the RF gives many top cells identical predictions.
+    # See _rank_scale for why this matters.
+    hot["risk"] = _rank_scale(hot["pred_count"].to_numpy())
+    # Integer rank (1 = hottest) for the popup.
+    hot = hot.sort_values("risk", ascending=False).reset_index(drop=True)
+    hot["rank"] = np.arange(1, len(hot) + 1)
+    n_hot = len(hot)
+    print(f"[hotspots] {key}: emitting top {n_hot} of {len(positive)} positive cells")
 
     features = []
     for _, row in hot.iterrows():
@@ -329,6 +365,9 @@ def predict_city(city: dict, cfg: dict) -> dict | None:
             "properties": {
                 "cell_id": int(row["cell_id"]),
                 "risk": round(float(row["risk"]), 4),
+                "rank": int(row["rank"]),
+                "rank_of": n_hot,
+                "pred_count": round(float(row["pred_count"]), 3),
             },
             "geometry": mapping(geom),
         })
@@ -350,10 +389,14 @@ def predict_city(city: dict, cfg: dict) -> dict | None:
             "n_cells_hot": len(features),
             "metrics": metrics,
             "notes": (
-                "Risk = model-predicted incident count per cell, "
-                "clipped at the 99th percentile and scaled to [0, 1]. "
-                "Training window is ~2/3 of the fetched data by date. "
-                "Inference re-scores against KDE of the full window."
+                "Cells shown are the top 10% of the grid by RF-predicted "
+                "incident count. `pred_count` is the raw model output. "
+                "`risk` is a rank-based 0..1 recomputed on this subset so "
+                "the map has visible contrast (RF predictions on aggregated "
+                "counts often tie many top cells). `rank`/`rank_of` are the "
+                "cell's position among displayed cells (1 = hottest). "
+                "Training window is ~2/3 of the fetched data by date; "
+                "inference re-scores against KDE of the full window."
             ),
         },
     }

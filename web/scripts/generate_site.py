@@ -307,11 +307,18 @@ def city_page(city: dict, summary: list[dict]) -> str:
           opacity: 0.8,
         }}),
         onEachFeature: (feature, layer) => {{
-          const r = feature.properties.risk;
+          const p = feature.properties;
+          const rank = p.rank;
+          const rankOf = p.rank_of;
+          const rankStr = (rank && rankOf) ? `#${{rank}} of ${{rankOf}} hottest cells` : `Risk ${{(p.risk*100).toFixed(0)}}/100`;
+          const predStr = (p.pred_count !== undefined)
+            ? `Predicted incidents: ~${{p.pred_count.toFixed(1)}} per cell`
+            : '';
           layer.bindPopup(
-            `<div class="text-sm"><div class="font-bold">Predicted risk</div>` +
-            `<div>Score: ${{(r * 100).toFixed(0)}} / 100</div>` +
-            `<div class="text-slate-500 text-xs">Random-forest model on ${{hGeo.properties.n_train || '?'}} training incidents</div></div>`
+            `<div class="text-sm"><div class="font-bold">Predicted hot spot</div>` +
+            `<div>${{rankStr}}</div>` +
+            (predStr ? `<div class="text-slate-600">${{predStr}}</div>` : '') +
+            `<div class="text-slate-500 text-xs mt-1">Random-forest model on ${{hGeo.properties.n_train || '?'}} training incidents</div></div>`
           );
         }},
       }});
