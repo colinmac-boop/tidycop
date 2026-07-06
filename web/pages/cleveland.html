@@ -191,17 +191,11 @@
           const paiStr = pai ? `PAI = ${pai.toFixed(2)} (a random baseline is 1.0)` : 'Validation PAI not available.';
           alert(
             'The Predicted risk layer highlights grid cells the model rates as ' +
-            'most likely to see incidents in the near future.
-
-' +
+            'most likely to see incidents in the near future.\n\n' +
             'Method: random-forest regression on kernel density, XY, and ' +
             'lagged counts (Wheeler & Steenbeek 2021, "Mapping the Risk ' +
-            'Terrain for Crime Using Machine Learning").
-
-' +
-            paiStr + '
-
-' +
+            'Terrain for Crime Using Machine Learning").\n\n' +
+            paiStr + '\n\n' +
             'Grid: ' + (hGeo.properties.cell_size_m || '?') + 'm cells, ' +
             (hGeo.properties.n_cells_hot || 0) + ' shown.'
           );
