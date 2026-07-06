@@ -56,12 +56,16 @@
   <key>WorkingDirectory</key>
   <string>/Users/mac/Projects/tidycop</string>
 
-  <!-- Keep launchd's default narrow PATH; the wrapper uses absolute
-       paths for everything, so PATH augmentation isn't necessary. -->
+  <!-- The wrapper uses absolute paths, but the Vercel CLI shebang
+       resolves node via `env`, so PATH must include /opt/homebrew/bin.
+       Without this the run reaches step 4/4 and dies with
+       `env: node: No such file or directory` (exit 127). -->
   <key>EnvironmentVariables</key>
   <dict>
     <key>HOME</key>
     <string>/Users/mac</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
   </dict>
 </dict>
 </plist>
