@@ -63,6 +63,12 @@ def normalize_incident(row: dict) -> dict | None:
         return None
     if latf == 0 and lngf == 0:
         return None  # null-island junk
+    # Sentinel values from portals that hide sensitive locations
+    # (Seattle SPD emits (-1, -1) for redacted-address rows). Anything
+    # obviously outside US+territories bounds is also a lost cause for
+    # a US-only crime map.
+    if not (17.0 < latf < 72.0 and -180.0 < lngf < -60.0):
+        return None
     dt = row.get("std_incident_date") or row.get("std_reported_date") or row.get("std_datetime")
     dt_str = None
     if dt is not None:

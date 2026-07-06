@@ -75,6 +75,12 @@ exec_with_lock
   echo "[refresh] step 3/4 generate_site.py"
   "$VENV_PY" web/scripts/generate_site.py
 
+  echo "[refresh] step 3b/4 check_pages_js.py (smoke test)"
+  # Fail the deploy if any page's inline JS won't parse. Catches
+  # the class of bug where curl returns 200 but the browser IIFE
+  # dies on load (2026-07-06 hotspot alert() newline).
+  "$VENV_PY" web/scripts/check_pages_js.py
+
   echo "[refresh] step 4/4 vercel --prod"
   cd web/pages
   # --yes accepts the project link non-interactively; .vercel/project.json

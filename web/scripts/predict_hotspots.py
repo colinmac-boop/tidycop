@@ -60,10 +60,37 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 # City-level knobs. Only cities present here get hotspot layers.
 # Grid cell size trades off resolution vs. payload size / model
 # variance. 250 m is Wheeler's default for DC-scale cities; 300 m
-# is a comfortable default for cities with fewer than a few
-# thousand incidents in the window.
+# is a comfortable default for large, dense cities; 200 m works
+# better for smaller cities where a 300 m grid is too coarse to
+# show meaningful contrast.
+#
+# Rule of thumb used here:
+#   ≥900 rows in-window  → 300 m / 500 m bw
+#   400-900 rows         → 250 m / 400 m bw
+#   <400 rows            → 200 m / 350 m bw
+# top_pct = 0.10 everywhere: emit the top 10% of positive-risk
+# cells. Adjust per-city if a map looks too sparse or too busy.
 HOTSPOT_CONFIG: dict[str, dict] = {
-    "chicago": {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    # Dense, high-volume cities
+    "chicago":       {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "detroit":       {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "san_francisco": {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "seattle":       {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "pittsburgh":    {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "washington_dc": {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "houston":       {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "cleveland":     {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "indianapolis":  {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "hartford":      {"cell_size_m": 250, "bandwidth_m": 400, "top_pct": 0.10},
+    "minneapolis":   {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "denver":        {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    # Mid-volume
+    "rochester":     {"cell_size_m": 250, "bandwidth_m": 400, "top_pct": 0.10},
+    "cincinnati":    {"cell_size_m": 250, "bandwidth_m": 400, "top_pct": 0.10},
+    "gainesville":   {"cell_size_m": 250, "bandwidth_m": 400, "top_pct": 0.10},
+    # Low-volume — smaller cells, tighter bandwidth so the map has
+    # contrast instead of one big warm blob.
+    "boston":        {"cell_size_m": 200, "bandwidth_m": 350, "top_pct": 0.10},
 }
 
 # Minimum share of the window that must have gone by before we
@@ -84,6 +111,56 @@ def _load_incidents(slug: str) -> pd.DataFrame | None:
     df = df.rename(columns={"lat": "std_latitude", "lng": "std_longitude"})
     if "datetime" in df.columns:
         df["std_datetime"] = pd.to_datetime(df["datetime"], errors="coerce", utc=True)
+    df = _drop_bad_coords(df, slug)
+    return df
+
+
+def _drop_bad_coords(df: pd.DataFrame, slug: str) -> pd.DataFrame:
+    """Drop obvious garbage coordinates before they blow up the grid.
+
+    Guards against two failure modes:
+
+    1. Sentinel values like (-1, -1) or (0, 0). Seattle SPD publishes
+       (-1, -1) for redacted-address incidents; other portals use
+       null-island. Left in, they stretch the bounding box across
+       continents — a 300 m grid on that box has billions of cells
+       and pins CPU at 100% forever.
+    2. Legitimate-looking outliers that are still far from the rest
+       of the incidents (a Chicago row in the middle of Lake
+       Michigan, or a copy-paste of the wrong city's data). Filter
+       against the median +/- 5° which is generously larger than any
+       real US metro but tight enough to catch clerical errors.
+    """
+    if "std_latitude" not in df.columns or "std_longitude" not in df.columns:
+        return df
+    lat = pd.to_numeric(df["std_latitude"], errors="coerce")
+    lng = pd.to_numeric(df["std_longitude"], errors="coerce")
+    # Rough plausible CONUS+HI+AK bounds
+    plausible = (
+        lat.notna() & lng.notna()
+        & (lat > 17) & (lat < 72)     # HI south of 20, AK north of 70
+        & (lng > -180) & (lng < -60)  # PR eastern edge ~-65
+    )
+    dropped_sentinel = (~plausible).sum()
+    df = df.loc[plausible].copy()
+    if len(df) == 0:
+        return df
+    # Then tighten around the city's own median. 5° is ~550 km at 40°N,
+    # which is bigger than any single US metro but small enough to
+    # exclude e.g. a Houston row that landed in New Mexico.
+    med_lat = df["std_latitude"].median()
+    med_lng = df["std_longitude"].median()
+    tight = (
+        (df["std_latitude"] - med_lat).abs() < 5.0
+    ) & (
+        (df["std_longitude"] - med_lng).abs() < 5.0
+    )
+    dropped_outlier = (~tight).sum()
+    df = df.loc[tight].copy()
+    dropped_total = int(dropped_sentinel + dropped_outlier)
+    if dropped_total > 0:
+        print(f"[hotspots] {slug}: dropped {dropped_total} rows with bad coords "
+              f"({dropped_sentinel} sentinel/OOB, {dropped_outlier} far-outlier)")
     return df
 
 
