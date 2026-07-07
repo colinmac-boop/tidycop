@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>FAQ — CityCrimeMap</title>
+  <meta name="description" content="Answers to common questions about CityCrimeMap: where the crime data comes from, how often it updates, how offenses are classified, and how to get free alerts.">
+  <meta name="keywords" content="crime map FAQ, crime data questions, how does crime mapping work, crime map source">
+  <link rel="canonical" href="https://citycrimemap.us/faq">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="FAQ — CityCrimeMap">
+  <meta property="og:description" content="Answers to common questions about CityCrimeMap: where the crime data comes from, how often it updates, how offenses are classified, and how to get free alerts.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://citycrimemap.us/faq">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FAQ — CityCrimeMap">
+  <meta name="twitter:description" content="Answers to common questions about CityCrimeMap: where the crime data comes from, how often it updates, how offenses are classified, and how to get free alerts.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"FAQ","item":"https://citycrimemap.us/faq"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is CityCrimeMap free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every map, every city, every incident. There is no paywall, no login, and no app to install. If you want free real-time email alerts for a specific address, sign up at SpotCrime."}},{"@type":"Question","name":"Where does the crime data come from?","acceptedAnswer":{"@type":"Answer","text":"Directly from each city's official open-data portal (typically Socrata, ArcGIS, or CKAN). We do not scrape. The dataset for every city is linked at the top of that city's page so you can verify."}},{"@type":"Question","name":"How current is the data?","acceptedAnswer":{"@type":"Answer","text":"It depends on the city. Some portals publish incidents within 24 hours; others lag a week or more. Each city page displays the exact window (\"last N days\") being shown. For faster notifications, use SpotCrime alerts."}},{"@type":"Question","name":"Why don't you show every crime in my city?","acceptedAnswer":{"@type":"Answer","text":"We only display what the city publishes. Some categories (like domestic violence and sex crimes involving minors) are intentionally excluded by the police department for victim privacy. That's a policy decision by the city, not by us."}},{"@type":"Question","name":"Why is my neighborhood empty on the map?","acceptedAnswer":{"@type":"Answer","text":"Two possibilities. First, no incidents were reported in that area during the current window \u2014 that's a good thing. Second, the incident was reported but the city couldn't geocode it (missing or bad address). We show a count of unlocated incidents on each city page when that happens."}},{"@type":"Question","name":"How do you classify offenses across different cities?","acceptedAnswer":{"@type":"Answer","text":"We normalize each city's offense codes into eight consistent categories: Shooting, Robbery, Assault, Burglary, Theft, Arson, Vandalism, and Arrest. Full definitions are on the About page. This lets you compare across cities apples-to-apples."}},{"@type":"Question","name":"Can I get crime alerts for my address?","acceptedAnswer":{"@type":"Answer","text":"Yes \u2014 through SpotCrime, which offers free daily email alerts for any US address nationwide. Every city page on CityCrimeMap has a direct sign-up link."}},{"@type":"Question","name":"Do you cover the whole country?","acceptedAnswer":{"@type":"Answer","text":"Not yet. We start with cities whose open-data feeds are current, populated, and have geocoded incidents. See the About page for the current list. New cities are added regularly. If your city isn't listed, SpotCrime covers thousands of US cities."}},{"@type":"Question","name":"Do you sell my data or track me?","acceptedAnswer":{"@type":"Answer","text":"No. We use Google Analytics for basic traffic reporting with anonymized IPs. We don't sell data, don't run ads, and don't have a login system that could collect PII."}},{"@type":"Question","name":"Is this affiliated with any police department?","acceptedAnswer":{"@type":"Answer","text":"No. CityCrimeMap is an independent public-interest project. We consume data that police departments have chosen to publish openly, but we're not affiliated with, endorsed by, or operated by any law-enforcement agency."}},{"@type":"Question","name":"Can I embed one of these maps on my site?","acceptedAnswer":{"@type":"Answer","text":"Not yet as a first-class embed, but every city page is public and shareable. Deep-link freely \u2014 the URLs are stable (e.g. citycrimemap.us/chicago). If you want a real embed or API, open an issue on the tidycop GitHub repo."}},{"@type":"Question","name":"How is this different from CrimeMapping.com and Community Crime Map?","acceptedAnswer":{"@type":"Answer","text":"Both of those are single-page apps whose content is mostly invisible to search engines and to screen readers. CityCrimeMap is fully static HTML \u2014 every city has its own crawlable page with real data. It's also open source, built on the free tidycop library, so anyone can inspect exactly how a city's data flows in."}}]}</script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">All cities</a><a href="/chicago" class="text-brand-100/80 hover:text-brand-100">Chicago</a><a href="/seattle" class="text-brand-100/80 hover:text-brand-100">Seattle</a><a href="/san-francisco" class="text-brand-100/80 hover:text-brand-100">San Francisco</a><a href="/detroit" class="text-brand-100/80 hover:text-brand-100">Detroit</a><a href="/pittsburgh" class="text-brand-100/80 hover:text-brand-100">Pittsburgh</a><a href="/washington-dc" class="text-brand-100/80 hover:text-brand-100">Washington, DC</a><a href="/houston" class="text-brand-100/80 hover:text-brand-100">Houston</a><a href="/rochester" class="text-brand-100/80 hover:text-brand-100">Rochester</a><a href="/cleveland" class="text-brand-100/80 hover:text-brand-100">Cleveland</a><a href="/indianapolis" class="text-brand-100/80 hover:text-brand-100">Indianapolis</a><a href="/hartford" class="text-brand-100/80 hover:text-brand-100">Hartford</a><a href="/minneapolis" class="text-brand-100/80 hover:text-brand-100">Minneapolis</a><a href="/cincinnati" class="text-brand-100/80 hover:text-brand-100">Cincinnati</a><a href="/gainesville" class="text-brand-100/80 hover:text-brand-100">Gainesville</a><a href="/denver" class="text-brand-100/80 hover:text-brand-100">Denver</a><a href="/boston" class="text-brand-100/80 hover:text-brand-100">Boston</a><a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a><a href="/faq" class="font-bold text-white">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-4xl mx-auto px-4 py-10 text-slate-700 leading-relaxed">
+  <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h1>
+  <p class="text-lg mb-8">Everything you might want to know about how CityCrimeMap works, where the data comes from, and how to get more out of it.</p>
+
+  
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Is CityCrimeMap free to use?</h2>
+      <p class="text-slate-700">Yes. Every map, every city, every incident. There is no paywall, no login, and no app to install. If you want free real-time email alerts for a specific address, sign up at SpotCrime.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Where does the crime data come from?</h2>
+      <p class="text-slate-700">Directly from each city's official open-data portal (typically Socrata, ArcGIS, or CKAN). We do not scrape. The dataset for every city is linked at the top of that city's page so you can verify.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">How current is the data?</h2>
+      <p class="text-slate-700">It depends on the city. Some portals publish incidents within 24 hours; others lag a week or more. Each city page displays the exact window ("last N days") being shown. For faster notifications, use SpotCrime alerts.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Why don't you show every crime in my city?</h2>
+      <p class="text-slate-700">We only display what the city publishes. Some categories (like domestic violence and sex crimes involving minors) are intentionally excluded by the police department for victim privacy. That's a policy decision by the city, not by us.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Why is my neighborhood empty on the map?</h2>
+      <p class="text-slate-700">Two possibilities. First, no incidents were reported in that area during the current window — that's a good thing. Second, the incident was reported but the city couldn't geocode it (missing or bad address). We show a count of unlocated incidents on each city page when that happens.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">How do you classify offenses across different cities?</h2>
+      <p class="text-slate-700">We normalize each city's offense codes into eight consistent categories: Shooting, Robbery, Assault, Burglary, Theft, Arson, Vandalism, and Arrest. Full definitions are on the About page. This lets you compare across cities apples-to-apples.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Can I get crime alerts for my address?</h2>
+      <p class="text-slate-700">Yes — through SpotCrime, which offers free daily email alerts for any US address nationwide. Every city page on CityCrimeMap has a direct sign-up link.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Do you cover the whole country?</h2>
+      <p class="text-slate-700">Not yet. We start with cities whose open-data feeds are current, populated, and have geocoded incidents. See the About page for the current list. New cities are added regularly. If your city isn't listed, SpotCrime covers thousands of US cities.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Do you sell my data or track me?</h2>
+      <p class="text-slate-700">No. We use Google Analytics for basic traffic reporting with anonymized IPs. We don't sell data, don't run ads, and don't have a login system that could collect PII.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Is this affiliated with any police department?</h2>
+      <p class="text-slate-700">No. CityCrimeMap is an independent public-interest project. We consume data that police departments have chosen to publish openly, but we're not affiliated with, endorsed by, or operated by any law-enforcement agency.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">Can I embed one of these maps on my site?</h2>
+      <p class="text-slate-700">Not yet as a first-class embed, but every city page is public and shareable. Deep-link freely — the URLs are stable (e.g. citycrimemap.us/chicago). If you want a real embed or API, open an issue on the tidycop GitHub repo.</p>
+    </div>
+    <div class="mb-6">
+      <h2 class="text-lg font-bold text-slate-900 mb-1">How is this different from CrimeMapping.com and Community Crime Map?</h2>
+      <p class="text-slate-700">Both of those are single-page apps whose content is mostly invisible to search engines and to screen readers. CityCrimeMap is fully static HTML — every city has its own crawlable page with real data. It's also open source, built on the free tidycop library, so anyone can inspect exactly how a city's data flows in.</p>
+    </div>
+
+  <p class="mt-8"><a href="/" class="text-brand-700 hover:underline font-semibold">← Back to all city crime maps</a></p>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get your city crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for your city alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-06T10:00:07.926806+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>

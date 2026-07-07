@@ -37,6 +37,25 @@ To preview against the `citymaps.vercel.app` URL during development:
 BASE_URL=https://citymaps.vercel.app .venv/bin/python web/scripts/generate_site.py
 ```
 
+### SEO / Analytics environment variables
+
+`generate_site.py` reads two optional env vars for production builds:
+
+| Var | Purpose | Example |
+|---|---|---|
+| `GA4_ID` | Google Analytics 4 measurement ID. Emits the `gtag.js` snippet on every page. | `G-XXXXXXXXXX` |
+| `GSC_VERIFICATION` | Google Search Console verification meta-tag value. | `abcd1234...` |
+
+Both default to empty (no analytics, no verification meta). Set them for production redeploys:
+
+```bash
+GA4_ID=G-XXXXXXXXXX \
+GSC_VERIFICATION=your-search-console-token \
+.venv/bin/python web/scripts/generate_site.py
+```
+
+Every build also emits `robots.txt`, `sitemap.xml`, `favicon.svg`, and reuses `og-image.png` / `apple-touch-icon.png` at the site root. Add-a-city refreshes automatically extend the sitemap and per-city JSON-LD.
+
 ## Layout
 
 ```

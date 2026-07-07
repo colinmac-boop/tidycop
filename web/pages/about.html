@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>About CityCrimeMap — Where the crime data comes from</title>
+  <meta name="description" content="CityCrimeMap publishes free crime maps for 16 US cities using data sourced directly from official police open-data portals. Learn where the data comes from, how often it updates, and how we classify offenses.">
+  <meta name="keywords" content="about crime map, crime data source, police open data, crime data methodology, crime map how it works">
+  <link rel="canonical" href="https://citycrimemap.us/about">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="About CityCrimeMap — Where the crime data comes from">
+  <meta property="og:description" content="CityCrimeMap publishes free crime maps for 16 US cities using data sourced directly from official police open-data portals. Learn where the data comes from, how often it updates, and how we classify offenses.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://citycrimemap.us/about">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About CityCrimeMap — Where the crime data comes from">
+  <meta name="twitter:description" content="CityCrimeMap publishes free crime maps for 16 US cities using data sourced directly from official police open-data portals. Learn where the data comes from, how often it updates, and how we classify offenses.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"About","item":"https://citycrimemap.us/about"}]}</script>
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">All cities</a><a href="/chicago" class="text-brand-100/80 hover:text-brand-100">Chicago</a><a href="/seattle" class="text-brand-100/80 hover:text-brand-100">Seattle</a><a href="/san-francisco" class="text-brand-100/80 hover:text-brand-100">San Francisco</a><a href="/detroit" class="text-brand-100/80 hover:text-brand-100">Detroit</a><a href="/pittsburgh" class="text-brand-100/80 hover:text-brand-100">Pittsburgh</a><a href="/washington-dc" class="text-brand-100/80 hover:text-brand-100">Washington, DC</a><a href="/houston" class="text-brand-100/80 hover:text-brand-100">Houston</a><a href="/rochester" class="text-brand-100/80 hover:text-brand-100">Rochester</a><a href="/cleveland" class="text-brand-100/80 hover:text-brand-100">Cleveland</a><a href="/indianapolis" class="text-brand-100/80 hover:text-brand-100">Indianapolis</a><a href="/hartford" class="text-brand-100/80 hover:text-brand-100">Hartford</a><a href="/minneapolis" class="text-brand-100/80 hover:text-brand-100">Minneapolis</a><a href="/cincinnati" class="text-brand-100/80 hover:text-brand-100">Cincinnati</a><a href="/gainesville" class="text-brand-100/80 hover:text-brand-100">Gainesville</a><a href="/denver" class="text-brand-100/80 hover:text-brand-100">Denver</a><a href="/boston" class="text-brand-100/80 hover:text-brand-100">Boston</a><a href="/about" class="font-bold text-white">About</a><a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-4xl mx-auto px-4 py-10 text-slate-700 leading-relaxed">
+  <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">About CityCrimeMap</h1>
+  <p class="text-lg mb-6">
+    CityCrimeMap is a free, mobile-friendly crime-map site covering 16 major US cities.
+    Every incident on every map is a real, publicly reported crime record from that city's
+    police department — pulled directly from the city's official open-data portal.
+  </p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">Where does the crime data come from?</h2>
+  <p class="mb-3">
+    We do not scrape. We do not buy data. We ingest each city's <strong>official open-data feed</strong>
+    (Socrata, ArcGIS, or CKAN) and normalize the incident records into a consistent schema.
+    That means the data you see on CityCrimeMap is the same data the city publishes on its own portal —
+    same fields, same coordinates, same block-level addresses — presented on an easier-to-use map.
+  </p>
+  <p class="mb-3">
+    Under the hood, all of this runs on <a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop" target="_blank" rel="noopener">tidycop</a>,
+    a permissively-licensed open-source library. If you want to see exactly how a given city is
+    ingested, the source code is public.
+  </p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">Cities we currently cover</h2>
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-slate-100"><tr><th class="px-3 py-2 text-left">City</th><th class="px-3 py-2 text-left">Coverage</th></tr></thead>
+      <tbody>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/chicago">Chicago, IL</a></td><td class="px-3 py-2 text-slate-600">Last 45 days · 1,000 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/seattle">Seattle, WA</a></td><td class="px-3 py-2 text-slate-600">Last 14 days · 690 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/san-francisco">San Francisco, CA</a></td><td class="px-3 py-2 text-slate-600">Last 14 days · 983 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/detroit">Detroit, MI</a></td><td class="px-3 py-2 text-slate-600">Last 14 days · 996 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/pittsburgh">Pittsburgh, PA</a></td><td class="px-3 py-2 text-slate-600">Last 75 days · 992 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/washington-dc">Washington, DC, DC</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 1,000 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/houston">Houston, TX</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 1,000 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/rochester">Rochester, NY</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 263 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/cleveland">Cleveland, OH</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 996 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/indianapolis">Indianapolis, IN</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 952 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/hartford">Hartford, CT</a></td><td class="px-3 py-2 text-slate-600">Last 30 days · 998 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/minneapolis">Minneapolis, MN</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 1,000 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/cincinnati">Cincinnati, OH</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 483 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/gainesville">Gainesville, FL</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 427 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/denver">Denver, CO</a></td><td class="px-3 py-2 text-slate-600">Last 14 days · 1,000 incidents</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2"><a class="text-brand-700 hover:underline" href="/boston">Boston, MA</a></td><td class="px-3 py-2 text-slate-600">Last 21 days · 185 incidents</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">How often does the data update?</h2>
+  <p class="mb-3">
+    Data is refreshed on a rolling basis from each city's open-data portal. City portals themselves
+    vary — some publish incidents within 24 hours, others lag a week or more. Each city page shows
+    the exact window of days being displayed. For real-time alerts about crimes near a specific
+    address, we recommend <a class="text-brand-700 hover:underline" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>,
+    which supports free daily email alerts nationwide.
+  </p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">How do you classify offenses?</h2>
+  <p class="mb-3">
+    Every city defines its own offense codes, so a straight passthrough would make comparison across
+    cities impossible. We normalize offenses into eight consistent categories:
+  </p>
+  <ul class="list-disc pl-6 mb-3 space-y-1">
+    <li><strong>Shooting</strong> — firearm-related violent incidents (including fatal shootings).</li>
+    <li><strong>Robbery</strong> — taking property from a person by force or threat.</li>
+    <li><strong>Assault</strong> — attack on a person (including aggravated and simple assault).</li>
+    <li><strong>Burglary</strong> — unlawful entry to commit theft or another felony.</li>
+    <li><strong>Theft</strong> — non-violent taking of property (larceny, shoplifting, theft from vehicle).</li>
+    <li><strong>Arson</strong> — intentional destruction of property by fire.</li>
+    <li><strong>Vandalism</strong> — willful damage or defacement of property.</li>
+    <li><strong>Arrest</strong> — an arrest event reported in the feed.</li>
+  </ul>
+  <p class="mb-3">
+    Rows that don't map cleanly to one of these categories are labelled <em>Unclassified</em>. This
+    matches the taxonomy used by the open-source
+    <a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop-spotcrime" target="_blank" rel="noopener">tidycop-spotcrime</a>
+    classifier package.
+  </p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">What about privacy?</h2>
+  <p class="mb-3">
+    We only display data the city itself has already published. Addresses are already generalized
+    to the block level by the city before we ingest them. No victim or suspect identifying
+    information is displayed.
+  </p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">Who's behind this?</h2>
+  <p class="mb-3">
+    CityCrimeMap is built and maintained on top of the open-source
+    <a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop" target="_blank" rel="noopener">tidycop</a> library
+    by the SpotCrime team. Not affiliated with any law-enforcement agency.
+  </p>
+
+  <p class="mt-8"><a href="/" class="text-brand-700 hover:underline font-semibold">← Back to all city crime maps</a></p>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get your city crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for your city alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-06T10:00:07.926806+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
