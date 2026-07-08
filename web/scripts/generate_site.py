@@ -44,9 +44,11 @@ OUT_DATA_DIR = OUT_DIR / "data"
 # Override via env: BASE_URL=https://citymaps.vercel.app python generate_site.py
 BASE_URL = os.environ.get("BASE_URL", "https://citycrimemap.us").rstrip("/")
 
-# Google Analytics 4 measurement id (e.g. "G-XXXXXXXXXX"). If unset,
-# no analytics script is emitted (safe default for local builds).
-GA4_ID = os.environ.get("GA4_ID", "").strip()
+# Google Analytics 4 measurement id. Defaults to the citycrimemap.us
+# property (G-H7TPDESB8N, provisioned 2026-07-08). Override with GA4_ID=""
+# to disable for local builds, or GA4_ID=G-OTHER to point at a different
+# property.
+GA4_ID = os.environ.get("GA4_ID", "G-H7TPDESB8N").strip()
 
 # Google Search Console verification token (the value of the
 # "content" attribute Google gives you for the meta-tag method).
