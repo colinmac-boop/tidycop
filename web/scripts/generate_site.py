@@ -64,6 +64,13 @@ GA4_ID = os.environ.get("GA4_ID", "G-H7TPDESB8N").strip()
 # "content" attribute Google gives you for the meta-tag method).
 GSC_VERIFICATION = os.environ.get("GSC_VERIFICATION", "").strip()
 
+# IndexNow key. Bing / Yandex / Seznam / Naver all accept IndexNow
+# push notifications when we ship or update URLs. The key is public
+# by design (it's served as a verification file at the domain root),
+# so it's fine to hard-code. Regenerate with `openssl rand -hex 16`
+# and drop a new <key>.txt at web/pages/ if it ever needs rotating.
+INDEXNOW_KEY = "6797d8e9f1ba5116256e715981cb7802"
+
 # Static OG image path (generated separately; see scripts/make_og_image.py).
 OG_IMAGE = "/og-image.png"
 
@@ -1903,6 +1910,10 @@ def main() -> int:
     print("[gen] wrote sitemap.xml")
     (OUT_DIR / "favicon.svg").write_text(favicon_svg())
     print("[gen] wrote favicon.svg")
+
+    # IndexNow verification file (Bing / Yandex / Seznam / Naver)
+    (OUT_DIR / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY + "\n")
+    print(f"[gen] wrote {INDEXNOW_KEY}.txt (IndexNow key)")
 
     # vercel.json — clean URLs + long-cache the /data/ JSON snapshots
     vercel_cfg = {
