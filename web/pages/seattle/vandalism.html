@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Vandalism in Seattle, WA — 67 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 67 reported vandalism incidents in Seattle, WA from the last 14 days. Data from Seattle Police Department SPD Crime Data.">
+  <meta name="keywords" content="Vandalism in Seattle, Seattle vandalism, vandalism near me Seattle, vandalism map Seattle, Seattle crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/seattle/vandalism">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Vandalism in Seattle, WA — 67 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 67 reported vandalism incidents in Seattle, WA from the last 14 days. Data from Seattle Police Department SPD Crime Data.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/seattle/vandalism">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vandalism in Seattle, WA — 67 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 67 reported vandalism incidents in Seattle, WA from the last 14 days. Data from Seattle Police Department SPD Crime Data.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Seattle, WA","item":"https://citycrimemap.us/seattle"},{"@type":"ListItem","position":3,"name":"Vandalism","item":"https://citycrimemap.us/seattle/vandalism"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/seattle" class="hover:text-brand-700">Seattle, WA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Vandalism</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Vandalism in Seattle, WA</h1>
+    <p class="text-slate-600">67 recent vandalism incidents · last 14 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Vandalism incidents in Seattle, WA"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About vandalism in Seattle</h2>
+    <p class="mb-2">This page shows only <strong>vandalism incidents</strong> in Seattle, WA from the last 14 days — 67 reports in total, filtered from the full Seattle dataset.</p>
+    <p class="mb-2">For all crime categories in Seattle on one map, <a href="/seattle" class="text-brand-700 hover:underline font-semibold">see the full Seattle crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent vandalism incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 10:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">21XX BLOCK OF WESTLAKE AVE N</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 03:26</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">21XX BLOCK OF E INTERLAKEN BLVD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 01:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">4XX BLOCK OF 15TH AVE E</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 00:43</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">15XX BLOCK OF 10TH AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 23:47</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">52XX BLOCK OF CALIFORNIA AVE SW</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 23:45</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">41ST AVE SW / SW ALASKA ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 23:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">24XX BLOCK OF NE 47TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 22:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">40XX BLOCK OF 8TH AVE NE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 20:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">53XX BLOCK OF TALLMAN AVE NW</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Destruction/Damage/Vandalism of Property</td><td class="px-3 py-2 text-slate-700">30XX BLOCK OF 39TH AVE SW</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Seattle</h2>
+    <div><a href='/seattle/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(344)</span></a><a href='/seattle/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(101)</span></a><a href='/seattle/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(87)</span></a><a href='/seattle/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(70)</span></a><a href='/seattle/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(16)</span></a><a href='/seattle/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(10)</span></a><a href='/seattle/arson' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Arson <span class='text-xs text-slate-500'>(3)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Seattle crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/wa/seattle" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Seattle alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:31.658715+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "71260230271", "lat": 47.638869, "lng": -122.341253, "datetime": "2026-06-28T10:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "21XX BLOCK OF WESTLAKE AVE N", "category": "Vandalism", "neighborhood": "QUEEN ANNE"}, {"id": "71213768140", "lat": 47.63508, "lng": -122.302744, "datetime": "2026-06-28T03:26:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "21XX BLOCK OF E INTERLAKEN BLVD", "category": "Vandalism", "neighborhood": "MONTLAKE/PORTAGE BAY"}, {"id": "71249664409", "lat": 47.622595, "lng": -122.312637, "datetime": "2026-06-28T01:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "4XX BLOCK OF 15TH AVE E", "category": "Vandalism", "neighborhood": "MILLER PARK"}, {"id": "71207055797", "lat": 47.614671, "lng": -122.319471, "datetime": "2026-06-28T00:43:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "15XX BLOCK OF 10TH AVE", "category": "Vandalism", "neighborhood": "CAPITOL HILL"}, {"id": "71205944871", "lat": 47.554796, "lng": -122.386961, "datetime": "2026-06-27T23:47:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "52XX BLOCK OF CALIFORNIA AVE SW", "category": "Vandalism", "neighborhood": "ALASKA JUNCTION"}, {"id": "71247055876", "lat": 47.561064, "lng": -122.384137, "datetime": "2026-06-27T23:45:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "41ST AVE SW / SW ALASKA ST", "category": "Vandalism", "neighborhood": "ALASKA JUNCTION"}, {"id": "71213621519", "lat": 47.66314, "lng": -122.301307, "datetime": "2026-06-27T23:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "24XX BLOCK OF NE 47TH ST", "category": "Vandalism", "neighborhood": "UNIVERSITY"}, {"id": "71262149717", "lat": 47.656688, "lng": -122.319794, "datetime": "2026-06-27T22:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "40XX BLOCK OF 8TH AVE NE", "category": "Vandalism", "neighborhood": "UNIVERSITY"}, {"id": "71204906365", "lat": 47.667948, "lng": -122.380874, "datetime": "2026-06-27T20:30:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "53XX BLOCK OF TALLMAN AVE NW", "category": "Vandalism", "neighborhood": "BALLARD SOUTH"}, {"id": "71213025573", "lat": 47.577186, "lng": -122.381331, "datetime": "2026-06-27T20:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "30XX BLOCK OF 39TH AVE SW", "category": "Vandalism", "neighborhood": "NORTH ADMIRAL"}, {"id": "71261036311", "lat": 47.510963, "lng": -122.355098, "datetime": "2026-06-27T18:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "102XX BLOCK OF 16TH AVE SW", "category": "Vandalism", "neighborhood": "UNKNOWN"}, {"id": "71246688639", "lat": 47.608789, "lng": -122.33845, "datetime": "2026-06-27T17:30:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "14XX BLOCK OF 2ND AVE", "category": "Vandalism", "neighborhood": "DOWNTOWN COMMERCIAL"}, {"id": "71246666362", "lat": 47.573431, "lng": -122.294397, "datetime": "2026-06-27T17:15:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "33XX BLOCK OF RAINIER AVE S", "category": "Vandalism", "neighborhood": "MOUNT BAKER"}, {"id": "71223926420", "lat": 47.625117, "lng": -122.32133, "datetime": "2026-06-27T12:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "BROADWAY E / E ROY ST", "category": "Vandalism", "neighborhood": "CAPITOL HILL"}, {"id": "71462101884", "lat": 47.671871, "lng": -122.31675, "datetime": "2026-06-27T10:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "10XX BLOCK OF NE RAVENNA BLVD", "category": "Vandalism", "neighborhood": "UNIVERSITY"}, {"id": "71200042734", "lat": 47.630586, "lng": -122.343521, "datetime": "2026-06-27T08:19:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "AURORA AVE N / COMSTOCK ST", "category": "Vandalism", "neighborhood": "QUEEN ANNE"}, {"id": "71200493369", "lat": 47.65682, "lng": -122.336838, "datetime": "2026-06-27T07:04:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "17XX BLOCK OF N 41ST ST", "category": "Vandalism", "neighborhood": "WALLINGFORD"}, {"id": "71246591061", "lat": 47.623925, "lng": -122.355409, "datetime": "2026-06-27T05:07:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "5XX BLOCK OF 1ST AVE N", "category": "Vandalism", "neighborhood": "QUEEN ANNE"}, {"id": "71246568142", "lat": 47.572854, "lng": -122.371805, "datetime": "2026-06-27T01:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "30XX BLOCK OF SW HINDS ST", "category": "Vandalism", "neighborhood": "NORTH ADMIRAL"}, {"id": "71246445017", "lat": 47.731213, "lng": -122.312712, "datetime": "2026-06-26T23:30:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "140XX BLOCK OF 15TH AVE NE", "category": "Vandalism", "neighborhood": "LAKECITY"}, {"id": "71461214051", "lat": 47.601263, "lng": -122.298924, "datetime": "2026-06-26T20:52:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "1XX BLOCK OF 26TH AVE S", "category": "Vandalism", "neighborhood": "MADRONA/LESCHI"}, {"id": "71242702699", "lat": 47.582954, "lng": -122.301664, "datetime": "2026-06-26T19:01:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "23XX BLOCK OF RAINIER AVE S", "category": "Vandalism", "neighborhood": "NORTH BEACON HILL"}, {"id": "71248606149", "lat": 47.60786, "lng": -122.34067, "datetime": "2026-06-26T19:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "14XX BLOCK OF WESTERN AVE", "category": "Vandalism", "neighborhood": "DOWNTOWN COMMERCIAL"}, {"id": "71223291347", "lat": 47.733769, "lng": -122.294485, "datetime": "2026-06-26T17:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "31XX BLOCK OF NE 145TH ST", "category": "Vandalism", "neighborhood": "LAKECITY"}, {"id": "71247338628", "lat": 47.603019, "lng": -122.333172, "datetime": "2026-06-26T16:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "2ND AVE / CHERRY ST", "category": "Vandalism", "neighborhood": "DOWNTOWN COMMERCIAL"}, {"id": "71249129836", "lat": 47.66877, "lng": -122.354408, "datetime": "2026-06-26T13:15:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "55XX BLOCK OF PHINNEY AVE N", "category": "Vandalism", "neighborhood": "PHINNEY RIDGE"}, {"id": "71214666103", "lat": 47.666769, "lng": -122.382243, "datetime": "2026-06-26T12:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "53XX BLOCK OF LEARY AVE NW", "category": "Vandalism", "neighborhood": "BALLARD SOUTH"}, {"id": "71214623765", "lat": 47.578188, "lng": -122.312052, "datetime": "2026-06-26T07:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "28XX BLOCK OF 16TH AVE S", "category": "Vandalism", "neighborhood": "NORTH BEACON HILL"}, {"id": "71246861926", "lat": 47.53706, "lng": -122.292277, "datetime": "2026-06-26T06:56:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "30XX BLOCK OF S OTHELLO ST", "category": "Vandalism", "neighborhood": "SOUTH BEACON HILL"}, {"id": "71175260245", "lat": 47.537958, "lng": -122.284726, "datetime": "2026-06-26T04:42:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "71XX BLOCK OF 38TH AVE S", "category": "Vandalism", "neighborhood": "NEW HOLLY"}, {"id": "71177622800", "lat": 47.516101, "lng": -122.281398, "datetime": "2026-06-26T04:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "96XX BLOCK OF 41ST AVE S", "category": "Vandalism", "neighborhood": "SOUTH BEACON HILL"}, {"id": "71179801650", "lat": 47.609015, "lng": -122.32945, "datetime": "2026-06-26T03:05:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "11XX BLOCK OF 8TH AVE", "category": "Vandalism", "neighborhood": "FIRST HILL"}, {"id": "71168984398", "lat": 47.602686, "lng": -122.316782, "datetime": "2026-06-26T01:04:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "E FIR ST / 12TH AVE", "category": "Vandalism", "neighborhood": "FIRST HILL"}, {"id": "71214582977", "lat": 47.709175, "lng": -122.317862, "datetime": "2026-06-26T00:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "111XX BLOCK OF ROOSEVELT WAY NE", "category": "Vandalism", "neighborhood": "NORTHGATE"}, {"id": "71246425642", "lat": 47.619675, "lng": -122.310736, "datetime": "2026-06-26T00:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "16XX BLOCK OF E JOHN ST", "category": "Vandalism", "neighborhood": "MILLER PARK"}, {"id": "71262139309", "lat": 47.664719, "lng": -122.373593, "datetime": "2026-06-25T23:44:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "49XX BLOCK OF 14TH AVE NW", "category": "Vandalism", "neighborhood": "BALLARD SOUTH"}, {"id": "71169378523", "lat": 47.578194, "lng": -122.312067, "datetime": "2026-06-25T21:26:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "28XX BLOCK OF 16TH AVE S", "category": "Vandalism", "neighborhood": "NORTH BEACON HILL"}, {"id": "71179768257", "lat": 47.61581, "lng": -122.322139, "datetime": "2026-06-25T19:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "16XX BLOCK OF HARVARD AVE", "category": "Vandalism", "neighborhood": "CAPITOL HILL"}, {"id": "71242289757", "lat": 47.628325, "lng": -122.3271, "datetime": "2026-06-25T19:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "BELMONT AVE E / LAKEVIEW BLVD E", "category": "Vandalism", "neighborhood": "EASTLAKE - EAST"}, {"id": "71165697502", "lat": 47.61073, "lng": -122.32181, "datetime": "2026-06-25T18:32:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "MADISON ST / BOYLSTON AVE", "category": "Vandalism", "neighborhood": "FIRST HILL"}, {"id": "71262790462", "lat": 47.668624, "lng": -122.398318, "datetime": "2026-06-25T18:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "32ND AVE NW / NW MARKET ST", "category": "Vandalism", "neighborhood": "BALLARD SOUTH"}, {"id": "71167542501", "lat": 47.664004, "lng": -122.314224, "datetime": "2026-06-25T15:40:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "47XX BLOCK OF BROOKLYN AVE NE", "category": "Vandalism", "neighborhood": "UNIVERSITY"}, {"id": "71164233453", "lat": 47.678536, "lng": -122.325171, "datetime": "2026-06-25T14:37:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "69XX BLOCK OF WOODLAWN AVE NE", "category": "Vandalism", "neighborhood": "ROOSEVELT/RAVENNA"}, {"id": "71162135999", "lat": 47.612958, "lng": -122.337873, "datetime": "2026-06-25T12:04:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "5TH AVE / STEWART ST", "category": "Vandalism", "neighborhood": "SLU/CASCADE"}, {"id": "71161151734", "lat": 47.617407, "lng": -122.349365, "datetime": "2026-06-25T10:54:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "27XX BLOCK OF 3RD AVE", "category": "Vandalism", "neighborhood": "BELLTOWN"}, {"id": "71214537773", "lat": 47.604358, "lng": -122.318105, "datetime": "2026-06-25T08:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "E ALDER ST / 11TH AVE", "category": "Vandalism", "neighborhood": "FIRST HILL"}, {"id": "71157697398", "lat": 47.550659, "lng": -122.335564, "datetime": "2026-06-25T05:56:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "58XX BLOCK OF E MARGINAL WAY S", "category": "Vandalism", "neighborhood": "GEORGETOWN"}, {"id": "71182188454", "lat": 47.649874, "lng": -122.341382, "datetime": "2026-06-25T02:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "35XX BLOCK OF INTERLAKE AVE N", "category": "Vandalism", "neighborhood": "WALLINGFORD"}, {"id": "71246555591", "lat": 47.668664, "lng": -122.372174, "datetime": "2026-06-25T01:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "11XX BLOCK OF NW MARKET ST", "category": "Vandalism", "neighborhood": "BALLARD SOUTH"}, {"id": "71232973499", "lat": 47.544113, "lng": -122.371356, "datetime": "2026-06-25T00:48:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "SYLVAN WAY SW / SW MORGAN ST", "category": "Vandalism", "neighborhood": "HIGH POINT"}, {"id": "71182097825", "lat": 47.686219, "lng": -122.348558, "datetime": "2026-06-25T00:40:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "7XX BLOCK OF N 79TH ST", "category": "Vandalism", "neighborhood": "GREENWOOD"}, {"id": "71212134543", "lat": 47.67591, "lng": -122.392396, "datetime": "2026-06-25T00:30:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "27XX BLOCK OF NW 65TH ST", "category": "Vandalism", "neighborhood": "BALLARD NORTH"}, {"id": "71182528113", "lat": 47.626083, "lng": -122.318056, "datetime": "2026-06-25T00:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "7XX BLOCK OF 11TH AVE E", "category": "Vandalism", "neighborhood": "CAPITOL HILL"}, {"id": "71202959048", "lat": 47.610159, "lng": -122.324355, "datetime": "2026-06-25T00:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "10XX BLOCK OF MINOR AVE", "category": "Vandalism", "neighborhood": "FIRST HILL"}, {"id": "71261361807", "lat": 47.647519, "lng": -122.383353, "datetime": "2026-06-25T00:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "30XX BLOCK OF 21ST AVE W", "category": "Vandalism", "neighborhood": "MAGNOLIA"}, {"id": "71157896776", "lat": 47.605483, "lng": -122.33082, "datetime": "2026-06-24T20:45:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "8XX BLOCK OF 5TH AVE", "category": "Vandalism", "neighborhood": "DOWNTOWN COMMERCIAL"}, {"id": "71152355733", "lat": 47.56018, "lng": -122.381456, "datetime": "2026-06-24T17:42:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "47XX BLOCK OF FAUNTLEROY WAY SW", "category": "Vandalism", "neighborhood": "-"}, {"id": "71152762553", "lat": 47.691649, "lng": -122.344535, "datetime": "2026-06-24T17:18:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "86XX BLOCK OF AURORA AVE N", "category": "Vandalism", "neighborhood": "-"}, {"id": "71158471905", "lat": 47.613535, "lng": -122.32551, "datetime": "2026-06-24T17:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "14XX BLOCK OF SUMMIT AVE", "category": "Vandalism", "neighborhood": "CAPITOL HILL"}, {"id": "71150154324", "lat": 47.656012, "lng": -122.315572, "datetime": "2026-06-24T13:44:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "12TH AVE NE / NE CAMPUS PKY", "category": "Vandalism", "neighborhood": "UNIVERSITY"}, {"id": "71146761744", "lat": 47.614674, "lng": -122.31815, "datetime": "2026-06-24T08:35:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "15XX BLOCK OF 11TH AVE", "category": "Vandalism", "neighborhood": "CAPITOL HILL"}, {"id": "71180842889", "lat": 47.610382, "lng": -122.333001, "datetime": "2026-06-24T06:49:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "6XX BLOCK OF UNION ST", "category": "Vandalism", "neighborhood": "DOWNTOWN COMMERCIAL"}, {"id": "71161897757", "lat": 47.619667, "lng": -122.331057, "datetime": "2026-06-24T05:30:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "12XX BLOCK OF JOHN ST", "category": "Vandalism", "neighborhood": "SLU/CASCADE"}, {"id": "71230177229", "lat": 47.721092, "lng": -122.295248, "datetime": "2026-06-24T04:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "30XX BLOCK OF NE 127TH ST", "category": "Vandalism", "neighborhood": "LAKECITY"}, {"id": "71181594848", "lat": 47.543772, "lng": -122.376467, "datetime": "2026-06-24T02:30:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "65XX BLOCK OF 35TH AVE SW", "category": "Vandalism", "neighborhood": "HIGH POINT"}, {"id": "71158119167", "lat": 47.614702, "lng": -122.314233, "datetime": "2026-06-24T00:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "15XX BLOCK OF 14TH AVE", "category": "Vandalism", "neighborhood": "CAPITOL HILL"}, {"id": "71147139510", "lat": 47.61413, "lng": -122.298139, "datetime": "2026-06-24T00:00:00-07:00", "description": "Destruction/Damage/Vandalism of Property", "address": "26XX BLOCK OF E PIKE ST", "category": "Vandalism", "neighborhood": "CENTRAL AREA/SQUIRE PARK"}];
+  const map = L.map('map').setView([47.6062, -122.3321], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Vandalism'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Vandalism</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

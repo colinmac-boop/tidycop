@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Central Park crime map (Denver, CO) — 61 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Crime map and incident data for Central Park in Denver, CO. 61 reported incidents in the last 14 days: 28 theft, 12 burglary, 7 assault. See predicted risk, incident table, and how Central Park compares to other Denver neighborhoods.">
+  <meta name="keywords" content="Central Park crime, Central Park Denver, Central Park crime map, crime near me Central Park, Central Park safety, Denver neighborhood crime">
+  <link rel="canonical" href="https://citycrimemap.us/denver/central-park">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Central Park crime map (Denver, CO) — 61 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Crime map and incident data for Central Park in Denver, CO. 61 reported incidents in the last 14 days: 28 theft, 12 burglary, 7 assault. See predicted risk, incident table, and how Central Park compares to other Denver neighborhoods.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/denver/central-park">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Central Park crime map (Denver, CO) — 61 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Crime map and incident data for Central Park in Denver, CO. 61 reported incidents in the last 14 days: 28 theft, 12 burglary, 7 assault. See predicted risk, incident table, and how Central Park compares to other Denver neighborhoods.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Denver, CO","item":"https://citycrimemap.us/denver"},{"@type":"ListItem","position":3,"name":"Central Park","item":"https://citycrimemap.us/denver/central-park"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Place","name":"Central Park, Denver, CO","containedInPlace":{"@type":"City","name":"Denver, CO","url":"https://citycrimemap.us/denver"}}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/denver" class="hover:text-brand-700">Denver, CO</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Central Park</span>
+  </nav>
+
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Central Park crime map</h1>
+    <p class="text-slate-600">61 reported incidents in Central Park, Denver · last 14 days</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 480px;" class="rounded" aria-label="Interactive crime map of Central Park, Denver"></div>
+    <div class="mt-3"><div class="flex flex-wrap"><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#0891b2"></span><span class="text-slate-700">Theft</span><span class="text-slate-400 ml-1">(28)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ca8a04"></span><span class="text-slate-700">Burglary</span><span class="text-slate-400 ml-1">(12)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ea580c"></span><span class="text-slate-700">Assault</span><span class="text-slate-400 ml-1">(7)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#475569"></span><span class="text-slate-700">Unclassified</span><span class="text-slate-400 ml-1">(6)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#7c3aed"></span><span class="text-slate-700">Vandalism</span><span class="text-slate-400 ml-1">(5)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#7f1d1d"></span><span class="text-slate-700">Shooting</span><span class="text-slate-400 ml-1">(3)</span></span></div></div>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">Crime in Central Park — the last 14 days</h2>
+    <p class="mb-2"><strong>Central Park</strong> is a neighborhood of Denver, CO. Over the last 14 days, 61 reported incidents landed in the neighborhood — which is <strong>higher-incident than most Denver neighborhoods (about the 97th percentile in this window)</strong>.</p>
+    <p class='mb-2'>The most common category in Central Park right now is <strong>Theft</strong> (28 incidents).</p>
+    <p class="text-xs text-slate-500">Data source: <a href="https://opendata-geospatialdenver.hub.arcgis.com/datasets/crime/about" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Denver Open Data — Crime Offenses (ArcGIS)</a>. For real-time alerts near a specific address in Central Park, sign up for free daily email alerts on <a href="https://spotcrime.com/co/denver" target="_blank" rel="noopener" class="text-brand-700 hover:underline">SpotCrime</a>.</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent incidents in Central Park</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Category</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 03:08</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">burglary-business-no-force</td><td class="px-3 py-2 text-slate-700">7930 E NORTHFIELD BLVD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 21:35</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">burg-auto-theft-busn-no-force</td><td class="px-3 py-2 text-slate-700">3100 BLK N GENEVA ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 18:55</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">drug-pcs-other-drug</td><td class="px-3 py-2 text-slate-700">3700 BLOCK N QUEBEC ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 14:16</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">theft-shoplift</td><td class="px-3 py-2 text-slate-700">3895 N PEORIA ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 14:16</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">theft-other</td><td class="px-3 py-2 text-slate-700">3895 N PEORIA ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 09:31</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">theft-shoplift</td><td class="px-3 py-2 text-slate-700">7805 E 35TH AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 04:18</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">theft-parts-from-vehicle</td><td class="px-3 py-2 text-slate-700">E 34TH AVE / N TRENTON ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 01:11</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">theft-shoplift</td><td class="px-3 py-2 text-slate-700">7930 E NORTHFIELD BLVD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 21:03</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">criminal-trespassing</td><td class="px-3 py-2 text-slate-700">7600 BLK E 29TH AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 15:58</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">police-interference</td><td class="px-3 py-2 text-slate-700">12090 E 40TH AVE</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other Denver neighborhoods</h2>
+    <div><a href='/denver/five-points' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Five Points <span class='text-xs text-slate-500'>(97)</span></a><a href='/denver/dia' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Dia <span class='text-xs text-slate-500'>(38)</span></a><a href='/denver/union-station' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Union Station <span class='text-xs text-slate-500'>(36)</span></a><a href='/denver/capitol-hill' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Capitol Hill <span class='text-xs text-slate-500'>(33)</span></a><a href='/denver/cbd' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Cbd <span class='text-xs text-slate-500'>(33)</span></a><a href='/denver/east-colfax' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>East Colfax <span class='text-xs text-slate-500'>(32)</span></a><a href='/denver/lincoln-park' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Lincoln Park <span class='text-xs text-slate-500'>(31)</span></a><a href='/denver/hampden' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Hampden <span class='text-xs text-slate-500'>(30)</span></a></div>
+    <p class="mt-3"><a href="/denver" class="text-brand-700 font-semibold hover:underline">See all of Denver →</a></p>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Denver crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/co/denver" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Denver alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:40.298757+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const DATA = {"incidents": [{"id": "DP2026369872", "lat": 39.783613, "lng": -104.895026, "datetime": "2026-07-06T03:08:00-06:00", "description": "burglary-business-no-force", "address": "7930 E NORTHFIELD BLVD", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026369611", "lat": 39.761775, "lng": -104.868426, "datetime": "2026-07-05T21:35:00-06:00", "description": "burg-auto-theft-busn-no-force", "address": "3100 BLK N GENEVA ST", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026369357", "lat": 39.768305, "lng": -104.901892, "datetime": "2026-07-05T18:55:00-06:00", "description": "drug-pcs-other-drug", "address": "3700 BLOCK N QUEBEC ST", "category": null, "neighborhood": "central-park"}, {"id": "DP2026368607", "lat": 39.770745, "lng": -104.847512, "datetime": "2026-07-05T14:16:00-06:00", "description": "theft-shoplift", "address": "3895 N PEORIA ST", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026368607", "lat": 39.770745, "lng": -104.847512, "datetime": "2026-07-05T14:16:00-06:00", "description": "theft-other", "address": "3895 N PEORIA ST", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026368127", "lat": 39.766224, "lng": -104.898033, "datetime": "2026-07-05T09:31:00-06:00", "description": "theft-shoplift", "address": "7805 E 35TH AVE", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026367698", "lat": 39.76411, "lng": -104.896354, "datetime": "2026-07-05T04:18:00-06:00", "description": "theft-parts-from-vehicle", "address": "E 34TH AVE / N TRENTON ST", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026367279", "lat": 39.783613, "lng": -104.895026, "datetime": "2026-07-05T01:11:00-06:00", "description": "theft-shoplift", "address": "7930 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026366845", "lat": 39.757462, "lng": -104.899225, "datetime": "2026-07-04T21:03:00-06:00", "description": "criminal-trespassing", "address": "7600 BLK E 29TH AVE", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026365279", "lat": 39.772629, "lng": -104.848121, "datetime": "2026-07-04T15:58:00-06:00", "description": "police-interference", "address": "12090 E 40TH AVE", "category": null, "neighborhood": "central-park"}, {"id": "DP2026365279", "lat": 39.772629, "lng": -104.848121, "datetime": "2026-07-04T15:58:00-06:00", "description": "criminal-trespassing", "address": "12090 E 40TH AVE", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026369625", "lat": 39.756522, "lng": -104.861107, "datetime": "2026-07-04T15:00:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "2800 BLK N JOLIET ST", "category": "Shooting", "neighborhood": "central-park"}, {"id": "DP2026365743", "lat": 39.767976, "lng": -104.865172, "datetime": "2026-07-04T14:54:00-06:00", "description": "disturbing-the-peace", "address": "10500 E SMITH RD", "category": null, "neighborhood": "central-park"}, {"id": "DP2026365743", "lat": 39.767976, "lng": -104.865172, "datetime": "2026-07-04T14:54:00-06:00", "description": "assault-simple", "address": "10500 E SMITH RD", "category": "Assault", "neighborhood": "central-park"}, {"id": "DP20266009045", "lat": 39.783613, "lng": -104.895026, "datetime": "2026-07-04T14:33:00-06:00", "description": "theft-shoplift", "address": "7930 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026364806", "lat": 39.759686, "lng": -104.902524, "datetime": "2026-07-04T13:03:00-06:00", "description": "theft-shoplift", "address": "7311 E 29TH DR", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP20266009031", "lat": 39.756602, "lng": -104.901846, "datetime": "2026-07-04T07:03:00-06:00", "description": "theft-shoplift", "address": "2810 N QUEBEC ST", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026363969", "lat": 39.757433, "lng": -104.892136, "datetime": "2026-07-04T02:00:00-06:00", "description": "burglary-residence-no-force", "address": "8200 BLK E 28TH PL", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026363053", "lat": 39.76746, "lng": -104.889623, "datetime": "2026-07-03T17:02:00-06:00", "description": "assault-simple", "address": "8400 BLK E 36TH AVE", "category": "Assault", "neighborhood": "central-park"}, {"id": "DP2026363129", "lat": 39.767976, "lng": -104.865172, "datetime": "2026-07-03T16:10:00-06:00", "description": "assault-simple", "address": "10500 E SMITH RD", "category": "Assault", "neighborhood": "central-park"}, {"id": "DP2026363707", "lat": 39.785917, "lng": -104.894088, "datetime": "2026-07-03T11:30:00-06:00", "description": "criminal-mischief-mtr-veh", "address": "8101 E NORTHFIELD BLVD", "category": "Vandalism", "neighborhood": "central-park"}, {"id": "DP2026361826", "lat": 39.767972, "lng": -104.847008, "datetime": "2026-07-03T07:55:00-06:00", "description": "drug-poss-paraphernalia", "address": "E 37TH AVE / N PEORIA ST", "category": null, "neighborhood": "central-park"}, {"id": "DP2026361826", "lat": 39.767972, "lng": -104.847008, "datetime": "2026-07-03T07:55:00-06:00", "description": "drug-pcs-other-drug", "address": "E 37TH AVE / N PEORIA ST", "category": null, "neighborhood": "central-park"}, {"id": "DP2026361742", "lat": 39.767381, "lng": -104.902534, "datetime": "2026-07-03T07:05:00-06:00", "description": "drug-methampetamine-possess", "address": "E 36TH AVE / N QUEBEC ST", "category": null, "neighborhood": "central-park"}, {"id": "DP2026362164", "lat": 39.803795, "lng": -104.879978, "datetime": "2026-07-03T02:00:00-06:00", "description": "fraud-by-telephone", "address": "5900 BLK N BOSTON CT", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026360713", "lat": 39.75669, "lng": -104.896567, "datetime": "2026-07-02T16:25:00-06:00", "description": "burglary-residence-no-force", "address": "7800 BLK E 28TH DR", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026360461", "lat": 39.755096, "lng": -104.851695, "datetime": "2026-07-02T14:50:00-06:00", "description": "menacing-felony-w-weap", "address": "11700 BLK E 26TH AVE", "category": "Assault", "neighborhood": "central-park"}, {"id": "DP20266008992", "lat": 39.796307, "lng": -104.894351, "datetime": "2026-07-02T14:30:00-06:00", "description": "criminal-mischief-mtr-veh", "address": "8191 E 54TH DR", "category": "Vandalism", "neighborhood": "central-park"}, {"id": "DP2026362857", "lat": 39.772973, "lng": -104.895687, "datetime": "2026-07-02T12:00:00-06:00", "description": "burglary-business-by-force", "address": "8025 E 40TH AVE", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026359753", "lat": 39.756602, "lng": -104.901846, "datetime": "2026-07-02T08:20:00-06:00", "description": "criminal-mischief-mtr-veh", "address": "2810 N QUEBEC ST", "category": "Vandalism", "neighborhood": "central-park"}, {"id": "DP2026359753", "lat": 39.756602, "lng": -104.901846, "datetime": "2026-07-02T08:20:00-06:00", "description": "theft-items-from-vehicle", "address": "2810 N QUEBEC ST", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026359644", "lat": 39.749705, "lng": -104.888853, "datetime": "2026-07-02T07:04:00-06:00", "description": "theft-other", "address": "2100 BLK N WILLOW CT", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026360091", "lat": 39.781002, "lng": -104.894921, "datetime": "2026-07-02T06:30:00-06:00", "description": "weapon-by-prev-offender-powpo", "address": "7970 E NORTHFIELD BLVD", "category": "Shooting", "neighborhood": "central-park"}, {"id": "DP2026360091", "lat": 39.781002, "lng": -104.894921, "datetime": "2026-07-02T06:30:00-06:00", "description": "theft-shoplift", "address": "7970 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026359494", "lat": 39.748948, "lng": -104.89158, "datetime": "2026-07-02T04:30:00-06:00", "description": "theft-parts-from-vehicle", "address": "2174 N VALENTIA ST", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026361196", "lat": 39.785917, "lng": -104.894088, "datetime": "2026-07-02T04:00:00-06:00", "description": "theft-of-motor-vehicle", "address": "8101 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP20266008949", "lat": 39.751403, "lng": -104.891858, "datetime": "2026-07-02T00:35:00-06:00", "description": "criminal-mischief-other", "address": "8269 E 23RD AVE", "category": "Vandalism", "neighborhood": "central-park"}, {"id": "DP2026358960", "lat": 39.760001, "lng": -104.899843, "datetime": "2026-07-01T19:00:00-06:00", "description": "theft-of-motor-vehicle", "address": "7575 E 29TH PL", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026358429", "lat": 39.811079, "lng": -104.871801, "datetime": "2026-07-01T14:20:00-06:00", "description": "burglary-residence-no-force", "address": "6352 N ELMIRA CT", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026358116", "lat": 39.783613, "lng": -104.895026, "datetime": "2026-07-01T12:33:00-06:00", "description": "theft-shoplift", "address": "7930 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026358014", "lat": 39.781002, "lng": -104.894921, "datetime": "2026-07-01T11:32:00-06:00", "description": "theft-shoplift", "address": "7970 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026358077", "lat": 39.770635, "lng": -104.89417, "datetime": "2026-07-01T11:04:00-06:00", "description": "assault-simple", "address": "N ULSTER ST / E SMITH RD", "category": "Assault", "neighborhood": "central-park"}, {"id": "DP2026357909", "lat": 39.766224, "lng": -104.898033, "datetime": "2026-07-01T10:00:00-06:00", "description": "criminal-trespassing", "address": "7805 E 35TH AVE", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026358094", "lat": 39.756602, "lng": -104.901846, "datetime": "2026-07-01T09:30:00-06:00", "description": "criminal-mischief-other", "address": "2810 N QUEBEC ST", "category": "Vandalism", "neighborhood": "central-park"}, {"id": "DP2026356194", "lat": 39.778237, "lng": -104.903434, "datetime": "2026-06-30T14:18:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "I70 HWYEB / N NORTHFIELD QUEBEC ST", "category": "Shooting", "neighborhood": "central-park"}, {"id": "DP2026355927", "lat": 39.783613, "lng": -104.895026, "datetime": "2026-06-30T12:16:00-06:00", "description": "theft-shoplift", "address": "7930 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026355768", "lat": 39.773323, "lng": -104.881667, "datetime": "2026-06-30T10:00:00-06:00", "description": "theft-items-from-vehicle", "address": "9200 E 40TH AVE", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026357056", "lat": 39.783613, "lng": -104.895026, "datetime": "2026-06-30T01:32:00-06:00", "description": "theft-shoplift", "address": "7930 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026355274", "lat": 39.749644, "lng": -104.891325, "datetime": "2026-06-29T12:00:00-06:00", "description": "burglary-residence-no-force", "address": "2224 N VALENTIA ST", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP20266008819", "lat": 39.758163, "lng": -104.901605, "datetime": "2026-06-29T10:15:00-06:00", "description": "theft-bicycle", "address": "7401 E 29TH AVE", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP20266008841", "lat": 39.766939, "lng": -104.890898, "datetime": "2026-06-29T03:36:00-06:00", "description": "theft-other", "address": "3585 N CENTRAL PARK BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026351873", "lat": 39.779892, "lng": -104.883566, "datetime": "2026-06-28T12:38:00-06:00", "description": "aggravated-assault", "address": "4597 N CENTRAL PARK BLVD", "category": "Assault", "neighborhood": "central-park"}, {"id": "DP20266009049", "lat": 39.759447, "lng": -104.866832, "datetime": "2026-06-28T09:45:00-06:00", "description": "theft-shoplift", "address": "10406 E MLK BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026363949", "lat": 39.783613, "lng": -104.895026, "datetime": "2026-06-28T07:36:00-06:00", "description": "theft-shoplift", "address": "7930 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP20266008747", "lat": 39.76633, "lng": -104.88149, "datetime": "2026-06-28T06:00:00-06:00", "description": "theft-bicycle", "address": "3574 N ALTON ST", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026358099", "lat": 39.781002, "lng": -104.894921, "datetime": "2026-06-27T12:40:00-06:00", "description": "theft-shoplift", "address": "7970 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026353860", "lat": 39.757685, "lng": -104.89843, "datetime": "2026-06-27T11:25:00-06:00", "description": "burglary-residence-no-force", "address": "7700 E 29TH AVE", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026349546", "lat": 39.765468, "lng": -104.891995, "datetime": "2026-06-26T22:00:00-06:00", "description": "theft-other", "address": "3500 BLK N UINTA ST", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026359530", "lat": 39.772973, "lng": -104.895687, "datetime": "2026-06-26T16:00:00-06:00", "description": "burglary-business-by-force", "address": "8025 E 40TH AVE", "category": "Burglary", "neighborhood": "central-park"}, {"id": "DP2026357581", "lat": 39.782075, "lng": -104.8921, "datetime": "2026-06-26T12:42:00-06:00", "description": "theft-shoplift", "address": "8246 E NORTHFIELD BLVD", "category": "Theft", "neighborhood": "central-park"}, {"id": "DP2026359440", "lat": 39.799497, "lng": -104.873414, "datetime": "2026-06-24T06:00:00-06:00", "description": "harassment-sexual-in-nature", "address": "5600 BLK N EMPORIA ST", "category": "Assault", "neighborhood": "central-park"}], "center": [39.7392, -104.9903], "zoom": 13};
+  const incidents = DATA.incidents;
+  const map = L.map('map').setView(DATA.center, DATA.zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const layer = L.layerGroup();
+  const bounds = [];
+  for (const inc of incidents) {
+    const color = CAT_COLORS[inc.category || 'Unclassified'] || '#64748b';
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 5, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.65 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">${inc.category || 'Unclassified'}</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    layer.addLayer(m);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  layer.addTo(map);
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 16 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const color = CAT_COLORS[i.category || 'Unclassified'] || '#64748b';
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:${color}"></span>${i.category || 'Unclassified'}</span></td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

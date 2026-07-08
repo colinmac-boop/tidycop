@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Terrace Village crime map (Pittsburgh, PA) — 7 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Crime map and incident data for Terrace Village in Pittsburgh, PA. 7 reported incidents in the last 75 days: 3 theft, 1 unclassified, 1 assault. See predicted risk, incident table, and how Terrace Village compares to other Pittsburgh neighborhoods.">
+  <meta name="keywords" content="Terrace Village crime, Terrace Village Pittsburgh, Terrace Village crime map, crime near me Terrace Village, Terrace Village safety, Pittsburgh neighborhood crime">
+  <link rel="canonical" href="https://citycrimemap.us/pittsburgh/terrace-village">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Terrace Village crime map (Pittsburgh, PA) — 7 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Crime map and incident data for Terrace Village in Pittsburgh, PA. 7 reported incidents in the last 75 days: 3 theft, 1 unclassified, 1 assault. See predicted risk, incident table, and how Terrace Village compares to other Pittsburgh neighborhoods.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/pittsburgh/terrace-village">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Terrace Village crime map (Pittsburgh, PA) — 7 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Crime map and incident data for Terrace Village in Pittsburgh, PA. 7 reported incidents in the last 75 days: 3 theft, 1 unclassified, 1 assault. See predicted risk, incident table, and how Terrace Village compares to other Pittsburgh neighborhoods.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Pittsburgh, PA","item":"https://citycrimemap.us/pittsburgh"},{"@type":"ListItem","position":3,"name":"Terrace Village","item":"https://citycrimemap.us/pittsburgh/terrace-village"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Place","name":"Terrace Village, Pittsburgh, PA","containedInPlace":{"@type":"City","name":"Pittsburgh, PA","url":"https://citycrimemap.us/pittsburgh"}}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/pittsburgh" class="hover:text-brand-700">Pittsburgh, PA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Terrace Village</span>
+  </nav>
+
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Terrace Village crime map</h1>
+    <p class="text-slate-600">7 reported incidents in Terrace Village, Pittsburgh · last 75 days</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 480px;" class="rounded" aria-label="Interactive crime map of Terrace Village, Pittsburgh"></div>
+    <div class="mt-3"><div class="flex flex-wrap"><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#0891b2"></span><span class="text-slate-700">Theft</span><span class="text-slate-400 ml-1">(3)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#475569"></span><span class="text-slate-700">Unclassified</span><span class="text-slate-400 ml-1">(1)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ea580c"></span><span class="text-slate-700">Assault</span><span class="text-slate-400 ml-1">(1)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ca8a04"></span><span class="text-slate-700">Burglary</span><span class="text-slate-400 ml-1">(1)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#dc2626"></span><span class="text-slate-700">Robbery</span><span class="text-slate-400 ml-1">(1)</span></span></div></div>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">Crime in Terrace Village — the last 75 days</h2>
+    <p class="mb-2"><strong>Terrace Village</strong> is a neighborhood of Pittsburgh, PA. Over the last 75 days, 7 reported incidents landed in the neighborhood — which is <strong>near the median for Pittsburgh neighborhoods</strong>.</p>
+    <p class='mb-2'>The most common category in Terrace Village right now is <strong>Theft</strong> (3 incidents).</p>
+    <p class="text-xs text-slate-500">Data source: <a href="https://data.wprdc.org/dataset/uniform-crime-reporting-data" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Western Pennsylvania Regional Data Center (WPRDC)</a>. For real-time alerts near a specific address in Terrace Village, sign up for free daily email alerts on <a href="https://spotcrime.com/pa/pittsburgh" target="_blank" rel="noopener" class="text-brand-700 hover:underline">SpotCrime</a>.</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent incidents in Terrace Village</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Category</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-26 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">90J TRESPASS OF REAL PROPERTY</td><td class="px-3 py-2 text-slate-700">2600 BLOCK OF CENTRE AVE PITTSBURGH, PA</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-25 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">13B SIMPLE ASSAULT</td><td class="px-3 py-2 text-slate-700">400 BLOCK OF OAK HILL DR PITTSBURGH, PA</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-24 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">23H ALL OTHER LARCENY</td><td class="px-3 py-2 text-slate-700">2600 BLOCK OF CENTRE AVE PITTSBURGH, PA</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-24 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">220 BURGLARY/BREAKING AND ENTERING</td><td class="px-3 py-2 text-slate-700">2600 BLOCK OF CENTRE AVE PITTSBURGH, PA</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-24 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">120 ROBBERY</td><td class="px-3 py-2 text-slate-700">0 BLOCK OF ADDISON PL PITTSBURGH, PA</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-24 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">23F THEFT FROM MOTOR VEHICLE</td><td class="px-3 py-2 text-slate-700">0 BLOCK OF ADDISON PL PITTSBURGH, PA</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-23 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">23H ALL OTHER LARCENY</td><td class="px-3 py-2 text-slate-700">2000 BLOCK OF REED ST PITTSBURGH, PA</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other Pittsburgh neighborhoods</h2>
+    <div><a href='/pittsburgh/central-business-district' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Central Business District <span class='text-xs text-slate-500'>(122)</span></a><a href='/pittsburgh/east-allegheny' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>East Allegheny <span class='text-xs text-slate-500'>(60)</span></a><a href='/pittsburgh/south-side-flats' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>South Side Flats <span class='text-xs text-slate-500'>(52)</span></a><a href='/pittsburgh/shadyside' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shadyside <span class='text-xs text-slate-500'>(47)</span></a><a href='/pittsburgh/east-liberty' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>East Liberty <span class='text-xs text-slate-500'>(42)</span></a><a href='/pittsburgh/carrick' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Carrick <span class='text-xs text-slate-500'>(35)</span></a><a href='/pittsburgh/bloomfield' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Bloomfield <span class='text-xs text-slate-500'>(25)</span></a><a href='/pittsburgh/south-side-slopes' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>South Side Slopes <span class='text-xs text-slate-500'>(23)</span></a></div>
+    <p class="mt-3"><a href="/pittsburgh" class="text-brand-700 font-semibold hover:underline">See all of Pittsburgh →</a></p>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Pittsburgh crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/pa/pittsburgh" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Pittsburgh alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:34.741032+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const DATA = {"incidents": [{"id": "PGHP26096907", "lat": 40.4468, "lng": -79.9679, "datetime": "2026-06-26T00:00:00-04:00", "description": "90J TRESPASS OF REAL PROPERTY", "address": "2600 BLOCK OF CENTRE AVE PITTSBURGH, PA", "category": null, "neighborhood": "Terrace Village"}, {"id": "PGHP26096295", "lat": 40.4421, "lng": -79.9697, "datetime": "2026-06-25T00:00:00-04:00", "description": "13B SIMPLE ASSAULT", "address": "400 BLOCK OF OAK HILL DR PITTSBURGH, PA", "category": "Assault", "neighborhood": "Terrace Village"}, {"id": "PGHP26095940", "lat": 40.4466, "lng": -79.9678, "datetime": "2026-06-24T00:00:00-04:00", "description": "23H ALL OTHER LARCENY", "address": "2600 BLOCK OF CENTRE AVE PITTSBURGH, PA", "category": "Theft", "neighborhood": "Terrace Village"}, {"id": "PGHP26095940", "lat": 40.4466, "lng": -79.9678, "datetime": "2026-06-24T00:00:00-04:00", "description": "220 BURGLARY/BREAKING AND ENTERING", "address": "2600 BLOCK OF CENTRE AVE PITTSBURGH, PA", "category": "Burglary", "neighborhood": "Terrace Village"}, {"id": "PGHP26095945", "lat": 40.4417, "lng": -79.9765, "datetime": "2026-06-24T00:00:00-04:00", "description": "120 ROBBERY", "address": "0 BLOCK OF ADDISON PL PITTSBURGH, PA", "category": "Robbery", "neighborhood": "Terrace Village"}, {"id": "PGHP26095945", "lat": 40.4417, "lng": -79.9765, "datetime": "2026-06-24T00:00:00-04:00", "description": "23F THEFT FROM MOTOR VEHICLE", "address": "0 BLOCK OF ADDISON PL PITTSBURGH, PA", "category": "Theft", "neighborhood": "Terrace Village"}, {"id": "PGHP26095627", "lat": 40.4425, "lng": -79.9785, "datetime": "2026-06-23T00:00:00-04:00", "description": "23H ALL OTHER LARCENY", "address": "2000 BLOCK OF REED ST PITTSBURGH, PA", "category": "Theft", "neighborhood": "Terrace Village"}], "center": [40.4406, -79.9959], "zoom": 13};
+  const incidents = DATA.incidents;
+  const map = L.map('map').setView(DATA.center, DATA.zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const layer = L.layerGroup();
+  const bounds = [];
+  for (const inc of incidents) {
+    const color = CAT_COLORS[inc.category || 'Unclassified'] || '#64748b';
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 5, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.65 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">${inc.category || 'Unclassified'}</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    layer.addLayer(m);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  layer.addTo(map);
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 16 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const color = CAT_COLORS[i.category || 'Unclassified'] || '#64748b';
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:${color}"></span>${i.category || 'Unclassified'}</span></td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Robbery in Minneapolis, MN — 46 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 46 reported robbery incidents in Minneapolis, MN from the last 21 days. Data from MPD Police Incidents — Last 2 Years (ArcGIS).">
+  <meta name="keywords" content="Robbery in Minneapolis, Minneapolis robbery, robbery near me Minneapolis, robbery map Minneapolis, Minneapolis crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/minneapolis/robbery">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Robbery in Minneapolis, MN — 46 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 46 reported robbery incidents in Minneapolis, MN from the last 21 days. Data from MPD Police Incidents — Last 2 Years (ArcGIS).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/minneapolis/robbery">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Robbery in Minneapolis, MN — 46 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 46 reported robbery incidents in Minneapolis, MN from the last 21 days. Data from MPD Police Incidents — Last 2 Years (ArcGIS).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Minneapolis, MN","item":"https://citycrimemap.us/minneapolis"},{"@type":"ListItem","position":3,"name":"Robbery","item":"https://citycrimemap.us/minneapolis/robbery"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/minneapolis" class="hover:text-brand-700">Minneapolis, MN</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Robbery</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Robbery in Minneapolis, MN</h1>
+    <p class="text-slate-600">46 recent robbery incidents · last 21 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Robbery incidents in Minneapolis, MN"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About robbery in Minneapolis</h2>
+    <p class="mb-2">This page shows only <strong>robbery incidents</strong> in Minneapolis, MN from the last 21 days — 46 reports in total, filtered from the full Minneapolis dataset.</p>
+    <p class="mb-2">For all crime categories in Minneapolis on one map, <a href="/minneapolis" class="text-brand-700 hover:underline font-semibold">see the full Minneapolis crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent robbery incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 23:19</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY PER AGG</td><td class="px-3 py-2 text-slate-700">12TH AVE S / 29TH ST E</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 21:42</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY OF BUSINESS</td><td class="px-3 py-2 text-slate-700">0020XX BRYANT AVE S</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 10:14</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY OF PERSON</td><td class="px-3 py-2 text-slate-700">0034XX PILLSBURY AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 08:14</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY OF PERSON</td><td class="px-3 py-2 text-slate-700">0030XX 14TH AVE S</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 05:43</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY OF PERSON</td><td class="px-3 py-2 text-slate-700">0001XX WASHINGTON AVE N</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 03:40</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY PER AGG</td><td class="px-3 py-2 text-slate-700">0001XX LAKE ST W</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 00:09</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY OF BUSINESS</td><td class="px-3 py-2 text-slate-700">0043XX LAKE ST E</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 11:10</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY OF PERSON</td><td class="px-3 py-2 text-slate-700">28TH ST E / CHICAGO AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-02 20:52</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY OF BUSINESS</td><td class="px-3 py-2 text-slate-700">0021XX ALDRICH AVE N</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-02 13:18</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#dc2626"></span>Robbery</span></td><td class="px-3 py-2 text-slate-700">ROBBERY OF PERSON</td><td class="px-3 py-2 text-slate-700">0011XX LOWRY AVE N</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Minneapolis</h2>
+    <div><a href='/minneapolis/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(673)</span></a><a href='/minneapolis/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(153)</span></a><a href='/minneapolis/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(92)</span></a><a href='/minneapolis/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(31)</span></a><a href='/minneapolis/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(4)</span></a><a href='/minneapolis/arson' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Arson <span class='text-xs text-slate-500'>(1)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Minneapolis crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/mn/minneapolis" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Minneapolis alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:38.751951+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "MP2026187265", "lat": 44.95009, "lng": -93.25757, "datetime": "2026-07-06T23:19:00-05:00", "description": "ROBBERY PER AGG", "address": "12TH AVE S / 29TH ST E", "category": "Robbery", "neighborhood": "Midtown Phillips"}, {"id": "MP2026187189", "lat": 44.96181, "lng": -93.29054, "datetime": "2026-07-06T21:42:00-05:00", "description": "ROBBERY OF BUSINESS", "address": "0020XX BRYANT AVE S", "category": "Robbery", "neighborhood": "Lowry Hill East"}, {"id": "MP2026185442", "lat": 44.9404, "lng": -93.28139, "datetime": "2026-07-05T10:14:00-05:00", "description": "ROBBERY OF PERSON", "address": "0034XX PILLSBURY AVE", "category": "Robbery", "neighborhood": "Lyndale"}, {"id": "MP2026185377", "lat": 44.94724, "lng": -93.25505, "datetime": "2026-07-05T08:14:00-05:00", "description": "ROBBERY OF PERSON", "address": "0030XX 14TH AVE S", "category": "Robbery", "neighborhood": "Powderhorn Park"}, {"id": "MP2026185341", "lat": 44.98331, "lng": -93.27077, "datetime": "2026-07-05T05:43:00-05:00", "description": "ROBBERY OF PERSON", "address": "0001XX WASHINGTON AVE N", "category": "Robbery", "neighborhood": "Downtown West"}, {"id": "MP2026185298", "lat": 44.94835, "lng": -93.28052, "datetime": "2026-07-05T03:40:00-05:00", "description": "ROBBERY PER AGG", "address": "0001XX LAKE ST W", "category": "Robbery", "neighborhood": "Whittier"}, {"id": "MP2026184814", "lat": 44.94834, "lng": -93.21079, "datetime": "2026-07-05T00:09:00-05:00", "description": "ROBBERY OF BUSINESS", "address": "0043XX LAKE ST E", "category": "Robbery", "neighborhood": "Cooper"}, {"id": "MP2026184235", "lat": 44.95195, "lng": -93.26264, "datetime": "2026-07-04T11:10:00-05:00", "description": "ROBBERY OF PERSON", "address": "28TH ST E / CHICAGO AVE", "category": "Robbery", "neighborhood": "Midtown Phillips"}, {"id": "MP2026182538", "lat": 45.00086, "lng": -93.28952, "datetime": "2026-07-02T20:52:00-05:00", "description": "ROBBERY OF BUSINESS", "address": "0021XX ALDRICH AVE N", "category": "Robbery", "neighborhood": "Near - North"}, {"id": "MP2026182023", "lat": 45.01313, "lng": -93.2937, "datetime": "2026-07-02T13:18:00-05:00", "description": "ROBBERY OF PERSON", "address": "0011XX LOWRY AVE N", "category": "Robbery", "neighborhood": "Folwell"}, {"id": "MP2026181828", "lat": 44.94836, "lng": -93.25759, "datetime": "2026-07-02T08:23:00-05:00", "description": "ROBBERY OF PERSON", "address": "LAKE ST E / 12TH AVE S", "category": "Robbery", "neighborhood": "Midtown Phillips"}, {"id": "MP2026181256", "lat": 44.96772, "lng": -93.27933, "datetime": "2026-07-01T18:05:00-05:00", "description": "ROBBERY PER AGG", "address": "15TH ST W / LASALLE AVE", "category": "Robbery", "neighborhood": "Loring Park"}, {"id": "MP2026181234", "lat": 44.97038, "lng": -93.24762, "datetime": "2026-07-01T17:10:00-05:00", "description": "ROBBERY OF PERSON", "address": "0016XX 4TH ST S", "category": "Robbery", "neighborhood": "Cedar Riverside"}, {"id": "MP2026180865", "lat": 45.00779, "lng": -93.28341, "datetime": "2026-07-01T13:28:00-05:00", "description": "ROBBERY OF PERSON", "address": "0027XX 3RD ST N", "category": "Robbery", "neighborhood": "Hawthorne"}, {"id": "MP2026180646", "lat": 44.94837, "lng": -93.28619, "datetime": "2026-07-01T04:48:00-05:00", "description": "ROBBERY PER AGG", "address": "0005XX LAKE ST W", "category": "Robbery", "neighborhood": "Whittier"}, {"id": "MP2026179622", "lat": 45.0448, "lng": -93.29793, "datetime": "2026-06-30T11:28:00-05:00", "description": "ROBBERY PER AGG", "address": "0049XX GIRARD AVE N", "category": "Robbery", "neighborhood": "Lind - Bohanon"}, {"id": "MP2026178505", "lat": 44.96521, "lng": -93.26511, "datetime": "2026-06-29T10:09:00-05:00", "description": "ROBBERY OF PERSON", "address": "PARK AVE / 18TH ST E", "category": "Robbery", "neighborhood": "Ventura Village"}, {"id": "MP2026177985", "lat": 44.9627, "lng": -93.26255, "datetime": "2026-06-28T21:33:00-05:00", "description": "ROBBERY OF PERSON", "address": "FRANKLIN AVE E / CHICAGO AVE", "category": "Robbery", "neighborhood": "Ventura Village"}, {"id": "MP2026177691", "lat": 44.98498, "lng": -93.24866, "datetime": "2026-06-28T15:14:00-05:00", "description": "ROBBERY OF PERSON", "address": "0003XX 5TH AVE SE", "category": "Robbery", "neighborhood": "Marcy Holmes"}, {"id": "MP2026177198", "lat": 44.90161, "lng": -93.25096, "datetime": "2026-06-28T02:12:00-05:00", "description": "ROBBERY PER AGG", "address": "16TH AVE S / EDGEWATER BLVD", "category": "Robbery", "neighborhood": "Diamond Lake"}, {"id": "MP2026177214", "lat": 45.01144, "lng": -93.30823, "datetime": "2026-06-28T01:39:00-05:00", "description": "ROBBERY OF PERSON", "address": "PENN AVE N / 30TH AVE N", "category": "Robbery", "neighborhood": "Jordan"}, {"id": "MP2026175450", "lat": 44.97928, "lng": -93.2702, "datetime": "2026-06-26T16:59:00-05:00", "description": "ROBBERY OF PERSON", "address": "0004XX NICOLLET MALL", "category": "Robbery", "neighborhood": "Downtown West"}, {"id": "MP2026175099", "lat": 44.94836, "lng": -93.25441, "datetime": "2026-06-26T11:47:00-05:00", "description": "ROBBERY PER AGG", "address": "0014XX LAKE ST E", "category": "Robbery", "neighborhood": "Midtown Phillips"}, {"id": "MP2026174635", "lat": 44.97718, "lng": -93.2759, "datetime": "2026-06-25T21:22:00-05:00", "description": "ROBBERY OF PERSON", "address": "8TH ST N / HENNEPIN AVE", "category": "Robbery", "neighborhood": "Downtown West"}, {"id": "MP2026173785", "lat": 44.96401, "lng": -93.24171, "datetime": "2026-06-25T01:23:00-05:00", "description": "ROBBERY OF PERSON", "address": "0021XX 9TH ST S", "category": "Robbery", "neighborhood": "Seward"}, {"id": "MP2026173172", "lat": 44.94751, "lng": -93.26775, "datetime": "2026-06-24T15:35:00-05:00", "description": "ROBBERY OF PERSON", "address": "0030XX PORTLAND AVE", "category": "Robbery", "neighborhood": "Central"}, {"id": "MP2026172884", "lat": 44.96812, "lng": -93.2485, "datetime": "2026-06-24T09:09:00-05:00", "description": "ROBBERY PER AGG", "address": "0016XX 6TH ST S", "category": "Robbery", "neighborhood": "Cedar Riverside"}, {"id": "MP2026172450", "lat": 44.95643, "lng": -93.2855, "datetime": "2026-06-23T19:03:00-05:00", "description": "ROBBERY INCLUDING AUTO THEFT", "address": "0025XX HARRIET AVE", "category": "Robbery", "neighborhood": "Whittier"}, {"id": "MP2026172424", "lat": 44.96095, "lng": -93.24389, "datetime": "2026-06-23T18:49:00-05:00", "description": "ROBBERY OF PERSON", "address": "0019XX 22ND ST E", "category": "Robbery", "neighborhood": "Seward"}, {"id": "MP2026172291", "lat": 44.94304, "lng": -93.27792, "datetime": "2026-06-23T17:28:00-05:00", "description": "ROBBERY PER AGG", "address": "0032XX NICOLLET AVE", "category": "Robbery", "neighborhood": "Lyndale"}, {"id": "MP2026171887", "lat": 44.95284, "lng": -93.2766, "datetime": "2026-06-23T08:15:00-05:00", "description": "ROBBERY PER AGG", "address": "0027XX 1ST AVE S", "category": "Robbery", "neighborhood": "Whittier"}, {"id": "MP2026171722", "lat": 44.95464, "lng": -93.28131, "datetime": "2026-06-23T01:15:00-05:00", "description": "ROBBERY PER AGG", "address": "0026XX PILLSBURY AVE", "category": "Robbery", "neighborhood": "Whittier"}, {"id": "MP2026171698", "lat": 45.04391, "lng": -93.29662, "datetime": "2026-06-23T00:26:00-05:00", "description": "ROBBERY INCLUDING AUTO THEFT", "address": "49TH AVE N / FREMONT AVE N", "category": "Robbery", "neighborhood": "Lind - Bohanon"}, {"id": "MP2026169846", "lat": 44.94881, "lng": -93.29828, "datetime": "2026-06-21T04:12:00-05:00", "description": "ROBBERY OF PERSON", "address": "0029XX HENNEPIN AVE", "category": "Robbery", "neighborhood": "Lowry Hill East"}, {"id": "MP2026169658", "lat": 44.99423, "lng": -93.3095, "datetime": "2026-06-21T00:19:00-05:00", "description": "ROBBERY OF PERSON", "address": "0015XX QUEEN AVE N", "category": "Robbery", "neighborhood": "Willard - Hay"}, {"id": "MP2026169345", "lat": 44.99786, "lng": -93.30821, "datetime": "2026-06-20T20:24:00-05:00", "description": "ROBBERY INCLUDING AUTO THEFT", "address": "0018XX PENN AVE N", "category": "Robbery", "neighborhood": "Willard - Hay"}, {"id": "MP2026168861", "lat": 44.96897, "lng": -93.24726, "datetime": "2026-06-20T11:06:00-05:00", "description": "ROBBERY PER AGG", "address": "0004XX CEDAR AVE S", "category": "Robbery", "neighborhood": "Cedar Riverside"}, {"id": "MP2026168834", "lat": 44.95778, "lng": -93.2951, "datetime": "2026-06-20T10:26:00-05:00", "description": "ROBBERY OF BUSINESS", "address": "0024XX HENNEPIN AVE", "category": "Robbery", "neighborhood": "East Isles"}, {"id": "MP2026168620", "lat": 44.97003, "lng": -93.24997, "datetime": "2026-06-20T05:07:00-05:00", "description": "ROBBERY PER AGG", "address": "0015XX 5TH ST S", "category": "Robbery", "neighborhood": "Cedar Riverside"}, {"id": "MP2026168087", "lat": 44.99415, "lng": -93.30508, "datetime": "2026-06-19T18:08:00-05:00", "description": "ROBBERY PER AGG", "address": "0019XX 15TH AVE N", "category": "Robbery", "neighborhood": "Willard - Hay"}, {"id": "MP2026167443", "lat": 44.94747, "lng": -93.24868, "datetime": "2026-06-19T01:00:00-05:00", "description": "ROBBERY PER AGG", "address": "0030XX 18TH AVE S", "category": "Robbery", "neighborhood": "Powderhorn Park"}, {"id": "MP2026167286", "lat": 44.93864, "lng": -93.2334, "datetime": "2026-06-18T21:09:00-05:00", "description": "ROBBERY PER AGG", "address": "0035XX 27TH AVE S", "category": "Robbery", "neighborhood": "Corcoran"}, {"id": "MP2026166559", "lat": 44.98855, "lng": -93.27353, "datetime": "2026-06-18T04:37:00-05:00", "description": "ROBBERY OF PERSON", "address": "0007XX 1ST ST N", "category": "Robbery", "neighborhood": "North Loop"}, {"id": "MP2026166527", "lat": 44.94047, "lng": -93.26131, "datetime": "2026-06-18T03:58:00-05:00", "description": "ROBBERY OF BUSINESS", "address": "0034XX ELLIOT AVE", "category": "Robbery", "neighborhood": "Powderhorn Park"}, {"id": "MP2026166213", "lat": 44.99245, "lng": -93.31462, "datetime": "2026-06-17T19:07:00-05:00", "description": "ROBBERY PER AGG", "address": "0013XX UPTON AVE N", "category": "Robbery", "neighborhood": "Willard - Hay"}, {"id": "MP2026165424", "lat": 45.00951, "lng": -93.28722, "datetime": "2026-06-16T21:10:00-05:00", "description": "ROBBERY PER AGG", "address": "0006XX 29TH AVE N", "category": "Robbery", "neighborhood": "Hawthorne"}];
+  const map = L.map('map').setView([44.9778, -93.265], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Robbery'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Robbery</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

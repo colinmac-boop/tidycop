@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Mission Bay crime map (San Francisco, CA) — 29 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Crime map and incident data for Mission Bay in San Francisco, CA. 29 reported incidents in the last 14 days: 16 unclassified, 7 assault, 2 theft. See predicted risk, incident table, and how Mission Bay compares to other San Francisco neighborhoods.">
+  <meta name="keywords" content="Mission Bay crime, Mission Bay San Francisco, Mission Bay crime map, crime near me Mission Bay, Mission Bay safety, San Francisco neighborhood crime">
+  <link rel="canonical" href="https://citycrimemap.us/san-francisco/mission-bay">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Mission Bay crime map (San Francisco, CA) — 29 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Crime map and incident data for Mission Bay in San Francisco, CA. 29 reported incidents in the last 14 days: 16 unclassified, 7 assault, 2 theft. See predicted risk, incident table, and how Mission Bay compares to other San Francisco neighborhoods.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/san-francisco/mission-bay">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mission Bay crime map (San Francisco, CA) — 29 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Crime map and incident data for Mission Bay in San Francisco, CA. 29 reported incidents in the last 14 days: 16 unclassified, 7 assault, 2 theft. See predicted risk, incident table, and how Mission Bay compares to other San Francisco neighborhoods.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"San Francisco, CA","item":"https://citycrimemap.us/san-francisco"},{"@type":"ListItem","position":3,"name":"Mission Bay","item":"https://citycrimemap.us/san-francisco/mission-bay"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Place","name":"Mission Bay, San Francisco, CA","containedInPlace":{"@type":"City","name":"San Francisco, CA","url":"https://citycrimemap.us/san-francisco"}}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/san-francisco" class="hover:text-brand-700">San Francisco, CA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Mission Bay</span>
+  </nav>
+
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Mission Bay crime map</h1>
+    <p class="text-slate-600">29 reported incidents in Mission Bay, San Francisco · last 14 days</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 480px;" class="rounded" aria-label="Interactive crime map of Mission Bay, San Francisco"></div>
+    <div class="mt-3"><div class="flex flex-wrap"><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#475569"></span><span class="text-slate-700">Unclassified</span><span class="text-slate-400 ml-1">(16)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ea580c"></span><span class="text-slate-700">Assault</span><span class="text-slate-400 ml-1">(7)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#0891b2"></span><span class="text-slate-700">Theft</span><span class="text-slate-400 ml-1">(2)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ca8a04"></span><span class="text-slate-700">Burglary</span><span class="text-slate-400 ml-1">(2)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#7c3aed"></span><span class="text-slate-700">Vandalism</span><span class="text-slate-400 ml-1">(2)</span></span></div></div>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">Crime in Mission Bay — the last 14 days</h2>
+    <p class="mb-2"><strong>Mission Bay</strong> is a neighborhood of San Francisco, CA. Over the last 14 days, 29 reported incidents landed in the neighborhood — which is <strong>higher-incident than most San Francisco neighborhoods (about the 79th percentile in this window)</strong>.</p>
+    <p class='mb-2'>The most common category in Mission Bay right now is <strong>Unclassified</strong> (16 incidents).</p>
+    <p class="text-xs text-slate-500">Data source: <a href="https://data.sfgov.org/Public-Safety/Police-Department-Incident-Reports-2018-to-Present/wg3w-h783" target="_blank" rel="noopener" class="text-brand-700 hover:underline">DataSF — SFPD Incident Reports</a>. For real-time alerts near a specific address in Mission Bay, sign up for free daily email alerts on <a href="https://spotcrime.com/ca/san-francisco" target="_blank" rel="noopener" class="text-brand-700 hover:underline">SpotCrime</a>.</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent incidents in Mission Bay</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Category</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 16:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Fire Report</td><td class="px-3 py-2 text-slate-700">07TH ST \ KING ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 15:36</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">Battery</td><td class="px-3 py-2 text-slate-700">17TH ST \ RHODE ISLAND ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 13:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Lost Property</td><td class="px-3 py-2 text-slate-700">03RD ST \ KING ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 08:34</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Terrorist Threats</td><td class="px-3 py-2 text-slate-700">03RD ST \ MISSION CREEK</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 08:11</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">Battery</td><td class="px-3 py-2 text-slate-700">05TH ST \ BLUXOME ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 01:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Theft, From Locked Vehicle, &gt;$950</td><td class="px-3 py-2 text-slate-700">COLIN P KELLY JR ST \ TOWNSEND ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 23:01</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">Battery</td><td class="px-3 py-2 text-slate-700">MISSION BAY BLVD \ TERRY A FRANCOIS BLVD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 17:33</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Bomb Threat or False Report of Bomb</td><td class="px-3 py-2 text-slate-700">03RD ST \ KING ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 10:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Found  Property</td><td class="px-3 py-2 text-slate-700">03RD ST \ MISSION ROCK ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 01:23</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">Battery</td><td class="px-3 py-2 text-slate-700">05TH ST \ BLUXOME ST</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other San Francisco neighborhoods</h2>
+    <div><a href='/san-francisco/tenderloin' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Tenderloin <span class='text-xs text-slate-500'>(161)</span></a><a href='/san-francisco/mission' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Mission <span class='text-xs text-slate-500'>(159)</span></a><a href='/san-francisco/south-of-market' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>South of Market <span class='text-xs text-slate-500'>(156)</span></a><a href='/san-francisco/bayview-hunters-point' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Bayview Hunters Point <span class='text-xs text-slate-500'>(62)</span></a><a href='/san-francisco/castro-upper-market' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Castro/Upper Market <span class='text-xs text-slate-500'>(53)</span></a><a href='/san-francisco/financial-district-south-beach' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Financial District/South Beach <span class='text-xs text-slate-500'>(38)</span></a><a href='/san-francisco/western-addition' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Western Addition <span class='text-xs text-slate-500'>(36)</span></a><a href='/san-francisco/nob-hill' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Nob Hill <span class='text-xs text-slate-500'>(27)</span></a></div>
+    <p class="mt-3"><a href="/san-francisco" class="text-brand-700 font-semibold hover:underline">See all of San Francisco →</a></p>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get San Francisco crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/ca/san-francisco" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for San Francisco alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:32.295315+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const DATA = {"incidents": [{"id": "1580333", "lat": 37.771137, "lng": -122.400803, "datetime": "2026-06-28T16:30:00-07:00", "description": "Fire Report", "address": "07TH ST \\ KING ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1580042", "lat": 37.764782, "lng": -122.402565, "datetime": "2026-06-28T15:36:00-07:00", "description": "Battery", "address": "17TH ST \\ RHODE ISLAND ST", "category": "Assault", "neighborhood": "Mission Bay"}, {"id": "1580009", "lat": 37.778126, "lng": -122.391838, "datetime": "2026-06-28T13:00:00-07:00", "description": "Lost Property", "address": "03RD ST \\ KING ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579956", "lat": 37.776722, "lng": -122.390213, "datetime": "2026-06-28T08:34:00-07:00", "description": "Terrorist Threats", "address": "03RD ST \\ MISSION CREEK", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579941", "lat": 37.77594, "lng": -122.397972, "datetime": "2026-06-28T08:11:00-07:00", "description": "Battery", "address": "05TH ST \\ BLUXOME ST", "category": "Assault", "neighborhood": "Mission Bay"}, {"id": "1581574", "lat": 37.781219, "lng": -122.389755, "datetime": "2026-06-28T01:00:00-07:00", "description": "Theft, From Locked Vehicle, >$950", "address": "COLIN P KELLY JR ST \\ TOWNSEND ST", "category": "Theft", "neighborhood": "Mission Bay"}, {"id": "1579882", "lat": 37.77084, "lng": -122.386452, "datetime": "2026-06-27T23:01:00-07:00", "description": "Battery", "address": "MISSION BAY BLVD \\ TERRY A FRANCOIS BLVD", "category": "Assault", "neighborhood": "Mission Bay"}, {"id": "1579938", "lat": 37.778126, "lng": -122.391838, "datetime": "2026-06-27T17:33:00-07:00", "description": "Bomb Threat or False Report of Bomb", "address": "03RD ST \\ KING ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579968", "lat": 37.77293, "lng": -122.389717, "datetime": "2026-06-27T10:00:00-07:00", "description": "Found  Property", "address": "03RD ST \\ MISSION ROCK ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579742", "lat": 37.77594, "lng": -122.397972, "datetime": "2026-06-27T01:23:00-07:00", "description": "Battery", "address": "05TH ST \\ BLUXOME ST", "category": "Assault", "neighborhood": "Mission Bay"}, {"id": "1580648", "lat": 37.775787, "lng": -122.393356, "datetime": "2026-06-27T01:00:00-07:00", "description": "Burglary, Other Bldg., Unlawful Entry", "address": "04TH ST \\ BERRY ST", "category": "Burglary", "neighborhood": "Mission Bay"}, {"id": "1579708", "lat": 37.77594, "lng": -122.397972, "datetime": "2026-06-26T19:08:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "05TH ST \\ BLUXOME ST", "category": "Vandalism", "neighborhood": "Mission Bay"}, {"id": "1579625", "lat": 37.769382, "lng": -122.395699, "datetime": "2026-06-26T09:20:00-07:00", "description": "Disturbing The Peace, Fighting", "address": "NELSON RISING LN \\ OWENS ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579561", "lat": 37.76643, "lng": -122.396896, "datetime": "2026-06-25T22:18:00-07:00", "description": "Burglary, Apartment House, Unlawful Entry", "address": "16TH ST \\ MISSOURI ST", "category": "Burglary", "neighborhood": "Mission Bay"}, {"id": "1579561", "lat": 37.76643, "lng": -122.396896, "datetime": "2026-06-25T22:18:00-07:00", "description": "Threat or Force to Resist Executive Officer", "address": "16TH ST \\ MISSOURI ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579561", "lat": 37.76643, "lng": -122.396896, "datetime": "2026-06-25T22:18:00-07:00", "description": "Resisting, Delaying, or Obstructing  Peace Officer Duties", "address": "16TH ST \\ MISSOURI ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579534", "lat": 37.771137, "lng": -122.400803, "datetime": "2026-06-25T17:28:00-07:00", "description": "Assault, Aggravated, W/ Other Weapon", "address": "07TH ST \\ KING ST", "category": "Assault", "neighborhood": "Mission Bay"}, {"id": "1579534", "lat": 37.771137, "lng": -122.400803, "datetime": "2026-06-25T17:28:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "07TH ST \\ KING ST", "category": "Vandalism", "neighborhood": "Mission Bay"}, {"id": "1579407", "lat": 37.77293, "lng": -122.389717, "datetime": "2026-06-25T10:50:00-07:00", "description": "Investigative Detention", "address": "03RD ST \\ MISSION ROCK ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579429", "lat": 37.776333, "lng": -122.394035, "datetime": "2026-06-25T10:31:00-07:00", "description": "Trespassing", "address": "04TH ST \\ KING ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579314", "lat": 37.771999, "lng": -122.38961, "datetime": "2026-06-25T05:15:00-07:00", "description": "Warrant Arrest, Enroute To Outside Jurisdiction", "address": "03RD ST \\ CHINA BASIN ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579314", "lat": 37.771999, "lng": -122.38961, "datetime": "2026-06-25T05:15:00-07:00", "description": "Stay Away Order Violation, DVU related", "address": "03RD ST \\ CHINA BASIN ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579314", "lat": 37.771999, "lng": -122.38961, "datetime": "2026-06-25T05:15:00-07:00", "description": "Narcotics Paraphernalia, Possession of", "address": "03RD ST \\ CHINA BASIN ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579305", "lat": 37.771717, "lng": -122.398506, "datetime": "2026-06-25T02:36:00-07:00", "description": "Warrant Arrest, Enroute To Outside Jurisdiction", "address": "BERRY ST \\ KING ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579305", "lat": 37.771717, "lng": -122.398506, "datetime": "2026-06-25T02:36:00-07:00", "description": "Methamphetamine Offense", "address": "BERRY ST \\ KING ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579305", "lat": 37.771717, "lng": -122.398506, "datetime": "2026-06-25T02:36:00-07:00", "description": "Narcotics Paraphernalia, Possession of", "address": "BERRY ST \\ KING ST", "category": null, "neighborhood": "Mission Bay"}, {"id": "1579542", "lat": 37.768822, "lng": -122.389305, "datetime": "2026-06-24T21:32:00-07:00", "description": "Theft, Pickpocket, >$950", "address": "03RD ST \\ WARRIORS WAY", "category": "Theft", "neighborhood": "Mission Bay"}, {"id": "1579273", "lat": 37.772507, "lng": -122.393936, "datetime": "2026-06-24T20:56:00-07:00", "description": "Assault, Aggravated, W/ Force", "address": "CHANNEL ST \\ CORINNE WOODS WAY", "category": "Assault", "neighborhood": "Mission Bay"}, {"id": "1579270", "lat": 37.778126, "lng": -122.391838, "datetime": "2026-06-24T15:42:00-07:00", "description": "Assault, Aggravated, W/ Other Weapon", "address": "03RD ST \\ KING ST", "category": "Assault", "neighborhood": "Mission Bay"}], "center": [37.7749, -122.4194], "zoom": 13};
+  const incidents = DATA.incidents;
+  const map = L.map('map').setView(DATA.center, DATA.zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const layer = L.layerGroup();
+  const bounds = [];
+  for (const inc of incidents) {
+    const color = CAT_COLORS[inc.category || 'Unclassified'] || '#64748b';
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 5, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.65 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">${inc.category || 'Unclassified'}</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    layer.addLayer(m);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  layer.addTo(map);
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 16 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const color = CAT_COLORS[i.category || 'Unclassified'] || '#64748b';
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:${color}"></span>${i.category || 'Unclassified'}</span></td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

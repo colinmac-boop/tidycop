@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Assault in Washington, DC, DC — 61 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 61 reported assault incidents in Washington, DC, DC from the last 21 days. Data from DC MPD Crime Incidents (ArcGIS).">
+  <meta name="keywords" content="Assault in Washington, DC, Washington, DC assault, assault near me Washington, DC, assault map Washington, DC, Washington, DC crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/washington-dc/assault">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Assault in Washington, DC, DC — 61 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 61 reported assault incidents in Washington, DC, DC from the last 21 days. Data from DC MPD Crime Incidents (ArcGIS).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/washington-dc/assault">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Assault in Washington, DC, DC — 61 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 61 reported assault incidents in Washington, DC, DC from the last 21 days. Data from DC MPD Crime Incidents (ArcGIS).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Washington, DC, DC","item":"https://citycrimemap.us/washington-dc"},{"@type":"ListItem","position":3,"name":"Assault","item":"https://citycrimemap.us/washington-dc/assault"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/washington-dc" class="hover:text-brand-700">Washington, DC</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Assault</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Assault in Washington, DC</h1>
+    <p class="text-slate-600">61 recent assault incidents · last 21 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Assault incidents in Washington, DC"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About assault in Washington, DC</h2>
+    <p class="mb-2">This page shows only <strong>assault incidents</strong> in Washington, DC from the last 21 days — 61 reports in total, filtered from the full Washington, DC dataset.</p>
+    <p class="mb-2">For all crime categories in Washington, DC on one map, <a href="/washington-dc" class="text-brand-700 hover:underline font-semibold">see the full Washington, DC crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent assault incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 17:08</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">1401 - 1433 BLOCK OF H STREET NE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 07:18</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">H STREET NW AND NEW YORK AVENUE NW</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 01:27</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">300 - 399 BLOCK OF V STREET NE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">7TH STREET NW AND G STREET NW</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 20:47</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">1900 BLOCK OF D STREET SE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 17:24</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">2400 - 2499 BLOCK OF MARKET STREET NE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 06:48</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">1600 - 1699 BLOCK OF SAVANNAH STREET SE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 04:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">1600 - 1699 BLOCK OF CRESCENT PLACE NW</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 02:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">500 - 699 BLOCK OF INGRAHAM STREET NW</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 01:32</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">ASSAULT W/DANGEROUS WEAPON</td><td class="px-3 py-2 text-slate-700">1800 - 1899 BLOCK OF PROVIDENCE STREET NE</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Washington, DC</h2>
+    <div><a href='/washington-dc/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(830)</span></a><a href='/washington-dc/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(68)</span></a><a href='/washington-dc/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(33)</span></a><a href='/washington-dc/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(5)</span></a><a href='/washington-dc/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(3)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Washington, DC crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/dc/washington" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Washington, DC alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:35.276951+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "26093771", "lat": 38.900193, "lng": -76.984817, "datetime": "2026-07-06T17:08:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1401 - 1433 BLOCK OF H STREET NE", "category": "Assault", "neighborhood": "Cluster 25"}, {"id": "26093473", "lat": 38.899979, "lng": -77.030341, "datetime": "2026-07-06T07:18:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "H STREET NW AND NEW YORK AVENUE NW", "category": "Assault", "neighborhood": "Cluster 8"}, {"id": "26093435", "lat": 38.918105, "lng": -77.001302, "datetime": "2026-07-06T01:27:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "300 - 399 BLOCK OF V STREET NE", "category": "Assault", "neighborhood": "Cluster 21"}, {"id": "26093610", "lat": 38.898446, "lng": -77.021914, "datetime": "2026-07-06T00:00:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "7TH STREET NW AND G STREET NW", "category": "Assault", "neighborhood": "Cluster 8"}, {"id": "26093351", "lat": 38.884077, "lng": -76.976246, "datetime": "2026-07-05T20:47:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1900 BLOCK OF D STREET SE", "category": "Assault", "neighborhood": "Cluster 26"}, {"id": "26093198", "lat": 38.919846, "lng": -76.952899, "datetime": "2026-07-05T17:24:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2400 - 2499 BLOCK OF MARKET STREET NE", "category": "Assault", "neighborhood": "Cluster 24"}, {"id": "26092964", "lat": 38.845581, "lng": -76.980118, "datetime": "2026-07-05T06:48:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1600 - 1699 BLOCK OF SAVANNAH STREET SE", "category": "Assault", "neighborhood": "Cluster 38"}, {"id": "26092937", "lat": 38.920779, "lng": -77.037809, "datetime": "2026-07-05T04:00:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1600 - 1699 BLOCK OF CRESCENT PLACE NW", "category": "Assault", "neighborhood": "Cluster 1"}, {"id": "26092878", "lat": 38.954271, "lng": -77.020999, "datetime": "2026-07-05T02:00:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "500 - 699 BLOCK OF INGRAHAM STREET NW", "category": "Assault", "neighborhood": "Cluster 18"}, {"id": "26093009", "lat": 38.912998, "lng": -76.984783, "datetime": "2026-07-05T01:32:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1800 - 1899 BLOCK OF PROVIDENCE STREET NE", "category": "Assault", "neighborhood": "Cluster 23"}, {"id": "26092507", "lat": 38.867764, "lng": -77.010693, "datetime": "2026-07-04T13:46:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1800 - 1899 BLOCK OF HALF STREET SW", "category": "Assault", "neighborhood": "Cluster 9"}, {"id": "26092323", "lat": 38.899677, "lng": -77.03114, "datetime": "2026-07-04T02:38:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1300 - 1399 BLOCK OF NEW YORK AVENUE NW", "category": "Assault", "neighborhood": "Cluster 8"}, {"id": "26092146", "lat": 38.888264, "lng": -76.952872, "datetime": "2026-07-03T20:08:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "100 - 199 BLOCK OF ANACOSTIA ROAD SE", "category": "Assault", "neighborhood": "Cluster 32"}, {"id": "26092152", "lat": 38.930634, "lng": -77.033811, "datetime": "2026-07-03T19:59:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1400 - 1499 BLOCK OF PARK ROAD NW", "category": "Assault", "neighborhood": "Cluster 2"}, {"id": "26092138", "lat": 38.90048, "lng": -77.028853, "datetime": "2026-07-03T19:25:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1200 - 1299 BLOCK OF NEW YORK AVENUE NW", "category": "Assault", "neighborhood": "Cluster 8"}, {"id": "26093054", "lat": 38.884179, "lng": -76.927421, "datetime": "2026-07-03T19:00:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "5100 - 5299 BLOCK OF CALL PLACE SE", "category": "Assault", "neighborhood": "Cluster 33"}, {"id": "26092096", "lat": 38.910094, "lng": -76.933637, "datetime": "2026-07-03T17:33:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "4700 - 4723 BLOCK OF QUARLES STREET NE", "category": "Assault", "neighborhood": "Cluster 31"}, {"id": "26091863", "lat": 38.82803, "lng": -77.000566, "datetime": "2026-07-03T09:11:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "4200 - 4351 BLOCK OF 4TH STREET SE", "category": "Assault", "neighborhood": "Cluster 39"}, {"id": "26091721", "lat": 38.856128, "lng": -76.972586, "datetime": "2026-07-02T22:43:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2700 - 2899 BLOCK OF LANGSTON PLACE SE", "category": "Assault", "neighborhood": "Cluster 36"}, {"id": "26091277", "lat": 38.919992, "lng": -77.006127, "datetime": "2026-07-02T05:32:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2100 - 2399 BLOCK OF LINCOLN ROAD NE", "category": "Assault", "neighborhood": "Cluster 21"}, {"id": "26091248", "lat": 38.880621, "lng": -76.930796, "datetime": "2026-07-02T01:51:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "4921- 5099 BLOCK OF G STREET SE", "category": "Assault", "neighborhood": "Cluster 33"}, {"id": "26091185", "lat": 38.883195, "lng": -76.941366, "datetime": "2026-07-01T22:38:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "4300 - 4309 BLOCK OF E STREET SE", "category": "Assault", "neighborhood": "Cluster 33"}, {"id": "26091180", "lat": 38.921595, "lng": -77.027036, "datetime": "2026-07-01T22:20:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2300 - 2499 BLOCK OF 11TH STREET NW", "category": "Assault", "neighborhood": "Cluster 2"}, {"id": "26090986", "lat": 38.900193, "lng": -76.97828, "datetime": "2026-07-01T17:07:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1700 - 1799 BLOCK OF H STREET NE", "category": "Assault", "neighborhood": "Cluster 23"}, {"id": "26090924", "lat": 38.912657, "lng": -76.984027, "datetime": "2026-07-01T14:44:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1926 - 1999 BLOCK OF CAPITOL AVENUE NE", "category": "Assault", "neighborhood": "Cluster 23"}, {"id": "26090656", "lat": 38.878997, "lng": -76.929948, "datetime": "2026-07-01T04:23:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "700 - 799 BLOCK OF 51ST STREET SE", "category": "Assault", "neighborhood": "Cluster 33"}, {"id": "26090630", "lat": 38.861021, "lng": -76.970957, "datetime": "2026-07-01T01:36:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2300 - 2399 BLOCK OF SKYLAND PLACE SE", "category": "Assault", "neighborhood": "Cluster 36"}, {"id": "26090629", "lat": 38.891966, "lng": -76.910933, "datetime": "2026-07-01T01:24:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "63RD STREET NE AND BANKS PLACE NE", "category": "Assault", "neighborhood": "Cluster 31"}, {"id": "26090587", "lat": 38.924482, "lng": -77.033183, "datetime": "2026-06-30T21:46:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1400 - 1499 BLOCK OF FAIRMONT STREET NW", "category": "Assault", "neighborhood": "Cluster 2"}, {"id": "26090489", "lat": 38.896115, "lng": -76.981463, "datetime": "2026-06-30T18:32:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1600 - 1699 BLOCK OF E STREET NE", "category": "Assault", "neighborhood": "Cluster 25"}, {"id": "26089996", "lat": 38.851186, "lng": -76.981017, "datetime": "2026-06-29T21:08:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "3098 - 3099 BLOCK OF STANTON ROAD SE", "category": "Assault", "neighborhood": "Cluster 38"}, {"id": "26089139", "lat": 38.946934, "lng": -77.01642, "datetime": "2026-06-28T05:02:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "4600 - 4699 BLOCK OF NEW HAMPSHIRE AVENUE NW", "category": "Assault", "neighborhood": "Cluster 18"}, {"id": "26089042", "lat": 38.855164, "lng": -76.968163, "datetime": "2026-06-27T22:41:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2804 - 2899 BLOCK OF GAINESVILLE STREET SE", "category": "Assault", "neighborhood": "Cluster 36"}, {"id": "26088676", "lat": 38.969279, "lng": -77.025737, "datetime": "2026-06-27T08:21:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "6500 - 6599 BLOCK OF PINEY BRANCH ROAD NW", "category": "Assault", "neighborhood": "Cluster 17"}, {"id": "26088582", "lat": 38.880621, "lng": -76.930796, "datetime": "2026-06-27T01:38:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "4921- 5099 BLOCK OF G STREET SE", "category": "Assault", "neighborhood": "Cluster 33"}, {"id": "26088578", "lat": 38.9062, "lng": -76.98417, "datetime": "2026-06-27T01:24:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1600 - 1624 BLOCK OF TRINIDAD AVENUE NE", "category": "Assault", "neighborhood": "Cluster 23"}, {"id": "26088520", "lat": 38.90334, "lng": -76.974171, "datetime": "2026-06-26T22:59:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "900 - 999 BLOCK OF 21ST STREET NE", "category": "Assault", "neighborhood": "Cluster 23"}, {"id": "26088474", "lat": 38.863535, "lng": -76.973972, "datetime": "2026-06-26T21:09:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2300 - 2399 BLOCK OF MARION BARRY AVENUE SE", "category": "Assault", "neighborhood": "Cluster 34"}, {"id": "26087847", "lat": 38.955735, "lng": -77.000849, "datetime": "2026-06-25T16:30:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "5500 - 5529 BLOCK OF SOUTH DAKOTA AVENUE NE", "category": "Assault", "neighborhood": "Cluster 19"}, {"id": "26086956", "lat": 38.887558, "lng": -76.926675, "datetime": "2026-06-24T02:40:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "5100 - 5299 BLOCK OF A STREET SE", "category": "Assault", "neighborhood": "Cluster 33"}, {"id": "26086418", "lat": 38.898313, "lng": -77.024948, "datetime": "2026-06-23T00:00:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "900 - 999 BLOCK OF G STREET NW", "category": "Assault", "neighborhood": "Cluster 8"}, {"id": "26086253", "lat": 38.936969, "lng": -77.024399, "datetime": "2026-06-22T16:48:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "3700 - 3799 BLOCK OF GEORGIA AVENUE NW", "category": "Assault", "neighborhood": "Cluster 18"}, {"id": "26086021", "lat": 38.901924, "lng": -77.015177, "datetime": "2026-06-22T08:56:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "900 - 999 BLOCK OF 3RD STREET NW", "category": "Assault", "neighborhood": "Cluster 8"}, {"id": "26085941", "lat": 38.856128, "lng": -76.972586, "datetime": "2026-06-22T03:11:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2700 - 2899 BLOCK OF LANGSTON PLACE SE", "category": "Assault", "neighborhood": "Cluster 36"}, {"id": "26085871", "lat": 38.906662, "lng": -76.952819, "datetime": "2026-06-21T23:47:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "3300 - 3730 BLOCK OF HAYES STREET NE", "category": "Assault", "neighborhood": "Cluster 30"}, {"id": "26085361", "lat": 38.896667, "lng": -76.982929, "datetime": "2026-06-21T00:50:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1500 - 1599 BLOCK OF F STREET NE", "category": "Assault", "neighborhood": "Cluster 25"}, {"id": "26085260", "lat": 38.919555, "lng": -77.025089, "datetime": "2026-06-20T22:08:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "944 - 967 BLOCK OF FLORIDA AVENUE NW", "category": "Assault", "neighborhood": "Cluster 3"}, {"id": "26084891", "lat": 38.929113, "lng": -77.021399, "datetime": "2026-06-20T05:53:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "500 - 699 BLOCK OF IRVING STREET NW", "category": "Assault", "neighborhood": "Cluster 2"}, {"id": "26084853", "lat": 38.922629, "lng": -77.032993, "datetime": "2026-06-20T03:12:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1400 - 1499 BLOCK OF CLIFTON STREET NW", "category": "Assault", "neighborhood": "Cluster 2"}, {"id": "26084847", "lat": 38.881012, "lng": -76.926456, "datetime": "2026-06-20T02:39:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "5133 - 5300 BLOCK OF FITCH STREET SE", "category": "Assault", "neighborhood": "Cluster 33"}, {"id": "26084454", "lat": 38.911466, "lng": -77.010637, "datetime": "2026-06-19T13:22:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "16 - 59 BLOCK OF FLORIDA AVENUE NW", "category": "Assault", "neighborhood": "Cluster 21"}, {"id": "26084458", "lat": 38.834741, "lng": -77.0033, "datetime": "2026-06-19T12:15:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "166 - 199 BLOCK OF MISSISSIPPI AVENUE SE", "category": "Assault", "neighborhood": "Cluster 39"}, {"id": "26084365", "lat": 38.822926, "lng": -77.001943, "datetime": "2026-06-19T08:32:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "4600 - 4699 BLOCK OF LIVINGSTON ROAD SE", "category": "Assault", "neighborhood": "Cluster 39"}, {"id": "26084119", "lat": 38.829203, "lng": -76.997354, "datetime": "2026-06-18T19:49:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "600 - 718 BLOCK OF CHESAPEAKE STREET SE", "category": "Assault", "neighborhood": "Cluster 39"}, {"id": "26084062", "lat": 38.935738, "lng": -77.109038, "datetime": "2026-06-18T17:28:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "5210 - 5299 BLOCK OF LOUGHBORO ROAD NW", "category": "Assault", "neighborhood": "Cluster 13"}, {"id": "26084046", "lat": 38.928743, "lng": -77.033639, "datetime": "2026-06-18T17:25:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1400 - 1451 BLOCK OF IRVING STREET NW", "category": "Assault", "neighborhood": "Cluster 2"}, {"id": "26083932", "lat": 38.900699, "lng": -77.049476, "datetime": "2026-06-18T14:00:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2200 - 2299 BLOCK OF I STREET NW", "category": "Assault", "neighborhood": "Cluster 5"}, {"id": "26083873", "lat": 38.899615, "lng": -76.980387, "datetime": "2026-06-18T11:37:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "1516 - 1699 BLOCK OF BENNING ROAD NE", "category": "Assault", "neighborhood": "Cluster 25"}, {"id": "26083591", "lat": 38.870732, "lng": -76.958981, "datetime": "2026-06-17T19:05:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "3200 - 3299 BLOCK OF O STREET SE", "category": "Assault", "neighborhood": "Cluster 34"}, {"id": "26083383", "lat": 38.878411, "lng": -77.014238, "datetime": "2026-06-17T13:00:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "200 - 299 BLOCK OF K STREET SW", "category": "Assault", "neighborhood": "Cluster 9"}, {"id": "26083177", "lat": 38.921887, "lng": -77.040149, "datetime": "2026-06-17T00:36:00-04:00", "description": "ASSAULT W/DANGEROUS WEAPON", "address": "2322 - 2499 BLOCK OF ONTARIO ROAD NW", "category": "Assault", "neighborhood": "Cluster 1"}];
+  const map = L.map('map').setView([38.9072, -77.0369], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Assault'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Assault</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

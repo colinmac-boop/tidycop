@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Vandalism in San Francisco, CA — 72 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 72 reported vandalism incidents in San Francisco, CA from the last 14 days. Data from DataSF — SFPD Incident Reports.">
+  <meta name="keywords" content="Vandalism in San Francisco, San Francisco vandalism, vandalism near me San Francisco, vandalism map San Francisco, San Francisco crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/san-francisco/vandalism">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Vandalism in San Francisco, CA — 72 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 72 reported vandalism incidents in San Francisco, CA from the last 14 days. Data from DataSF — SFPD Incident Reports.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/san-francisco/vandalism">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vandalism in San Francisco, CA — 72 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 72 reported vandalism incidents in San Francisco, CA from the last 14 days. Data from DataSF — SFPD Incident Reports.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"San Francisco, CA","item":"https://citycrimemap.us/san-francisco"},{"@type":"ListItem","position":3,"name":"Vandalism","item":"https://citycrimemap.us/san-francisco/vandalism"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/san-francisco" class="hover:text-brand-700">San Francisco, CA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Vandalism</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Vandalism in San Francisco, CA</h1>
+    <p class="text-slate-600">72 recent vandalism incidents · last 14 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Vandalism incidents in San Francisco, CA"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About vandalism in San Francisco</h2>
+    <p class="mb-2">This page shows only <strong>vandalism incidents</strong> in San Francisco, CA from the last 14 days — 72 reports in total, filtered from the full San Francisco dataset.</p>
+    <p class="mb-2">For all crime categories in San Francisco on one map, <a href="/san-francisco" class="text-brand-700 hover:underline font-semibold">see the full San Francisco crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent vandalism incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 17:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Adult Suspect</td><td class="px-3 py-2 text-slate-700">GOLDEN GATE AVE \ LEAVENWORTH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 16:40</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Property</td><td class="px-3 py-2 text-slate-700">GOLDEN GATE AVE \ VAN NESS AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 16:01</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Property</td><td class="px-3 py-2 text-slate-700">CALIFORNIA ST \ DAVIS ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 15:49</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Vehicle</td><td class="px-3 py-2 text-slate-700">19TH ST \ FOLSOM ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 15:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Vehicle</td><td class="px-3 py-2 text-slate-700">GEARY BLVD \ SPRUCE ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 12:57</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Property</td><td class="px-3 py-2 text-slate-700">17TH ST \ HARRISON ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 11:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Vehicle</td><td class="px-3 py-2 text-slate-700">BRYANT ST \ MAIN ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 10:14</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Property</td><td class="px-3 py-2 text-slate-700">17TH ST \ DIAMOND ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 08:50</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Property</td><td class="px-3 py-2 text-slate-700">SCOTT ST \ TURK ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 08:41</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Malicious Mischief, Vandalism to Property</td><td class="px-3 py-2 text-slate-700">04TH ST \ HOWARD ST</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in San Francisco</h2>
+    <div><a href='/san-francisco/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(533)</span></a><a href='/san-francisco/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(203)</span></a><a href='/san-francisco/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(91)</span></a><a href='/san-francisco/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(43)</span></a><a href='/san-francisco/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(18)</span></a><a href='/san-francisco/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(18)</span></a><a href='/san-francisco/arson' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Arson <span class='text-xs text-slate-500'>(3)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get San Francisco crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/ca/san-francisco" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for San Francisco alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:32.295315+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "1580057", "lat": 37.781864, "lng": -122.413864, "datetime": "2026-06-28T17:30:00-07:00", "description": "Malicious Mischief, Adult Suspect", "address": "GOLDEN GATE AVE \\ LEAVENWORTH ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1580077", "lat": 37.781033, "lng": -122.420441, "datetime": "2026-06-28T16:40:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "GOLDEN GATE AVE \\ VAN NESS AVE", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1580012", "lat": 37.79351, "lng": -122.397606, "datetime": "2026-06-28T16:01:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "CALIFORNIA ST \\ DAVIS ST", "category": "Vandalism", "neighborhood": "Financial District/South Beach"}, {"id": "1580010", "lat": 37.760498, "lng": -122.414841, "datetime": "2026-06-28T15:49:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "19TH ST \\ FOLSOM ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1580360", "lat": 37.781719, "lng": -122.453171, "datetime": "2026-06-28T15:00:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "GEARY BLVD \\ SPRUCE ST", "category": "Vandalism", "neighborhood": "Presidio Heights"}, {"id": "1579998", "lat": 37.764091, "lng": -122.413002, "datetime": "2026-06-28T12:57:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "17TH ST \\ HARRISON ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1580018", "lat": 37.7869, "lng": -122.388779, "datetime": "2026-06-28T11:00:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "BRYANT ST \\ MAIN ST", "category": "Vandalism", "neighborhood": "Financial District/South Beach"}, {"id": "1579983", "lat": 37.762356, "lng": -122.43734, "datetime": "2026-06-28T10:14:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "17TH ST \\ DIAMOND ST", "category": "Vandalism", "neighborhood": "Castro/Upper Market"}, {"id": "1579996", "lat": 37.779869, "lng": -122.437073, "datetime": "2026-06-28T08:50:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "SCOTT ST \\ TURK ST", "category": "Vandalism", "neighborhood": "Western Addition"}, {"id": "1579977", "lat": 37.78326, "lng": -122.40271, "datetime": "2026-06-28T08:41:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "04TH ST \\ HOWARD ST", "category": "Vandalism", "neighborhood": "Financial District/South Beach"}, {"id": "1579969", "lat": 37.768406, "lng": -122.417801, "datetime": "2026-06-28T08:23:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "14TH ST \\ SOUTH VAN NESS AVE", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1579930", "lat": 37.785789, "lng": -122.412971, "datetime": "2026-06-28T06:55:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "JONES ST \\ OFARRELL ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1581572", "lat": 37.756561, "lng": -122.426788, "datetime": "2026-06-28T06:30:00-07:00", "description": "Phone Calls, Harassing", "address": "21ST ST \\ CHATTANOOGA ST", "category": "Vandalism", "neighborhood": "Noe Valley"}, {"id": "1579944", "lat": 37.73101, "lng": -122.376999, "datetime": "2026-06-28T02:02:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "HARBOR RD \\ NORTHRIDGE RD", "category": "Vandalism", "neighborhood": "Bayview Hunters Point"}, {"id": "1579896", "lat": 37.774517, "lng": -122.413773, "datetime": "2026-06-28T00:03:00-07:00", "description": "Malicious Mischief, Adult Suspect", "address": "DORE ST \\ HOWARD ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579894", "lat": 37.77589, "lng": -122.415131, "datetime": "2026-06-27T22:36:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "MISSION ST \\ WASHBURN ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579901", "lat": 37.771412, "lng": -122.416183, "datetime": "2026-06-27T22:20:00-07:00", "description": "Malicious Mischief, Tire Slashing", "address": "12TH ST \\ KISSLING ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1579890", "lat": 37.789227, "lng": -122.408592, "datetime": "2026-06-27T21:00:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "POWELL ST \\ SUTTER ST", "category": "Vandalism", "neighborhood": "Nob Hill"}, {"id": "1579873", "lat": 37.79129, "lng": -122.422516, "datetime": "2026-06-27T20:55:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "SACRAMENTO ST \\ VAN NESS AVE", "category": "Vandalism", "neighborhood": "Nob Hill"}, {"id": "1579911", "lat": 37.783005, "lng": -122.412415, "datetime": "2026-06-27T20:30:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "JONES ST \\ TURK ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1580368", "lat": 37.782997, "lng": -122.397942, "datetime": "2026-06-27T19:20:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "03RD ST \\ SAINT FRANCIS PL", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579821", "lat": 37.745758, "lng": -122.386063, "datetime": "2026-06-27T15:40:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "AMADOR ST \\ ILLINOIS ST", "category": "Vandalism", "neighborhood": "Bayview Hunters Point"}, {"id": "1579816", "lat": 37.783722, "lng": -122.414238, "datetime": "2026-06-27T15:30:00-07:00", "description": "Malicious Mischief, Adult Suspect", "address": "EDDY ST \\ LEAVENWORTH ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579801", "lat": 37.724007, "lng": -122.43531, "datetime": "2026-06-27T10:35:00-07:00", "description": "Malicious Mischief, Street Cars/Buses", "address": "MISSION ST \\ SAN JUAN AVE", "category": "Vandalism", "neighborhood": "Excelsior"}, {"id": "1579735", "lat": 37.784657, "lng": -122.414429, "datetime": "2026-06-26T23:54:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "ELLIS ST \\ LEAVENWORTH ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579992", "lat": 37.761429, "lng": -122.426079, "datetime": "2026-06-26T23:12:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "18TH ST \\ DOLORES ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1579760", "lat": 37.786835, "lng": -122.412338, "datetime": "2026-06-26T23:00:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "GEARY ST \\ SHANNON ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579700", "lat": 37.783932, "lng": -122.412598, "datetime": "2026-06-26T19:45:00-07:00", "description": "Malicious Mischief, Tire Slashing", "address": "EDDY ST \\ JONES ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579705", "lat": 37.752205, "lng": -122.419014, "datetime": "2026-06-26T19:40:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "24TH ST \\ OSAGE ALY", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1580698", "lat": 37.77824, "lng": -122.414146, "datetime": "2026-06-26T19:12:00-07:00", "description": "Malicious Mischief, Adult Suspect", "address": "08TH ST \\ STEVENSON ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579708", "lat": 37.77594, "lng": -122.397972, "datetime": "2026-06-26T19:08:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "05TH ST \\ BLUXOME ST", "category": "Vandalism", "neighborhood": "Mission Bay"}, {"id": "1580196", "lat": 37.776718, "lng": -122.415321, "datetime": "2026-06-26T19:00:00-07:00", "description": "Malicious Mischief, Breaking Windows", "address": "09TH ST \\ JESSIE ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579737", "lat": 37.77824, "lng": -122.414146, "datetime": "2026-06-26T19:00:00-07:00", "description": "Malicious Mischief, Adult Suspect", "address": "08TH ST \\ STEVENSON ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579694", "lat": 37.77824, "lng": -122.414146, "datetime": "2026-06-26T19:00:00-07:00", "description": "Malicious Mischief, Adult Suspect", "address": "08TH ST \\ STEVENSON ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579716", "lat": 37.783215, "lng": -122.410767, "datetime": "2026-06-26T19:00:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "TAYLOR ST \\ TURK ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1581837", "lat": 37.77824, "lng": -122.414146, "datetime": "2026-06-26T19:00:00-07:00", "description": "Malicious Mischief, Adult Suspect", "address": "08TH ST \\ STEVENSON ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1580411", "lat": 37.772907, "lng": -122.422188, "datetime": "2026-06-26T18:53:00-07:00", "description": "Malicious Mischief, Graffiti, Real or Personal Property", "address": "GOUGH ST \\ MARKET ST", "category": "Vandalism", "neighborhood": "Hayes Valley"}, {"id": "1580569", "lat": 37.761429, "lng": -122.426079, "datetime": "2026-06-26T18:15:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "18TH ST \\ DOLORES ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1580346", "lat": 37.720512, "lng": -122.410484, "datetime": "2026-06-26T18:12:00-07:00", "description": "Vehicle, Tampering", "address": "COLBY ST \\ OLMSTEAD ST", "category": "Vandalism", "neighborhood": "Portola"}, {"id": "1579715", "lat": 37.776543, "lng": -122.417503, "datetime": "2026-06-26T17:02:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "10TH ST \\ FELL ST \\ MARKET ST \\ POLK ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1580538", "lat": 37.769814, "lng": -122.417755, "datetime": "2026-06-26T14:45:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "13TH ST \\ SOUTH VAN NESS AVE", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1580187", "lat": 37.823174, "lng": -122.374908, "datetime": "2026-06-26T14:30:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "09TH TI ST \\ AVENUE B", "category": "Vandalism", "neighborhood": "Treasure Island"}, {"id": "1580170", "lat": 37.750675, "lng": -122.417725, "datetime": "2026-06-26T12:48:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "25TH ST \\ LILAC ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1581284", "lat": 37.768177, "lng": -122.410728, "datetime": "2026-06-26T12:42:00-07:00", "description": "Vehicle, Tampering", "address": "ALAMEDA ST \\ BRYANT ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1579657", "lat": 37.786518, "lng": -122.41481, "datetime": "2026-06-26T12:07:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "GEARY ST \\ LEAVENWORTH ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579753", "lat": 37.786518, "lng": -122.41481, "datetime": "2026-06-26T12:07:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "GEARY ST \\ LEAVENWORTH ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579624", "lat": 37.784454, "lng": -122.408493, "datetime": "2026-06-26T11:00:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "CYRIL MAGNIN ST \\ EDDY ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579648", "lat": 37.78849, "lng": -122.421951, "datetime": "2026-06-26T10:30:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "BUSH ST \\ VAN NESS AVE", "category": "Vandalism", "neighborhood": "Nob Hill"}, {"id": "1579620", "lat": 37.779922, "lng": -122.508369, "datetime": "2026-06-26T10:15:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "47TH AVE \\ POINT LOBOS AVE", "category": "Vandalism", "neighborhood": "Outer Richmond"}, {"id": "1579666", "lat": 37.792252, "lng": -122.407516, "datetime": "2026-06-26T09:30:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "CALIFORNIA ST \\ STOCKTON ST", "category": "Vandalism", "neighborhood": "Financial District/South Beach"}, {"id": "1579599", "lat": 37.783722, "lng": -122.414238, "datetime": "2026-06-26T08:15:00-07:00", "description": "Malicious Mischief, Breaking Windows", "address": "EDDY ST \\ LEAVENWORTH ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579599", "lat": 37.783722, "lng": -122.414238, "datetime": "2026-06-26T08:15:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "EDDY ST \\ LEAVENWORTH ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1580798", "lat": 37.781754, "lng": -122.409691, "datetime": "2026-06-26T08:00:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "06TH ST \\ STEVENSON ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579635", "lat": 37.784523, "lng": -122.470978, "datetime": "2026-06-26T03:00:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "12TH AVE \\ CALIFORNIA ST", "category": "Vandalism", "neighborhood": "Inner Richmond"}, {"id": "1579582", "lat": 37.783688, "lng": -122.444641, "datetime": "2026-06-26T02:20:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "LYON ST \\ POST ST", "category": "Vandalism", "neighborhood": "Presidio Heights"}, {"id": "1579560", "lat": 37.785686, "lng": -122.421394, "datetime": "2026-06-25T21:39:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "GEARY BLVD \\ GEARY ST \\ VAN NESS AVE", "category": "Vandalism", "neighborhood": "Western Addition"}, {"id": "1579534", "lat": 37.771137, "lng": -122.400803, "datetime": "2026-06-25T17:28:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "07TH ST \\ KING ST", "category": "Vandalism", "neighborhood": "Mission Bay"}, {"id": "1579514", "lat": 37.775517, "lng": -122.460663, "datetime": "2026-06-25T16:26:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "03RD AVE \\ CABRILLO ST", "category": "Vandalism", "neighborhood": "Inner Richmond"}, {"id": "1580386", "lat": 37.776543, "lng": -122.417503, "datetime": "2026-06-25T11:30:00-07:00", "description": "Phone Calls, Harassing", "address": "10TH ST \\ FELL ST \\ MARKET ST \\ POLK ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579491", "lat": 37.777271, "lng": -122.404068, "datetime": "2026-06-25T04:39:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "06TH ST \\ HARRISON ST", "category": "Vandalism", "neighborhood": "South of Market"}, {"id": "1579668", "lat": 37.780495, "lng": -122.432144, "datetime": "2026-06-25T02:30:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "FILLMORE ST \\ TURK ST", "category": "Vandalism", "neighborhood": "Western Addition"}, {"id": "1579295", "lat": 37.730038, "lng": -122.404594, "datetime": "2026-06-24T23:50:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "FELTON ST \\ SAN BRUNO AVE", "category": "Vandalism", "neighborhood": "Portola"}, {"id": "1579289", "lat": 37.730789, "lng": -122.428391, "datetime": "2026-06-24T22:35:00-07:00", "description": "Vehicle, Tampering", "address": "CRAUT ST \\ TRUMBULL ST", "category": "Vandalism", "neighborhood": "Excelsior"}, {"id": "1579398", "lat": 37.783215, "lng": -122.410767, "datetime": "2026-06-24T20:30:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "TAYLOR ST \\ TURK ST", "category": "Vandalism", "neighborhood": "Tenderloin"}, {"id": "1579251", "lat": 37.757233, "lng": -122.415627, "datetime": "2026-06-24T15:50:00-07:00", "description": "Animal, Cruelty to", "address": "21ST ST \\ SHOTWELL ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1579261", "lat": 37.764706, "lng": -122.415253, "datetime": "2026-06-24T15:50:00-07:00", "description": "Malicious Mischief, Vandalism to Vehicle", "address": "ENTERPRISE ST \\ FOLSOM ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1579192", "lat": 37.786404, "lng": -122.42321, "datetime": "2026-06-24T14:33:00-07:00", "description": "Malicious Mischief, Vandalism to Property", "address": "FRANKLIN ST \\ PETER YORKE WAY \\ POST ST", "category": "Vandalism", "neighborhood": "Western Addition"}, {"id": "1579618", "lat": 37.763561, "lng": -122.477173, "datetime": "2026-06-24T14:00:00-07:00", "description": "Malicious Mischief, Tire Slashing", "address": "19TH AVE \\ IRVING ST", "category": "Vandalism", "neighborhood": "Sunset/Parkside"}, {"id": "1579134", "lat": 37.709949, "lng": -122.416885, "datetime": "2026-06-24T08:52:00-07:00", "description": "Phone Calls, Harassing, to 911", "address": "HAHN ST \\ SUNRISE WAY", "category": "Vandalism", "neighborhood": "Visitacion Valley"}, {"id": "1579098", "lat": 37.749138, "lng": -122.416519, "datetime": "2026-06-24T03:50:00-07:00", "description": "Malicious Mischief, Breaking Windows", "address": "26TH ST \\ CYPRESS ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1579259", "lat": 37.749138, "lng": -122.416519, "datetime": "2026-06-24T03:46:00-07:00", "description": "Vandalism or Graffiti Tools, Possession", "address": "26TH ST \\ CYPRESS ST", "category": "Vandalism", "neighborhood": "Mission"}, {"id": "1581757", "lat": 37.793564, "lng": -122.40461, "datetime": "2026-06-24T01:00:00-07:00", "description": "Malicious Mischief, Breaking Windows", "address": "KEARNY ST \\ SACRAMENTO ST", "category": "Vandalism", "neighborhood": "Chinatown"}];
+  const map = L.map('map').setView([37.7749, -122.4194], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Vandalism'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Vandalism</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

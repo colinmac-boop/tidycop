@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Methodology — how CityCrimeMap works | Predictive crime modeling, open source</title>
+  <meta name="description" content="Full technical methodology for CityCrimeMap: how we ingest data from 16 US city open-data portals, how the SpotCrime 8-category classifier normalizes offenses, and how the random-forest predictive model is trained and validated (Wheeler & Steenbeek 2021 RTM methodology).">
+  <meta name="keywords" content="crime map methodology, predictive crime modeling, risk terrain modeling, random forest crime prediction, PAI predictive accuracy index, Wheeler Steenbeek crime, kernel density crime, open source crime data">
+  <link rel="canonical" href="https://citycrimemap.us/methodology">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Methodology — how CityCrimeMap works | Predictive crime modeling, open source">
+  <meta property="og:description" content="Full technical methodology for CityCrimeMap: how we ingest data from 16 US city open-data portals, how the SpotCrime 8-category classifier normalizes offenses, and how the random-forest predictive model is trained and validated (Wheeler & Steenbeek 2021 RTM methodology).">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://citycrimemap.us/methodology">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Methodology — how CityCrimeMap works | Predictive crime modeling, open source">
+  <meta name="twitter:description" content="Full technical methodology for CityCrimeMap: how we ingest data from 16 US city open-data portals, how the SpotCrime 8-category classifier normalizes offenses, and how the random-forest predictive model is trained and validated (Wheeler & Steenbeek 2021 RTM methodology).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Methodology","item":"https://citycrimemap.us/methodology"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"CityCrimeMap Methodology","description":"Full technical methodology for CityCrimeMap: how we ingest data from 16 US city open-data portals, how the SpotCrime 8-category classifier normalizes offenses, and how the random-forest predictive model is trained and validated (Wheeler & Steenbeek 2021 RTM methodology).","url":"https://citycrimemap.us/methodology","publisher":{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]},"citation":"Wheeler, A.P. & Steenbeek, W. (2021). Mapping the Risk Terrain for Crime Using Machine Learning. J Quant Criminol 37, 445\u2013480. https://doi.org/10.1007/s10940-020-09457-7"}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="text-brand-100/80 hover:text-brand-100 inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="font-bold text-white">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-4xl mx-auto px-4 py-10 text-slate-700 leading-relaxed">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3"><a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span> <span class="text-slate-700">Methodology</span></nav>
+  <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Methodology</h1>
+  <p class="text-lg text-slate-600 mb-8">How CityCrimeMap ingests, normalizes, classifies, and models crime data for 16 US cities. Every step below is implemented in publicly readable Python. Nothing is proprietary.</p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">1. Data ingest</h2>
+  <p class="mb-3">We consume each city's official open-data portal directly. The three portal families we support cover roughly 95% of US cities that publish crime data at all:</p>
+  <ul class="list-disc pl-6 space-y-1 mb-3">
+    <li><strong>Socrata</strong> (Chicago, Seattle, San Francisco, Cincinnati, Cleveland, Detroit, Denver, Minneapolis, Rochester, and others)</li>
+    <li><strong>ArcGIS FeatureServer / MapServer</strong> (Washington DC, Houston, Pittsburgh, Indianapolis, Boston, Hartford, Gainesville, and others)</li>
+    <li><strong>CKAN</strong> (fallback for a handful of smaller cities)</li>
+  </ul>
+  <p class="mb-3">Ingest is handled by the open-source <a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop" target="_blank" rel="noopener">tidycop</a> library (MIT), a Python port of Anthony Galvan's R <a class="text-brand-700 hover:underline" href="https://github.com/Steal-This-Code/tidycops" target="_blank" rel="noopener">tidycops</a> package. We add nothing over the wire that the city hasn't already published; we simply pull, normalize, and cache. The registry that defines each city's field mapping is <a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop/blob/main/registry/cities.yaml" target="_blank" rel="noopener">a single YAML file</a> you can inspect.</p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">2. Offense classification</h2>
+  <p class="mb-3">Every city defines its own offense codes — NIBRS, UCR variants, custom vocabularies, or plain-English descriptions. Direct passthrough would make cross-city comparison impossible. We normalize into <strong>eight categories</strong>:</p>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3 text-sm">
+    <div class="bg-slate-100 rounded px-3 py-2"><strong>Shooting</strong></div><div class="bg-slate-100 rounded px-3 py-2"><strong>Robbery</strong></div>
+    <div class="bg-slate-100 rounded px-3 py-2"><strong>Assault</strong></div><div class="bg-slate-100 rounded px-3 py-2"><strong>Burglary</strong></div>
+    <div class="bg-slate-100 rounded px-3 py-2"><strong>Theft</strong></div><div class="bg-slate-100 rounded px-3 py-2"><strong>Arson</strong></div>
+    <div class="bg-slate-100 rounded px-3 py-2"><strong>Vandalism</strong></div><div class="bg-slate-100 rounded px-3 py-2"><strong>Arrest</strong></div>
+  </div>
+  <p class="mb-3">Classification uses the open-source <a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop-spotcrime" target="_blank" rel="noopener">tidycop-spotcrime</a> package. Rows that don't map cleanly are labelled <em>Unclassified</em> rather than force-fit into a bucket. Coverage varies by city; see each city's page for the current breakdown.</p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">3. Geocoding (where needed)</h2>
+  <p class="mb-3">Most feeds publish latitude/longitude. When a city publishes addresses but no coordinates (currently: Boston), we resolve them via the <a class="text-brand-700 hover:underline" href="https://geocoding.geo.census.gov/geocoder/" target="_blank" rel="noopener">U.S. Census Bureau batch geocoder</a>, with a SQLite cache to avoid re-hitting the API. Unmatched rows are counted honestly as "N incidents could not be located" beneath the map.</p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">4. Predictive risk model</h2>
+  <p class="mb-3">The predicted-risk overlay is generated by <a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop-hotspots" target="_blank" rel="noopener">tidycop-hotspots</a>, a pure-Python implementation of the machine-learning Risk Terrain Modeling methodology published by Wheeler and Steenbeek in the <a class="text-brand-700 hover:underline" href="https://doi.org/10.1007/s10940-020-09457-7" target="_blank" rel="noopener">Journal of Quantitative Criminology</a> (2021). No ArcGIS Pro license required. The implementation is MIT-licensed and readable.</p>
+
+  <h3 class="text-lg font-bold text-slate-900 mt-4 mb-2">Grid</h3>
+  <p class="mb-3">Cities are gridded into square cells of 200–300 meters depending on incident density. Denser cities get larger cells so cell counts stay uniformly-distributed enough for training; smaller cities get tighter cells so the map has visible contrast. Hex grids are also supported upstream and are a possible future refinement.</p>
+
+  <h3 class="text-lg font-bold text-slate-900 mt-4 mb-2">Features</h3>
+  <ul class="list-disc pl-6 space-y-1 mb-3">
+    <li><strong>Kernel density estimate</strong> of prior incidents at each cell centroid, with a Gaussian kernel and bandwidth of 350–500 m depending on city size. Values are log-transformed (log1p of the normalized density) before being fed to the model, because raw KDE values on city-scale grids sit in the 1e-10 range and cause the RF to learn a constant.</li>
+    <li><strong>Cell centroid X/Y coordinates</strong> for spatial context.</li>
+    <li><strong>Lagged incident counts</strong> per cell from the training window.</li>
+  </ul>
+
+  <h3 class="text-lg font-bold text-slate-900 mt-4 mb-2">Model</h3>
+  <p class="mb-3"><code class="bg-slate-100 px-1 rounded">sklearn.ensemble.RandomForestRegressor</code> with <code>n_estimators=400</code>, <code>min_samples_leaf=5</code>. Random forests are the baseline model in the Wheeler &amp; Steenbeek paper and continue to perform competitively with gradient-boosted trees at this problem scale, with a fraction of the tuning burden.</p>
+
+  <h3 class="text-lg font-bold text-slate-900 mt-4 mb-2">Training / test split</h3>
+  <p class="mb-3">We split by <strong>time</strong>, not by row — the first ≈65% of the window is training, the last ≈35% is held-out test. This is the leakage-free protocol Wheeler &amp; Steenbeek recommend. Fitting the KDE feature on the training window only is important; refitting on the whole window would leak test-window information into the feature vector.</p>
+
+  <h3 class="text-lg font-bold text-slate-900 mt-4 mb-2">Inference</h3>
+  <p class="mb-3">We deliberately do inference twice. The fitted tree is applied first to the training-window KDE to compute the honest test-set PAI. It is applied a second time to a KDE built from the full window, and that surface is what we ship on the map — so the user sees where things are hot <em>right now</em>, not where they were hot last month. The fitted decision function is the same both times; only the input feature vector changes.</p>
+
+  <h3 class="text-lg font-bold text-slate-900 mt-4 mb-2">Output</h3>
+  <p class="mb-3">We keep only the top 10% of positive-risk cells and drop the rest, which shrinks the payload from ≈15,000 cells to a few dozen. Each output cell carries <code>risk</code> (0–1), <code>rank</code> / <code>rank_of</code> for ordering, and <code>pred_count</code> — the raw predicted incident count per cell over the training-window duration.</p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">5. Validation — Predictive Accuracy Index (PAI)</h2>
+  <p class="mb-3">Every model is validated with the <strong>Predictive Accuracy Index</strong>:</p>
+  <p class="mb-3 bg-slate-100 rounded p-3 font-mono text-sm text-slate-800">PAI = (incidents in flagged cells / total incidents) &divide; (flagged cell area / total area)</p>
+  <p class="mb-3">A PAI of 1.0 is random. 2.0 is twice as good as random; 4.0 is four times. We report PAI at 10% of the area (the standard reporting convention in the RTM literature) for every city. See the <a class="text-brand-700 hover:underline" href="/predictions">predictions page</a> for the current per-city numbers.</p>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">6. Bias and limitations</h2>
+  <p class="mb-3">Reported crime data does not equal real crime. It reflects both criminal activity and where policing looks. Predictive models built on that data inherit both. We flag this explicitly rather than pretend otherwise:</p>
+  <ul class="list-disc pl-6 space-y-1 mb-3">
+    <li>The risk overlay is <strong>place-based</strong>, not person-based. We do not model or predict individuals.</li>
+    <li>The overlay is <strong>advisory</strong>, not decisional. It is not a policing product and does not recommend deployment.</li>
+    <li>Cities with sparse training data produce noisy models; some score at or below the random baseline. We publish those numbers alongside the good ones.</li>
+  </ul>
+
+  <h2 class="text-2xl font-bold text-slate-900 mt-8 mb-3">7. Reproducibility</h2>
+  <p class="mb-3">Everything on this site is reproducible from three open-source Python packages:</p>
+  <ul class="list-disc pl-6 space-y-1 mb-3">
+    <li><a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop" target="_blank" rel="noopener">tidycop</a> — city-agnostic data ingest</li>
+    <li><a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop-spotcrime" target="_blank" rel="noopener">tidycop-spotcrime</a> — offense classifier</li>
+    <li><a class="text-brand-700 hover:underline" href="https://github.com/colinmac-boop/tidycop-hotspots" target="_blank" rel="noopener">tidycop-hotspots</a> — predictive model</li>
+  </ul>
+  <p class="mb-3">All MIT licensed. Clone the repo, install the packages, and you can regenerate every map on this site.</p>
+
+  <p class="mt-8"><a href="/predictions" class="text-brand-700 hover:underline font-semibold">← Back to predictions overview</a></p>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get your city crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for your city alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:31.104829+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>

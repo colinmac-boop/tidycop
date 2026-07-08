@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Theft in Gainesville, FL — 96 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 96 reported theft incidents in Gainesville, FL from the last 21 days. Data from City of Gainesville — Crime Responses (Socrata).">
+  <meta name="keywords" content="Theft in Gainesville, Gainesville theft, theft near me Gainesville, theft map Gainesville, Gainesville crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/gainesville/theft">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Theft in Gainesville, FL — 96 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 96 reported theft incidents in Gainesville, FL from the last 21 days. Data from City of Gainesville — Crime Responses (Socrata).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/gainesville/theft">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Theft in Gainesville, FL — 96 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 96 reported theft incidents in Gainesville, FL from the last 21 days. Data from City of Gainesville — Crime Responses (Socrata).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Gainesville, FL","item":"https://citycrimemap.us/gainesville"},{"@type":"ListItem","position":3,"name":"Theft","item":"https://citycrimemap.us/gainesville/theft"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/gainesville" class="hover:text-brand-700">Gainesville, FL</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Theft</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Theft in Gainesville, FL</h1>
+    <p class="text-slate-600">96 recent theft incidents · last 21 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Theft incidents in Gainesville, FL"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About theft in Gainesville</h2>
+    <p class="mb-2">This page shows only <strong>theft incidents</strong> in Gainesville, FL from the last 21 days — 96 reports in total, filtered from the full Gainesville dataset.</p>
+    <p class="mb-2">For all crime categories in Gainesville on one map, <a href="/gainesville" class="text-brand-700 hover:underline font-semibold">see the full Gainesville crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent theft incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 21:16</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Fraud (forgery)</td><td class="px-3 py-2 text-slate-700">900 BLK NE 24TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 10:39</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Fraud (obtain Money/property by False Pretense)</td><td class="px-3 py-2 text-slate-700">1200 BLK W UNIVERSITY AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 10:28</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Theft Petit - Retail</td><td class="px-3 py-2 text-slate-700">1600 BLK NE 16TH AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 01:16</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Theft Petit - Retail</td><td class="px-3 py-2 text-slate-700">4500 BLK NW 13TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Lost/stolen Vehicle Tag / Decal</td><td class="px-3 py-2 text-slate-700">100 BLK SW 62ND ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 20:50</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Theft Petit - Retail</td><td class="px-3 py-2 text-slate-700">2900 BLK SW 42ND ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 16:05</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Theft Petit - Retail</td><td class="px-3 py-2 text-slate-700">3900 BLK SW ARCHER RD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 10:28</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Theft Petit - Retail</td><td class="px-3 py-2 text-slate-700">5700 BLK NW 23RD ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 03:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Theft Petit - Other</td><td class="px-3 py-2 text-slate-700">1000 BLK NE 26TH TER</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 19:06</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">Theft Petit - Retail</td><td class="px-3 py-2 text-slate-700">2900 BLK SW 42ND ST</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Gainesville</h2>
+    <div><a href='/gainesville/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(244)</span></a><a href='/gainesville/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(131)</span></a><a href='/gainesville/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(45)</span></a><a href='/gainesville/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(27)</span></a><a href='/gainesville/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(7)</span></a><a href='/gainesville/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(1)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Gainesville crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/fl/gainesville" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Gainesville alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:39.947725+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "226010644", "lat": 29.6603, "lng": -82.29364, "datetime": "2026-07-06T21:16:47-04:00", "description": "Fraud (forgery)", "address": "900 BLK NE 24TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010647", "lat": 29.65208, "lng": -82.33728, "datetime": "2026-07-06T10:39:00-04:00", "description": "Fraud (obtain Money/property by False Pretense)", "address": "1200 BLK W UNIVERSITY AVE", "category": "Theft", "neighborhood": null}, {"id": "226010602", "lat": 29.6665, "lng": -82.30478, "datetime": "2026-07-06T10:28:00-04:00", "description": "Theft Petit - Retail", "address": "1600 BLK NE 16TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010589", "lat": 29.69606, "lng": -82.3391, "datetime": "2026-07-06T01:16:00-04:00", "description": "Theft Petit - Retail", "address": "4500 BLK NW 13TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010642", "lat": 29.6525, "lng": -82.41009, "datetime": "2026-07-06T00:00:00-04:00", "description": "Lost/stolen Vehicle Tag / Decal", "address": "100 BLK SW 62ND ST", "category": "Theft", "neighborhood": null}, {"id": "226010580", "lat": 29.6262, "lng": -82.38671, "datetime": "2026-07-05T20:50:59-04:00", "description": "Theft Petit - Retail", "address": "2900 BLK SW 42ND ST", "category": "Theft", "neighborhood": null}, {"id": "226010566", "lat": 29.62023, "lng": -82.38125, "datetime": "2026-07-05T16:05:00-04:00", "description": "Theft Petit - Retail", "address": "3900 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226010556", "lat": 29.70873, "lng": -82.35601, "datetime": "2026-07-05T10:28:00-04:00", "description": "Theft Petit - Retail", "address": "5700 BLK NW 23RD ST", "category": "Theft", "neighborhood": null}, {"id": "226010645", "lat": 29.66119, "lng": -82.29014, "datetime": "2026-07-05T03:00:00-04:00", "description": "Theft Petit - Other", "address": "1000 BLK NE 26TH TER", "category": "Theft", "neighborhood": null}, {"id": "226010538", "lat": 29.6262, "lng": -82.38671, "datetime": "2026-07-04T19:06:25-04:00", "description": "Theft Petit - Retail", "address": "2900 BLK SW 42ND ST", "category": "Theft", "neighborhood": null}, {"id": "226010639", "lat": 29.654, "lng": -82.33221, "datetime": "2026-07-04T16:51:00-04:00", "description": "Theft Petit - Other", "address": "300 BLK NW 7TH TER", "category": "Theft", "neighborhood": null}, {"id": "226010530", "lat": 29.6262, "lng": -82.38671, "datetime": "2026-07-04T15:00:00-04:00", "description": "Theft Petit - Retail", "address": "2900 BLK SW 42ND ST", "category": "Theft", "neighborhood": null}, {"id": "226010522", "lat": 29.66545, "lng": -82.3245, "datetime": "2026-07-04T12:53:28-04:00", "description": "Theft Petit - Retail", "address": "1500 BLK N MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226010517", "lat": 29.70397, "lng": -82.37937, "datetime": "2026-07-04T07:00:00-04:00", "description": "Fraud (all Other)", "address": "3700 BLK NW 53RD LN", "category": "Theft", "neighborhood": null}, {"id": "226010507", "lat": 29.68499, "lng": -82.3069, "datetime": "2026-07-04T00:23:04-04:00", "description": "Theft Petit - Other", "address": "3500 BLK NE 15TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010520", "lat": 29.67226, "lng": -82.33913, "datetime": "2026-07-03T21:00:45-04:00", "description": "Theft Petit - Bicycle", "address": "2100 BLK NW 13TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010471", "lat": 29.67397, "lng": -82.33929, "datetime": "2026-07-03T12:27:01-04:00", "description": "Theft Petit - Retail", "address": "1300 BLK NW 23RD AVE", "category": "Theft", "neighborhood": null}, {"id": "226010518", "lat": 29.65092, "lng": -82.325, "datetime": "2026-07-03T09:45:59-04:00", "description": "Theft Petit - Other", "address": "100 BLK S MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226010606", "lat": 29.66117, "lng": -82.41066, "datetime": "2026-07-03T09:00:00-04:00", "description": "Theft Petit - Other", "address": "6400 BLK W NEWBERRY RD", "category": "Theft", "neighborhood": null}, {"id": "226010469", "lat": 29.62311, "lng": -82.3851, "datetime": "2026-07-02T21:00:00-04:00", "description": "Theft Grand - Bicycle", "address": "4000 BLK SW 33RD PL", "category": "Theft", "neighborhood": null}, {"id": "226010450", "lat": 29.68069, "lng": -82.32916, "datetime": "2026-07-02T17:45:00-04:00", "description": "Fraud (all Other)", "address": "500 BLK NW 31ST AVE", "category": "Theft", "neighborhood": null}, {"id": "226010423", "lat": 29.66336, "lng": -82.30111, "datetime": "2026-07-02T10:37:00-04:00", "description": "Theft Petit - Retail", "address": "1800 BLK NE 12TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010428", "lat": 29.64089, "lng": -82.30588, "datetime": "2026-07-02T05:30:00-04:00", "description": "Stolen Vehicle (auto)", "address": "1100 BLK SE 15TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010350", "lat": 29.61405, "lng": -82.35291, "datetime": "2026-07-01T03:15:21-04:00", "description": "Theft Petit - Other", "address": "2300 BLK SW WILLISTON RD", "category": "Theft", "neighborhood": null}, {"id": "226010389", "lat": 29.63659, "lng": -82.33586, "datetime": "2026-07-01T00:00:00-04:00", "description": "Fraud (credit Card/atm)", "address": "1000 BLK SW 16TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010341", "lat": 29.6283, "lng": -82.33944, "datetime": "2026-06-30T20:08:03-04:00", "description": "Extortion/threats", "address": "2500 BLK SW 13TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010328", "lat": 29.66336, "lng": -82.30111, "datetime": "2026-06-30T15:24:00-04:00", "description": "Theft Petit - Retail", "address": "1800 BLK NE 12TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010314", "lat": 29.6667, "lng": -82.3393, "datetime": "2026-06-30T12:21:00-04:00", "description": "Identity Theft", "address": "1300 BLK NW 16TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010307", "lat": 29.65725, "lng": -82.39405, "datetime": "2026-06-30T11:46:46-04:00", "description": "Theft Petit - Other", "address": "4800 BLK NEWBERRY RD", "category": "Theft", "neighborhood": null}, {"id": "226010308", "lat": 29.68417, "lng": -82.36353, "datetime": "2026-06-30T10:32:08-04:00", "description": "Theft Grand - Other", "address": "3400 BLK NW 27TH TER", "category": "Theft", "neighborhood": null}, {"id": "226010295", "lat": 29.66336, "lng": -82.30111, "datetime": "2026-06-30T07:40:31-04:00", "description": "Theft Petit - Bicycle", "address": "1800 BLK NE 12TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010271", "lat": 29.67398, "lng": -82.34075, "datetime": "2026-06-29T17:27:19-04:00", "description": "Theft Petit - Retail", "address": "1400 BLK NW 23RD AVE", "category": "Theft", "neighborhood": null}, {"id": "226010374", "lat": 29.61973, "lng": -82.363, "datetime": "2026-06-29T10:00:00-04:00", "description": "Fraud (all Other)", "address": "2700 BLK SW 35TH PL", "category": "Theft", "neighborhood": null}, {"id": "226010239", "lat": 29.64491, "lng": -82.33379, "datetime": "2026-06-29T00:00:00-04:00", "description": "Theft Petit - Other", "address": "900 BLK SW 8TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010186", "lat": 29.70873, "lng": -82.35601, "datetime": "2026-06-28T13:00:38-04:00", "description": "Theft Petit - Retail", "address": "5700 BLK NW 23RD ST", "category": "Theft", "neighborhood": null}, {"id": "226010184", "lat": 29.71603, "lng": -82.34422, "datetime": "2026-06-28T11:53:24-04:00", "description": "Theft Grand - Other", "address": "6700 BLK NW 16TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010171", "lat": 29.65207, "lng": -82.33412, "datetime": "2026-06-28T02:30:00-04:00", "description": "Theft Grand -firearm", "address": "900 BLK W UNIVERSITY AVE", "category": "Theft", "neighborhood": null}, {"id": "226010250", "lat": 29.63654, "lng": -82.33211, "datetime": "2026-06-27T22:00:00-04:00", "description": "Stolen Vehicle (motorcycle)", "address": "700 BLK SW 16TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010297", "lat": 29.64089, "lng": -82.30588, "datetime": "2026-06-27T20:00:42-04:00", "description": "Lost/stolen Vehicle Tag / Decal", "address": "1100 BLK SE 15TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010148", "lat": 29.70131, "lng": -82.39055, "datetime": "2026-06-27T16:20:15-04:00", "description": "Fraud (obtain Money/property by False Pretense)", "address": "5200 BLK NW 43RD ST", "category": "Theft", "neighborhood": null}, {"id": "226010144", "lat": 29.6684, "lng": -82.31027, "datetime": "2026-06-27T15:13:37-04:00", "description": "Theft Petit - Retail", "address": "1800 BLK NE 12TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010201", "lat": 29.67054, "lng": -82.33914, "datetime": "2026-06-27T14:00:00-04:00", "description": "Theft Petit - Other", "address": "2000 BLK NW 13TH ST", "category": "Theft", "neighborhood": null}, {"id": "226010133", "lat": 29.6285, "lng": -82.37008, "datetime": "2026-06-27T13:55:00-04:00", "description": "Theft Petit - Bicycle", "address": "3200 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226010106", "lat": 29.66545, "lng": -82.3245, "datetime": "2026-06-26T20:03:50-04:00", "description": "Theft Petit - Retail", "address": "1500 BLK N MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226010555", "lat": 29.71689, "lng": -82.35988, "datetime": "2026-06-26T17:00:02-04:00", "description": "Stolen Vehicle (auto)", "address": "7300 BLK NW 13TH BLVD", "category": "Theft", "neighborhood": null}, {"id": "226010080", "lat": 29.67397, "lng": -82.33929, "datetime": "2026-06-26T14:26:00-04:00", "description": "Theft Petit - Retail", "address": "1300 BLK NW 23RD AVE", "category": "Theft", "neighborhood": null}, {"id": "226010076", "lat": 29.65222, "lng": -82.37093, "datetime": "2026-06-26T14:00:00-04:00", "description": "Theft Petit - Retail", "address": "3300 BLK W UNIVERSITY AVE", "category": "Theft", "neighborhood": null}, {"id": "226010071", "lat": 29.6637, "lng": -82.32452, "datetime": "2026-06-26T12:58:00-04:00", "description": "Theft Petit - Retail", "address": "1300 BLK N MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226010026", "lat": 29.60783, "lng": -82.37764, "datetime": "2026-06-25T14:53:40-04:00", "description": "Stolen Vehicle (auto)", "address": "4400 BLK SW 40TH BLVD", "category": "Theft", "neighborhood": null}, {"id": "226010027", "lat": 29.67563, "lng": -82.33919, "datetime": "2026-06-25T13:02:00-04:00", "description": "Theft Grand - Retail", "address": "2500 BLK NW 13TH ST", "category": "Theft", "neighborhood": null}, {"id": "226009993", "lat": 29.63488, "lng": -82.35582, "datetime": "2026-06-25T05:27:59-04:00", "description": "Theft Petit - Retail", "address": "2300 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009971", "lat": 29.70873, "lng": -82.35601, "datetime": "2026-06-24T18:02:00-04:00", "description": "Theft Petit - Retail", "address": "5700 BLK NW 23RD ST", "category": "Theft", "neighborhood": null}, {"id": "226009951", "lat": 29.70321, "lng": -82.33662, "datetime": "2026-06-24T12:52:02-04:00", "description": "Theft Petit - Other", "address": "1100 BLK NW 53RD AVE", "category": "Theft", "neighborhood": null}, {"id": "226009952", "lat": 29.62023, "lng": -82.38125, "datetime": "2026-06-24T12:00:00-04:00", "description": "Fraud (obtain Money/property by False Pretense)", "address": "3900 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009948", "lat": 29.6178, "lng": -82.35553, "datetime": "2026-06-24T11:15:57-04:00", "description": "Theft Petit - From Building", "address": "4000 BLK SW 23RD ST", "category": "Theft", "neighborhood": null}, {"id": "226009947", "lat": 29.60696, "lng": -82.41478, "datetime": "2026-06-24T11:00:00-04:00", "description": "Theft Petit - Other", "address": "5000 BLK SW 67TH RD", "category": "Theft", "neighborhood": null}, {"id": "226010204", "lat": 29.65025, "lng": -82.3337, "datetime": "2026-06-24T02:30:00-04:00", "description": "Theft Petit - Bicycle", "address": "900 BLK SW 2ND AVE", "category": "Theft", "neighborhood": null}, {"id": "226009915", "lat": 29.66117, "lng": -82.41066, "datetime": "2026-06-23T16:30:00-04:00", "description": "Theft Petit - Other", "address": "6400 BLK W NEWBERRY RD", "category": "Theft", "neighborhood": null}, {"id": "226009960", "lat": 29.66664, "lng": -82.33214, "datetime": "2026-06-23T14:00:00-04:00", "description": "Lost/stolen Vehicle Tag / Decal", "address": "700 BLK NW 16TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010089", "lat": 29.62023, "lng": -82.38125, "datetime": "2026-06-23T12:40:00-04:00", "description": "Theft Grand - Other", "address": "3900 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009847", "lat": 29.62117, "lng": -82.38695, "datetime": "2026-06-23T09:27:43-04:00", "description": "Fraud (all Other)", "address": "3500 BLK SW 42ND ST", "category": "Theft", "neighborhood": null}, {"id": "626035093", "lat": 29.70758, "lng": -82.36367, "datetime": "2026-06-23T00:00:00-04:00", "description": "Identity Theft", "address": "5700 BLK NW 27TH TER", "category": "Theft", "neighborhood": null}, {"id": "226009946", "lat": 29.66336, "lng": -82.30111, "datetime": "2026-06-22T16:00:00-04:00", "description": "Fraud (all Other)", "address": "1800 BLK NE 12TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226009936", "lat": 29.6342, "lng": -82.37364, "datetime": "2026-06-22T12:00:00-04:00", "description": "Fraud (all Other)", "address": "3500 BLK SW 20TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226010128", "lat": 29.69829, "lng": -82.38892, "datetime": "2026-06-21T21:00:01-04:00", "description": "Fraud (credit Card/atm)", "address": "4800 BLK NW 43RD ST", "category": "Theft", "neighborhood": null}, {"id": "226010312", "lat": 29.62805, "lng": -82.37135, "datetime": "2026-06-21T20:00:00-04:00", "description": "Theft Grand - Retail", "address": "3300 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009802", "lat": 29.66545, "lng": -82.3245, "datetime": "2026-06-21T19:45:00-04:00", "description": "Theft Petit - Retail", "address": "1500 BLK N MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226009798", "lat": 29.62686, "lng": -82.37274, "datetime": "2026-06-21T15:54:00-04:00", "description": "Theft Petit - Retail", "address": "3400 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009796", "lat": 29.66117, "lng": -82.41066, "datetime": "2026-06-21T15:10:00-04:00", "description": "Theft Petit - Retail", "address": "6400 BLK W NEWBERRY RD", "category": "Theft", "neighborhood": null}, {"id": "226009810", "lat": 29.66561, "lng": -82.3649, "datetime": "2026-06-21T15:00:00-04:00", "description": "Extortion/threats", "address": "1500 BLK NW 28TH ST", "category": "Theft", "neighborhood": null}, {"id": "226009785", "lat": 29.67054, "lng": -82.33914, "datetime": "2026-06-21T12:09:53-04:00", "description": "Theft Petit - Retail", "address": "2000 BLK NW 13TH ST", "category": "Theft", "neighborhood": null}, {"id": "226009840", "lat": 29.69011, "lng": -82.33909, "datetime": "2026-06-21T12:00:00-04:00", "description": "Theft Grand - From Building", "address": "4100 BLK NW 13TH ST", "category": "Theft", "neighborhood": null}, {"id": "226009919", "lat": 29.63117, "lng": -82.38412, "datetime": "2026-06-20T18:22:59-04:00", "description": "Fraud (credit Card/atm)", "address": "2300 BLK SW 39TH DR", "category": "Theft", "neighborhood": null}, {"id": "226009738", "lat": 29.70873, "lng": -82.35601, "datetime": "2026-06-20T13:09:00-04:00", "description": "Theft Petit - Retail", "address": "5700 BLK NW 23RD ST", "category": "Theft", "neighborhood": null}, {"id": "226009739", "lat": 29.65956, "lng": -82.35016, "datetime": "2026-06-20T12:40:23-04:00", "description": "Fraud (obtain Money/property by False Pretense)", "address": "800 BLK NW 20TH TER", "category": "Theft", "neighborhood": null}, {"id": "226009737", "lat": 29.62329, "lng": -82.37668, "datetime": "2026-06-20T12:23:00-04:00", "description": "Theft Petit - Retail", "address": "3600 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009746", "lat": 29.6637, "lng": -82.32452, "datetime": "2026-06-20T11:50:43-04:00", "description": "Theft Petit - Retail", "address": "1300 BLK N MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226009728", "lat": 29.6637, "lng": -82.32452, "datetime": "2026-06-20T09:00:39-04:00", "description": "Theft Petit - Retail", "address": "1300 BLK N MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226009726", "lat": 29.67901, "lng": -82.30582, "datetime": "2026-06-20T07:00:00-04:00", "description": "Theft Petit - Other", "address": "2900 BLK NE 15TH ST", "category": "Theft", "neighborhood": null}, {"id": "626035092", "lat": 29.63005, "lng": -82.38093, "datetime": "2026-06-20T00:00:00-04:00", "description": "Fraud (obtain Money/property by False Pretense)", "address": "3900 BLK PLAZA BLVD", "category": "Theft", "neighborhood": null}, {"id": "226009789", "lat": 29.61968, "lng": -82.3643, "datetime": "2026-06-19T20:00:00-04:00", "description": "Theft Petit - Bicycle", "address": "2800 BLK SW 35TH PL", "category": "Theft", "neighborhood": null}, {"id": "226010005", "lat": 29.66336, "lng": -82.30111, "datetime": "2026-06-19T13:01:51-04:00", "description": "Theft Petit - Retail", "address": "1800 BLK NE 12TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226009799", "lat": 29.62686, "lng": -82.37274, "datetime": "2026-06-19T12:27:00-04:00", "description": "Theft Petit - Retail", "address": "3400 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009692", "lat": 29.67583, "lng": -82.38427, "datetime": "2026-06-19T11:15:00-04:00", "description": "Theft Grand - Other", "address": "3800 BLK NW 25TH CIR", "category": "Theft", "neighborhood": null}, {"id": "226009941", "lat": 29.6683, "lng": -82.32874, "datetime": "2026-06-19T06:37:00-04:00", "description": "Fraud (all Other)", "address": "1800 BLK NW 4TH ST", "category": "Theft", "neighborhood": null}, {"id": "226009646", "lat": 29.66545, "lng": -82.3245, "datetime": "2026-06-18T20:53:00-04:00", "description": "Theft Petit - Retail", "address": "1500 BLK N MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226009684", "lat": 29.62023, "lng": -82.38125, "datetime": "2026-06-18T20:19:00-04:00", "description": "Theft Grand - Retail", "address": "3900 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009685", "lat": 29.62708, "lng": -82.37532, "datetime": "2026-06-18T20:00:58-04:00", "description": "Theft Petit - Other", "address": "3500 BLK SW ARCHER RD", "category": "Theft", "neighborhood": null}, {"id": "226009634", "lat": 29.60647, "lng": -82.36037, "datetime": "2026-06-18T19:12:18-04:00", "description": "Theft Grand - Other", "address": "5000 BLK SW 25TH BLVD", "category": "Theft", "neighborhood": null}, {"id": "226009632", "lat": 29.6262, "lng": -82.38671, "datetime": "2026-06-18T17:21:00-04:00", "description": "Theft Petit - Retail", "address": "2900 BLK SW 42ND ST", "category": "Theft", "neighborhood": null}, {"id": "226009636", "lat": 29.66336, "lng": -82.30111, "datetime": "2026-06-18T17:00:06-04:00", "description": "Fraud (obtain Money/property by False Pretense)", "address": "1800 BLK NE 12TH AVE", "category": "Theft", "neighborhood": null}, {"id": "226009906", "lat": 29.62641, "lng": -82.34087, "datetime": "2026-06-18T17:00:00-04:00", "description": "Fraud (credit Card/atm)", "address": "2800 BLK SW 14TH DR", "category": "Theft", "neighborhood": null}, {"id": "226009619", "lat": 29.6262, "lng": -82.38671, "datetime": "2026-06-18T14:09:00-04:00", "description": "Theft Petit - Retail", "address": "2900 BLK SW 42ND ST", "category": "Theft", "neighborhood": null}, {"id": "226009747", "lat": 29.6637, "lng": -82.32452, "datetime": "2026-06-17T16:14:51-04:00", "description": "Theft Petit - Retail", "address": "1300 BLK N MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "226009582", "lat": 29.61744, "lng": -82.36645, "datetime": "2026-06-17T12:00:32-04:00", "description": "Fraud (obtain Money/property by False Pretense)", "address": "3600 BLK SW 29TH TER", "category": "Theft", "neighborhood": null}, {"id": "226009604", "lat": 29.67853, "lng": -82.33917, "datetime": "2026-06-17T11:26:00-04:00", "description": "Fraud (impersonation)", "address": "2800 BLK NW 13TH ST", "category": "Theft", "neighborhood": null}];
+  const map = L.map('map').setView([29.6516, -82.3248], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Theft'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Theft</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

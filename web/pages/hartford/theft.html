@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Theft in Hartford, CT — 64 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 64 reported theft incidents in Hartford, CT from the last 30 days. Data from Hartford Open Data — Police Incidents (ArcGIS).">
+  <meta name="keywords" content="Theft in Hartford, Hartford theft, theft near me Hartford, theft map Hartford, Hartford crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/hartford/theft">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Theft in Hartford, CT — 64 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 64 reported theft incidents in Hartford, CT from the last 30 days. Data from Hartford Open Data — Police Incidents (ArcGIS).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/hartford/theft">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Theft in Hartford, CT — 64 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 64 reported theft incidents in Hartford, CT from the last 30 days. Data from Hartford Open Data — Police Incidents (ArcGIS).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Hartford, CT","item":"https://citycrimemap.us/hartford"},{"@type":"ListItem","position":3,"name":"Theft","item":"https://citycrimemap.us/hartford/theft"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/hartford" class="hover:text-brand-700">Hartford, CT</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Theft</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Theft in Hartford, CT</h1>
+    <p class="text-slate-600">64 recent theft incidents · last 30 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Theft incidents in Hartford, CT"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About theft in Hartford</h2>
+    <p class="mb-2">This page shows only <strong>theft incidents</strong> in Hartford, CT from the last 30 days — 64 reports in total, filtered from the full Hartford dataset.</p>
+    <p class="mb-2">For all crime categories in Hartford on one map, <a href="/hartford" class="text-brand-700 hover:underline font-semibold">see the full Hartford crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent theft incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-19 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-119C LARCENY OF A MOTOR VEHICLE</td><td class="px-3 py-2 text-slate-700">1013 MAPLE AV</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-19 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-119C LARCENY OF A MOTOR VEHICLE</td><td class="px-3 py-2 text-slate-700">790 MAPLE AV</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-19 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-125B LARCENY 6TH DEG</td><td class="px-3 py-2 text-slate-700">790 MAPLE AV</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-19 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-119C LARCENY OF A MOTOR VEHICLE</td><td class="px-3 py-2 text-slate-700">32 ELM ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-19 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-125 LARCENY 4TH DEG</td><td class="px-3 py-2 text-slate-700">110 NEW BRITAIN AV</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-19 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-119C LARCENY OF A MOTOR VEHICLE</td><td class="px-3 py-2 text-slate-700">BROAD ST & MAPLETON ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-19 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-125A LARCENY 5TH DEG</td><td class="px-3 py-2 text-slate-700">BROAD ST & MAPLETON ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-19 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-119C LARCENY OF A MOTOR VEHICLE</td><td class="px-3 py-2 text-slate-700">122 FAIRFIELD AV</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-17 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-125B LARCENY 6TH DEG</td><td class="px-3 py-2 text-slate-700">495 FLATBUSH AV</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-17 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">53A-125B LARCENY 6TH DEG</td><td class="px-3 py-2 text-slate-700">1200 PARK ST</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Hartford</h2>
+    <div><a href='/hartford/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(791)</span></a><a href='/hartford/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(69)</span></a><a href='/hartford/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(48)</span></a><a href='/hartford/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(12)</span></a><a href='/hartford/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(8)</span></a><a href='/hartford/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(5)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Hartford crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/ct/hartford" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Hartford alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:38.256647+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "26-013928", "lat": 41.731333, "lng": -72.689093, "datetime": "2026-06-19T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "1013 MAPLE AV", "category": "Theft", "neighborhood": null}, {"id": "26-013933", "lat": 41.738321, "lng": -72.684943, "datetime": "2026-06-19T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "790 MAPLE AV", "category": "Theft", "neighborhood": null}, {"id": "26-013933", "lat": 41.738321, "lng": -72.684943, "datetime": "2026-06-19T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "790 MAPLE AV", "category": "Theft", "neighborhood": null}, {"id": "26-013974", "lat": 41.762164, "lng": -72.675277, "datetime": "2026-06-19T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "32 ELM ST", "category": "Theft", "neighborhood": null}, {"id": "26-013967", "lat": 41.745625, "lng": -72.686726, "datetime": "2026-06-19T20:00:00-04:00", "description": "53A-125 LARCENY 4TH DEG", "address": "110 NEW BRITAIN AV", "category": "Theft", "neighborhood": null}, {"id": "26-013918", "lat": 41.739045, "lng": -72.687237, "datetime": "2026-06-19T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "BROAD ST & MAPLETON ST", "category": "Theft", "neighborhood": null}, {"id": "26-013918", "lat": 41.739045, "lng": -72.687237, "datetime": "2026-06-19T20:00:00-04:00", "description": "53A-125A LARCENY 5TH DEG", "address": "BROAD ST & MAPLETON ST", "category": "Theft", "neighborhood": null}, {"id": "26-013943", "lat": 41.738522, "lng": -72.692709, "datetime": "2026-06-19T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "122 FAIRFIELD AV", "category": "Theft", "neighborhood": null}, {"id": "26-013786", "lat": 41.740067, "lng": -72.714192, "datetime": "2026-06-17T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "495 FLATBUSH AV", "category": "Theft", "neighborhood": null}, {"id": "26-013798", "lat": 41.759002, "lng": -72.699086, "datetime": "2026-06-17T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "1200 PARK ST", "category": "Theft", "neighborhood": null}, {"id": "26-013696", "lat": 41.766402, "lng": -72.673396, "datetime": "2026-06-16T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "811 MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013711", "lat": 41.757793, "lng": -72.702117, "datetime": "2026-06-16T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "1429 PARK ST", "category": "Theft", "neighborhood": null}, {"id": "26-013662", "lat": 41.769354, "lng": -72.681124, "datetime": "2026-06-16T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "74 UNION PL", "category": "Theft", "neighborhood": null}, {"id": "26-013662", "lat": 41.769354, "lng": -72.681124, "datetime": "2026-06-16T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "74 UNION PL", "category": "Theft", "neighborhood": null}, {"id": "P2C-26-0142", "lat": 41.776255, "lng": -72.675965, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "1574 MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013556", "lat": 41.753637, "lng": -72.683747, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "10 LINCOLN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013551", "lat": 41.789735, "lng": -72.662581, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "125 WESTON ST", "category": "Theft", "neighborhood": null}, {"id": "26-013569", "lat": 41.743964, "lng": -72.668335, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "99 MEADOW ST", "category": "Theft", "neighborhood": null}, {"id": "26-013570", "lat": 41.783309, "lng": -72.666684, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "265 REV R.A. MOODY OVPS", "category": "Theft", "neighborhood": null}, {"id": "26-013573", "lat": 41.771441, "lng": -72.674281, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "1214 MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013585", "lat": 41.792051, "lng": -72.700427, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "117 PLAINFIELD ST", "category": "Theft", "neighborhood": null}, {"id": "26-013624", "lat": 41.74747, "lng": -72.676176, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "56 BENTON ST", "category": "Theft", "neighborhood": null}, {"id": "26-013602", "lat": 41.754279, "lng": -72.679886, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "80 SEYMOUR ST", "category": "Theft", "neighborhood": null}, {"id": "26-013550", "lat": 41.75892, "lng": -72.675533, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125 LARCENY 4TH DEG", "address": "257 MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013606", "lat": 41.76395, "lng": -72.696772, "datetime": "2026-06-15T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "69 HAWTHORN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013476", "lat": 41.752076, "lng": -72.708667, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "150 NEW PARK AV", "category": "Theft", "neighborhood": null}, {"id": "26-013457", "lat": 41.763364, "lng": -72.691303, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "4 COLUMBIA ST", "category": "Theft", "neighborhood": null}, {"id": "26-013485", "lat": 41.754588, "lng": -72.712467, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "24 CARPENTER ST", "category": "Theft", "neighborhood": null}, {"id": "26-013442", "lat": 41.796119, "lng": -72.663604, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "3281 MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013459", "lat": 41.740067, "lng": -72.714192, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125A LARCENY 5TH DEG", "address": "495 FLATBUSH AV", "category": "Theft", "neighborhood": null}, {"id": "26-013450", "lat": 41.750014, "lng": -72.691503, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "300 SUMMIT ST", "category": "Theft", "neighborhood": null}, {"id": "26-013546", "lat": 41.739553, "lng": -72.682326, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "112 CAMPFIELD AV", "category": "Theft", "neighborhood": null}, {"id": "26-013527", "lat": 41.777274, "lng": -72.67909, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "50 EAST ST", "category": "Theft", "neighborhood": null}, {"id": "26-013506", "lat": 41.768538, "lng": -72.684475, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125A LARCENY 5TH DEG", "address": "600 ASYLUM AV", "category": "Theft", "neighborhood": null}, {"id": "26-013492", "lat": 41.759075, "lng": -72.673488, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "39 CHARTER OAK PL", "category": "Theft", "neighborhood": null}, {"id": "26-013507", "lat": 41.755608, "lng": -72.66776, "datetime": "2026-06-14T20:00:00-04:00", "description": "53A-125 LARCENY 4TH DEG", "address": "3 MLK WAY", "category": "Theft", "neighborhood": null}, {"id": "26-013381", "lat": 41.797041, "lng": -72.663288, "datetime": "2026-06-13T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "3343 MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013404", "lat": 41.75725, "lng": -72.68203, "datetime": "2026-06-13T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "172 WASHINGTON ST", "category": "Theft", "neighborhood": null}, {"id": "26-013405", "lat": 41.787298, "lng": -72.699845, "datetime": "2026-06-13T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "128 WESTBOURNE PKWY", "category": "Theft", "neighborhood": null}, {"id": "26-013417", "lat": 41.804995, "lng": -72.693833, "datetime": "2026-06-13T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "125 LEBANON ST", "category": "Theft", "neighborhood": null}, {"id": "26-013342", "lat": 41.789024, "lng": -72.677952, "datetime": "2026-06-12T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "28 JUDSON ST", "category": "Theft", "neighborhood": null}, {"id": "26-013350", "lat": 41.791521, "lng": -72.705533, "datetime": "2026-06-12T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "171 GRANBY ST", "category": "Theft", "neighborhood": null}, {"id": "26-013298", "lat": 41.740067, "lng": -72.714192, "datetime": "2026-06-12T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "495 FLATBUSH AV", "category": "Theft", "neighborhood": null}, {"id": "26-013359", "lat": 41.758549, "lng": -72.701803, "datetime": "2026-06-12T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "1400 PARK ST", "category": "Theft", "neighborhood": null}, {"id": "26-013324", "lat": 41.734033, "lng": -72.711615, "datetime": "2026-06-12T20:00:00-04:00", "description": "53A-125A LARCENY 5TH DEG", "address": "48 BRINLEY AV", "category": "Theft", "neighborhood": null}, {"id": "26-013215", "lat": 41.757074, "lng": -72.707903, "datetime": "2026-06-11T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "1768 PARK ST", "category": "Theft", "neighborhood": null}, {"id": "26-013206", "lat": 41.780199, "lng": -72.675881, "datetime": "2026-06-11T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "1888 MAIN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013246", "lat": 41.746124, "lng": -72.672968, "datetime": "2026-06-11T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "356 WETHERSFIELD AV", "category": "Theft", "neighborhood": null}, {"id": "26-013230", "lat": 41.765591, "lng": -72.704766, "datetime": "2026-06-11T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "FREDERICK ST & OWEN ST", "category": "Theft", "neighborhood": null}, {"id": "P2C-26-0139", "lat": 41.775525, "lng": -72.698749, "datetime": "2026-06-11T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "114 WOODLAND ST", "category": "Theft", "neighborhood": null}, {"id": "26-013220", "lat": 41.768538, "lng": -72.684475, "datetime": "2026-06-11T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "600 ASYLUM AVENUE", "category": "Theft", "neighborhood": null}, {"id": "26-013180", "lat": 41.792162, "lng": -72.679156, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "241 MARTIN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013182", "lat": 41.751418, "lng": -72.659786, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "309 WAWARME AV", "category": "Theft", "neighborhood": null}, {"id": "P2C-26-0137", "lat": 41.761967, "lng": -72.715749, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "501 PROSPECT AVE", "category": "Theft", "neighborhood": null}, {"id": "26-013171", "lat": 41.768339, "lng": -72.67859, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "111 ALLYN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013176", "lat": 41.738697, "lng": -72.714986, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "223 NEWFIELD AV", "category": "Theft", "neighborhood": null}, {"id": "26-013102", "lat": 41.734387, "lng": -72.675152, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "525 FRANKLIN AV", "category": "Theft", "neighborhood": null}, {"id": "26-013193", "lat": 41.759075, "lng": -72.673488, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "39 CHARTER OAK PL", "category": "Theft", "neighborhood": null}, {"id": "26-013137", "lat": 41.768339, "lng": -72.67859, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-125 LARCENY 4TH DEG", "address": "111 ALLYN ST", "category": "Theft", "neighborhood": null}, {"id": "26-013145", "lat": 41.770467, "lng": -72.672118, "datetime": "2026-06-10T20:00:00-04:00", "description": "53A-125B LARCENY 6TH DEG", "address": "50 MORGAN ST", "category": "Theft", "neighborhood": null}, {"id": "26-012990", "lat": 41.746306, "lng": -72.67299, "datetime": "2026-06-09T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "350 WETHERSFIELD AV", "category": "Theft", "neighborhood": null}, {"id": "26-013067", "lat": 41.754482, "lng": -72.702689, "datetime": "2026-06-09T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "101 POPE PARK HWY", "category": "Theft", "neighborhood": null}, {"id": "26-012943", "lat": 41.780207, "lng": -72.669229, "datetime": "2026-06-08T20:00:00-04:00", "description": "53A-119C LARCENY OF A MOTOR VEHICLE", "address": "61 SAVITT WAY", "category": "Theft", "neighborhood": null}, {"id": "26-012851", "lat": 41.736689, "lng": -72.6592, "datetime": "2026-06-08T20:00:00-04:00", "description": "53A-124 LARCENY 3RD DEG", "address": "130 BRAINARD RD", "category": "Theft", "neighborhood": null}];
+  const map = L.map('map').setView([41.7658, -72.6734], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Theft'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Theft</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

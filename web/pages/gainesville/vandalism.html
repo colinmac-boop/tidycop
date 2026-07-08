@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Vandalism in Gainesville, FL — 45 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 45 reported vandalism incidents in Gainesville, FL from the last 21 days. Data from City of Gainesville — Crime Responses (Socrata).">
+  <meta name="keywords" content="Vandalism in Gainesville, Gainesville vandalism, vandalism near me Gainesville, vandalism map Gainesville, Gainesville crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/gainesville/vandalism">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Vandalism in Gainesville, FL — 45 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 45 reported vandalism incidents in Gainesville, FL from the last 21 days. Data from City of Gainesville — Crime Responses (Socrata).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/gainesville/vandalism">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Vandalism in Gainesville, FL — 45 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 45 reported vandalism incidents in Gainesville, FL from the last 21 days. Data from City of Gainesville — Crime Responses (Socrata).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Gainesville, FL","item":"https://citycrimemap.us/gainesville"},{"@type":"ListItem","position":3,"name":"Vandalism","item":"https://citycrimemap.us/gainesville/vandalism"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/gainesville" class="hover:text-brand-700">Gainesville, FL</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Vandalism</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Vandalism in Gainesville, FL</h1>
+    <p class="text-slate-600">45 recent vandalism incidents · last 21 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Vandalism incidents in Gainesville, FL"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About vandalism in Gainesville</h2>
+    <p class="mb-2">This page shows only <strong>vandalism incidents</strong> in Gainesville, FL from the last 21 days — 45 reports in total, filtered from the full Gainesville dataset.</p>
+    <p class="mb-2">For all crime categories in Gainesville on one map, <a href="/gainesville" class="text-brand-700 hover:underline font-semibold">see the full Gainesville crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent vandalism incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 22:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Criminal Mischief (felony)</td><td class="px-3 py-2 text-slate-700">3900 BLK PLAZA BLVD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-03 00:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Damage to Property</td><td class="px-3 py-2 text-slate-700">1200 BLK SE 17TH DR</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-02 09:13</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Damage to Property</td><td class="px-3 py-2 text-slate-700">3900 BLK NW 29TH LN</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-02 01:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Damage to Property</td><td class="px-3 py-2 text-slate-700">2000 BLK SW 34TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-01 09:27</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Criminal Mischief (misdemeanor)</td><td class="px-3 py-2 text-slate-700">400 BLK W UNIVERSITY AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-01 03:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Damage to Property</td><td class="px-3 py-2 text-slate-700">1100 BLK SE 15TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-01 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Criminal Mischief (misdemeanor)</td><td class="px-3 py-2 text-slate-700">800 BLK SE 20TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-30 20:35</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Damage to Property</td><td class="px-3 py-2 text-slate-700">3800 BLK N MAIN ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-30 09:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Criminal Mischief (misdemeanor)</td><td class="px-3 py-2 text-slate-700">6600 BLK SW 10TH LN</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-30 00:10</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">Damage to Property</td><td class="px-3 py-2 text-slate-700">3900 BLK SW ARCHER RD</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Gainesville</h2>
+    <div><a href='/gainesville/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(244)</span></a><a href='/gainesville/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(131)</span></a><a href='/gainesville/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(96)</span></a><a href='/gainesville/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(27)</span></a><a href='/gainesville/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(7)</span></a><a href='/gainesville/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(1)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Gainesville crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/fl/gainesville" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Gainesville alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:39.947725+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "226010624", "lat": 29.63005, "lng": -82.38093, "datetime": "2026-07-04T22:30:00-04:00", "description": "Criminal Mischief (felony)", "address": "3900 BLK PLAZA BLVD", "category": "Vandalism", "neighborhood": null}, {"id": "226010466", "lat": 29.64013, "lng": -82.30194, "datetime": "2026-07-03T00:30:28-04:00", "description": "Damage to Property", "address": "1200 BLK SE 17TH DR", "category": "Vandalism", "neighborhood": null}, {"id": "226010419", "lat": 29.67898, "lng": -82.38333, "datetime": "2026-07-02T09:13:00-04:00", "description": "Damage to Property", "address": "3900 BLK NW 29TH LN", "category": "Vandalism", "neighborhood": null}, {"id": "226010567", "lat": 29.63409, "lng": -82.37262, "datetime": "2026-07-02T01:30:00-04:00", "description": "Damage to Property", "address": "2000 BLK SW 34TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010376", "lat": 29.65202, "lng": -82.32901, "datetime": "2026-07-01T09:27:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "400 BLK W UNIVERSITY AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226010357", "lat": 29.64089, "lng": -82.30588, "datetime": "2026-07-01T03:00:00-04:00", "description": "Damage to Property", "address": "1100 BLK SE 15TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010418", "lat": 29.64438, "lng": -82.29849, "datetime": "2026-07-01T00:00:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "800 BLK SE 20TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010343", "lat": 29.68767, "lng": -82.31975, "datetime": "2026-06-30T20:35:00-04:00", "description": "Damage to Property", "address": "3800 BLK N MAIN ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010298", "lat": 29.64254, "lng": -82.41265, "datetime": "2026-06-30T09:00:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "6600 BLK SW 10TH LN", "category": "Vandalism", "neighborhood": null}, {"id": "226010282", "lat": 29.62023, "lng": -82.38125, "datetime": "2026-06-30T00:10:16-04:00", "description": "Damage to Property", "address": "3900 BLK SW ARCHER RD", "category": "Vandalism", "neighborhood": null}, {"id": "226010361", "lat": 29.68996, "lng": -82.30578, "datetime": "2026-06-29T23:30:59-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "4100 BLK NE 15TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010247", "lat": 29.64391, "lng": -82.40107, "datetime": "2026-06-29T14:16:43-04:00", "description": "Trash Dumping", "address": "900 BLK SW 55TH TER", "category": "Vandalism", "neighborhood": null}, {"id": "226010369", "lat": 29.61621, "lng": -82.34067, "datetime": "2026-06-29T12:31:26-04:00", "description": "Criminal Mischief (felony)", "address": "3900 BLK SW 13TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010228", "lat": 29.6421, "lng": -82.40258, "datetime": "2026-06-29T00:00:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "1000 BLK SW 62ND BLVD", "category": "Vandalism", "neighborhood": null}, {"id": "226010173", "lat": 29.64634, "lng": -82.32498, "datetime": "2026-06-28T23:30:18-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "600 BLK S MAIN ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010202", "lat": 29.65471, "lng": -82.32887, "datetime": "2026-06-28T18:39:13-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "400 BLK NW 4TH AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226010196", "lat": 29.63105, "lng": -82.31794, "datetime": "2026-06-28T15:00:59-04:00", "description": "Criminal Mischief (felony)", "address": "200 BLK SE 20TH LN", "category": "Vandalism", "neighborhood": null}, {"id": "226010178", "lat": 29.64014, "lng": -82.30587, "datetime": "2026-06-28T10:23:42-04:00", "description": "Damage to Property", "address": "1200 BLK SE 15TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010163", "lat": 29.65923, "lng": -82.32673, "datetime": "2026-06-27T23:45:00-04:00", "description": "Criminal Mischief (felony)", "address": "200 BLK SE 20TH PL", "category": "Vandalism", "neighborhood": null}, {"id": "226010123", "lat": 29.64641, "lng": -82.31215, "datetime": "2026-06-27T01:00:34-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "1100 BLK SE 6TH AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226010097", "lat": 29.6421, "lng": -82.40258, "datetime": "2026-06-26T20:02:59-04:00", "description": "Damage to Property", "address": "1000 BLK SW 62ND BLVD", "category": "Vandalism", "neighborhood": null}, {"id": "226010055", "lat": 29.63185, "lng": -82.37263, "datetime": "2026-06-26T07:44:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "2200 BLK SW 34TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010057", "lat": 29.63949, "lng": -82.33021, "datetime": "2026-06-26T05:50:42-04:00", "description": "Damage to City Property", "address": "1200 BLK SW 6TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226010048", "lat": 29.61405, "lng": -82.35291, "datetime": "2026-06-26T00:35:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "2300 BLK SW WILLISTON RD", "category": "Vandalism", "neighborhood": null}, {"id": "226009962", "lat": 29.64679, "lng": -82.30868, "datetime": "2026-06-24T10:00:38-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "500 BLK SE 13TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226009933", "lat": 29.65434, "lng": -82.29119, "datetime": "2026-06-24T06:30:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "300 BLK NE 25TH TER", "category": "Vandalism", "neighborhood": null}, {"id": "226009977", "lat": 29.62554, "lng": -82.36373, "datetime": "2026-06-23T17:59:59-04:00", "description": "Criminal Mischief (felony)", "address": "2700 BLK SW 27TH AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226009893", "lat": 29.62023, "lng": -82.38125, "datetime": "2026-06-23T13:00:00-04:00", "description": "Damage to City Property", "address": "3900 BLK SW ARCHER RD", "category": "Vandalism", "neighborhood": null}, {"id": "226009839", "lat": 29.61824, "lng": -82.36758, "datetime": "2026-06-22T13:00:05-04:00", "description": "Damage to Property", "address": "3500 BLK SW 30TH TER", "category": "Vandalism", "neighborhood": null}, {"id": "226009851", "lat": 29.63656, "lng": -82.37804, "datetime": "2026-06-21T17:30:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "1700 BLK SW 37TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226009782", "lat": 29.63408, "lng": -82.3764, "datetime": "2026-06-21T10:56:42-04:00", "description": "Damage to Property", "address": "3600 BLK SW 20TH AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226009742", "lat": 29.65196, "lng": -82.32042, "datetime": "2026-06-20T13:56:00-04:00", "description": "Damage to Property", "address": "500 BLK E UNIVERSITY AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226009734", "lat": 29.68767, "lng": -82.31975, "datetime": "2026-06-20T10:30:49-04:00", "description": "Damage to Property", "address": "3800 BLK N MAIN ST", "category": "Vandalism", "neighborhood": null}, {"id": "226009710", "lat": 29.67366, "lng": -82.26429, "datetime": "2026-06-19T22:14:59-04:00", "description": "Criminal Mischief (felony)", "address": "5000 BLK NE 39TH AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226009701", "lat": 29.62173, "lng": -82.33985, "datetime": "2026-06-19T13:05:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "3300 BLK SW 13TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226009683", "lat": 29.62921, "lng": -82.37624, "datetime": "2026-06-19T11:20:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "3600 BLK SW 24TH AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226009674", "lat": 29.60853, "lng": -82.37452, "datetime": "2026-06-19T10:40:39-04:00", "description": "Damage to Property", "address": "2800 BLK SW 35TH DR", "category": "Vandalism", "neighborhood": null}, {"id": "226009937", "lat": 29.59505, "lng": -82.39222, "datetime": "2026-06-19T00:00:00-04:00", "description": "Criminal Mischief (felony)", "address": "6400 BLK SW 44TH WAY", "category": "Vandalism", "neighborhood": null}, {"id": "226009623", "lat": 29.66578, "lng": -82.33667, "datetime": "2026-06-18T14:44:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "1100 BLK NW 15TH AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226009622", "lat": 29.62914, "lng": -82.33944, "datetime": "2026-06-18T12:10:48-04:00", "description": "Damage to Property", "address": "2400 BLK SW 13TH ST", "category": "Vandalism", "neighborhood": null}, {"id": "226009615", "lat": 29.66251, "lng": -82.29681, "datetime": "2026-06-18T00:00:00-04:00", "description": "Damage to Property", "address": "1100 BLK NE 21ST CT", "category": "Vandalism", "neighborhood": null}, {"id": "226009586", "lat": 29.65195, "lng": -82.29038, "datetime": "2026-06-17T22:00:08-04:00", "description": "Criminal Mischief (felony)", "address": "2600 BLK E UNIVERSITY AVE", "category": "Vandalism", "neighborhood": null}, {"id": "226009583", "lat": 29.65014, "lng": -82.325, "datetime": "2026-06-17T20:58:20-04:00", "description": "Damage to Property", "address": "200 BLK S MAIN ST", "category": "Vandalism", "neighborhood": null}, {"id": "226009570", "lat": 29.6604, "lng": -82.41168, "datetime": "2026-06-17T16:49:12-04:00", "description": "Damage to Property", "address": "6500 BLK W NEWBERRY RD", "category": "Vandalism", "neighborhood": null}, {"id": "226009578", "lat": 29.63873, "lng": -82.29851, "datetime": "2026-06-17T13:00:00-04:00", "description": "Criminal Mischief (misdemeanor)", "address": "1300 BLK SE 20TH ST", "category": "Vandalism", "neighborhood": null}];
+  const map = L.map('map').setView([29.6516, -82.3248], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Vandalism'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Vandalism</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

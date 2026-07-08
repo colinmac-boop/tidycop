@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#b91c1c">
-  <title>CityCrimeMap — Free crime maps for 16 US cities</title>
-  <meta name="description" content="Free interactive crime maps and incident tables for 16 major US cities (Chicago, Seattle, San Francisco, Detroit, Pittsburgh, Washington, DC, and 10 more). Fresh data from official police open-data portals, updated regularly. See recent reported crime near you.">
-  <meta name="keywords" content="crime map, crime map near me, city crime map, crime near me, neighborhood crime, police crime data, crime statistics, crime alerts">
+  <title>CityCrimeMap — Predictive crime maps for 16 US cities</title>
+  <meta name="description" content="CityCrimeMap publishes free crime maps and machine-learning-based predicted risk overlays for 16 US cities (Chicago, Seattle, San Francisco, Detroit, Pittsburgh, Washington, DC, and 10 more). Fresh data from official police open-data portals + a peer-reviewed predictive model. Open source. Honest numbers.">
+  <meta name="keywords" content="crime map, crime near me, crime map near me, city crime map, predictive crime map, crime prediction, AI crime map, crime forecast, neighborhood crime, police crime data, crime statistics, crime alerts, crime hot spots">
   <link rel="canonical" href="https://citycrimemap.us/">
 
   <!-- Open Graph -->
   <meta property="og:site_name" content="CityCrimeMap">
-  <meta property="og:title" content="CityCrimeMap — Free crime maps for 16 US cities">
-  <meta property="og:description" content="Free interactive crime maps and incident tables for 16 major US cities (Chicago, Seattle, San Francisco, Detroit, Pittsburgh, Washington, DC, and 10 more). Fresh data from official police open-data portals, updated regularly. See recent reported crime near you.">
+  <meta property="og:title" content="CityCrimeMap — Predictive crime maps for 16 US cities">
+  <meta property="og:description" content="CityCrimeMap publishes free crime maps and machine-learning-based predicted risk overlays for 16 US cities (Chicago, Seattle, San Francisco, Detroit, Pittsburgh, Washington, DC, and 10 more). Fresh data from official police open-data portals + a peer-reviewed predictive model. Open source. Honest numbers.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://citycrimemap.us/">
   <meta property="og:image" content="https://citycrimemap.us/og-image.png">
@@ -22,8 +22,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="CityCrimeMap — Free crime maps for 16 US cities">
-  <meta name="twitter:description" content="Free interactive crime maps and incident tables for 16 major US cities (Chicago, Seattle, San Francisco, Detroit, Pittsburgh, Washington, DC, and 10 more). Fresh data from official police open-data portals, updated regularly. See recent reported crime near you.">
+  <meta name="twitter:title" content="CityCrimeMap — Predictive crime maps for 16 US cities">
+  <meta name="twitter:description" content="CityCrimeMap publishes free crime maps and machine-learning-based predicted risk overlays for 16 US cities (Chicago, Seattle, San Francisco, Detroit, Pittsburgh, Washington, DC, and 10 more). Fresh data from official police open-data portals + a peer-reviewed predictive model. Open source. Honest numbers.">
   <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
 
   <!-- Icons -->
@@ -64,21 +64,42 @@
 <header class="bg-brand-700 text-white">
   <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
     <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
-    <nav class="flex flex-wrap gap-x-5 gap-y-1 text-sm" aria-label="Primary">
-      <a href="/" class="font-bold text-white">All cities</a><a href="/chicago" class="text-brand-100/80 hover:text-brand-100">Chicago</a><a href="/seattle" class="text-brand-100/80 hover:text-brand-100">Seattle</a><a href="/san-francisco" class="text-brand-100/80 hover:text-brand-100">San Francisco</a><a href="/detroit" class="text-brand-100/80 hover:text-brand-100">Detroit</a><a href="/pittsburgh" class="text-brand-100/80 hover:text-brand-100">Pittsburgh</a><a href="/washington-dc" class="text-brand-100/80 hover:text-brand-100">Washington, DC</a><a href="/houston" class="text-brand-100/80 hover:text-brand-100">Houston</a><a href="/rochester" class="text-brand-100/80 hover:text-brand-100">Rochester</a><a href="/cleveland" class="text-brand-100/80 hover:text-brand-100">Cleveland</a><a href="/indianapolis" class="text-brand-100/80 hover:text-brand-100">Indianapolis</a><a href="/hartford" class="text-brand-100/80 hover:text-brand-100">Hartford</a><a href="/minneapolis" class="text-brand-100/80 hover:text-brand-100">Minneapolis</a><a href="/cincinnati" class="text-brand-100/80 hover:text-brand-100">Cincinnati</a><a href="/gainesville" class="text-brand-100/80 hover:text-brand-100">Gainesville</a><a href="/denver" class="text-brand-100/80 hover:text-brand-100">Denver</a><a href="/boston" class="text-brand-100/80 hover:text-brand-100">Boston</a><a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a><a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="font-bold text-white">Home</a>
+      <div class="relative group">
+        <button type="button" class="text-brand-100/80 hover:text-brand-100 inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
     </nav>
   </div>
 </header>
 
 <main class="max-w-7xl mx-auto px-4 py-10">
   <section class="text-center mb-10">
-    <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">Crime maps for 16 US cities</h1>
-    <p class="text-slate-600 max-w-2xl mx-auto text-lg">
-      Interactive crime maps and incident tables for 16 major US cities —
-      built from official police open-data portals. Currently tracking
-      <span class="font-semibold text-slate-900">12,965 recent reported incidents</span>.
-      Want alerts for your address? <a href="https://spotcrime.com" target="_blank" rel="noopener" class="text-brand-700 font-semibold hover:underline">Sign up free at SpotCrime</a>.
+    <p class="uppercase tracking-widest text-xs text-brand-700 font-semibold mb-2">Crime maps + predictive risk</p>
+    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-3">Where is crime happening — and where is it going next?</h1>
+    <p class="text-slate-600 max-w-3xl mx-auto text-lg mb-5">
+      CityCrimeMap publishes free crime maps for 16 US cities <em>plus</em> a peer-reviewed
+      machine-learning <a href="/predictions" class="text-brand-700 font-semibold hover:underline">predicted-risk overlay</a>
+      — currently tracking <span class="font-semibold text-slate-900">12,967 recent reported incidents</span>.
+      All open source. No login, no paywall, no app.
     </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/near-me" class="inline-flex items-center gap-2 bg-brand-700 text-white px-5 py-2 rounded-lg font-bold hover:bg-brand-800 transition">📍 Crime near me</a>
+      <a href="/predictions" class="inline-flex items-center gap-2 bg-white border border-slate-300 text-slate-800 px-5 py-2 rounded-lg font-bold hover:bg-slate-50 transition">How predictions work</a>
+    </div>
   </section>
   <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" aria-label="Cities">
 
@@ -88,47 +109,47 @@
             <span class="text-xs font-mono text-slate-500">1,000 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 45 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (299), Assault (296), Unclassified (173), Vandalism (134)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Assault (301), Theft (254), Unclassified (148), Vandalism (133)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Chicago crime map →</p>
         </a>
 
         <a href="/seattle" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Seattle, WA</h3>
-            <span class="text-xs font-mono text-slate-500">690 incidents</span>
+            <span class="text-xs font-mono text-slate-500">698 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 14 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (325), Unclassified (123), Assault (84), Burglary (64)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (344), Unclassified (101), Burglary (87), Assault (70)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Seattle crime map →</p>
         </a>
 
         <a href="/san-francisco" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">San Francisco, CA</h3>
-            <span class="text-xs font-mono text-slate-500">983 incidents</span>
+            <span class="text-xs font-mono text-slate-500">981 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 14 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (581), Theft (168), Assault (80), Vandalism (71)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (533), Theft (203), Assault (91), Vandalism (72)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View San Francisco crime map →</p>
         </a>
 
         <a href="/detroit" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Detroit, MI</h3>
-            <span class="text-xs font-mono text-slate-500">996 incidents</span>
+            <span class="text-xs font-mono text-slate-500">1,000 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 14 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Assault (323), Theft (207), Unclassified (200), Vandalism (158)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Assault (338), Unclassified (204), Theft (179), Vandalism (176)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Detroit crime map →</p>
         </a>
 
         <a href="/pittsburgh" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Pittsburgh, PA</h3>
-            <span class="text-xs font-mono text-slate-500">992 incidents</span>
+            <span class="text-xs font-mono text-slate-500">988 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 75 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (486), Theft (178), Assault (168), Vandalism (109)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (442), Theft (223), Assault (176), Vandalism (98)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Pittsburgh crime map →</p>
         </a>
 
@@ -138,7 +159,7 @@
             <span class="text-xs font-mono text-slate-500">1,000 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 21 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (822), Robbery (74), Assault (63), Burglary (29)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (830), Robbery (68), Assault (61), Burglary (33)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Washington, DC crime map →</p>
         </a>
 
@@ -155,40 +176,40 @@
         <a href="/rochester" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Rochester, NY</h3>
-            <span class="text-xs font-mono text-slate-500">263 incidents</span>
+            <span class="text-xs font-mono text-slate-500">282 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 21 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (188), Assault (43), Burglary (18), Robbery (13)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (204), Assault (43), Burglary (20), Robbery (13)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Rochester crime map →</p>
         </a>
 
         <a href="/cleveland" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Cleveland, OH</h3>
-            <span class="text-xs font-mono text-slate-500">996 incidents</span>
+            <span class="text-xs font-mono text-slate-500">995 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 21 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (375), Assault (286), Theft (154), Vandalism (89)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (384), Assault (277), Theft (147), Vandalism (87)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Cleveland crime map →</p>
         </a>
 
         <a href="/indianapolis" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Indianapolis, IN</h3>
-            <span class="text-xs font-mono text-slate-500">952 incidents</span>
+            <span class="text-xs font-mono text-slate-500">946 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 21 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (361), Assault (238), Theft (190), Vandalism (98)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (341), Assault (222), Theft (203), Vandalism (102)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Indianapolis crime map →</p>
         </a>
 
         <a href="/hartford" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Hartford, CT</h3>
-            <span class="text-xs font-mono text-slate-500">998 incidents</span>
+            <span class="text-xs font-mono text-slate-500">997 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 30 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (792), Assault (69), Theft (65), Vandalism (48)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (791), Assault (69), Theft (64), Vandalism (48)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Hartford crime map →</p>
         </a>
 
@@ -198,27 +219,27 @@
             <span class="text-xs font-mono text-slate-500">1,000 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 21 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (680), Assault (142), Burglary (99), Robbery (44)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (673), Assault (153), Burglary (92), Robbery (46)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Minneapolis crime map →</p>
         </a>
 
         <a href="/cincinnati" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Cincinnati, OH</h3>
-            <span class="text-xs font-mono text-slate-500">483 incidents</span>
+            <span class="text-xs font-mono text-slate-500">353 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 21 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (216), Unclassified (209), Assault (26), Burglary (19)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (155), Theft (143), Assault (25), Burglary (18)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Cincinnati crime map →</p>
         </a>
 
         <a href="/gainesville" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Gainesville, FL</h3>
-            <span class="text-xs font-mono text-slate-500">427 incidents</span>
+            <span class="text-xs font-mono text-slate-500">551 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 21 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (184), Assault (102), Theft (77), Vandalism (36)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Unclassified (244), Assault (131), Theft (96), Vandalism (45)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Gainesville crime map →</p>
         </a>
 
@@ -228,17 +249,17 @@
             <span class="text-xs font-mono text-slate-500">1,000 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 14 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (456), Assault (139), Vandalism (126), Unclassified (125)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (406), Assault (169), Unclassified (140), Vandalism (109)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Denver crime map →</p>
         </a>
 
         <a href="/boston" class="block bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition p-5">
           <div class="flex items-start justify-between mb-3">
             <h3 class="text-xl font-bold text-slate-900">Boston, MA</h3>
-            <span class="text-xs font-mono text-slate-500">185 incidents</span>
+            <span class="text-xs font-mono text-slate-500">176 incidents</span>
           </div>
           <p class="text-sm text-slate-600 mb-3">Last 21 days</p>
-          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (90), Assault (57), Vandalism (25), Robbery (7)</p>
+          <p class="text-xs text-slate-500"><span class="font-semibold">Top categories:</span> Theft (74), Assault (51), Vandalism (31), Burglary (8)</p>
           <p class="text-brand-600 text-sm font-semibold mt-3">View Boston crime map →</p>
         </a>
   </section>
@@ -302,7 +323,7 @@
     </div>
     <div>
       <p class="font-bold text-white mb-2">Data freshness</p>
-      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-06T10:00:07.926806+00:00</span></p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:31.104829+00:00</span></p>
       <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
     </div>
   </div>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Grand Boulevard crime map (Chicago, IL) — 19 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Crime map and incident data for Grand Boulevard in Chicago, IL. 19 reported incidents in the last 45 days: 7 unclassified, 5 assault, 4 vandalism. See predicted risk, incident table, and how Grand Boulevard compares to other Chicago neighborhoods.">
+  <meta name="keywords" content="Grand Boulevard crime, Grand Boulevard Chicago, Grand Boulevard crime map, crime near me Grand Boulevard, Grand Boulevard safety, Chicago neighborhood crime">
+  <link rel="canonical" href="https://citycrimemap.us/chicago/grand-boulevard">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Grand Boulevard crime map (Chicago, IL) — 19 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Crime map and incident data for Grand Boulevard in Chicago, IL. 19 reported incidents in the last 45 days: 7 unclassified, 5 assault, 4 vandalism. See predicted risk, incident table, and how Grand Boulevard compares to other Chicago neighborhoods.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/chicago/grand-boulevard">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Grand Boulevard crime map (Chicago, IL) — 19 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Crime map and incident data for Grand Boulevard in Chicago, IL. 19 reported incidents in the last 45 days: 7 unclassified, 5 assault, 4 vandalism. See predicted risk, incident table, and how Grand Boulevard compares to other Chicago neighborhoods.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Chicago, IL","item":"https://citycrimemap.us/chicago"},{"@type":"ListItem","position":3,"name":"Grand Boulevard","item":"https://citycrimemap.us/chicago/grand-boulevard"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Place","name":"Grand Boulevard, Chicago, IL","containedInPlace":{"@type":"City","name":"Chicago, IL","url":"https://citycrimemap.us/chicago"}}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/chicago" class="hover:text-brand-700">Chicago, IL</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Grand Boulevard</span>
+  </nav>
+
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Grand Boulevard crime map</h1>
+    <p class="text-slate-600">19 reported incidents in Grand Boulevard, Chicago · last 45 days</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 480px;" class="rounded" aria-label="Interactive crime map of Grand Boulevard, Chicago"></div>
+    <div class="mt-3"><div class="flex flex-wrap"><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#475569"></span><span class="text-slate-700">Unclassified</span><span class="text-slate-400 ml-1">(7)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ea580c"></span><span class="text-slate-700">Assault</span><span class="text-slate-400 ml-1">(5)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#7c3aed"></span><span class="text-slate-700">Vandalism</span><span class="text-slate-400 ml-1">(4)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#0891b2"></span><span class="text-slate-700">Theft</span><span class="text-slate-400 ml-1">(3)</span></span></div></div>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">Crime in Grand Boulevard — the last 45 days</h2>
+    <p class="mb-2"><strong>Grand Boulevard</strong> is a neighborhood of Chicago, IL. Over the last 45 days, 19 reported incidents landed in the neighborhood — which is <strong>higher-incident than most Chicago neighborhoods (about the 74th percentile in this window)</strong>.</p>
+    <p class='mb-2'>The most common category in Grand Boulevard right now is <strong>Unclassified</strong> (7 incidents).</p>
+    <p class="text-xs text-slate-500">Data source: <a href="https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2" target="_blank" rel="noopener" class="text-brand-700 hover:underline">City of Chicago Data Portal (Socrata)</a>. For real-time alerts near a specific address in Grand Boulevard, sign up for free daily email alerts on <a href="https://spotcrime.com/il/chicago" target="_blank" rel="noopener" class="text-brand-700 hover:underline">SpotCrime</a>.</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent incidents in Grand Boulevard</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Category</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 11:41</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">VIOLATE ORDER OF PROTECTION</td><td class="px-3 py-2 text-slate-700">050XX S DR MARTIN LUTHER KING JR DR</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 11:29</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">TO CITY OF CHICAGO PROPERTY</td><td class="px-3 py-2 text-slate-700">043XX S PRAIRIE AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 09:40</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">ANIMAL ABUSE / NEGLECT</td><td class="px-3 py-2 text-slate-700">002XX E 47TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 08:18</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">TELEPHONE THREAT</td><td class="px-3 py-2 text-slate-700">007XX E 49TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 01:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7c3aed"></span>Vandalism</span></td><td class="px-3 py-2 text-slate-700">TO VEHICLE</td><td class="px-3 py-2 text-slate-700">045XX S EVANS AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-24 22:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">TELEPHONE THREAT</td><td class="px-3 py-2 text-slate-700">001XX E 45TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-24 20:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">OVER $500</td><td class="px-3 py-2 text-slate-700">006XX E 40TH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-24 19:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">SIMPLE</td><td class="px-3 py-2 text-slate-700">047XX S MICHIGAN AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-24 19:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">DOMESTIC BATTERY SIMPLE</td><td class="px-3 py-2 text-slate-700">045XX S FORRESTVILLE AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-24 17:20</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">POSSESS - CRACK</td><td class="px-3 py-2 text-slate-700">046XX S COTTAGE GROVE AVE</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other Chicago neighborhoods</h2>
+    <div><a href='/chicago/west-town' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>West Town <span class='text-xs text-slate-500'>(57)</span></a><a href='/chicago/austin' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Austin <span class='text-xs text-slate-500'>(54)</span></a><a href='/chicago/near-west-side' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Near West Side <span class='text-xs text-slate-500'>(50)</span></a><a href='/chicago/auburn-gresham' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Auburn Gresham <span class='text-xs text-slate-500'>(38)</span></a><a href='/chicago/near-north-side' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Near North Side <span class='text-xs text-slate-500'>(37)</span></a><a href='/chicago/greater-grand-crossing' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Greater Grand Crossing <span class='text-xs text-slate-500'>(30)</span></a><a href='/chicago/loop' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Loop <span class='text-xs text-slate-500'>(30)</span></a><a href='/chicago/south-shore' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>South Shore <span class='text-xs text-slate-500'>(27)</span></a></div>
+    <p class="mt-3"><a href="/chicago" class="text-brand-700 font-semibold hover:underline">See all of Chicago →</a></p>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Chicago crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/il/chicago" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Chicago alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:31.104829+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const DATA = {"incidents": [{"id": "14250219", "lat": 41.803484, "lng": -87.616435, "datetime": "2026-05-25T11:41:00-05:00", "description": "VIOLATE ORDER OF PROTECTION", "address": "050XX S DR MARTIN LUTHER KING JR DR", "category": null, "neighborhood": "38"}, {"id": "14208495", "lat": 41.816134, "lng": -87.619779, "datetime": "2026-05-25T11:29:00-05:00", "description": "TO CITY OF CHICAGO PROPERTY", "address": "043XX S PRAIRIE AVE", "category": "Vandalism", "neighborhood": "38"}, {"id": "14208389", "lat": 41.809317, "lng": -87.620776, "datetime": "2026-05-25T09:40:00-05:00", "description": "ANIMAL ABUSE / NEGLECT", "address": "002XX E 47TH ST", "category": null, "neighborhood": "38"}, {"id": "14208725", "lat": 41.805885, "lng": -87.607279, "datetime": "2026-05-25T08:18:00-05:00", "description": "TELEPHONE THREAT", "address": "007XX E 49TH ST", "category": null, "neighborhood": "38"}, {"id": "14208875", "lat": 41.812359, "lng": -87.608259, "datetime": "2026-05-25T01:00:00-05:00", "description": "TO VEHICLE", "address": "045XX S EVANS AVE", "category": "Vandalism", "neighborhood": "38"}, {"id": "14209368", "lat": 41.813115, "lng": -87.622432, "datetime": "2026-05-24T22:00:00-05:00", "description": "TELEPHONE THREAT", "address": "001XX E 45TH ST", "category": null, "neighborhood": "38"}, {"id": "14208178", "lat": 41.821455, "lng": -87.611051, "datetime": "2026-05-24T20:30:00-05:00", "description": "OVER $500", "address": "006XX E 40TH ST", "category": "Theft", "neighborhood": "38"}, {"id": "14213528", "lat": 41.808608, "lng": -87.622819, "datetime": "2026-05-24T19:30:00-05:00", "description": "SIMPLE", "address": "047XX S MICHIGAN AVE", "category": "Assault", "neighborhood": "38"}, {"id": "14208250", "lat": 41.812456, "lng": -87.612707, "datetime": "2026-05-24T19:00:00-05:00", "description": "DOMESTIC BATTERY SIMPLE", "address": "045XX S FORRESTVILLE AVE", "category": "Assault", "neighborhood": "38"}, {"id": "14207759", "lat": 41.810433, "lng": -87.606586, "datetime": "2026-05-24T17:20:00-05:00", "description": "POSSESS - CRACK", "address": "046XX S COTTAGE GROVE AVE", "category": null, "neighborhood": "38"}, {"id": "14210933", "lat": 41.821483, "lng": -87.608501, "datetime": "2026-05-24T12:00:00-05:00", "description": "HARASSMENT BY TELEPHONE", "address": "007XX E 40TH ST", "category": null, "neighborhood": "38"}, {"id": "14207564", "lat": 41.816079, "lng": -87.619776, "datetime": "2026-05-24T11:47:00-05:00", "description": "SIMPLE", "address": "043XX S PRAIRIE AVE", "category": "Assault", "neighborhood": "38"}, {"id": "14207500", "lat": 41.808836, "lng": -87.616574, "datetime": "2026-05-24T10:49:00-05:00", "description": "VIOLATE ORDER OF PROTECTION", "address": "047XX S DR MARTIN LUTHER KING JR DR", "category": null, "neighborhood": "38"}, {"id": "14207489", "lat": 41.808836, "lng": -87.616574, "datetime": "2026-05-24T10:49:00-05:00", "description": "AGGRAVATED - HANDGUN", "address": "047XX S DR MARTIN LUTHER KING JR DR", "category": "Assault", "neighborhood": "38"}, {"id": "14207416", "lat": 41.819383, "lng": -87.624725, "datetime": "2026-05-24T10:40:00-05:00", "description": "TO VEHICLE", "address": "041XX S WABASH AVE", "category": "Vandalism", "neighborhood": "38"}, {"id": "14207588", "lat": 41.820297, "lng": -87.612744, "datetime": "2026-05-24T10:15:00-05:00", "description": "AUTOMOBILE", "address": "005XX E 41ST ST", "category": "Theft", "neighborhood": "38"}, {"id": "14207349", "lat": 41.82147, "lng": -87.616932, "datetime": "2026-05-24T09:24:00-05:00", "description": "TO VEHICLE", "address": "040XX S DR MARTIN LUTHER KING JR DR", "category": "Vandalism", "neighborhood": "38"}, {"id": "14207567", "lat": 41.808929, "lng": -87.616576, "datetime": "2026-05-24T07:27:00-05:00", "description": "AGGRAVATED - KNIFE / CUTTING INSTRUMENT", "address": "047XX S DR MARTIN LUTHER KING JR DR", "category": "Assault", "neighborhood": "38"}, {"id": "14207593", "lat": 41.809404, "lng": -87.615254, "datetime": "2026-05-24T02:00:00-05:00", "description": "AUTOMOBILE", "address": "004XX E 47TH ST", "category": "Theft", "neighborhood": "38"}], "center": [41.8781, -87.6298], "zoom": 13};
+  const incidents = DATA.incidents;
+  const map = L.map('map').setView(DATA.center, DATA.zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const layer = L.layerGroup();
+  const bounds = [];
+  for (const inc of incidents) {
+    const color = CAT_COLORS[inc.category || 'Unclassified'] || '#64748b';
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 5, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.65 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">${inc.category || 'Unclassified'}</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    layer.addLayer(m);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  layer.addTo(map);
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 16 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const color = CAT_COLORS[i.category || 'Unclassified'] || '#64748b';
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:${color}"></span>${i.category || 'Unclassified'}</span></td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Burglary in Detroit, MI — 47 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 47 reported burglary incidents in Detroit, MI from the last 14 days. Data from Detroit Open Data Portal — RMS Crime Incidents.">
+  <meta name="keywords" content="Burglary in Detroit, Detroit burglary, burglary near me Detroit, burglary map Detroit, Detroit crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/detroit/burglary">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Burglary in Detroit, MI — 47 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 47 reported burglary incidents in Detroit, MI from the last 14 days. Data from Detroit Open Data Portal — RMS Crime Incidents.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/detroit/burglary">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Burglary in Detroit, MI — 47 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 47 reported burglary incidents in Detroit, MI from the last 14 days. Data from Detroit Open Data Portal — RMS Crime Incidents.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Detroit, MI","item":"https://citycrimemap.us/detroit"},{"@type":"ListItem","position":3,"name":"Burglary","item":"https://citycrimemap.us/detroit/burglary"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/detroit" class="hover:text-brand-700">Detroit, MI</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Burglary</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Burglary in Detroit, MI</h1>
+    <p class="text-slate-600">47 recent burglary incidents · last 14 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Burglary incidents in Detroit, MI"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About burglary in Detroit</h2>
+    <p class="mb-2">This page shows only <strong>burglary incidents</strong> in Detroit, MI from the last 14 days — 47 reports in total, filtered from the full Detroit dataset.</p>
+    <p class="mb-2">For all crime categories in Detroit on one map, <a href="/detroit" class="text-brand-700 hover:underline font-semibold">see the full Detroit crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent burglary incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-30 07:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">ENTRY WITHOUT PERMISSION (NO INTENT)</td><td class="px-3 py-2 text-slate-700">Rolyat St & Terrell St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-29 08:45</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">BURGLARY - FORCED ENTRY</td><td class="px-3 py-2 text-slate-700">E Jefferson Ave & Dickerson St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-29 01:51</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">ENTRY WITHOUT PERMISSION (NO INTENT)</td><td class="px-3 py-2 text-slate-700">E Outer Dr & Mackay St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 21:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">BURGLARY - FORCED ENTRY</td><td class="px-3 py-2 text-slate-700">Millbank St & Terrell St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 18:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">BURGLARY - FORCED ENTRY</td><td class="px-3 py-2 text-slate-700">Sunderland Rd & W Outer Dr</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 14:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">BURGLARY - FORCED ENTRY</td><td class="px-3 py-2 text-slate-700">Toledo St & Lansing St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 14:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)</td><td class="px-3 py-2 text-slate-700">Bliss St & Kempa St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 08:29</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">ENTRY WITHOUT PERMISSION (NO INTENT)</td><td class="px-3 py-2 text-slate-700">Atkinson St & Rosa Parks Blvd</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-28 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)</td><td class="px-3 py-2 text-slate-700">Scovel Pl & Scotten St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-06-27 20:29</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)</td><td class="px-3 py-2 text-slate-700">Prentis St & 3rd St</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Detroit</h2>
+    <div><a href='/detroit/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(338)</span></a><a href='/detroit/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(204)</span></a><a href='/detroit/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(179)</span></a><a href='/detroit/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(176)</span></a><a href='/detroit/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(38)</span></a><a href='/detroit/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(18)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Detroit crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/mi/detroit" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Detroit alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:33.705543+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "1341623", "lat": 42.439583, "lng": -83.022249, "datetime": "2026-06-30T07:00:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "Rolyat St & Terrell St", "category": "Burglary", "neighborhood": "Nortown"}, {"id": "1341193", "lat": 42.370556, "lng": -82.953269, "datetime": "2026-06-29T08:45:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "E Jefferson Ave & Dickerson St", "category": "Burglary", "neighborhood": "Jefferson Chalmers"}, {"id": "1341053", "lat": 42.440224, "lng": -83.076182, "datetime": "2026-06-29T01:51:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "E Outer Dr & Mackay St", "category": "Burglary", "neighborhood": "Butler"}, {"id": "1341173", "lat": 42.443927, "lng": -83.022412, "datetime": "2026-06-28T21:30:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Millbank St & Terrell St", "category": "Burglary", "neighborhood": "Conner Creek"}, {"id": "1341283", "lat": 42.418978, "lng": -83.228137, "datetime": "2026-06-28T18:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Sunderland Rd & W Outer Dr", "category": "Burglary", "neighborhood": "Evergreen-Outer Drive"}, {"id": "1340915", "lat": 42.322367, "lng": -83.100546, "datetime": "2026-06-28T14:30:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Toledo St & Lansing St", "category": "Burglary", "neighborhood": "Central Southwest"}, {"id": "1340909", "lat": 42.43729, "lng": -83.019457, "datetime": "2026-06-28T14:00:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "Bliss St & Kempa St", "category": "Burglary", "neighborhood": "Nortown"}, {"id": "1340822", "lat": 42.377255, "lng": -83.100086, "datetime": "2026-06-28T08:29:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "Atkinson St & Rosa Parks Blvd", "category": "Burglary", "neighborhood": "Historic Atkinson"}, {"id": "1340890", "lat": 42.353904, "lng": -83.112406, "datetime": "2026-06-28T00:00:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "Scovel Pl & Scotten St", "category": "Burglary", "neighborhood": "Midwest"}, {"id": "1340643", "lat": 42.351591, "lng": -83.069411, "datetime": "2026-06-27T20:29:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "Prentis St & 3rd St", "category": "Burglary", "neighborhood": "Midtown"}, {"id": "1341127", "lat": 42.445727, "lng": -83.158239, "datetime": "2026-06-27T16:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Wisconsin St & W 8 Mile Rd", "category": "Burglary", "neighborhood": null}, {"id": "1340608", "lat": 42.429318, "lng": -83.179213, "datetime": "2026-06-27T12:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Hartwell St & Clarita St", "category": "Burglary", "neighborhood": "Schulze"}, {"id": "1340491", "lat": 42.38082, "lng": -83.120563, "datetime": "2026-06-27T09:57:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Wildemere St & Webb St", "category": "Burglary", "neighborhood": "Dexter-Linwood"}, {"id": "1340416", "lat": 42.400265, "lng": -82.945684, "datetime": "2026-06-27T03:35:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Chatsworth St & E Warren Ave", "category": "Burglary", "neighborhood": "Morningside"}, {"id": "1340495", "lat": 42.413292, "lng": -83.241024, "datetime": "2026-06-27T03:08:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Kentfield St & Grove St", "category": "Burglary", "neighborhood": "McNichols Evergreen"}, {"id": "1340361", "lat": 42.37098, "lng": -83.078633, "datetime": "2026-06-26T22:30:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "W Bethune St & Bethune Ct", "category": "Burglary", "neighborhood": "New Center Commons"}, {"id": "1340309", "lat": 42.384013, "lng": -82.992488, "datetime": "2026-06-26T20:33:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Saint Clair St & E Warren Ave", "category": "Burglary", "neighborhood": "West End"}, {"id": "1340294", "lat": 42.351953, "lng": -82.99402, "datetime": "2026-06-26T17:53:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "E Jefferson Ave & Parker St", "category": "Burglary", "neighborhood": "West Village"}, {"id": "1340294", "lat": 42.351953, "lng": -82.99402, "datetime": "2026-06-26T17:53:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "E Jefferson Ave & Parker St", "category": "Burglary", "neighborhood": "West Village"}, {"id": "1340179", "lat": 42.437247, "lng": -83.21952, "datetime": "2026-06-26T15:13:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "Pembroke Ave & N M 39", "category": "Burglary", "neighborhood": "Greenfield"}, {"id": "1341044", "lat": 42.404416, "lng": -82.940061, "datetime": "2026-06-26T15:00:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "Frankfort St & Courville St", "category": "Burglary", "neighborhood": "Morningside"}, {"id": "1340122", "lat": 42.421666, "lng": -83.279941, "datetime": "2026-06-26T11:38:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Curtis St & Wormer St", "category": "Burglary", "neighborhood": "The Eye"}, {"id": "1340122", "lat": 42.421666, "lng": -83.279941, "datetime": "2026-06-26T11:38:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "Curtis St & Wormer St", "category": "Burglary", "neighborhood": "The Eye"}, {"id": "1340018", "lat": 42.424319, "lng": -83.246134, "datetime": "2026-06-26T07:19:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "Pickford St & Braile St", "category": "Burglary", "neighborhood": "Holcomb Community"}, {"id": "1339998", "lat": 42.416283, "lng": -82.985323, "datetime": "2026-06-26T02:52:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Park Dr & Jane St", "category": "Burglary", "neighborhood": "Eden Gardens"}, {"id": "1339976", "lat": 42.410854, "lng": -83.059474, "datetime": "2026-06-26T02:36:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "Halleck St & Moran St", "category": "Burglary", "neighborhood": "Campau/Banglatown"}, {"id": "1339974", "lat": 42.351825, "lng": -83.153995, "datetime": "2026-06-26T02:30:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Tireman Ave & Wisconsin St", "category": "Burglary", "neighborhood": "Barton-McFarland"}, {"id": "1339986", "lat": 42.401613, "lng": -82.964294, "datetime": "2026-06-26T01:50:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "Lakewood St & Linville St", "category": "Burglary", "neighborhood": "Chandler Park"}, {"id": "1339979", "lat": 42.343722, "lng": -83.079002, "datetime": "2026-06-26T01:06:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "Mulberry St & Rosa Parks Blvd", "category": "Burglary", "neighborhood": "Core City"}, {"id": "1339945", "lat": 42.291746, "lng": -83.122601, "datetime": "2026-06-26T00:10:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "S Harbaugh St & Keller St", "category": "Burglary", "neighborhood": "Delray"}, {"id": "1339740", "lat": 42.409426, "lng": -83.176212, "datetime": "2026-06-25T14:00:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "Puritan St & Littlefield St", "category": "Burglary", "neighborhood": "Harmony Village"}, {"id": "1339953", "lat": 42.420213, "lng": -83.1182, "datetime": "2026-06-25T13:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Pontchartrain Blvd & Whitmore Rd", "category": "Burglary", "neighborhood": "Detroit Golf"}, {"id": "1339564", "lat": 42.350356, "lng": -83.106372, "datetime": "2026-06-25T06:15:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "McGraw St & Roosevelt St", "category": "Burglary", "neighborhood": "Midwest"}, {"id": "1339690", "lat": 42.435939, "lng": -83.051542, "datetime": "2026-06-25T03:08:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Keystone St & Emery St", "category": "Burglary", "neighborhood": "Farwell"}, {"id": "1340820", "lat": 42.438394, "lng": -83.047188, "datetime": "2026-06-25T00:00:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "E Lantz St & Caldwell St", "category": "Burglary", "neighborhood": "Farwell"}, {"id": "1339487", "lat": 42.400413, "lng": -82.96763, "datetime": "2026-06-24T21:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Lakeview St & Linville St", "category": "Burglary", "neighborhood": "Chandler Park"}, {"id": "1339603", "lat": 42.449678, "lng": -82.970942, "datetime": "2026-06-24T16:30:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Mohican St & E 8 Mile Rd", "category": "Burglary", "neighborhood": "Mohican Regent"}, {"id": "1339380", "lat": 42.444862, "lng": -83.08816, "datetime": "2026-06-24T15:06:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "Greeley St & E Winchester Ave", "category": "Burglary", "neighborhood": "Nolan"}, {"id": "1339337", "lat": 42.447758, "lng": -82.980708, "datetime": "2026-06-24T15:01:00-04:00", "description": "ENTRY WITHOUT PERMISSION (NO INTENT)", "address": "Collingham Dr & Hoyt St", "category": "Burglary", "neighborhood": "Mohican Regent"}, {"id": "1339617", "lat": 42.404051, "lng": -83.169481, "datetime": "2026-06-24T14:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Keeler Ave & Meyers Rd", "category": "Burglary", "neighborhood": "Bethune Community"}, {"id": "1339694", "lat": 42.360467, "lng": -83.202464, "datetime": "2026-06-24T14:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Ellis St & Rutherford St", "category": "Burglary", "neighborhood": "Joy Community"}, {"id": "1339348", "lat": 42.385329, "lng": -83.108459, "datetime": "2026-06-24T13:36:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Webb St & 14th St", "category": "Burglary", "neighborhood": "Dexter-Linwood"}, {"id": "1339315", "lat": 42.359296, "lng": -82.988743, "datetime": "2026-06-24T13:05:00-04:00", "description": "BURGLARY - ENTRY WITHOUT FORCE (INTENT TO COMMIT)", "address": "Agnes St & Hibbard St", "category": "Burglary", "neighborhood": "East Village"}, {"id": "1339233", "lat": 42.432699, "lng": -83.185283, "datetime": "2026-06-24T11:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Ardmore St & Cambridge Ave", "category": "Burglary", "neighborhood": "Schaefer 7/8 Lodge"}, {"id": "1339429", "lat": 42.368055, "lng": -83.10516, "datetime": "2026-06-24T11:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "W Philadelphia St & Linwood St", "category": "Burglary", "neighborhood": "Jamison"}, {"id": "1340099", "lat": 42.336044, "lng": -83.222915, "datetime": "2026-06-23T23:00:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Brace St & Paul Dr", "category": "Burglary", "neighborhood": "Warrendale"}, {"id": "1339048", "lat": 42.42661, "lng": -83.276644, "datetime": "2026-06-23T21:41:00-04:00", "description": "BURGLARY - FORCED ENTRY", "address": "Dale St & Clarita St", "category": "Burglary", "neighborhood": "Seven Mile-Rouge"}];
+  const map = L.map('map').setView([42.3314, -83.0458], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Burglary'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Burglary</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

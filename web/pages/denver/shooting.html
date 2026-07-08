@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Shooting in Denver, CO — 46 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 46 reported shooting incidents in Denver, CO from the last 14 days. Data from Denver Open Data — Crime Offenses (ArcGIS).">
+  <meta name="keywords" content="Shooting in Denver, Denver shooting, shooting near me Denver, shooting map Denver, Denver crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/denver/shooting">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Shooting in Denver, CO — 46 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 46 reported shooting incidents in Denver, CO from the last 14 days. Data from Denver Open Data — Crime Offenses (ArcGIS).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/denver/shooting">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shooting in Denver, CO — 46 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 46 reported shooting incidents in Denver, CO from the last 14 days. Data from Denver Open Data — Crime Offenses (ArcGIS).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Denver, CO","item":"https://citycrimemap.us/denver"},{"@type":"ListItem","position":3,"name":"Shooting","item":"https://citycrimemap.us/denver/shooting"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/denver" class="hover:text-brand-700">Denver, CO</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Shooting</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Shooting in Denver, CO</h1>
+    <p class="text-slate-600">46 recent shooting incidents · last 14 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Shooting incidents in Denver, CO"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About shooting in Denver</h2>
+    <p class="mb-2">This page shows only <strong>shooting incidents</strong> in Denver, CO from the last 14 days — 46 reports in total, filtered from the full Denver dataset.</p>
+    <p class="mb-2">For all crime categories in Denver on one map, <a href="/denver" class="text-brand-700 hover:underline font-semibold">see the full Denver crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent shooting incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 00:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">W CEDAR AVE / S DALE CT</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 22:42</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">14297 E ANDREWS DR</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 19:50</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">1315 N FEDERAL BLVD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 19:46</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">2 N GROVE ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 17:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">1555 N GROVE ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 08:11</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">800 BLK S VRAIN ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 22:50</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">1336 N KING ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 22:32</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">1545 N GROVE ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 20:47</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">700 BLOCK W 9TH AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-04 20:41</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">weapon-unlawful-discharge-of</td><td class="px-3 py-2 text-slate-700">4365 W NEVADA PL</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Denver</h2>
+    <div><a href='/denver/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(406)</span></a><a href='/denver/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(169)</span></a><a href='/denver/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(140)</span></a><a href='/denver/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(109)</span></a><a href='/denver/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(106)</span></a><a href='/denver/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(20)</span></a><a href='/denver/arson' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Arson <span class='text-xs text-slate-500'>(4)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Denver crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/co/denver" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Denver alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:40.298757+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "DP2026369653", "lat": 39.713005, "lng": -105.021507, "datetime": "2026-07-06T00:30:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "W CEDAR AVE / S DALE CT", "category": "Shooting", "neighborhood": "valverde"}, {"id": "DP2026369548", "lat": 39.782546, "lng": -104.82785, "datetime": "2026-07-05T22:42:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "14297 E ANDREWS DR", "category": "Shooting", "neighborhood": "montbello"}, {"id": "DP2026369418", "lat": 39.736898, "lng": -105.025668, "datetime": "2026-07-05T19:50:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1315 N FEDERAL BLVD", "category": "Shooting", "neighborhood": "west-colfax"}, {"id": "DP2026369410", "lat": 39.716752, "lng": -105.025978, "datetime": "2026-07-05T19:46:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "2 N GROVE ST", "category": "Shooting", "neighborhood": "barnum"}, {"id": "DP2026368876", "lat": 39.741769, "lng": -105.02731, "datetime": "2026-07-05T17:00:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1555 N GROVE ST", "category": "Shooting", "neighborhood": "west-colfax"}, {"id": "DP2026368071", "lat": 39.702017, "lng": -105.047466, "datetime": "2026-07-05T08:11:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "800 BLK S VRAIN ST", "category": "Shooting", "neighborhood": "westwood"}, {"id": "DP2026366890", "lat": 39.737317, "lng": -105.03305, "datetime": "2026-07-04T22:50:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1336 N KING ST", "category": "Shooting", "neighborhood": "west-colfax"}, {"id": "DP2026366853", "lat": 39.741338, "lng": -105.027202, "datetime": "2026-07-04T22:32:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1545 N GROVE ST", "category": "Shooting", "neighborhood": "west-colfax"}, {"id": "DP2026366446", "lat": 39.730375, "lng": -104.996603, "datetime": "2026-07-04T20:47:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "700 BLOCK W 9TH AVE", "category": "Shooting", "neighborhood": "lincoln-park"}, {"id": "DP2026366420", "lat": 39.710691, "lng": -105.044193, "datetime": "2026-07-04T20:41:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "4365 W NEVADA PL", "category": "Shooting", "neighborhood": "westwood"}, {"id": "DP2026366281", "lat": 39.716395, "lng": -105.025974, "datetime": "2026-07-04T20:03:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "2 S GROVE ST", "category": "Shooting", "neighborhood": "barnum"}, {"id": "DP2026366005", "lat": 39.738079, "lng": -104.885704, "datetime": "2026-07-04T18:47:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1350 N XENIA ST", "category": "Shooting", "neighborhood": "east-colfax"}, {"id": "DP2026365951", "lat": 39.736759, "lng": -104.885851, "datetime": "2026-07-04T18:35:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1200 N XENIA ST", "category": "Shooting", "neighborhood": "east-colfax"}, {"id": "DP2026365706", "lat": 39.741216, "lng": -104.886164, "datetime": "2026-07-04T17:36:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1545 N XENIA ST", "category": "Shooting", "neighborhood": "east-colfax"}, {"id": "DP2026365627", "lat": 39.730227, "lng": -104.979673, "datetime": "2026-07-04T17:21:00-06:00", "description": "weapon-flourishing", "address": "600 BLK E 9TH AVE", "category": "Shooting", "neighborhood": "capitol-hill"}, {"id": "DP2026365510", "lat": 39.767712, "lng": -104.971227, "datetime": "2026-07-04T16:53:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "3639 N LAFAYETTE ST", "category": "Shooting", "neighborhood": "cole"}, {"id": "DP2026365429", "lat": 39.710417, "lng": -105.007563, "datetime": "2026-07-04T16:35:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1400 BLK W NEVADA PL", "category": "Shooting", "neighborhood": "athmar-park"}, {"id": "DP2026369625", "lat": 39.756522, "lng": -104.861107, "datetime": "2026-07-04T15:00:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "2800 BLK N JOLIET ST", "category": "Shooting", "neighborhood": "central-park"}, {"id": "DP2026364928", "lat": 39.708307, "lng": -105.034189, "datetime": "2026-07-04T13:58:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "3500 BLK W ALASKA PL", "category": "Shooting", "neighborhood": "westwood"}, {"id": "DP2026367648", "lat": 39.742127, "lng": -104.891326, "datetime": "2026-07-04T11:30:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1600 N VALENTIA ST", "category": "Shooting", "neighborhood": "east-colfax"}, {"id": "DP2026364327", "lat": 39.737173, "lng": -105.034829, "datetime": "2026-07-04T08:24:00-06:00", "description": "homicide-other", "address": "1300 BLK N LOWELL BLVD", "category": "Shooting", "neighborhood": "west-colfax"}, {"id": "DP2026363976", "lat": 39.685413, "lng": -105.038779, "datetime": "2026-07-03T21:30:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1698 S PATTON CT", "category": "Shooting", "neighborhood": "mar-lee"}, {"id": "DP2026363271", "lat": 39.723819, "lng": -105.038053, "datetime": "2026-07-03T19:36:00-06:00", "description": "weapon-other-viol", "address": "446 N OSCEOLA ST", "category": "Shooting", "neighborhood": "barnum"}, {"id": "DP2026364461", "lat": 39.778553, "lng": -105.02133, "datetime": "2026-07-03T19:30:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "4500 N DECATUR ST", "category": "Shooting", "neighborhood": "sunnyside"}, {"id": "DP2026363348", "lat": 39.726275, "lng": -105.030045, "datetime": "2026-07-03T18:30:00-06:00", "description": "weapon-other-viol", "address": "W 6TH AVE / N IRVING ST", "category": "Shooting", "neighborhood": "villa-park"}, {"id": "DP2026361888", "lat": 39.740324, "lng": -104.891538, "datetime": "2026-07-03T08:25:00-06:00", "description": "weapon-poss-illegal-dangerous", "address": "1500 BLOCK N VALENTIA ST", "category": "Shooting", "neighborhood": "east-colfax"}, {"id": "DP2026361840", "lat": 39.71706, "lng": -104.903705, "datetime": "2026-07-03T08:03:00-06:00", "description": "weapon-other-viol", "address": "E LOWRY BLVD / N QUEBEC ST", "category": "Shooting", "neighborhood": "lowry-field"}, {"id": "DP2026363649", "lat": 39.773132, "lng": -104.823476, "datetime": "2026-07-02T21:59:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "14500 BLK E 43RD AVE", "category": "Shooting", "neighborhood": "montbello"}, {"id": "DP2026361020", "lat": 39.754067, "lng": -104.992766, "datetime": "2026-07-02T19:42:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "2000 BLOCK MARKET ST", "category": "Shooting", "neighborhood": "five-points"}, {"id": "DP2026360994", "lat": 39.787268, "lng": -104.939478, "datetime": "2026-07-02T19:19:00-06:00", "description": "weapon-carrying-concealed", "address": "4950 N COLORADO BLVD", "category": "Shooting", "neighborhood": "northeast-park-hill"}, {"id": "DP2026360965", "lat": 39.751812, "lng": -105.017469, "datetime": "2026-07-02T18:55:00-06:00", "description": "weapon-carrying-concealed", "address": "2400 BLOCK N ALCOTT ST", "category": "Shooting", "neighborhood": "jefferson-park"}, {"id": "DP2026360965", "lat": 39.751812, "lng": -105.017469, "datetime": "2026-07-02T18:55:00-06:00", "description": "weapon-by-prev-offender-powpo", "address": "2400 BLOCK N ALCOTT ST", "category": "Shooting", "neighborhood": "jefferson-park"}, {"id": "DP2026360692", "lat": 39.725441, "lng": -105.01867, "datetime": "2026-07-02T16:25:00-06:00", "description": "weapon-other-viol", "address": "W 6TH AVE / N BRYANT ST", "category": "Shooting", "neighborhood": "sun-valley"}, {"id": "DP2026360666", "lat": 39.776597, "lng": -104.740725, "datetime": "2026-07-02T16:09:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "4300 BLOCK N NEPAL ST", "category": "Shooting", "neighborhood": "gateway-green-valley-ranch"}, {"id": "DP2026360441", "lat": 39.749577, "lng": -104.979259, "datetime": "2026-07-02T14:39:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "2300 BLK COURT PL", "category": "Shooting", "neighborhood": "five-points"}, {"id": "DP2026360112", "lat": 39.74273, "lng": -105.025219, "datetime": "2026-07-02T11:12:00-06:00", "description": "weapon-poss-illegal-dangerous", "address": "W 16TH AVE / N FEDERAL BLVD", "category": "Shooting", "neighborhood": "west-colfax"}, {"id": "DP2026360091", "lat": 39.781002, "lng": -104.894921, "datetime": "2026-07-02T06:30:00-06:00", "description": "weapon-by-prev-offender-powpo", "address": "7970 E NORTHFIELD BLVD", "category": "Shooting", "neighborhood": "central-park"}, {"id": "DP2026359143", "lat": 39.662307, "lng": -105.02826, "datetime": "2026-07-02T03:09:00-06:00", "description": "weapon-flourishing", "address": "3144 W FRANCES WALSH PL", "category": "Shooting", "neighborhood": "harvey-park-south"}, {"id": "DP2026356788", "lat": 39.783739, "lng": -104.843719, "datetime": "2026-06-30T23:00:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "12760 E 48TH AVE", "category": "Shooting", "neighborhood": "montbello"}, {"id": "DP2026356783", "lat": 39.699373, "lng": -105.047401, "datetime": "2026-06-30T18:30:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "900 BLK S VRAIN ST", "category": "Shooting", "neighborhood": "westwood"}, {"id": "DP2026356350", "lat": 39.77654, "lng": -105.006433, "datetime": "2026-06-30T15:57:00-06:00", "description": "homicide-other", "address": "W 44TH AVE / N PECOS ST", "category": "Shooting", "neighborhood": "sunnyside"}, {"id": "DP2026356194", "lat": 39.778237, "lng": -104.903434, "datetime": "2026-06-30T14:18:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "I70 HWYEB / N NORTHFIELD QUEBEC ST", "category": "Shooting", "neighborhood": "central-park"}, {"id": "DP2026356123", "lat": 39.771831, "lng": -105.047866, "datetime": "2026-06-30T13:25:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "3937 N WINONA CT", "category": "Shooting", "neighborhood": "berkeley"}, {"id": "DP2026355808", "lat": 39.75324, "lng": -104.999832, "datetime": "2026-06-30T10:25:00-06:00", "description": "weapon-flourishing", "address": "1701 WYNKOOP ST", "category": "Shooting", "neighborhood": "union-station"}, {"id": "DP2026357832", "lat": 39.695539, "lng": -105.032895, "datetime": "2026-06-27T23:13:00-06:00", "description": "weapon-unlawful-discharge-of", "address": "1164 S KING ST", "category": "Shooting", "neighborhood": "mar-lee"}, {"id": "DP2026349999", "lat": 39.649944, "lng": -104.921602, "datetime": "2026-06-27T14:17:00-06:00", "description": "weapon-by-prev-offender-powpo", "address": "3600 S IVANHOE ST", "category": "Shooting", "neighborhood": "southmoor-park"}];
+  const map = L.map('map').setView([39.7392, -104.9903], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Shooting'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Shooting</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

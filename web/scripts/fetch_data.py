@@ -81,6 +81,14 @@ def normalize_incident(row: dict) -> dict | None:
                 dt_str = str(dt)
         except Exception:
             dt_str = str(dt)
+    # Neighborhood is optional — only 12 of 16 live cities carry it upstream.
+    # We keep the raw label as-is (Chicago "08A", DC "Cluster 25", SF
+    # "Mission") and let the frontend slugify + display it.
+    hood_raw = row.get("std_neighborhood")
+    if hood_raw is None or (isinstance(hood_raw, float) and math.isnan(hood_raw)):
+        hood = None
+    else:
+        hood = str(hood_raw).strip() or None
     return {
         "id": str(row.get("std_incident_id") or row.get("std_source_record_id") or ""),
         "lat": round(latf, 6),
@@ -89,6 +97,7 @@ def normalize_incident(row: dict) -> dict | None:
         "description": (row.get("std_offense_description") or "").strip() or None,
         "address": (row.get("std_address") or "").strip() or None,
         "category": row.get("std_spotcrime_category") or None,
+        "neighborhood": hood,
     }
 
 

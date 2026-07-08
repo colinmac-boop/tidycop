@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Burglary in Indianapolis, IN — 52 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 52 reported burglary incidents in Indianapolis, IN from the last 21 days. Data from IMPD Incidents Public (ArcGIS).">
+  <meta name="keywords" content="Burglary in Indianapolis, Indianapolis burglary, burglary near me Indianapolis, burglary map Indianapolis, Indianapolis crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/indianapolis/burglary">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Burglary in Indianapolis, IN — 52 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 52 reported burglary incidents in Indianapolis, IN from the last 21 days. Data from IMPD Incidents Public (ArcGIS).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/indianapolis/burglary">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Burglary in Indianapolis, IN — 52 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 52 reported burglary incidents in Indianapolis, IN from the last 21 days. Data from IMPD Incidents Public (ArcGIS).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Indianapolis, IN","item":"https://citycrimemap.us/indianapolis"},{"@type":"ListItem","position":3,"name":"Burglary","item":"https://citycrimemap.us/indianapolis/burglary"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/indianapolis" class="hover:text-brand-700">Indianapolis, IN</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Burglary</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Burglary in Indianapolis, IN</h1>
+    <p class="text-slate-600">52 recent burglary incidents · last 21 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Burglary incidents in Indianapolis, IN"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About burglary in Indianapolis</h2>
+    <p class="mb-2">This page shows only <strong>burglary incidents</strong> in Indianapolis, IN from the last 21 days — 52 reports in total, filtered from the full Indianapolis dataset.</p>
+    <p class="mb-2">For all crime categories in Indianapolis on one map, <a href="/indianapolis" class="text-brand-700 hover:underline font-semibold">see the full Indianapolis crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent burglary incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 05:12</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Burglary/Breaking And Entering</td><td class="px-3 py-2 text-slate-700">3600 BLOCK N CAPITOL AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 05:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Burglary/Breaking And Entering</td><td class="px-3 py-2 text-slate-700">1600 BLOCK HARLAN ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 20:19</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Trespass Of Real Property</td><td class="px-3 py-2 text-slate-700">2400 BLOCK PROSPECT ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 20:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Burglary/Breaking And Entering</td><td class="px-3 py-2 text-slate-700">3400 BLOCK RANSDELL ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 18:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Burglary/Breaking And Entering</td><td class="px-3 py-2 text-slate-700">5400 BLOCK N CAPITOL AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 15:45</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Burglary/Breaking And Entering</td><td class="px-3 py-2 text-slate-700">4900 BLOCK YOUNG AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 15:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Burglary/Breaking And Entering</td><td class="px-3 py-2 text-slate-700">800 BLOCK WARREN AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 14:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Trespass Of Real Property</td><td class="px-3 py-2 text-slate-700">3200 BLOCK RALSTON AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 12:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Burglary/Breaking And Entering</td><td class="px-3 py-2 text-slate-700">900 BLOCK BURDSAL PKWY</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 11:53</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">Burglary/Breaking And Entering</td><td class="px-3 py-2 text-slate-700">7900 BLOCK W 10TH ST</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Indianapolis</h2>
+    <div><a href='/indianapolis/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(341)</span></a><a href='/indianapolis/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(222)</span></a><a href='/indianapolis/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(203)</span></a><a href='/indianapolis/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(102)</span></a><a href='/indianapolis/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(14)</span></a><a href='/indianapolis/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(10)</span></a><a href='/indianapolis/arson' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Arson <span class='text-xs text-slate-500'>(2)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Indianapolis crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/in/indianapolis" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Indianapolis alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:37.891377+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "IP260053683", "lat": 39.821141, "lng": -86.161559, "datetime": "2026-07-07T05:12:00-04:00", "description": "Burglary/Breaking And Entering", "address": "3600 BLOCK N CAPITOL AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053703", "lat": 39.746189, "lng": -86.125425, "datetime": "2026-07-07T05:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "1600 BLOCK HARLAN ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053620", "lat": 39.752476, "lng": -86.121222, "datetime": "2026-07-06T20:19:00-04:00", "description": "Trespass Of Real Property", "address": "2400 BLOCK PROSPECT ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053723", "lat": 39.717056, "lng": -86.15034, "datetime": "2026-07-06T20:00:01-04:00", "description": "Burglary/Breaking And Entering", "address": "3400 BLOCK RANSDELL ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053674", "lat": 39.850392, "lng": -86.161891, "datetime": "2026-07-06T18:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "5400 BLOCK N CAPITOL AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053589", "lat": 39.763682, "lng": -86.086145, "datetime": "2026-07-06T15:45:00-04:00", "description": "Burglary/Breaking And Entering", "address": "4900 BLOCK YOUNG AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053564", "lat": 39.756804, "lng": -86.18163, "datetime": "2026-07-06T15:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "800 BLOCK WARREN AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053527", "lat": 39.813316, "lng": -86.131181, "datetime": "2026-07-06T14:00:00-04:00", "description": "Trespass Of Real Property", "address": "3200 BLOCK RALSTON AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053469", "lat": 39.801024, "lng": -86.17581, "datetime": "2026-07-06T12:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "900 BLOCK BURDSAL PKWY", "category": "Burglary", "neighborhood": null}, {"id": "IP260053473", "lat": 39.779081, "lng": -86.30048, "datetime": "2026-07-06T11:53:00-04:00", "description": "Burglary/Breaking And Entering", "address": "7900 BLOCK W 10TH ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053451", "lat": 39.819194, "lng": -86.274221, "datetime": "2026-07-06T11:06:00-04:00", "description": "Burglary/Breaking And Entering", "address": "3600 BLOCK N GLEN ARM RD", "category": "Burglary", "neighborhood": null}, {"id": "IP260053499", "lat": 39.798244, "lng": -86.045544, "datetime": "2026-07-06T10:21:00-04:00", "description": "Burglary/Breaking And Entering", "address": "2200 BLOCK N SHADELAND AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053418", "lat": 39.771155, "lng": -86.150714, "datetime": "2026-07-06T09:40:00-04:00", "description": "Trespass Of Real Property", "address": "300 BLOCK N NEW JERSEY ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053429", "lat": 39.825446, "lng": -85.982473, "datetime": "2026-07-06T09:40:00-04:00", "description": "Trespass Of Real Property", "address": "10400 BLOCK E 37TH ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053395", "lat": 39.722409, "lng": -86.227498, "datetime": "2026-07-06T08:15:00-04:00", "description": "Burglary/Breaking And Entering", "address": "2900 BLOCK S LOCKBURN ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053600", "lat": 39.77613, "lng": -86.119231, "datetime": "2026-07-06T08:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "600 BLOCK N TEMPLE AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053342", "lat": 39.706104, "lng": -86.138661, "datetime": "2026-07-06T05:49:00-04:00", "description": "Burglary/Breaking And Entering", "address": "4100 BLOCK WEAVER AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053323", "lat": 39.722013, "lng": -86.15496, "datetime": "2026-07-06T04:37:00-04:00", "description": "Trespass Of Real Property", "address": "200 BLOCK STEPHANIE LN", "category": "Burglary", "neighborhood": null}, {"id": "IP260053558", "lat": 39.833373, "lng": -86.008172, "datetime": "2026-07-06T04:20:00-04:00", "description": "Burglary/Breaking And Entering", "address": "4200 BLOCK TORINO CT", "category": "Burglary", "neighborhood": null}, {"id": "IP260053400", "lat": 39.81806, "lng": -86.129693, "datetime": "2026-07-05T21:30:00-04:00", "description": "Burglary/Breaking And Entering", "address": "3400 BLOCK SCHOFIELD AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053218", "lat": 39.826509, "lng": -86.165774, "datetime": "2026-07-05T15:50:00-04:00", "description": "Trespass Of Real Property", "address": "400 BLOCK W 39TH ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053216", "lat": 39.923745, "lng": -86.139208, "datetime": "2026-07-05T11:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "9400 BLOCK BARCROFT LN", "category": "Burglary", "neighborhood": null}, {"id": "IP260053110", "lat": 39.820332, "lng": -85.988537, "datetime": "2026-07-05T08:00:00-04:00", "description": "Trespass Of Real Property", "address": "10100 BLOCK JOHN JAY DR", "category": "Burglary", "neighborhood": null}, {"id": "IP260053444", "lat": 39.74235, "lng": -86.189434, "datetime": "2026-07-05T02:15:00-04:00", "description": "Burglary/Breaking And Entering", "address": "1800 BLOCK KENTUCKY AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053043", "lat": 39.707917, "lng": -86.148954, "datetime": "2026-07-05T01:00:00-04:00", "description": "Trespass Of Real Property", "address": "4000 BLOCK S EAST ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053000", "lat": 39.707735, "lng": -86.162043, "datetime": "2026-07-04T20:27:00-04:00", "description": "Trespass Of Real Property", "address": "200 BLOCK W HANNA AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053262", "lat": 39.815809, "lng": -86.14971, "datetime": "2026-07-04T20:20:00-04:00", "description": "Trespass Of Real Property", "address": "3300 BLOCK CENTRAL AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260052975", "lat": 39.670509, "lng": -86.200997, "datetime": "2026-07-04T19:40:00-04:00", "description": "Trespass Of Real Property", "address": "6500 BLOCK OWLS HEAD DR", "category": "Burglary", "neighborhood": null}, {"id": "IP260053037", "lat": 39.788007, "lng": -86.119702, "datetime": "2026-07-04T16:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "2500 BLOCK E 16TH ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260052906", "lat": 39.749382, "lng": -86.189632, "datetime": "2026-07-04T15:37:00-04:00", "description": "Burglary/Breaking And Entering", "address": "1300 BLOCK S REISNER ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260052867", "lat": 39.799626, "lng": -86.059672, "datetime": "2026-07-04T11:41:00-04:00", "description": "Burglary/Breaking And Entering", "address": "2300 BLOCK BARNOR DR", "category": "Burglary", "neighborhood": null}, {"id": "IP260053320", "lat": 39.685616, "lng": -86.201879, "datetime": "2026-07-04T11:02:00-04:00", "description": "Burglary/Breaking And Entering", "address": "5500 BLOCK S BELMONT AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053328", "lat": 39.728529, "lng": -86.134535, "datetime": "2026-07-04T07:48:00-04:00", "description": "Trespass Of Real Property", "address": "1500 BLOCK NELSON AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053031", "lat": 39.813233, "lng": -86.141155, "datetime": "2026-07-04T07:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "3200 BLOCK SUTHERLAND AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260052783", "lat": 39.787094, "lng": -86.15735, "datetime": "2026-07-04T05:16:00-04:00", "description": "Trespass Of Real Property", "address": "1500 BLOCK N MERIDIAN ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260052717", "lat": 39.72334, "lng": -86.247971, "datetime": "2026-07-03T21:17:00-04:00", "description": "Burglary/Breaking And Entering", "address": "5100 BLOCK WINNEBAGO DR", "category": "Burglary", "neighborhood": null}, {"id": "IP260052666", "lat": 39.833438, "lng": -86.00489, "datetime": "2026-07-03T18:00:00-04:00", "description": "Trespass Of Real Property", "address": "4200 BLOCK N WITTFIELD ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053405", "lat": 39.762949, "lng": -86.139858, "datetime": "2026-07-03T14:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "1100 BLOCK BATES ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053689", "lat": 39.746347, "lng": -86.127324, "datetime": "2026-07-03T13:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "1600 BLOCK S RANDOLPH ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260052569", "lat": 39.908956, "lng": -86.053467, "datetime": "2026-07-03T11:00:00-04:00", "description": "Trespass Of Real Property", "address": "8400 BLOCK CRAIG ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260052565", "lat": 39.883254, "lng": -86.204635, "datetime": "2026-07-03T10:41:00-04:00", "description": "Trespass Of Real Property", "address": "2500 BLOCK STOCKBRIDGE DR", "category": "Burglary", "neighborhood": null}, {"id": "IP260052566", "lat": 39.772902, "lng": -86.067264, "datetime": "2026-07-03T03:30:00-04:00", "description": "Burglary/Breaking And Entering", "address": "300 BLOCK N BOLTON AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053329", "lat": 39.716495, "lng": -86.187025, "datetime": "2026-07-02T20:15:00-04:00", "description": "Burglary/Breaking And Entering", "address": "3400 BLOCK S HARDING ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260053341", "lat": 39.787207, "lng": -86.050134, "datetime": "2026-07-02T20:00:01-04:00", "description": "Burglary/Breaking And Entering", "address": "1400 BLOCK N EDMONDSON AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260052377", "lat": 39.743468, "lng": -86.111482, "datetime": "2026-07-02T17:04:00-04:00", "description": "Burglary/Breaking And Entering", "address": "1800 BLOCK PERKINS AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260052308", "lat": 39.763035, "lng": -86.127501, "datetime": "2026-07-02T12:31:00-04:00", "description": "Trespass Of Real Property", "address": "2000 BLOCK SOUTHEASTERN AVE", "category": "Burglary", "neighborhood": null}, {"id": "IP260053125", "lat": 39.882097, "lng": -86.167021, "datetime": "2026-07-02T04:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "7000 BLOCK STEVEN LN", "category": "Burglary", "neighborhood": null}, {"id": "IP260053701", "lat": 39.644509, "lng": -86.115258, "datetime": "2026-06-27T13:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "2800 BLOCK DEL PRADO DR", "category": "Burglary", "neighborhood": null}, {"id": "IP260049820", "lat": 39.89268, "lng": -86.247075, "datetime": "2026-06-22T18:35:00-04:00", "description": "Burglary/Breaking And Entering", "address": "7700 BLOCK WINTON DR", "category": "Burglary", "neighborhood": null}, {"id": "IP260048885", "lat": 39.733248, "lng": -86.025261, "datetime": "2026-06-20T21:29:00-04:00", "description": "Burglary/Breaking And Entering", "address": "8000 BLOCK HARSHAW DR", "category": "Burglary", "neighborhood": null}, {"id": "IP260050380", "lat": 39.806287, "lng": -86.185445, "datetime": "2026-06-20T20:00:01-04:00", "description": "Trespass Of Real Property", "address": "1300 BLOCK W 28TH ST", "category": "Burglary", "neighborhood": null}, {"id": "IP260050448", "lat": 39.746313, "lng": -86.162302, "datetime": "2026-06-17T23:00:00-04:00", "description": "Burglary/Breaking And Entering", "address": "200 BLOCK E PALMER ST", "category": "Burglary", "neighborhood": null}];
+  const map = L.map('map').setView([39.7684, -86.1581], 11);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Burglary'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Burglary</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Theft in Boston, MA — 74 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 74 reported theft incidents in Boston, MA from the last 21 days. Data from Boston Police Incidents (ArcGIS, geocoded via Census).">
+  <meta name="keywords" content="Theft in Boston, Boston theft, theft near me Boston, theft map Boston, Boston crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/boston/theft">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Theft in Boston, MA — 74 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 74 reported theft incidents in Boston, MA from the last 21 days. Data from Boston Police Incidents (ArcGIS, geocoded via Census).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/boston/theft">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Theft in Boston, MA — 74 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 74 reported theft incidents in Boston, MA from the last 21 days. Data from Boston Police Incidents (ArcGIS, geocoded via Census).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Boston, MA","item":"https://citycrimemap.us/boston"},{"@type":"ListItem","position":3,"name":"Theft","item":"https://citycrimemap.us/boston/theft"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/boston" class="hover:text-brand-700">Boston, MA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Theft</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Theft in Boston, MA</h1>
+    <p class="text-slate-600">74 recent theft incidents · last 21 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Theft incidents in Boston, MA"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About theft in Boston</h2>
+    <p class="mb-2">This page shows only <strong>theft incidents</strong> in Boston, MA from the last 21 days — 74 reports in total, filtered from the full Boston dataset.</p>
+    <p class="mb-2">For all crime categories in Boston on one map, <a href="/boston" class="text-brand-700 hover:underline font-semibold">see the full Boston crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent theft incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 15:52</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY SHOPLIFTING</td><td class="px-3 py-2 text-slate-700">400 BLOCK  W BROADWAY</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 14:42</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY SHOPLIFTING</td><td class="px-3 py-2 text-slate-700">0 BLOCK  ALLSTATE RD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 13:27</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY SHOPLIFTING</td><td class="px-3 py-2 text-slate-700">100 BLOCK  CAMBRIDGE ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 11:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY ALL OTHERS</td><td class="px-3 py-2 text-slate-700">800 BLOCK  CUMMINS HWY</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 07:07</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY THEFT OF BICYCLE</td><td class="px-3 py-2 text-slate-700">0 BLOCK  BRADSTON ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 22:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY ALL OTHERS</td><td class="px-3 py-2 text-slate-700">0 BLOCK  WILLIAM T MORRISSEY BLVD</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-06 11:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY SHOPLIFTING</td><td class="px-3 py-2 text-slate-700">800 BLOCK  BOYLSTON ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 18:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY THEFT OF MV PARTS & ACCESSORIES</td><td class="px-3 py-2 text-slate-700">0 BLOCK  CENTRE ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 13:26</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY THEFT FROM BUILDING</td><td class="px-3 py-2 text-slate-700">0 BLOCK  MICHIGAN AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-05 08:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">LARCENY SHOPLIFTING</td><td class="px-3 py-2 text-slate-700">600 BLOCK  WASHINGTON ST</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Boston</h2>
+    <div><a href='/boston/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(51)</span></a><a href='/boston/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(31)</span></a><a href='/boston/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(8)</span></a><a href='/boston/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(7)</span></a><a href='/boston/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(5)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Boston crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/ma/boston" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Boston alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 16 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-08T15:59:41.301754+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "262058086", "lat": 42.33717, "lng": -71.048198, "datetime": "2026-07-07T15:52:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "400 BLOCK  W BROADWAY", "category": "Theft", "neighborhood": "South Boston"}, {"id": "262058110", "lat": 42.324895, "lng": -71.064589, "datetime": "2026-07-07T14:42:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "0 BLOCK  ALLSTATE RD", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262058010", "lat": 42.360989, "lng": -71.061576, "datetime": "2026-07-07T13:27:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "100 BLOCK  CAMBRIDGE ST", "category": "Theft", "neighborhood": "West End"}, {"id": "262058002", "lat": 42.270342, "lng": -71.099202, "datetime": "2026-07-07T11:00:00-04:00", "description": "LARCENY ALL OTHERS", "address": "800 BLOCK  CUMMINS HWY", "category": "Theft", "neighborhood": "Mattapan"}, {"id": "262058036", "lat": 42.332417, "lng": -71.071281, "datetime": "2026-07-07T07:07:00-04:00", "description": "LARCENY THEFT OF BICYCLE", "address": "0 BLOCK  BRADSTON ST", "category": "Theft", "neighborhood": "South Boston"}, {"id": "262058056", "lat": 42.32133, "lng": -71.051375, "datetime": "2026-07-06T22:00:00-04:00", "description": "LARCENY ALL OTHERS", "address": "0 BLOCK  WILLIAM T MORRISSEY BLVD", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262057614", "lat": 42.348748, "lng": -71.082131, "datetime": "2026-07-06T11:00:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "800 BLOCK  BOYLSTON ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262057788", "lat": 42.330077, "lng": -71.091533, "datetime": "2026-07-05T18:00:00-04:00", "description": "LARCENY THEFT OF MV PARTS & ACCESSORIES", "address": "0 BLOCK  CENTRE ST", "category": "Theft", "neighborhood": "Roxbury"}, {"id": "262057371", "lat": 42.303105, "lng": -71.084171, "datetime": "2026-07-05T13:26:00-04:00", "description": "LARCENY THEFT FROM BUILDING", "address": "0 BLOCK  MICHIGAN AVE", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262057296", "lat": 42.35304, "lng": -71.062464, "datetime": "2026-07-05T08:30:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "600 BLOCK  WASHINGTON ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262057294", "lat": 42.35304, "lng": -71.062464, "datetime": "2026-07-05T07:13:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "600 BLOCK  WASHINGTON ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262057615", "lat": 42.296562, "lng": -71.079538, "datetime": "2026-07-05T03:40:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "HARVARD ST & GREENWOOD ST", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262057215", "lat": 42.351797, "lng": -71.068013, "datetime": "2026-07-05T00:24:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "0 BLOCK  PARK PLZ", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262057144", "lat": 42.283682, "lng": -71.0481, "datetime": "2026-07-04T17:55:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "700 BLOCK  GALLIVAN BLVD", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262057118", "lat": 42.304725, "lng": -71.081843, "datetime": "2026-07-04T15:38:00-04:00", "description": "LARCENY THEFT FROM BUILDING", "address": "0 BLOCK  PASADENA RD", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262057106", "lat": 42.303493, "lng": -71.077534, "datetime": "2026-07-04T15:27:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "0 BLOCK  BOWDOIN ST", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262056951", "lat": 42.349849, "lng": -71.065866, "datetime": "2026-07-04T02:24:00-04:00", "description": "LARCENY ALL OTHERS", "address": "0 BLOCK  WARRENTON ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262057321", "lat": 42.349014, "lng": -71.06368, "datetime": "2026-07-04T01:30:00-04:00", "description": "AUTO THEFT", "address": "WASHINGTON ST & NASSAU ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262057023", "lat": 42.293505, "lng": -71.082973, "datetime": "2026-07-03T21:30:00-04:00", "description": "AUTO THEFT", "address": "100 BLOCK  TALBOT AVE", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262056890", "lat": 42.342219, "lng": -71.139991, "datetime": "2026-07-03T20:30:00-04:00", "description": "LARCENY THEFT FROM BUILDING", "address": "0 BLOCK  WASHINGTON ST", "category": "Theft", "neighborhood": "Brighton"}, {"id": "262056879", "lat": 42.357488, "lng": -71.058326, "datetime": "2026-07-03T20:27:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "0 BLOCK  SCHOOL ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262056870", "lat": 42.273833, "lng": -71.06756, "datetime": "2026-07-03T20:17:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "2200 BLOCK  DORCHESTER AVE", "category": "Theft", "neighborhood": "Mattapan"}, {"id": "262056850", "lat": 42.279135, "lng": -71.080448, "datetime": "2026-07-03T18:34:00-04:00", "description": "LARCENY ALL OTHERS", "address": "1000 BLOCK  MORTON ST", "category": "Theft", "neighborhood": "Mattapan"}, {"id": "262056817", "lat": 42.351035, "lng": -71.06529, "datetime": "2026-07-03T16:20:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "100 BLOCK  STUART ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262056789", "lat": 42.351381, "lng": -71.075654, "datetime": "2026-07-03T15:18:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "100 BLOCK  NEWBURY ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056646", "lat": 42.333466, "lng": -71.082772, "datetime": "2026-07-03T00:12:00-04:00", "description": "AUTO THEFT", "address": "0 BLOCK  DEWITT DR", "category": "Theft", "neighborhood": "Roxbury"}, {"id": "262056585", "lat": 42.348748, "lng": -71.082131, "datetime": "2026-07-02T20:44:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "800 BLOCK  BOYLSTON ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056549", "lat": 42.348748, "lng": -71.082131, "datetime": "2026-07-02T19:23:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "800 BLOCK  BOYLSTON ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056553", "lat": 42.34455, "lng": -71.097684, "datetime": "2026-07-02T18:29:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "1300 BLOCK  BOYLSTON ST", "category": "Theft", "neighborhood": "Fenway"}, {"id": "262056543", "lat": 42.380766, "lng": -71.026159, "datetime": "2026-07-02T18:28:00-04:00", "description": "RECOVERED - MV RECOVERED IN BOSTON (STOLEN OUTSIDE BOSTON)", "address": "CHELSEA ST & EAGLE SQ", "category": "Theft", "neighborhood": "East Boston"}, {"id": "262056820", "lat": 42.309086, "lng": -71.078265, "datetime": "2026-07-02T16:50:00-04:00", "description": "LARCENY ALL OTHERS", "address": "100 BLOCK  DEVON ST", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262056740", "lat": 42.360601, "lng": -71.055647, "datetime": "2026-07-02T16:00:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "0 BLOCK  CLINTON ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262056493", "lat": 42.347242, "lng": -71.079123, "datetime": "2026-07-02T14:01:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "100 BLOCK  HUNTINGTON AVE", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056516", "lat": 42.311289, "lng": -71.081121, "datetime": "2026-07-02T13:26:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "400 BLOCK  BLUE HILL AVE", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262056375", "lat": 42.349437, "lng": -71.079555, "datetime": "2026-07-02T10:14:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "700 BLOCK  BOYLSTON ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056364", "lat": 42.312358, "lng": -71.054879, "datetime": "2026-07-02T09:24:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "0 BLOCK  SAXTON ST", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262056315", "lat": 42.311289, "lng": -71.081121, "datetime": "2026-07-02T01:35:00-04:00", "description": "RECOVERED - MV RECOVERED IN BOSTON (STOLEN OUTSIDE BOSTON)", "address": "400 BLOCK  BLUE HILL AVE", "category": "Theft", "neighborhood": "Roxbury"}, {"id": "262056260", "lat": 42.350885, "lng": -71.074227, "datetime": "2026-07-01T20:44:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "500 BLOCK  BOYLSTON ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056523", "lat": 42.334796, "lng": -71.039895, "datetime": "2026-07-01T19:30:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "100 BLOCK  I ST", "category": "Theft", "neighborhood": "South Boston"}, {"id": "262056222", "lat": 42.348748, "lng": -71.082131, "datetime": "2026-07-01T19:23:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "800 BLOCK  BOYLSTON ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056220", "lat": 42.269072, "lng": -71.093553, "datetime": "2026-07-01T19:04:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "1600 BLOCK  BLUE HILL AVE", "category": "Theft", "neighborhood": "Mattapan"}, {"id": "262056221", "lat": 42.351381, "lng": -71.075654, "datetime": "2026-07-01T18:15:00-04:00", "description": "LARCENY THEFT OF BICYCLE", "address": "100 BLOCK  NEWBURY ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262057364", "lat": 42.324955, "lng": -71.057159, "datetime": "2026-07-01T18:00:00-04:00", "description": "LARCENY THEFT OF BICYCLE", "address": "0 BLOCK  WASHBURN ST", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262056194", "lat": 42.348582, "lng": -71.062258, "datetime": "2026-07-01T17:48:00-04:00", "description": "LARCENY THEFT FROM BUILDING", "address": "200 BLOCK  HARRISON AVE", "category": "Theft", "neighborhood": "Chinatown"}, {"id": "262056066", "lat": 42.348925, "lng": -71.084822, "datetime": "2026-07-01T12:25:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "300 BLOCK  NEWBURY ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056396", "lat": 42.343942, "lng": -71.164287, "datetime": "2026-07-01T12:00:00-04:00", "description": "AUTO THEFT", "address": "100 BLOCK  LAKE ST", "category": "Theft", "neighborhood": "Brighton"}, {"id": "262057138", "lat": 42.359438, "lng": -71.064449, "datetime": "2026-07-01T12:00:00-04:00", "description": "AUTO THEFT", "address": "0 BLOCK  MYRTLE ST", "category": "Theft", "neighborhood": "Beacon Hill"}, {"id": "262056492", "lat": 42.329212, "lng": -71.098966, "datetime": "2026-07-01T11:00:00-04:00", "description": "LARCENY THEFT OF BICYCLE", "address": "0 BLOCK  HILLSIDE ST", "category": "Theft", "neighborhood": "Mission Hill"}, {"id": "262056186", "lat": 42.357157, "lng": -71.058465, "datetime": "2026-06-30T23:44:00-04:00", "description": "LARCENY ALL OTHERS", "address": "300 BLOCK  WASHINGTON ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262055697", "lat": 42.375651, "lng": -71.03985, "datetime": "2026-06-30T10:21:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "200 BLOCK  BORDER ST", "category": "Theft", "neighborhood": "East Boston"}, {"id": "262055776", "lat": 42.351035, "lng": -71.06529, "datetime": "2026-06-30T07:02:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "100 BLOCK  STUART ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262055540", "lat": 42.37554, "lng": -71.039841, "datetime": "2026-06-29T18:41:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "100 BLOCK  BORDER ST", "category": "Theft", "neighborhood": "East Boston"}, {"id": "262055487", "lat": 42.352712, "lng": -71.071177, "datetime": "2026-06-29T16:44:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "0 BLOCK  NEWBURY ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262055500", "lat": 42.347242, "lng": -71.079123, "datetime": "2026-06-29T16:09:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "100 BLOCK  HUNTINGTON AVE", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262055486", "lat": 42.351381, "lng": -71.075654, "datetime": "2026-06-29T15:54:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "100 BLOCK  NEWBURY ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262055397", "lat": 42.348925, "lng": -71.084822, "datetime": "2026-06-29T12:28:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "300 BLOCK  NEWBURY ST", "category": "Theft", "neighborhood": "Back Bay"}, {"id": "262056748", "lat": 42.357157, "lng": -71.058465, "datetime": "2026-06-29T10:44:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "300 BLOCK  WASHINGTON ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262055508", "lat": 42.303808, "lng": -71.084854, "datetime": "2026-06-28T22:10:00-04:00", "description": "LARCENY THEFT OF BICYCLE", "address": "600 BLOCK  BLUE HILL AVE", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262056209", "lat": 42.343384, "lng": -71.085885, "datetime": "2026-06-28T16:40:00-04:00", "description": "LARCENY THEFT OF BICYCLE", "address": "0 BLOCK  WESTLAND AVE", "category": "Theft", "neighborhood": "Fenway"}, {"id": "262055073", "lat": 42.3814, "lng": -71.030221, "datetime": "2026-06-28T10:14:00-04:00", "description": "AUTO THEFT", "address": "300 BLOCK  E EAGLE ST", "category": "Theft", "neighborhood": "East Boston"}, {"id": "262056418", "lat": 42.270283, "lng": -71.087531, "datetime": "2026-06-28T04:52:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "0 BLOCK  GLADESIDE AVE", "category": "Theft", "neighborhood": "Mattapan"}, {"id": "262057415", "lat": 42.36185, "lng": -71.143537, "datetime": "2026-06-28T00:00:00-04:00", "description": "LARCENY THEFT OF BICYCLE", "address": "500 BLOCK  WESTERN AVE", "category": "Theft", "neighborhood": "Brighton"}, {"id": "262054826", "lat": 42.269072, "lng": -71.093553, "datetime": "2026-06-27T14:00:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "1600 BLOCK  BLUE HILL AVE", "category": "Theft", "neighborhood": "Mattapan"}, {"id": "262054990", "lat": 42.333459, "lng": -71.073082, "datetime": "2026-06-27T10:12:00-04:00", "description": "AUTO THEFT", "address": "800 BLOCK  MASSACHUSETTS AVE", "category": "Theft", "neighborhood": "South Boston"}, {"id": "262054692", "lat": 42.311289, "lng": -71.081121, "datetime": "2026-06-27T00:23:00-04:00", "description": "RECOVERED - MV RECOVERED IN BOSTON (STOLEN IN BOSTON) MUST BE SUPPLEMENTAL", "address": "400 BLOCK  BLUE HILL AVE", "category": "Theft", "neighborhood": "Dorchester"}, {"id": "262056350", "lat": 42.338473, "lng": -71.066401, "datetime": "2026-06-26T17:00:00-04:00", "description": "LARCENY THEFT OF MV PARTS & ACCESSORIES", "address": "500 BLOCK  ALBANY ST", "category": "Theft", "neighborhood": "South End"}, {"id": "262055826", "lat": 42.310516, "lng": -71.097905, "datetime": "2026-06-26T17:00:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "0 BLOCK  PIERS PARK LN", "category": "Theft", "neighborhood": "East Boston"}, {"id": "262054365", "lat": 42.336369, "lng": -71.073208, "datetime": "2026-06-25T20:00:00-04:00", "description": "LARCENY THEFT OF BICYCLE", "address": "800 BLOCK  HARRISON AVE", "category": "Theft", "neighborhood": "Roxbury"}, {"id": "262054379", "lat": 42.270342, "lng": -71.099202, "datetime": "2026-06-25T14:00:00-04:00", "description": "LARCENY THEFT FROM MV - NON-ACCESSORY", "address": "800 BLOCK  CUMMINS HIGHWAY", "category": "Theft", "neighborhood": "Mattapan"}, {"id": "262056409", "lat": 42.344851, "lng": -71.051964, "datetime": "2026-06-23T14:03:00-04:00", "description": "LARCENY THEFT FROM BUILDING", "address": "0 BLOCK  CHANNEL CENTER ST", "category": "Theft", "neighborhood": "South Boston Waterfront"}, {"id": "262056781", "lat": 42.357157, "lng": -71.058465, "datetime": "2026-06-23T12:08:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "300 BLOCK  WASHINGTON ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262056785", "lat": 42.357157, "lng": -71.058465, "datetime": "2026-06-22T17:55:00-04:00", "description": "LARCENY SHOPLIFTING", "address": "300 BLOCK  WASHINGTON ST", "category": "Theft", "neighborhood": "Downtown"}, {"id": "262053282", "lat": 42.334929, "lng": -71.108618, "datetime": "2026-06-22T13:00:00-04:00", "description": "AUTO THEFT", "address": "0 BLOCK  VINING ST", "category": "Theft", "neighborhood": "Longwood"}, {"id": "262053822", "lat": 42.333347, "lng": -71.082846, "datetime": "2026-06-18T20:00:00-04:00", "description": "AUTO THEFT", "address": "700 BLOCK  SHAWMUT AVE", "category": "Theft", "neighborhood": "Roxbury"}];
+  const map = L.map('map').setView([42.3601, -71.0589], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Theft'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Theft</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>
