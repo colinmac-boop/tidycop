@@ -64,6 +64,11 @@ GA4_ID = os.environ.get("GA4_ID", "G-H7TPDESB8N").strip()
 # "content" attribute Google gives you for the meta-tag method).
 GSC_VERIFICATION = os.environ.get("GSC_VERIFICATION", "").strip()
 
+# Bing Webmaster Tools verification token (the value of the
+# "content" attribute Bing gives you for the meta-tag method,
+# a.k.a. msvalidate.01).
+BING_VERIFICATION = os.environ.get("BING_VERIFICATION", "").strip()
+
 # IndexNow key. Bing / Yandex / Seznam / Naver all accept IndexNow
 # push notifications when we ship or update URLs. The key is public
 # by design (it's served as a verification file at the domain root),
@@ -112,6 +117,12 @@ def _gsc_meta() -> str:
     return f'\n  <meta name="google-site-verification" content="{GSC_VERIFICATION}">'
 
 
+def _bing_meta() -> str:
+    if not BING_VERIFICATION:
+        return ""
+    return f'\n  <meta name="msvalidate.01" content="{BING_VERIFICATION}">'
+
+
 def head(
     title: str,
     description: str,
@@ -136,7 +147,7 @@ def head(
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index,follow,max-image-preview:large">
-  <meta name="theme-color" content="#b91c1c">{_gsc_meta()}
+  <meta name="theme-color" content="#b91c1c">{_gsc_meta()}{_bing_meta()}
   <title>{title}</title>
   <meta name="description" content="{description}">{kw}
   <link rel="canonical" href="{canonical}">

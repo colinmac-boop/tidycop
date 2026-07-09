@@ -105,7 +105,7 @@ Set up before any Phase 2 work ships:
 
 - **Google Search Console** verified on citycrimemap.us. Track impressions/clicks/CTR/position by query.
 - **Bing Webmaster Tools** same.
-- **One simple analytics tool** that respects privacy (Plausible, Fathom, or Vercel Analytics). No Google Analytics — page weight + privacy cost outweighs benefit for a public-data site. Vercel Analytics is the lazy choice and probably correct.
+- **Analytics — decided 2026-07-08:** shipped **Google Analytics 4** (measurement id `G-H7TPDESB8N`), overriding the plan's original "no GA" stance. Rationale from Colin: GA4 pairs cleanly with Search Console (same account, one dashboard for organic + on-site), and the privacy cost is mitigated by `anonymize_ip: true` and no PII collection. The tag is wired via `GA4_ID` env var in `web/scripts/generate_site.py`; set `GA4_ID=""` to disable for local builds. Plausible / Fathom / Vercel Analytics remain viable second sources if we ever want a privacy-first mirror, but adding a second analytics vendor is out of scope until GA4 has run long enough to establish baseline (target: 2026-08).
 - **Weekly review** of the GSC "Pages" report. Cheap signal for what's getting indexed vs. crawled-not-indexed.
 
 Baseline metrics to capture week 1 so we can show movement:
@@ -126,7 +126,7 @@ Baseline metrics to capture week 1 so we can show movement:
 
 ## Open questions for Colin
 
-1. **Vercel Analytics vs. Plausible?** Vercel is built-in (zero effort, costs ~$10/mo at our traffic). Plausible is independent + a stronger privacy story (~$10/mo also). Either is fine.
+1. ~~**Vercel Analytics vs. Plausible?**~~ **Resolved 2026-07-08:** GA4 shipped instead (see Measurement section).
 2. **SpotCrime ↔ CityCrimeMap cross-link.** Worth doing for SEO + topical authority. Wants your call.
 3. **Methodology blog domain.** Sub-path (`citycrimemap.us/blog`) or subdomain (`blog.citycrimemap.us`)? Sub-path is better for SEO consolidation; subdomain is easier to manage as a separate Vercel project. Defaulting to sub-path unless you push back.
 4. **Affiliate revenue.** Crimegrade monetizes via home-security affiliates. Want to consider that route at all, or stay clean? My default reading is stay clean — affiliate clutter is one of our wedges against them.
