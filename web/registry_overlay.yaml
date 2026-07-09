@@ -1,0 +1,354 @@
+# tidycop overlay registry — citycrimemap.us downstream additions
+#
+# Cities here are NOT in upstream R `tidycops` incident_registry.R and
+# therefore cannot ship in `registry/cities.yaml` (see AGENTS.md § Hard
+# Boundary). They live here because CityCrimeMap ships them as a
+# downstream product, exactly like the SpotCrime data2 Boise overlay
+# at ~/.openclaw/workspace/spotcrime_sources/cities.yaml.
+#
+# Loaded via `tidycop.get_incidents(..., registry_path=...)` from
+# `web/scripts/fetch_data.py` for cities whose `overlay: true` flag is
+# set in `web/scripts/cities.py`.
+#
+# Boundary rule: do not migrate anything from this file into
+# registry/cities.yaml. The pre-commit guard
+# (scripts/check_no_downstream_cities.py) will reject it.
+
+schema_version: 1
+
+cities:
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # BALTIMORE — BPD ArcGIS NIBRS Group A
+  # ──────────────────────────────────────────────────────────────────────────
+  # NIBRS Group A feed is the current active source (as of 2026-07-09
+  # freshest row is ~2 days old, ~6,800 rows/45d). BPD's older
+  # Part1_Crime dataset stopped updating 2023-02; Part1_Crime_Beta
+  # stopped 2024-12; this NIBRS layer is the live one going forward.
+  baltimore:
+    display_name: "Baltimore"
+    timezone: "America/New_York"
+    aliases: ["baltimore_md", "bpd"]
+    sources:
+      - source_id: "baltimore_nibrs_group_a"
+        display_name: "BPD NIBRS Group A Crime Data"
+        provider: "arcgis"
+        dataset_id: "NIBRS_GroupA_Crime_Data"
+        base_url: "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/NIBRS_GroupA_Crime_Data/FeatureServer/0"
+        date_field: "CrimeDateTime"
+        arcgis_date_field_type: "date"
+        object_id_field: "RowID"
+        order_by: "RowID DESC"
+        return_geometry: true
+        active_from: null
+        active_to: null
+        # BPD's Description column is NIBRS-style, mostly clean labels
+        # like "COMMON ASSAULT", "AGG. ASSAULT", "ROBBERY - CARJACKING",
+        # "BURGLARY", "LARCENY", "LARCENY FROM AUTO", "HOMICIDE".
+        # Homicide → Shooting per the 2026-05-26 fatal-shooting collapse.
+        # Categories reflect what BPD's NIBRS_GroupA feed actually
+          # emits (verified 2026-07-09 against 1500 rows / 45 days).
+          # Fatal shootings collapse into Shooting per the 2026-05-26
+          # convention. Sexual assault (RAPE) maps to Assault, matching
+          # how tidycop-spotcrime handles sex offenses across cities.
+          # SHOPLIFTING and LARCENY OF MOTOR VEHICLE PARTS both bucket
+          # to Theft. INTIMIDATION is threats/harassment; standard
+          # NIBRS handling puts it under Assault since the crime-
+          # against-persons framing is the same.
+        spotcrime_category_map:
+          HOMICIDE: "Shooting"
+          SHOOTING: "Shooting"
+          "ROBBERY": "Robbery"
+          "ROBBERY - COMMERCIAL": "Robbery"
+          "ROBBERY - STREET": "Robbery"
+          "ROBBERY - RESIDENCE": "Robbery"
+          "ROBBERY - CARJACKING": "Robbery"
+          "COMMON ASSAULT": "Assault"
+          "AGG. ASSAULT": "Assault"
+          "INTIMIDATION": "Assault"
+          "BURGLARY": "Burglary"
+          "LARCENY": "Theft"
+          "LARCENY FROM AUTO": "Theft"
+          "LARCENY OF MOTOR VEHICLE PARTS OR ACCESSORIES": "Theft"
+          "AUTO THEFT": "Theft"
+          "SHOPLIFTING": "Theft"
+          "FRAUD": "Theft"  # identity theft / wire fraud → Theft bucket
+          "STOLEN PROPERTY": "Theft"
+          "ARSON": "Arson"
+          "VANDALISM": "Vandalism"
+          "RAPE": "Assault"
+          "SEX OFFENSES": "Assault"
+          # KIDNAPPING / HUMAN TRAFFICKING / PORNOGRAPHY appear at
+          # single-digit volumes and are not in the 8-bucket taxonomy;
+          # they intentionally fall through to Unclassified and are
+          # filtered out downstream.
+        field_map:
+          std_source_record_id: ["CCNumber", "RowID"]
+          std_incident_id: ["CCNumber", "RowID"]
+          std_incident_number: "CCNumber"
+          std_incident_date: "CrimeDateTime"
+          std_reported_date: null
+          std_offense_code: "CrimeCode"
+          std_offense_description: "Description"
+          std_offense_category: "Description"
+          std_disposition: null
+          std_address: "Location"
+          std_zip_code: null
+          std_neighborhood: "Neighborhood"
+          std_district: "New_District"
+          std_beat: "Post"
+          std_division: null
+          std_latitude: "geometry_y"
+          std_longitude: "geometry_x"
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # LOS ANGELES — LAPD Socrata NIBRS Offenses
+  # ──────────────────────────────────────────────────────────────────────────
+  # LAPD retired the 2020-2024 dataset (2nrs-mtv8) in 2024 when they
+  # transitioned to the FBI's National Incident-Based Reporting System
+  # (NIBRS). The current dataset (y8y3-fqfu) tracks NIBRS offenses
+  # 2024-present.
+  #
+  # KNOWN FRESHNESS CAVEAT (2026-07-09): the LAPD public portal is
+  # running ~6 months behind real time. Freshest row available is
+  # 2025-12-31. This is a portal-level lag, not a tidycop bug. LAPD
+  # has been publishing crime stats via annual press releases while
+  # the open-data pipeline catches up. Ship with a wide window so we
+  # surface a meaningful sample, and surface the lag honestly in the
+  # frontend copy.
+  los_angeles:
+    display_name: "Los Angeles"
+    timezone: "America/Los_Angeles"
+    aliases: ["la", "los_angeles_ca", "lapd"]
+    sources:
+      - source_id: "la_nibrs_offenses"
+        display_name: "LAPD NIBRS Offenses Dataset 2024 to Present"
+        provider: "socrata"
+        dataset_id: "y8y3-fqfu"
+        base_url: "https://data.lacity.org/resource/y8y3-fqfu.json"
+        date_field: "date_occ"
+        active_from: "2024-03-07"  # NIBRS transition date per LAPD
+        active_to: null
+        # LAPD NIBRS descriptions include the CA Penal Code + NIBRS
+        # code in one string, e.g. "594(B)(2)(A) - PC - M - Vandalism
+        # Less Than $400 - Misd - 290". Exact-match mapping is not
+        # practical; the classifier will fall through to
+        # description-based pattern matching. We do map the a few
+        # exact NIBRS group A codes when the feed emits them cleanly.
+        # For coverage we lean on tidycop-spotcrime's NIBRS keyword
+        # matcher (which reads std_offense_description).
+        spotcrime_category_map:
+          "487(D)(1) - PC - F - Grand Theft Auto - GTA  - 240": "Theft"
+          "594(B)(1) - PC - F - Vandalism ($400 Or More) - Felony - 290": "Vandalism"
+          "243(A) - PC - M - Battery On Person - Simple - 13B": "Assault"
+          "484(A) - PC - M - Petty Theft - All Other Larceny - 23H": "Theft"
+          "459 - PC - F - BFMV- Burglary From Motor Vehicle  - 23F": "Theft"
+          "459.5(A) - PC - M - Petty Theft - Shoplifting - 23C": "Theft"
+          "459 - PC - F - Burglary - Residential - 220": "Burglary"
+          "211 - PC - F - Robbery - 120": "Robbery"
+          "243(E)(1) - PC - M - Intimate Partner Battery - Simple Assault - 13B": "Assault"
+          "273.5(A) - PC - F - IPV w/ Injury - Simple Assault - 13B": "Assault"
+          "594(B)(2)(A) - PC - M - Vandalism Less Than $400 - Misd - 290": "Vandalism"
+          "487(A) - PC - F - Grand Theft - 23H": "Theft"
+          "245(A)(1) - PC - F - ADW w/Deadly Weapon - (Agg Assault Non-Firearm) - 13A": "Assault"
+          "459 - PC - F - Burglary - Non-Residential - 220": "Burglary"
+          "422(A) - PC - F - Criminal Threats - 13C": "Assault"
+          "487(A) - PC - F - TFMV -Grand Theft from Motor Vehicle (Over $950) - 23F": "Theft"
+          "530.5(A) - PC - F - Identity Theft - 26F": "Theft"
+          "484(A) - PC - M - Theft Of Motor Vehicle Parts/Accessories - Petty Theft - 23G": "Theft"
+          "242 - PC - M - Battery On Person - Simple - 13B": "Assault"
+          "273.5(A) - PC - F - IPV w/ Injury - Aggravated Assault  - 13A": "Assault"
+          "484(A) - PC - M - TFMV- Petty Theft From Motor Vehicle (Under $950) - 23F": "Theft"
+          "245(A)(2) - PC - F - ADW w/Firearm On Person-Agg Assault - 13A": "Assault"
+          "487(A) - PC - F - Grand Theft - Shoplifting - 23C": "Theft"
+          "242 - PC - F - Battery - Simple Assault - 13B": "Assault"
+          "417(A)(1) - PC - M - Brandish Deadly Weapon - Aggravated (Non-Firearm) - 13A": "Assault"
+          "243(D) - PC - F - Felony Battery - Aggravated  - 13A": "Assault"
+          "417(A)(1) - PC - M - Criminal Threats - Brandish Deadly Weapon (Non-Firearm) - 13A": "Assault"
+          "459 - PC - F - Burglary  - 220": "Burglary"
+          "10851(A) - VC - F - Take Vehicle Without Owner's Consent/Vehicle Theft - 280": "Theft"
+          "417(A)(2)(B) - PC - M - Brandishing (Firearm)- Aggravated Assault  - 13A": "Assault"
+          "487(C) - PC - F - Grand Theft From Person - GTP -  Pocket-Picking - 23A": "Theft"
+          "261(A)(2) - PC - F - Rape By Force/Fear/Etc  - 11A": "Assault"
+          "666.1(A)(1) - PC - F - PETTY THEFT W/2 OR MORE PRIORS - 23C": "Theft"
+          "532(A) - PC - F - Obtain Money/Etc By False Pretenses (Over $400) - 26A": "Theft"
+          "273D(A) - PC - M - Child Abuse - Simple  - 13B": "Assault"
+          "215(A) - PC - F - Carjacking - 120": "Robbery"
+          "459 - PC - F - BFMV - Theft Of Motor Vehicle Parts/Accessories - 23G": "Theft"
+          "245(A)(4) - PC - F - ADW - Bodily Force - Aggravated - 13A": "Assault"
+          "487(A) - PC - F - Theft Of Motor Vehicle Parts/Accessories - Grand Theft - 23G": "Theft"
+          "243.4(E)(1) - PC - M - Sexual Battery - 11D": "Assault"
+          "664/187(A) - PC - F - Attempt Murder - 13A": "Assault"
+          "518(A) - PC - F - Extortion - 210": "Robbery"
+          "246.3(A) - PC - F - Willful Discharge Of Firearm In A Grossly Negligent Manner - 520": "Shooting"
+          "484(A) - PC - M - Petty Theft -  Theft From Building - 23D": "Theft"
+          "487(C) - PC - F - Grand Theft From Person - GTP - Purse-Snatching - 23B": "Theft"
+          "10851(A) - VC - F - Driving Vehicle W/out Owner's Consent  - 240": "Theft"
+          "487(C) - PC - F - Grand Theft From Person - GTP - All Other Larceny - 23H": "Theft"
+          "594(A)(2) - PC - F - Vandalism - Damage Property - 290": "Vandalism"
+          "484(A) - PC - M - Theft Of Personal Property - Pocket-Picking - 23A": "Theft"
+          "487(D)(1) - PC - F - Embezzlement-Vehicle ( GTA ) - 270": "Theft"
+          "484(A) - PC - F - Grand Theft - False Pretenses/Swindle/Confidence Game - 26A": "Theft"
+          "207(A) - PC - F - Kidnapping  - 100": "Robbery"
+          "594(A)(2) - PC - M - Vandalism - Damage Property - 290": "Vandalism"
+          "368(B)(1) - PC - F - Cause Injury Elder/Dependent Adult - Simple Assault - 13B": "Assault"
+          "470(A) - PC - F - Forgery - 250": "Theft"
+          "653M(A) - PC - M - Annoying Telephone Call - Obscene/Threatening - 13C": "Assault"
+          "594(B)(1) - PC - M - Vandalism ($400 Or More) - 290": "Vandalism"
+          "10852 - VC - M - Tamper With Vehicle - 290": "Vandalism"
+          "243(B) - PC - M - Battery On Peace Officer/EMT/Firefighter/Etc - Simple - 13B": "Assault"
+          "246 - PC - F - Shoot At Inhabited Dwelling/Vehicle/Etc - Aggravated - 13A": "Assault"
+          "368(D)(1) - PC - F - Theft by False Pretenses Elder/Dependent Adult (Over $950) - Felony - 26A": "Theft"
+          "187(A) - PC - F - Murder - 09A": "Shooting"
+          "484(A) - PC - M - Petty Theft Of Personal Property -  Theft From Building - 23D": "Theft"
+          "451(D) - PC - F - Arson Property - 200": "Arson"
+          "211 - PC - F - Robbery - Second Degree - 120": "Robbery"
+          "242 - PC - F - Battery - Aggravated Assault - 13A": "Assault"
+          "246.3(A) - PC - M - Willfully Discharge Firearm In A Grossly Negligent Manner - 520": "Shooting"
+          "242 - PC - M - Battery On Person - Aggravated - 13A": "Assault"
+          "10851(A) - VC - F - Take Vehicle Without Owner's Consent/Vehicle Theft - Embezzlement - 270": "Theft"
+          "236.1(C) - PC - F - Hmn Trfk Mnr Comm Sex Act - 64A": "Assault"
+          "487J - PC - F - Grand Theft - Stolen Copper - 23H": "Theft"
+          "243(C)(2) - PC - M - Battery Against Police Officer - Simple - 13B": "Assault"
+          "69(A) - PC - F - Obstruct/Resist Executive Officer - Simple - 13B": "Assault"
+          "273D(A) - PC - F - Child Abuse - Aggravated - 13A": "Assault"
+          "487(D)(1) - PC - M - Grand Theft - Auto - Motor Vehicle Theft - 240": "Theft"
+          "496(A) - PC - F - Receive/Etc Known Stolen Property - 280": "Theft"
+          "273D(A) - PC - F - Corporal Injury/Etc On Child - Simple Assault - 13B": "Assault"
+          "487(A) - PC - F - Grand Theft - Theft From Building - 23D": "Theft"
+          "484(A) - PC - M - Theft Of Personal Property - All Other Larceny - 23H": "Theft"
+          "368(B)(1) - PC - F - Cause Injury Elder/Dependent Adult - Aggravated Assault - 13A": "Assault"
+          "646.9(A) - PC - F - Stalking  - 13C": "Assault"
+          "532(A) - PC - M - Obtain Money/Etc By False Pretenses - 26A": "Theft"
+          "487(D)(2) - PC - F - Grand Theft of a Firearm - 23H": "Theft"
+          "459 - PC - F - Burglary - Second Degree - Theft From Motor Vehicle - 23F": "Theft"
+          "666.1(A)(1) - PC - M - PETTY THEFT W/2 OR MORE PRIORS - 23H": "Theft"
+          "498(D) - PC - F - Theft Of Utility Services (Over $400) - All Other Larceny - 23H": "Theft"
+          "487(D)(1) - PC - M - Grand Theft - Auto - Theft Of Motor Vehicle Parts/Accessories - 23G": "Theft"
+          "484(A) - PC - M - Petty Theft - False Pretenses/Swindle/Confidence Game - 26A": "Theft"
+          "245(C) - PC - F - ADW on P.O./Firefighter  - (Non-Firearm) - 13A": "Assault"
+          "289(A)(1)(A) - PC - F - Sexual Penetration W/Object Force/Fear/Etc  - 11C": "Assault"
+          "594(A)(1) - PC - F - Vandalism - Deface Property - 290": "Vandalism"
+          "594(A)(3) - PC - M - Vandalism - Destroy Other's Property - 290": "Vandalism"
+          "368(B)(1) - PC - M - Cause Injury Elder/Dependent Adult - Simple Assault - 13B": "Assault"
+          "487(D)(2) - PC - F - TFMV - Theft From Motor Vehicle - Firearm - 23F": "Theft"
+          "286(C)(2)(A) - PC - F - Sodomy By Force/Fear/Etc - 11B": "Assault"
+          "417(A)(2)(B) - PC - M - Criminal Threats - Brandishing (w/ a Firearm) - 13A": "Assault"
+          "503 - PC - F - Embezzlement ($950 or more) - Felony - 270": "Theft"
+          "451(B) - PC - F - Arson Inhabited Structure/Property - 200": "Arson"
+          "213(A)(1)(A) - PC - F - Robbery-Home Invasion (Multiple Suspect's) - 120": "Robbery"
+          "287(C)(2)(A) - PC - F - Oral Copulation - By Use Of Force/Injury  - 11B": "Assault"
+          "484(A) - PC - F - Grand Theft - Theft Of Motor Vehicle Parts/Accessories - 23G": "Theft"
+          "530.5(C)(2) - PC - F - Acquire/Possess Personal Id Info W/Intent Defraud W/Prior (Felony) - 26A": "Theft"
+          "524 - PC - F - Attempted Extortion - 210": "Robbery"
+          "243.3 - PC - M - Battery On Transportation Personnel/Passenger - Simple - 13B": "Assault"
+          "470(D) - PC - M - Forged False Checks/Records/Certificates/Etc  - 250": "Theft"
+          "243.4(A) - PC - M - Sexual Batt By Restraint - Forcible Fondling - 11D": "Assault"
+          "22810(G)(1) - PC - F - Ill Use Of Tear Gas/Tear Gas Weapon - Aggravated - 13A": "Assault"
+          "368(D)(1) - PC - F - Grand Theft Eldr/Depn Adlt - All Other Larceny - 23H": "Theft"
+          "487J - PC - F - Grand Theft - Stolen Copper Materials -  Theft From Building - 23D": "Theft"
+          "484G - PC - F - Theft By Use Of Access Card Information - 26B": "Theft"
+          "10852 - VC - M - Tamper With Vehicle - Theft Of Motor Vehicle Parts/Accessories - 23G": "Theft"
+          "10851(A) - VC - F - Take Vehicle Without Owner's Consent/Vehicle Theft - 26A": "Theft"
+          "243(C)(2) - PC - F - Battery Against Police Officer - Simple - 13B": "Assault"
+          "10851(A) - VC - M - Take Vehicle Without Owner's Consent - 240": "Theft"
+          "530.5(A) - PC - M - Obtain Credit/Etc - Use Others Id - 26A": "Theft"
+          "273.5(A) - PC - M - Inflict Corporal Injury On Spouse/Cohabitant/Dating Relationship - Simple Assault - 13B": "Assault"
+          "236 - PC - F - False Imprisonment - 100": "Robbery"
+          "273A(A) - PC - F - Child Abuse W/Poss GBI/Death -  Intimidation - 13C": "Assault"
+          "23110(A) - VC - M - Throw Object At Motor Vehicle - Simple - 13B": "Assault"
+          "211 - PC - F - Robbery - First Degree - 120": "Robbery"
+          "487H(A) - PC - F - Grand Theft - Cargo Exceeds $953 - Motor Vehicle Theft - 240": "Theft"
+          "243.4(A) - PC - F - Felony Sexual Batt By Restraint  - 11D": "Assault"
+          "487(D)(1) - PC - F - Grand Theft - Auto - False Pretenses - 26A": "Theft"
+          "4463(A)(1) - VC - F - Forge/Alter Vehicle Registration/Etc - 250": "Theft"
+          "422.6(B) - PC - M - Damage/Etc Property To Violate Civil Rights - 290": "Vandalism"
+          "22810(A) - PC - M - Unlawful Possession/Use Tear Gas Or Tear Gas Weapon - Aggravated - 13A": "Assault"
+          "192(C)(2) - PC - M - Vehicle Manslaughter Without Gross Negligence - 09B": "Shooting"
+          "484(A) - PC - F - Grand Theft - All Other Larceny - 23H": "Theft"
+          "287(C)(3) - PC - F - Oral Copulation Force/Thrt Retal - 11B": "Assault"
+          "273.5(F)(2) - PC - F - Corporalinjury Spouse W/Prior Battery - Aggravated Assault - 13A": "Assault"
+          "487(A) - PC - M - Grand Theft - Money/Labor/Property - Theft Of Motor Vehicle Parts/Accessories - 23G": "Theft"
+          "496(A) - PC - M - Receive/Etc Known Stolen Property - 280": "Theft"
+          "273.5(F)(1) - PC - F - Corporal Injury Spouse/Etc W/Prior - Simple Assault - 13B": "Assault"
+          "347(A)(1) - PC - F - Willful Poisoning/Etc Of Food/Etc - Aggravated - 13A": "Assault"
+          "485 - PC - M - Appropriate Lost Property - All Other Larceny - 23H": "Theft"
+          "289(D) - PC - F - Sex Penetration - Foreign Obj/Etc Victim Unaware - Nature Of Act - Forcible Rape - 11A": "Assault"
+          "148.1(A) - PC - F - False Bomb Threat - To Peace Officer/Media/Etc  - 13C": "Assault"
+          "286(B)(2) - PC - F - Sodomy W/Person Under 16 Years  - 11A": "Assault"
+          "220(A)(1) - PC - F - Assault W/Int To Rape/Etc - Aggravated Assault - 13A": "Assault"
+          "246.3(A) - PC - F - Willful Discharge Of Firearm In A Grossly Negligent Manner - Aggravated - 13A": "Assault"
+          "187(A) - PC - F - Murder - 09B": "Shooting"
+          "209(B)(1) - PC - F - Kidnap To Commit Robbery - 100": "Robbery"
+          "459 - PC - F - Burglary - First Degree - Theft Of Motor Vehicle Parts/Accessories - 23G": "Theft"
+          "487(D)(1) - PC - F - Grand Theft - Auto - Theft Of Motor Vehicle Parts/Accessories - 23G": "Theft"
+          "459 - PC - M - Burglary - Second Degree - Theft From Motor Vehicle - 23F": "Theft"
+          "69(A) - PC - F - Obstruct/Resist Officer - Aggravated - 13A": "Assault"
+          "529(A)(3) - PC - F - Personate To Make Other Liable - 26A": "Theft"
+          "278 - PC - F - Child Stealing  - 100": "Robbery"
+          "237(A) - PC - M - False Imprisonment - 100": "Robbery"
+          "187(A) - PC - F - Murder - First Degree - 09A": "Shooting"
+          "211 - PC - F - Robbery-Home Invasion (One Suspect) - 120": "Robbery"
+          "666.5(A) - PC - F - Vehicle/Etc Theft - Specific Priors - All Other Larceny - 23H": "Theft"
+          "273A(A) - PC - F - Child Abuse W/Poss GBI/Death - - Aggravated - 13A": "Assault"
+          "415(1) - PC - M - Challenge Fight Public Place  - 13C": "Assault"
+          "273A(A) - PC - M - Child Abuse W/Poss GBI/Death - Simple Assault - 13B": "Assault"
+          "666.5(A) - PC - F - Vehicle/Etc Theft - Specific Priors - 240": "Theft"
+          "487(D)(1) - PC - F - Grand Theft - Auto - Stolen Property Offense - 280": "Theft"
+          "452(C) - PC - F - Causing Fire Of Structure/Forest Land - 200": "Arson"
+          "484G - PC - M - Theft By Use Of Access Card Information -  Impersonation - 26C": "Theft"
+          "236.1(C) - PC - F - Hmn Trfk Mnr Comm Sex Act - 64B": "Assault"
+          "487(C) - PC - M - Grand Theft From Person - All Other Larceny - 23H": "Theft"
+          "242 - PC - F - Battery Emergency Person/Etc - Simple - 13B": "Assault"
+          "286(C)(2)(C) - PC - F - Sodomy By Force/Violence/Fear Victim 14 Yrs Of Age Or Older - Forcible Sodomy - 11B": "Assault"
+          "484(A) - PC - M - Petty Theft - Shoplifting - 23C": "Theft"
+          "470(D) - PC - F - False Checks/Records/Certificates/Etc  - 250": "Theft"
+          "273A(A) - PC - F - Child Abuse W/Poss GBI/Death - Simple - 13B": "Assault"
+          "289(A)(1)(B) - PC - F - Sexual Penetration W/Force/Etc - Under 14 Yrs - Sexual Assault With An Object - 11C": "Assault"
+          "368(C) - PC - M - Elder/Dependent Cruelty - Simple Assault - 13B": "Assault"
+          "484(A) - PC - M - Theft Of Personal Property - Theft From Motor Vehicle - 23F": "Theft"
+          "530.5(D)(1) - PC - M - Convey Prsnl Id Int Dfrd - 26A": "Theft"
+          "653M(B) - PC - M - With Intent To Annoy Or Harass With Repeat Calls/Contact -  Intimidation - 13C": "Assault"
+          "603 - PC - M - Forcible Entry - Property Damage - 290": "Vandalism"
+          "220(B) - PC - F - Assault With Intent To Rape In Commission Of 459 - Aggravated - 13A": "Assault"
+          "236 - PC - F - False Imprisonment W/Violence/Etc - 100": "Robbery"
+          "273.5(F)(1) - PC - F - Corporal Injury Spouse/Etc W/Prior - Aggravated Assault - 13A": "Assault"
+          "23110(B) - VC - F - Throw Object At Motor Vehicle  - Aggravated - 13A": "Assault"
+          "10153.1 - BP - M - Identity Fraud - Examination/Application - 26A": "Theft"
+          "243(C) - PC - F - Felony Battery on P.O. - Aggravated  - 13A": "Assault"
+          "241(A) - PC - M - Assault On Person - Simple - 13B": "Assault"
+          "246 - PC - F - Shoot At Inhabited Dwelling/Vehicle/Etc - 290": "Vandalism"
+          "236.1(B) - PC - F - Hmn Trfk To Cmt Othr Crim - 64A": "Assault"
+          "287(B)(2) - PC - F - Oral Copulation W/Person Undr 16 - 11B": "Assault"
+          "240 - PC - M - Assault On Person - Simple - 13B": "Assault"
+          "332(A) - PC - M - Obtain Money By Fraud - Cards/Etc - 26A": "Theft"
+          "487(B)(2) - PC - F - Grand Theft - Fish/Shellfish/Etc - All Other Larceny - 23H": "Theft"
+          "243.1 - PC - F - Battery On Custodial Officer - Simple - 13B": "Assault"
+          "289(A)(1)(A) - PC - F - Sexual Penetration W/Force/Fear/Etc - Forcible Rape - 11A": "Assault"
+          "487(D)(1) - PC - M - Grand Theft - Auto - Embezzlement - 270": "Theft"
+          "587C - PC - M - Evade Railroad Fare - 26A": "Theft"
+          "502(C)(1)(A) - PC - F - Access Computer/Alter/Etc Data - Devise Scheme/Etc Defraud/Etc - False Pretenses/Swindle/Confidence Game - 26A": "Theft"
+          "243(A) - PC - M - Battery On Person - Aggravated - 13A": "Assault"
+          "245(B) - PC - F - Assault Person With A Semiautomatic Firearm - Aggravated - 13A": "Assault"
+          "247(B) - PC - F - Shoot At Unoccupied Dwelling/Vehicle/Etc - 290": "Vandalism"
+          "487K - PC - F - Grand Theft -  Ag Equipment - All Other Larceny - 23H": "Theft"
+          "148(A)(1) - PC - M - Interfere With a Police Officer - Simple - 13B": "Assault"
+          "192(C)(1) - PC - F - Vehicle Manslaughter W/Gross Negligence - 09B": "Shooting"
+        field_map:
+          std_source_record_id: "caseno"
+          std_incident_id: ["uniquenibrno", "caseno"]
+          std_incident_number: "caseno"
+          std_incident_date: "date_occ"
+          std_reported_date: "date_rptd"
+          std_offense_code: "nibr_code"
+          std_offense_description: "nibr_description"
+          std_offense_category: "nibr_description"
+          std_disposition: "status_desc"
+          std_address: "location"
+          std_zip_code: null
+          std_neighborhood: "area_name"
+          std_district: "area"
+          std_beat: "rpt_dist_no"
+          std_division: null
+          std_latitude: "lat"
+          std_longitude: "lon"

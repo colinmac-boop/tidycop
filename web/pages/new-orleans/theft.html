@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Theft in New Orleans, LA — 41 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 41 reported theft incidents in New Orleans, LA from the last 45 days. Data from NOPD Calls for Service (Socrata, geocoded via Census).">
+  <meta name="keywords" content="Theft in New Orleans, New Orleans theft, theft near me New Orleans, theft map New Orleans, New Orleans crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/new-orleans/theft">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Theft in New Orleans, LA — 41 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 41 reported theft incidents in New Orleans, LA from the last 45 days. Data from NOPD Calls for Service (Socrata, geocoded via Census).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/new-orleans/theft">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Theft in New Orleans, LA — 41 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 41 reported theft incidents in New Orleans, LA from the last 45 days. Data from NOPD Calls for Service (Socrata, geocoded via Census).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"New Orleans, LA","item":"https://citycrimemap.us/new-orleans"},{"@type":"ListItem","position":3,"name":"Theft","item":"https://citycrimemap.us/new-orleans/theft"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a><a href="/baltimore" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Baltimore, MD</a><a href="/los-angeles" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Los Angeles, CA</a><a href="/kansas-city" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Kansas City, MO</a><a href="/dallas" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Dallas, TX</a><a href="/providence" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Providence, RI</a><a href="/new-orleans" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">New Orleans, LA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/new-orleans" class="hover:text-brand-700">New Orleans, LA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Theft</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Theft in New Orleans, LA</h1>
+    <p class="text-slate-600">41 recent theft incidents · last 45 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Theft incidents in New Orleans, LA"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About theft in New Orleans</h2>
+    <p class="mb-2">This page shows only <strong>theft incidents</strong> in New Orleans, LA from the last 45 days — 41 reports in total, filtered from the full New Orleans dataset.</p>
+    <p class="mb-2">For all crime categories in New Orleans on one map, <a href="/new-orleans" class="text-brand-700 hover:underline font-semibold">see the full New Orleans crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent theft incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 05:44</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">AUTO THEFT</td><td class="px-3 py-2 text-slate-700">013XX Kabel Dr</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 05:22</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">SIMULTANEOS STOLEN/RECOVERY VEHICLE</td><td class="px-3 py-2 text-slate-700">023XX Blk Clio St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 03:19</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">THEFT</td><td class="px-3 py-2 text-slate-700">003XX Royal St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 02:33</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">THEFT</td><td class="px-3 py-2 text-slate-700">005XX Canal St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 00:48</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">AUTO THEFT</td><td class="px-3 py-2 text-slate-700">005XX Bourbon St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 23:07</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">SIMPLE BURGLARY VEHICLE</td><td class="px-3 py-2 text-slate-700">040XX Baudin St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 21:47</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">THEFT</td><td class="px-3 py-2 text-slate-700">031XX Magazine St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 20:32</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">SHOPLIFTING</td><td class="px-3 py-2 text-slate-700">044XX S Claiborne Av</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 20:17</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">SHOPLIFTING</td><td class="px-3 py-2 text-slate-700">055XX Magazine St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 20:08</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">THEFT BY FRAUD</td><td class="px-3 py-2 text-slate-700">008XX S Peters St</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in New Orleans</h2>
+    <div><a href='/new-orleans/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(55)</span></a><a href='/new-orleans/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(14)</span></a><a href='/new-orleans/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(12)</span></a><a href='/new-orleans/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(6)</span></a><a href='/new-orleans/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(4)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get New Orleans crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/la/new-orleans" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for New Orleans alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 22 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-09T17:38:40.683943+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "E2607426", "lat": 29.931109, "lng": -90.007374, "datetime": "2026-05-26T05:44:48.630000-05:00", "description": "AUTO THEFT", "address": "013XX Kabel Dr", "category": "Theft", "neighborhood": null}, {"id": "E2605826", "lat": 29.945797, "lng": -90.081973, "datetime": "2026-05-26T05:22:35.517000-05:00", "description": "SIMULTANEOS STOLEN/RECOVERY VEHICLE", "address": "023XX Blk Clio St", "category": "Theft", "neighborhood": null}, {"id": "E2599626", "lat": 29.95485, "lng": -90.067424, "datetime": "2026-05-26T03:19:08.040000-05:00", "description": "THEFT", "address": "003XX Royal St", "category": "Theft", "neighborhood": null}, {"id": "E2598326", "lat": 29.951723, "lng": -90.067227, "datetime": "2026-05-26T02:33:44.757000-05:00", "description": "THEFT", "address": "005XX Canal St", "category": "Theft", "neighborhood": null}, {"id": "E2593726", "lat": 29.957028, "lng": -90.066956, "datetime": "2026-05-26T00:48:45.033000-05:00", "description": "AUTO THEFT", "address": "005XX Bourbon St", "category": "Theft", "neighborhood": null}, {"id": "E2587926", "lat": 29.97028, "lng": -90.102687, "datetime": "2026-05-25T23:07:29.220000-05:00", "description": "SIMPLE BURGLARY VEHICLE", "address": "040XX Baudin St", "category": "Theft", "neighborhood": null}, {"id": "E2583526", "lat": 29.92451, "lng": -90.085379, "datetime": "2026-05-25T21:47:05.053000-05:00", "description": "THEFT", "address": "031XX Magazine St", "category": "Theft", "neighborhood": null}, {"id": "E2579226", "lat": 29.940017, "lng": -90.1036, "datetime": "2026-05-25T20:32:03.027000-05:00", "description": "SHOPLIFTING", "address": "044XX S Claiborne Av", "category": "Theft", "neighborhood": null}, {"id": "E2577826", "lat": 29.92103, "lng": -90.116101, "datetime": "2026-05-25T20:17:32.557000-05:00", "description": "SHOPLIFTING", "address": "055XX Magazine St", "category": "Theft", "neighborhood": null}, {"id": "E2577126", "lat": 29.944522, "lng": -90.065762, "datetime": "2026-05-25T20:08:35.643000-05:00", "description": "THEFT BY FRAUD", "address": "008XX S Peters St", "category": "Theft", "neighborhood": null}, {"id": "E2573526", "lat": 29.964622, "lng": -90.111381, "datetime": "2026-05-25T19:37:25.323000-05:00", "description": "THEFT", "address": "036XX S Carrollton Av", "category": "Theft", "neighborhood": null}, {"id": "E2573426", "lat": 29.960816, "lng": -90.08066, "datetime": "2026-05-25T19:36:21.987000-05:00", "description": "THEFT FROM EXTERIOR OF VEHICLE", "address": "020XX Canal St", "category": "Theft", "neighborhood": null}, {"id": "E2572826", "lat": 29.923331, "lng": -90.013816, "datetime": "2026-05-25T19:30:06.043000-05:00", "description": "SHOPLIFTING", "address": "030XX Holiday Dr", "category": "Theft", "neighborhood": null}, {"id": "E2572526", "lat": 29.969842, "lng": -90.124257, "datetime": "2026-05-25T19:26:46.040000-05:00", "description": "THEFT", "address": "032XX Cherry St", "category": "Theft", "neighborhood": null}, {"id": "E2571526", "lat": 29.940492, "lng": -90.076311, "datetime": "2026-05-25T19:06:45.197000-05:00", "description": "THEFT BY FRAUD", "address": "017XX Thalia St", "category": "Theft", "neighborhood": null}, {"id": "E2570526", "lat": 30.032875, "lng": -89.973271, "datetime": "2026-05-25T18:54:35.837000-05:00", "description": "THEFT BY FRAUD", "address": "057XX Read Blvd", "category": "Theft", "neighborhood": null}, {"id": "E2569026", "lat": 29.918481, "lng": -90.113144, "datetime": "2026-05-25T18:37:56.133000-05:00", "description": "THEFT FROM EXTERIOR OF VEHICLE", "address": "007XX Blk Valmont St", "category": "Theft", "neighborhood": null}, {"id": "E2564726", "lat": 29.924577, "lng": -90.08128, "datetime": "2026-05-25T17:54:44.257000-05:00", "description": "AUTO THEFT", "address": "009XX Washington Av", "category": "Theft", "neighborhood": null}, {"id": "E2564526", "lat": 29.95485, "lng": -90.067424, "datetime": "2026-05-25T17:52:41.650000-05:00", "description": "THEFT", "address": "003XX Royal St", "category": "Theft", "neighborhood": null}, {"id": "E2563126", "lat": 30.026693, "lng": -89.99997, "datetime": "2026-05-25T17:34:05.287000-05:00", "description": "ATTEMPTED AUTO THEFT", "address": "068XX Parc Brittany Blvd", "category": "Theft", "neighborhood": null}, {"id": "E2560126", "lat": 29.951659, "lng": -90.067097, "datetime": "2026-05-25T16:47:59.650000-05:00", "description": "SHOPLIFTING", "address": "001XX Magazine St", "category": "Theft", "neighborhood": null}, {"id": "E2560026", "lat": 29.928673, "lng": -90.074467, "datetime": "2026-05-25T16:47:33.267000-05:00", "description": "SIMPLE BURGLARY VEHICLE", "address": "009XX Josephine St", "category": "Theft", "neighborhood": null}, {"id": "E2553826", "lat": 29.923331, "lng": -90.013816, "datetime": "2026-05-25T15:26:35.843000-05:00", "description": "SHOPLIFTING", "address": "030XX Holiday Dr", "category": "Theft", "neighborhood": null}, {"id": "E2548726", "lat": 29.944309, "lng": -90.072077, "datetime": "2026-05-25T14:07:50.450000-05:00", "description": "THEFT", "address": "009XX St Charles Av", "category": "Theft", "neighborhood": null}, {"id": "E2548226", "lat": 29.96903, "lng": -90.106209, "datetime": "2026-05-25T13:57:35.027000-05:00", "description": "SHOPLIFTING", "address": "041XX S Carrollton Av", "category": "Theft", "neighborhood": null}, {"id": "E2547926", "lat": 29.923331, "lng": -90.013816, "datetime": "2026-05-25T13:52:43.710000-05:00", "description": "SHOPLIFTING", "address": "030XX Holiday Dr", "category": "Theft", "neighborhood": null}, {"id": "E2547526", "lat": 29.945816, "lng": -90.080601, "datetime": "2026-05-25T13:48:04.700000-05:00", "description": "THEFT", "address": "022XX Earhart Blvd", "category": "Theft", "neighborhood": null}, {"id": "E2547126", "lat": 29.910636, "lng": -90.017888, "datetime": "2026-05-25T13:39:18.653000-05:00", "description": "THEFT", "address": "040XX Behrman Pl", "category": "Theft", "neighborhood": null}, {"id": "E2547026", "lat": 29.972649, "lng": -90.05735, "datetime": "2026-05-25T13:39:17.607000-05:00", "description": "SHOPLIFTING", "address": "015XX Elysian Fields Av", "category": "Theft", "neighborhood": null}, {"id": "E2544126", "lat": 29.964093, "lng": -90.059198, "datetime": "2026-05-25T12:51:53.960000-05:00", "description": "THEFT", "address": "019XX Royal St", "category": "Theft", "neighborhood": null}, {"id": "E2543626", "lat": 29.960277, "lng": -90.064072, "datetime": "2026-05-25T12:40:07.137000-05:00", "description": "THEFT BY FRAUD", "address": "009XX Bourbon St", "category": "Theft", "neighborhood": null}, {"id": "E2542126", "lat": 29.920534, "lng": -89.986829, "datetime": "2026-05-25T12:16:53.677000-05:00", "description": "THEFT BY FRAUD", "address": "063XX Dover Pl", "category": "Theft", "neighborhood": null}, {"id": "E2540826", "lat": 29.96903, "lng": -90.106209, "datetime": "2026-05-25T12:01:05.733000-05:00", "description": "SHOPLIFTING", "address": "041XX S Carrollton Av", "category": "Theft", "neighborhood": null}, {"id": "E2540226", "lat": 29.910108, "lng": -89.988313, "datetime": "2026-05-25T11:50:52.743000-05:00", "description": "SIMULTANEOS STOLEN/RECOVERY VEHICLE", "address": "045XX Maple Leaf Dr", "category": "Theft", "neighborhood": null}, {"id": "E2539926", "lat": 29.964714, "lng": -90.01747, "datetime": "2026-05-25T11:47:23.347000-05:00", "description": "THEFT FROM EXTERIOR OF VEHICLE", "address": "054XX N Villere St", "category": "Theft", "neighborhood": null}, {"id": "E2535326", "lat": 29.934868, "lng": -90.081314, "datetime": "2026-05-25T10:53:11.440000-05:00", "description": "SIMPLE BURGLARY VEHICLE", "address": "022XX Blk Carondelet St", "category": "Theft", "neighborhood": null}, {"id": "E2526826", "lat": 30.057987, "lng": -89.951527, "datetime": "2026-05-25T08:43:36.657000-05:00", "description": "SIMPLE BURGLARY VEHICLE", "address": "072XX W Tamaron Blvd", "category": "Theft", "neighborhood": null}, {"id": "E2526126", "lat": 29.928614, "lng": -90.069158, "datetime": "2026-05-25T08:24:59.107000-05:00", "description": "SIMPLE BURGLARY VEHICLE", "address": "006XX Felicity St", "category": "Theft", "neighborhood": null}, {"id": "E2504626", "lat": 30.026693, "lng": -89.99997, "datetime": "2026-05-25T00:38:25.053000-05:00", "description": "ATTEMPTED SIMPLE BURGLARY VEHICLE", "address": "068XX Parc Brittany Blvd", "category": "Theft", "neighborhood": null}, {"id": "E2503426", "lat": 30.026693, "lng": -89.99997, "datetime": "2026-05-25T00:28:59.460000-05:00", "description": "AUTO THEFT", "address": "068XX Parc Brittany Blvd", "category": "Theft", "neighborhood": null}, {"id": "E2503326", "lat": 29.953301, "lng": -90.068922, "datetime": "2026-05-25T00:21:21.400000-05:00", "description": "THEFT", "address": "001XX Royal St", "category": "Theft", "neighborhood": null}];
+  const map = L.map('map').setView([29.9511, -90.0715], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Theft'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Theft</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

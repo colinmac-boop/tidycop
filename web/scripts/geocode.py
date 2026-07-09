@@ -69,6 +69,11 @@ DEFAULT_CACHE_PATH = Path(__file__).parent.parent / "data" / "geocode_cache.sqli
 _BLOCK_RE = re.compile(r"^\s*(\d+)\s*BLOCK\s+(.+?)\s*$", re.IGNORECASE)
 # Match intersections: "FOO ST & BAR ST", "FOO ST / BAR ST", "FOO AND BAR".
 _INTERSECTION_RE = re.compile(r"\s*(?:&|/|\bAND\b)\s*", re.IGNORECASE)
+# NOPD block anonymization: "027XX Canal St", "039XX N Claiborne Av".
+# The trailing "XX" replaces the last two digits of the hundred-block.
+# Rewrite "NNNXX" → the start of that block ("NNN00", stripped of
+# leading zeros so Census sees a clean number).
+_NOPD_BLOCK_RE = re.compile(r"^\s*0*(\d{1,4})XX\s+(.+?)\s*$", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -89,6 +94,9 @@ CITY_CONFIGS: dict[str, CityGeocodeConfig] = {
     ),
     "new_orleans": CityGeocodeConfig(
         city="new_orleans", state="LA", city_label="NEW ORLEANS"
+    ),
+    "kansas_city": CityGeocodeConfig(
+        city="kansas_city", state="MO", city_label="KANSAS CITY"
     ),
 }
 
@@ -129,6 +137,19 @@ def normalize_address(raw: str | None) -> str | None:
         if number == "0":
             number = "1"
         return f"{number} {street}"
+
+    # NOPD "027XX Canal St" → "2700 CANAL ST". The XX represents the
+    # unknown last two digits of the hundred-block; anchor to the low
+    # end so Census maps to the correct block.
+    m = _NOPD_BLOCK_RE.match(s)
+    if m:
+        hundreds = m.group(1)
+        street = m.group(2).strip()
+        # "0" hundreds → "1" so we don't send "00 STREET".
+        base = int(hundreds) * 100
+        if base == 0:
+            base = 1
+        return f"{base} {street}"
 
     # Intersections: normalize separators to " AND "
     if _INTERSECTION_RE.search(s):

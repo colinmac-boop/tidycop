@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Assault in New Orleans, LA — 55 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 55 reported assault incidents in New Orleans, LA from the last 45 days. Data from NOPD Calls for Service (Socrata, geocoded via Census).">
+  <meta name="keywords" content="Assault in New Orleans, New Orleans assault, assault near me New Orleans, assault map New Orleans, New Orleans crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/new-orleans/assault">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Assault in New Orleans, LA — 55 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 55 reported assault incidents in New Orleans, LA from the last 45 days. Data from NOPD Calls for Service (Socrata, geocoded via Census).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/new-orleans/assault">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Assault in New Orleans, LA — 55 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 55 reported assault incidents in New Orleans, LA from the last 45 days. Data from NOPD Calls for Service (Socrata, geocoded via Census).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"New Orleans, LA","item":"https://citycrimemap.us/new-orleans"},{"@type":"ListItem","position":3,"name":"Assault","item":"https://citycrimemap.us/new-orleans/assault"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a><a href="/baltimore" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Baltimore, MD</a><a href="/los-angeles" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Los Angeles, CA</a><a href="/kansas-city" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Kansas City, MO</a><a href="/dallas" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Dallas, TX</a><a href="/providence" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Providence, RI</a><a href="/new-orleans" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">New Orleans, LA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/new-orleans" class="hover:text-brand-700">New Orleans, LA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Assault</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Assault in New Orleans, LA</h1>
+    <p class="text-slate-600">55 recent assault incidents · last 45 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Assault incidents in New Orleans, LA"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About assault in New Orleans</h2>
+    <p class="mb-2">This page shows only <strong>assault incidents</strong> in New Orleans, LA from the last 45 days — 55 reports in total, filtered from the full New Orleans dataset.</p>
+    <p class="mb-2">For all crime categories in New Orleans on one map, <a href="/new-orleans" class="text-brand-700 hover:underline font-semibold">see the full New Orleans crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent assault incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 05:17</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">SIMPLE BATTERY</td><td class="px-3 py-2 text-slate-700">Chartres St & Iberville St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 01:42</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">FIGHT</td><td class="px-3 py-2 text-slate-700">Iberville St & Bourbon St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 01:33</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">DOMESTIC DISTURBANCE</td><td class="px-3 py-2 text-slate-700">028XX Allen St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 00:59</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">DOMESTIC DISTURBANCE</td><td class="px-3 py-2 text-slate-700">026XX Pauger St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 00:49</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">DOMESTIC DISTURBANCE</td><td class="px-3 py-2 text-slate-700">131XX Dwyer Blvd</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 00:46</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">AGGRAVATED ASSAULT</td><td class="px-3 py-2 text-slate-700">012XX S Telemachus St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 00:30</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">AGGRAVATED ASSAULT</td><td class="px-3 py-2 text-slate-700">137XX Chef Menteur Hwy</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-26 00:12</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">SIMPLE BATTERY</td><td class="px-3 py-2 text-slate-700">046XX Flake Av</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 23:39</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">DOMESTIC DISTURBANCE</td><td class="px-3 py-2 text-slate-700">067XX Foch Rd</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-05-25 21:54</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">SIMPLE BATTERY</td><td class="px-3 py-2 text-slate-700">035XX Toledano St</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in New Orleans</h2>
+    <div><a href='/new-orleans/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(41)</span></a><a href='/new-orleans/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(14)</span></a><a href='/new-orleans/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(12)</span></a><a href='/new-orleans/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(6)</span></a><a href='/new-orleans/burglary' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Burglary <span class='text-xs text-slate-500'>(4)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get New Orleans crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/la/new-orleans" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for New Orleans alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 22 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-09T17:38:40.683943+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "E2605526", "lat": 29.953453, "lng": -90.067296, "datetime": "2026-05-26T05:17:25.847000-05:00", "description": "SIMPLE BATTERY", "address": "Chartres St & Iberville St", "category": "Assault", "neighborhood": null}, {"id": "E2596126", "lat": 29.954677, "lng": -90.069083, "datetime": "2026-05-26T01:42:23.063000-05:00", "description": "FIGHT", "address": "Iberville St & Bourbon St", "category": "Assault", "neighborhood": null}, {"id": "E2595626", "lat": 29.985402, "lng": -90.065315, "datetime": "2026-05-26T01:33:11.893000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "028XX Allen St", "category": "Assault", "neighborhood": null}, {"id": "E2594326", "lat": 29.976473, "lng": -90.061108, "datetime": "2026-05-26T00:59:38.247000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "026XX Pauger St", "category": "Assault", "neighborhood": null}, {"id": "E2593826", "lat": 30.035943, "lng": -89.932363, "datetime": "2026-05-26T00:49:24.127000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "131XX Dwyer Blvd", "category": "Assault", "neighborhood": null}, {"id": "E2593326", "lat": 29.959601, "lng": -90.106612, "datetime": "2026-05-26T00:46:53.430000-05:00", "description": "AGGRAVATED ASSAULT", "address": "012XX S Telemachus St", "category": "Assault", "neighborhood": null}, {"id": "E2592326", "lat": 30.032988, "lng": -89.921726, "datetime": "2026-05-26T00:30:05.637000-05:00", "description": "AGGRAVATED ASSAULT", "address": "137XX Chef Menteur Hwy", "category": "Assault", "neighborhood": null}, {"id": "E2591526", "lat": 30.017854, "lng": -89.989289, "datetime": "2026-05-26T00:12:19.723000-05:00", "description": "SIMPLE BATTERY", "address": "046XX Flake Av", "category": "Assault", "neighborhood": null}, {"id": "E2589726", "lat": 30.021574, "lng": -90.018747, "datetime": "2026-05-25T23:39:15.420000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "067XX Foch Rd", "category": "Assault", "neighborhood": null}, {"id": "E2584226", "lat": 29.947129, "lng": -90.099075, "datetime": "2026-05-25T21:54:14.303000-05:00", "description": "SIMPLE BATTERY", "address": "035XX Toledano St", "category": "Assault", "neighborhood": null}, {"id": "E2582226", "lat": 29.96922, "lng": -90.022138, "datetime": "2026-05-25T21:28:58.077000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "017XX Deslonde St", "category": "Assault", "neighborhood": null}, {"id": "E2578126", "lat": 29.951979, "lng": -90.07126, "datetime": "2026-05-25T20:20:10.703000-05:00", "description": "SIMPLE BATTERY DOMESTIC", "address": "008XX Blk Gravier St", "category": "Assault", "neighborhood": null}, {"id": "E2575526", "lat": 29.947129, "lng": -90.099075, "datetime": "2026-05-25T19:55:58.140000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "035XX Toledano St", "category": "Assault", "neighborhood": null}, {"id": "E2574526", "lat": 29.962323, "lng": -90.121709, "datetime": "2026-05-25T19:47:29.837000-05:00", "description": "SIMPLE BATTERY", "address": "086XX Apricot St", "category": "Assault", "neighborhood": null}, {"id": "E2574426", "lat": 29.953675, "lng": -90.070107, "datetime": "2026-05-25T19:47:17.407000-05:00", "description": "SIMPLE BATTERY", "address": "008XX Canal St", "category": "Assault", "neighborhood": null}, {"id": "E2572326", "lat": 29.9515, "lng": -90.07127, "datetime": "2026-05-25T19:21:44.017000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "Carondelet St & Union St", "category": "Assault", "neighborhood": null}, {"id": "E2570926", "lat": 30.041315, "lng": -89.971585, "datetime": "2026-05-25T18:56:21.793000-05:00", "description": "SIMPLE BATTERY", "address": "108XX Roger Dr", "category": "Assault", "neighborhood": null}, {"id": "E2570626", "lat": 29.972569, "lng": -90.058528, "datetime": "2026-05-25T18:54:51.347000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "015XX Frenchmen St", "category": "Assault", "neighborhood": null}, {"id": "E2570226", "lat": 30.048696, "lng": -89.956472, "datetime": "2026-05-25T18:52:39.843000-05:00", "description": "SIMPLE BATTERY", "address": "123XX S I-10 Service Rd", "category": "Assault", "neighborhood": null}, {"id": "E2570126", "lat": 29.952683, "lng": -90.068, "datetime": "2026-05-25T18:50:54.340000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "001XX Chartres St", "category": "Assault", "neighborhood": null}, {"id": "E2570026", "lat": 29.91874, "lng": -90.022641, "datetime": "2026-05-25T18:48:34.880000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "032XX Memorial Park Dr", "category": "Assault", "neighborhood": null}, {"id": "E2565326", "lat": 30.025523, "lng": -89.961447, "datetime": "2026-05-25T18:01:33.773000-05:00", "description": "FIGHT", "address": "049XX Corinne St", "category": "Assault", "neighborhood": null}, {"id": "E2565026", "lat": 29.96381, "lng": -90.017897, "datetime": "2026-05-25T17:56:53.710000-05:00", "description": "SIMPLE BATTERY", "address": "013XX Andry St", "category": "Assault", "neighborhood": null}, {"id": "E2563026", "lat": 29.98019, "lng": -90.067439, "datetime": "2026-05-25T17:27:22.843000-05:00", "description": "AGGRAVATED ASSAULT DOMESTIC", "address": "023XX A P Tureaud Av", "category": "Assault", "neighborhood": null}, {"id": "E2561826", "lat": 30.041222, "lng": -89.909208, "datetime": "2026-05-25T17:18:20.757000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "147XX Peltier Dr", "category": "Assault", "neighborhood": null}, {"id": "E2558426", "lat": 30.021708, "lng": -90.068532, "datetime": "2026-05-25T16:22:41.147000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "062XX Waldo Dr", "category": "Assault", "neighborhood": null}, {"id": "E2558026", "lat": 30.002322, "lng": -90.07688, "datetime": "2026-05-25T16:15:04.653000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "044XX Jeanne Marie Pl", "category": "Assault", "neighborhood": null}, {"id": "E2557626", "lat": 29.937486, "lng": -90.022644, "datetime": "2026-05-25T16:11:50.420000-05:00", "description": "AGGRAVATED ASSAULT DOMESTIC", "address": "032XX Bringier St", "category": "Assault", "neighborhood": null}, {"id": "E2556626", "lat": 29.93064, "lng": -90.021864, "datetime": "2026-05-25T16:03:37.687000-05:00", "description": "SIMPLE RAPE", "address": "035XX Vespasian Blvd", "category": "Assault", "neighborhood": null}, {"id": "E2556126", "lat": 29.961551, "lng": -90.041193, "datetime": "2026-05-25T15:59:09.303000-05:00", "description": "SIMPLE RAPE", "address": "006XX Blk Gallier St", "category": "Assault", "neighborhood": null}, {"id": "E2555026", "lat": 30.011394, "lng": -90.060441, "datetime": "2026-05-25T15:40:52.313000-05:00", "description": "SIMPLE BATTERY", "address": "052XX Elysian Fields Av", "category": "Assault", "neighborhood": null}, {"id": "E2554726", "lat": 30.006733, "lng": -90.064454, "datetime": "2026-05-25T15:38:36.530000-05:00", "description": "FIGHT", "address": "020XX Brutus St", "category": "Assault", "neighborhood": null}, {"id": "E2550226", "lat": 30.057119, "lng": -89.945515, "datetime": "2026-05-25T14:37:35.043000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "069XX Ridgefield Dr", "category": "Assault", "neighborhood": null}, {"id": "E2549826", "lat": 30.025038, "lng": -90.002265, "datetime": "2026-05-25T14:24:52.747000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "068XX Mayo Blvd", "category": "Assault", "neighborhood": null}, {"id": "E2546326", "lat": 29.94929, "lng": -90.066891, "datetime": "2026-05-25T13:28:51.527000-05:00", "description": "SIMPLE BATTERY", "address": "004XX Blk Natchez St", "category": "Assault", "neighborhood": null}, {"id": "E2545326", "lat": 30.00911, "lng": -90.062447, "datetime": "2026-05-25T13:07:15.290000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "021XX Timoleon St", "category": "Assault", "neighborhood": null}, {"id": "E2545226", "lat": 30.00911, "lng": -90.062447, "datetime": "2026-05-25T13:06:07.870000-05:00", "description": "SIMPLE BATTERY", "address": "021XX Timoleon St", "category": "Assault", "neighborhood": null}, {"id": "E2542726", "lat": 30.070666, "lng": -89.944162, "datetime": "2026-05-25T12:22:15.577000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "078XX Sail St", "category": "Assault", "neighborhood": null}, {"id": "E2533026", "lat": 29.92622, "lng": -90.103321, "datetime": "2026-05-25T10:13:31.153000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "045XX St Charles Av", "category": "Assault", "neighborhood": null}, {"id": "E2529926", "lat": 29.943598, "lng": -90.068754, "datetime": "2026-05-25T09:32:08.597000-05:00", "description": "FIGHT", "address": "St Joseph St & Constance St", "category": "Assault", "neighborhood": null}, {"id": "E2523126", "lat": 29.951471, "lng": -90.069958, "datetime": "2026-05-25T07:17:34.917000-05:00", "description": "SIMPLE BATTERY", "address": "007XX Gravier St", "category": "Assault", "neighborhood": null}, {"id": "E2522226", "lat": 30.01961, "lng": -90.002518, "datetime": "2026-05-25T07:02:33.557000-05:00", "description": "SIMPLE BATTERY DOMESTIC", "address": "049XX Tulip St", "category": "Assault", "neighborhood": null}, {"id": "E2520826", "lat": 30.036301, "lng": -89.931179, "datetime": "2026-05-25T06:25:15.120000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "132XX Dwyer Blvd", "category": "Assault", "neighborhood": null}, {"id": "E2520626", "lat": 29.931523, "lng": -90.09167, "datetime": "2026-05-25T06:21:09.607000-05:00", "description": "SIMPLE BATTERY", "address": "019XX Toledano St", "category": "Assault", "neighborhood": null}, {"id": "E2516426", "lat": 29.992492, "lng": -90.036766, "datetime": "2026-05-25T04:39:24.170000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "034XX Clouet St", "category": "Assault", "neighborhood": null}, {"id": "E2515126", "lat": 29.96374, "lng": -90.065368, "datetime": "2026-05-25T04:14:34.767000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "011XX N Rampart St", "category": "Assault", "neighborhood": null}, {"id": "E2509526", "lat": 29.968044, "lng": -90.104623, "datetime": "2026-05-25T02:19:20.190000-05:00", "description": "FIGHT", "address": "040XX Tulane Av", "category": "Assault", "neighborhood": null}, {"id": "E2509126", "lat": 29.983593, "lng": -90.061688, "datetime": "2026-05-25T02:12:19.237000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "033XX Pauger St", "category": "Assault", "neighborhood": null}, {"id": "E2506926", "lat": 29.919885, "lng": -89.996454, "datetime": "2026-05-25T01:30:32.603000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "055XX Durham Dr", "category": "Assault", "neighborhood": null}, {"id": "E2506326", "lat": 29.918361, "lng": -90.113157, "datetime": "2026-05-25T01:08:56.177000-05:00", "description": "AGGRAVATED ASSAULT", "address": "053XX Laurel St", "category": "Assault", "neighborhood": null}, {"id": "E2505926", "lat": 29.97831, "lng": -90.06473, "datetime": "2026-05-25T01:01:30.387000-05:00", "description": "SIMPLE BATTERY DOMESTIC", "address": "021XX Allen St", "category": "Assault", "neighborhood": null}, {"id": "E2504126", "lat": 29.920603, "lng": -90.022476, "datetime": "2026-05-25T00:31:49.793000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "035XX Garden Oaks Dr", "category": "Assault", "neighborhood": null}, {"id": "E2503826", "lat": 29.972191, "lng": -90.087905, "datetime": "2026-05-25T00:30:10.853000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "031XX Toulouse St", "category": "Assault", "neighborhood": null}, {"id": "E2503626", "lat": 29.930701, "lng": -90.071509, "datetime": "2026-05-25T00:29:28.417000-05:00", "description": "SIMPLE BATTERY DOMESTIC", "address": "018XX Laurel St", "category": "Assault", "neighborhood": null}, {"id": "E2503226", "lat": 30.01961, "lng": -90.002518, "datetime": "2026-05-25T00:12:56.837000-05:00", "description": "DOMESTIC DISTURBANCE", "address": "049XX Tulip St", "category": "Assault", "neighborhood": null}];
+  const map = L.map('map').setView([29.9511, -90.0715], 12);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Assault'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Assault</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

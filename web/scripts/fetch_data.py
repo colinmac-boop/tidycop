@@ -47,6 +47,14 @@ from geocode import CITY_CONFIGS as GEOCODE_CITIES, geocode_addresses  # noqa: E
 OUTPUT_DIR = Path(__file__).parent.parent / "data"
 MAX_INCIDENTS_PER_CITY = 1500  # cap payload so /data/*.json stays browser-friendly
 
+# Downstream registry overlay for cities not in upstream R tidycops.
+# See AGENTS.md § Hard Boundary: cities like Baltimore and Los Angeles
+# that aren't in upstream `incident_registry.R` can still ship on the
+# frontend by living in this overlay and being requested with
+# `registry_path=`. Boundary rule: NEVER move entries from here into
+# `registry/cities.yaml`.
+REGISTRY_OVERLAY = Path(__file__).parent.parent / "registry_overlay.yaml"
+
 
 def normalize_incident(row: dict) -> dict | None:
     import math
@@ -153,12 +161,16 @@ def fetch_city(city: dict) -> dict:
     end = date.today()
     start = end - timedelta(days=city["window_days"])
     print(f"[fetch] {city['key']}: {start} → {end} ({city['window_days']}d)")
-    df = get_incidents(
-        city["key"],
+    # Cities with `overlay: True` are downstream-only additions (not in
+    # upstream R tidycops) served from web/registry_overlay.yaml.
+    fetch_kwargs = dict(
         start_date=start.isoformat(),
         end_date=end.isoformat(),
         classify_spotcrime=True,
     )
+    if city.get("overlay"):
+        fetch_kwargs["registry_path"] = str(REGISTRY_OVERLAY)
+    df = get_incidents(city["key"], **fetch_kwargs)
     print(f"[fetch] {city['key']}: {len(df)} raw rows")
 
     # Optionally drop rows the classifier left Unclassified. Used for

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Burglary in Los Angeles, CA — 62 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive map of 62 reported burglary incidents in Los Angeles, CA from the last 240 days. Data from LAPD NIBRS Offenses Dataset 2024 to Present (Socrata).">
+  <meta name="keywords" content="Burglary in Los Angeles, Los Angeles burglary, burglary near me Los Angeles, burglary map Los Angeles, Los Angeles crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/los-angeles/burglary">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Burglary in Los Angeles, CA — 62 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive map of 62 reported burglary incidents in Los Angeles, CA from the last 240 days. Data from LAPD NIBRS Offenses Dataset 2024 to Present (Socrata).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/los-angeles/burglary">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Burglary in Los Angeles, CA — 62 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive map of 62 reported burglary incidents in Los Angeles, CA from the last 240 days. Data from LAPD NIBRS Offenses Dataset 2024 to Present (Socrata).">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Los Angeles, CA","item":"https://citycrimemap.us/los-angeles"},{"@type":"ListItem","position":3,"name":"Burglary","item":"https://citycrimemap.us/los-angeles/burglary"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a><a href="/baltimore" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Baltimore, MD</a><a href="/los-angeles" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Los Angeles, CA</a><a href="/kansas-city" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Kansas City, MO</a><a href="/dallas" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Dallas, TX</a><a href="/providence" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Providence, RI</a><a href="/new-orleans" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">New Orleans, LA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/los-angeles" class="hover:text-brand-700">Los Angeles, CA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Burglary</span>
+  </nav>
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Burglary in Los Angeles, CA</h1>
+    <p class="text-slate-600">62 recent burglary incidents · last 240 days</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Map of Burglary incidents in Los Angeles, CA"></div>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">About burglary in Los Angeles</h2>
+    <p class="mb-2">This page shows only <strong>burglary incidents</strong> in Los Angeles, CA from the last 240 days — 62 reports in total, filtered from the full Los Angeles dataset.</p>
+    <p class="mb-2">For all crime categories in Los Angeles on one map, <a href="/los-angeles" class="text-brand-700 hover:underline font-semibold">see the full Los Angeles crime map</a>.</p>
+  </section>
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent burglary incidents</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Non-Residential - 220</td><td class="px-3 py-2 text-slate-700">100 N Western Ave</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Residential - 220</td><td class="px-3 py-2 text-slate-700">3000 Valevista Trl</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Residential - 220</td><td class="px-3 py-2 text-slate-700">2200 Mantis Ave</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Residential - 220</td><td class="px-3 py-2 text-slate-700">900 S Gramercy Pl</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Residential - 220</td><td class="px-3 py-2 text-slate-700">12700 Cumpston St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Non-Residential - 220</td><td class="px-3 py-2 text-slate-700">2800 N Main St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Residential - 220</td><td class="px-3 py-2 text-slate-700">1400 E 50th St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Residential - 220</td><td class="px-3 py-2 text-slate-700">11400 Albers St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Non-Residential - 220</td><td class="px-3 py-2 text-slate-700">15200 Ventura Blvd</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Residential - 220</td><td class="px-3 py-2 text-slate-700">1100 S Windsor Blvd</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other categories in Los Angeles</h2>
+    <div><a href='/los-angeles/theft' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Theft <span class='text-xs text-slate-500'>(420)</span></a><a href='/los-angeles/assault' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Assault <span class='text-xs text-slate-500'>(239)</span></a><a href='/los-angeles/unclassified' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Unclassified <span class='text-xs text-slate-500'>(120)</span></a><a href='/los-angeles/vandalism' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Vandalism <span class='text-xs text-slate-500'>(115)</span></a><a href='/los-angeles/robbery' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Robbery <span class='text-xs text-slate-500'>(41)</span></a><a href='/los-angeles/shooting' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Shooting <span class='text-xs text-slate-500'>(2)</span></a><a href='/los-angeles/arson' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Arson <span class='text-xs text-slate-500'>(1)</span></a></div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Los Angeles crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/ca/los-angeles" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Los Angeles alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 22 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-09T17:38:31.706321+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const incidents = [{"id": "25214432_220_0", "lat": 34.073, "lng": -118.3091, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "100 N Western Ave", "category": "Burglary", "neighborhood": "Olympic"}, {"id": "25215488_220_0", "lat": 34.1236, "lng": -118.3492, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "3000 Valevista Trl", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25214397_220_0", "lat": 33.7263, "lng": -118.3149, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "2200 Mantis Ave", "category": "Burglary", "neighborhood": "Harbor"}, {"id": "25234665_220_0", "lat": 34.0559, "lng": -118.3132, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "900 S Gramercy Pl", "category": "Burglary", "neighborhood": "Olympic"}, {"id": "25232012_220_0", "lat": 34.1695, "lng": -118.4094, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "12700 Cumpston St", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25218592_220_0", "lat": 34.066, "lng": -118.2128, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "2800 N Main St", "category": "Burglary", "neighborhood": "Hollenbeck"}, {"id": "25214678_220_0", "lat": 33.9975, "lng": -118.2499, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "1400 E 50th St", "category": "Burglary", "neighborhood": "Newton"}, {"id": "25214564_220_0", "lat": 34.1705, "lng": -118.379, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "11400 Albers St", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25214481_220_0", "lat": 34.1535, "lng": -118.4639, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "15200 Ventura Blvd", "category": "Burglary", "neighborhood": "Van Nuys"}, {"id": "25214337_220_0", "lat": 34.054, "lng": -118.3263, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "1100 S Windsor Blvd", "category": "Burglary", "neighborhood": "Wilshire"}, {"id": "25215408_220_0", "lat": 34.0973, "lng": -118.2147, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "4100 Camino Real", "category": "Burglary", "neighborhood": "Northeast"}, {"id": "25212930_220_1", "lat": 34.1726, "lng": -118.5622, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "19700 Ventura Blvd", "category": "Burglary", "neighborhood": "Topanga"}, {"id": "25212940_220_0", "lat": 34.1812, "lng": -118.3703, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "6100 Vineland Ave", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25213043_220_0", "lat": 34.0847, "lng": -118.2133, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "3400 Pasadena Ave", "category": "Burglary", "neighborhood": "Hollenbeck"}, {"id": "25214243_220_0", "lat": 34.1813, "lng": -118.5534, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "6100 Tampa Ave", "category": "Burglary", "neighborhood": "West Valley"}, {"id": "25213719_220_0", "lat": 34.1721, "lng": -118.4053, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "12500 Burbank Blvd", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25215188_220_0", "lat": 34.2214, "lng": -118.4739, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "15600 Roscoe Blvd", "category": "Burglary", "neighborhood": "Devonshire"}, {"id": "25213534_220_0", "lat": 34.0598, "lng": -118.2987, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "700 S Mariposa Ave", "category": "Burglary", "neighborhood": "Olympic"}, {"id": "25212961_220_0", "lat": 34.2333, "lng": -118.373, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "11100 Tuxford St", "category": "Burglary", "neighborhood": "Foothill"}, {"id": "25214252_220_0", "lat": 34.0475, "lng": -118.239, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "400 E 2nd St", "category": "Burglary", "neighborhood": "Central"}, {"id": "25214110_220_1", "lat": 34.0962, "lng": -118.3483, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "1400 N Poinsettia Pl", "category": "Burglary", "neighborhood": "Hollywood"}, {"id": "25212931_220_0", "lat": 34.0737, "lng": -118.2143, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "2700 N Broadway", "category": "Burglary", "neighborhood": "Hollenbeck"}, {"id": "25213981_220_0", "lat": 34.0753, "lng": -118.287, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "3600 Beverly Blvd", "category": "Burglary", "neighborhood": "Olympic"}, {"id": "25212958_220_0", "lat": 34.2427, "lng": -118.5735, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "20200 Plummer St", "category": "Burglary", "neighborhood": "Devonshire"}, {"id": "25213541_220_0", "lat": 34.0783, "lng": -118.4691, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "11700 W Bellagio Rd", "category": "Burglary", "neighborhood": "West LA"}, {"id": "25212902_220_0", "lat": 34.1527, "lng": -118.3822, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "4500 Camellia Ave", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25213070_220_0", "lat": 34.0269, "lng": -118.2525, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "1700 Griffith Ave", "category": "Burglary", "neighborhood": "Newton"}, {"id": "25213585_220_0", "lat": 34.147, "lng": -118.4249, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "4200 Dixie Canyon Ave", "category": "Burglary", "neighborhood": "Van Nuys"}, {"id": "25213568_220_0", "lat": 33.7458, "lng": -118.318, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "300 N Enrose Ave", "category": "Burglary", "neighborhood": "Harbor"}, {"id": "25213191_220_0", "lat": 34.2594, "lng": -118.5089, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "10400 Aldea Ave", "category": "Burglary", "neighborhood": "Devonshire"}, {"id": "25214086_220_0", "lat": 34.1721, "lng": -118.4031, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "12400 Burbank Blvd", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25214117_220_0", "lat": 34.1548, "lng": -118.4721, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary  - 220", "address": "15500 Ventura Blvd", "category": "Burglary", "neighborhood": "West Valley"}, {"id": "25213503_220_0", "lat": 34.0969, "lng": -118.2854, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary  - 220", "address": "4400 W Sunset Blvd", "category": "Burglary", "neighborhood": "Northeast"}, {"id": "25213299_220_0", "lat": 34.0473, "lng": -118.3213, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "3700 W Pico Blvd", "category": "Burglary", "neighborhood": "Wilshire"}, {"id": "25212936_220_0", "lat": 33.9965, "lng": -118.2914, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "5100 S Vermont Ave", "category": "Burglary", "neighborhood": "77th Street"}, {"id": "25231172_220_0", "lat": 34.0455, "lng": -118.4519, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "1600 Butler Ave", "category": "Burglary", "neighborhood": "West LA"}, {"id": "25217840_220_0", "lat": 34.0057, "lng": -118.2697, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary  - 220", "address": "4300 S San Pedro Pl", "category": "Burglary", "neighborhood": "Newton"}, {"id": "25212427_220_0", "lat": 34.1304, "lng": -118.2308, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "3000 N Shasta Cir", "category": "Burglary", "neighborhood": "Northeast"}, {"id": "25212433_220_0", "lat": 34.1721, "lng": -118.3947, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "12000 Burbank Blvd", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25212474_220_0", "lat": 34.1687, "lng": -118.3965, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "5400 Laurel Canyon Blvd", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25212832_220_0", "lat": 34.1247, "lng": -118.2005, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "1800 Phillips Way", "category": "Burglary", "neighborhood": "Northeast"}, {"id": "25212329_220_0", "lat": 34.0908, "lng": -118.3136, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "5700 Santa Monica Blvd", "category": "Burglary", "neighborhood": "Hollywood"}, {"id": "25215290_220_0", "lat": 34.2069, "lng": -118.4056, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "7500 Whitsett Ave", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25232755_220_0", "lat": 34.2121, "lng": -118.3988, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "12200 Stagg St", "category": "Burglary", "neighborhood": "Foothill"}, {"id": "25217278_220_0", "lat": 34.1667, "lng": -118.3993, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "5300 Bellingham Ave", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25212437_220_0", "lat": 34.201, "lng": -118.6044, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "21900 Sherman Way", "category": "Burglary", "neighborhood": "Topanga"}, {"id": "25213332_220_0", "lat": 33.7742, "lng": -118.262, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "400 N Avalon Blvd", "category": "Burglary", "neighborhood": "Harbor"}, {"id": "25212886_220_0", "lat": 34.1576, "lng": -118.4422, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "14200 Riverside Dr", "category": "Burglary", "neighborhood": "Van Nuys"}, {"id": "25212884_220_0", "lat": 33.9688, "lng": -118.2844, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "600 W 78th St", "category": "Burglary", "neighborhood": "77th Street"}, {"id": "25213231_220_0", "lat": 34.1262, "lng": -118.3223, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "3200 Ledgewood Dr", "category": "Burglary", "neighborhood": "Hollywood"}, {"id": "25214253_220_0", "lat": 34.2662, "lng": -118.422, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "13200 Van Nuys Blvd", "category": "Burglary", "neighborhood": "Foothill"}, {"id": "25213255_220_0", "lat": 34.098, "lng": -118.2679, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "2100 Kenilworth Ave", "category": "Burglary", "neighborhood": "Northeast"}, {"id": "25213259_220_0", "lat": 34.142, "lng": -118.3893, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "11800 Ventura Blvd", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25213532_220_0", "lat": 34.2645, "lng": -118.5275, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "18100 Chatsworth St", "category": "Burglary", "neighborhood": "Devonshire"}, {"id": "25212410_220_1", "lat": 34.2246, "lng": -118.5361, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "Reseda Blvd & Chase St", "category": "Burglary", "neighborhood": "Devonshire"}, {"id": "25212513_220_0", "lat": 34.2355, "lng": -118.5574, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "19500 Nordhoff St", "category": "Burglary", "neighborhood": "Devonshire"}, {"id": "25214101_220_0", "lat": 34.1436, "lng": -118.3953, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "12100 Ventura Blvd", "category": "Burglary", "neighborhood": "N Hollywood"}, {"id": "25212616_220_0", "lat": 34.0439, "lng": -118.2514, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary  - 220", "address": "700 S Main St", "category": "Burglary", "neighborhood": "Central"}, {"id": "25212798_220_0", "lat": 34.1041, "lng": -118.3439, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "1800 Outpost Dr", "category": "Burglary", "neighborhood": "Hollywood"}, {"id": "25213244_220_0", "lat": 34.0305, "lng": -118.2636, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "200 E Washington Blvd", "category": "Burglary", "neighborhood": "Central"}, {"id": "25213128_220_0", "lat": 34.1903, "lng": -118.4224, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "6600 Fulton Ave", "category": "Burglary", "neighborhood": "Van Nuys"}, {"id": "25214088_220_0", "lat": 33.9599, "lng": -118.2916, "datetime": "2025-11-11T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "8600 S Vermont Ave", "category": "Burglary", "neighborhood": "Southeast"}];
+  const map = L.map('map').setView([34.0522, -118.2437], 10);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const color = CAT_COLORS['Burglary'] || '#64748b';
+  const bounds = [];
+  for (const inc of incidents) {
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">Burglary</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    m.addTo(map);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

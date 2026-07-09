@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Providence, RI Crime Map — 649 Recent Incidents | CityCrimeMap</title>
+  <meta name="description" content="Interactive Providence crime map with 649 reported incidents from the last 30 days: 649 unclassified. Data sourced directly from Providence PD Case Log (CKAN, geocoded via Census). Free crime alerts for Providence, RI.">
+  <meta name="keywords" content="Providence crime map, Providence crime, crime in Providence, Providence, RI crime, crime map Providence, crime near me Providence, Providence police reports, Providence crime rate">
+  <link rel="canonical" href="https://citycrimemap.us/providence">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Providence, RI Crime Map — 649 Recent Incidents | CityCrimeMap">
+  <meta property="og:description" content="Interactive Providence crime map with 649 reported incidents from the last 30 days: 649 unclassified. Data sourced directly from Providence PD Case Log (CKAN, geocoded via Census). Free crime alerts for Providence, RI.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/providence">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Providence, RI Crime Map — 649 Recent Incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Interactive Providence crime map with 649 reported incidents from the last 30 days: 649 unclassified. Data sourced directly from Providence PD Case Log (CKAN, geocoded via Census). Free crime alerts for Providence, RI.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Crime Maps","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":3,"name":"Providence, RI","item":"https://citycrimemap.us/providence"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Recent reported crime incidents \u2014 Providence, RI","description":"649 reported crime incidents in Providence, RI over the last 30 days, aggregated from the Providence PD Case Log (CKAN, geocoded via Census). Categories: Unclassified.","url":"https://citycrimemap.us/providence","keywords":["Providence crime map","Providence crime data","crime in Providence","Unclassified"],"isAccessibleForFree":true,"license":"https://opendatacommons.org/licenses/by/","creator":{"@type":"GovernmentOrganization","name":"Providence PD Case Log (CKAN, geocoded via Census)","url":"https://www.providenceri.gov/police/dispatch-log/"},"publisher":{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]},"spatialCoverage":{"@type":"Place","name":"Providence, RI","geo":{"@type":"GeoCoordinates","latitude":41.824,"longitude":-71.4128}},"temporalCoverage":"P30D","distribution":[{"@type":"DataDownload","encodingFormat":"application/json","contentUrl":"https://citycrimemap.us/data/providence.json"}]}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a><a href="/baltimore" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Baltimore, MD</a><a href="/los-angeles" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Los Angeles, CA</a><a href="/kansas-city" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Kansas City, MO</a><a href="/dallas" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Dallas, TX</a><a href="/providence" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Providence, RI</a><a href="/new-orleans" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">New Orleans, LA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/" class="hover:text-brand-700">Crime maps</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Providence, RI</span>
+  </nav>
+
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Providence, RI crime map</h1>
+    <p class="text-slate-600">649 recent incidents · last 30 days · source: <a href="https://www.providenceri.gov/police/dispatch-log/" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Providence PD Case Log (CKAN, geocoded via Census)</a></p>
+    <p class='text-xs text-slate-500 mt-1'>133 additional incidents could not be located on the map (address could not be geocoded).</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 520px;" class="rounded" aria-label="Interactive crime map of Providence, RI"></div>
+    <div class="mt-3"><div class="flex flex-wrap"><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#475569"></span><span class="text-slate-700">Unclassified</span><span class="text-slate-400 ml-1">(649)</span></span></div></div>
+    <div id="hotspotInfo" class="mt-2 text-xs text-slate-500 hidden">
+      <span class="inline-block w-3 h-3 align-middle mr-1" style="background:#dc2626;opacity:0.5;border:1px solid #7f1d1d;"></span>
+      Predicted risk overlay: top 10% of grid cells by modelled risk. Toggle via the layers control on the map.
+      <a href="#" id="hotspotHelp" class="text-brand-700 hover:underline">What is this?</a>
+    </div>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed"><div class="bg-brand-50 border border-brand-100 rounded-lg p-4 mb-4"><p class="text-xs uppercase tracking-widest font-semibold text-brand-700 mb-1">Predicted risk in Providence</p><p class="text-slate-800 mb-1">The map above includes a machine-learning-based <a href="/predictions" class="text-brand-700 font-semibold hover:underline">predicted-risk overlay</a> — the 18 highest-risk 200 m cells across Providence. In the held-out test window, those cells captured roughly <strong>47% of reported incidents</strong> (PAI = 4.74 vs. 1.0 random baseline — a excellent lift).</p><p class="text-xs text-slate-600">Toggle the <em>Predicted risk</em> layer on the map to see the cells. <a href="/methodology" class="text-brand-700 hover:underline">Read the full methodology →</a></p></div><h3 class="font-bold text-slate-900 mb-2">About this data</h3><p class="mb-2">This page shows <strong>649 reported crime incidents in Providence, RI</strong> from the last 30 days, aggregated directly from the <a href="https://www.providenceri.gov/police/dispatch-log/" target="_blank" rel="noopener" class="text-brand-700 hover:underline">Providence PD Case Log (CKAN, geocoded via Census)</a>. The most common category in the current window is <strong>Unclassified</strong>. Each dot on the map is a single reported incident; click any dot for date, offense description, and block-level address.</p><p class="text-xs text-slate-500">Open-data portals lag the real world by days to weeks. For real-time notifications when new crime is reported near a specific address in Providence, sign up for free daily email alerts on <a href="https://spotcrime.com/ri/providence" target="_blank" rel="noopener" class="text-brand-700 hover:underline">SpotCrime</a>.</p></section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+      <h2 class="text-lg font-bold">Recent Providence incidents</h2>
+      <div class="flex flex-wrap gap-2 items-center">
+        <label class="text-sm text-slate-600" for="catFilter">Filter:</label>
+        <select id="catFilter" class="border border-slate-300 rounded px-2 py-1 text-sm">
+          <option value="">All categories</option>
+        </select>
+        <input id="searchFilter" type="search" placeholder="Search address or offense…" class="border border-slate-300 rounded px-2 py-1 text-sm w-56" aria-label="Search incidents">
+        <span id="rowCount" class="text-xs text-slate-500 font-mono"></span>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700">
+          <tr>
+            <th class="px-3 py-2 text-left">Date</th>
+            <th class="px-3 py-2 text-left">Category</th>
+            <th class="px-3 py-2 text-left">Offense</th>
+            <th class="px-3 py-2 text-left">Address</th>
+          </tr>
+        </thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-08 15:21</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Larceny from Building</td><td class="px-3 py-2 text-slate-700">100 Block FORD ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-08 12:53</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Larceny, Other</td><td class="px-3 py-2 text-slate-700">0 Block LYNCH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-08 09:36</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Larceny, Shoplifting</td><td class="px-3 py-2 text-slate-700">1000 Block BRANCH AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-08 01:18</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Drug Offenses</td><td class="px-3 py-2 text-slate-700">500 Block CRANSTON ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 21:51</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Warrant\Capias</td><td class="px-3 py-2 text-slate-700">POCASSET AVE &  MURRAY ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 20:46</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Warrant\Capias</td><td class="px-3 py-2 text-slate-700">0 Block SILVER LAKE AVE</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 19:07</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Vandalism</td><td class="px-3 py-2 text-slate-700">100 Block HOLDEN ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 18:47</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Assault, Aggravated</td><td class="px-3 py-2 text-slate-700">500 Block SMITH ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 17:19</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Larceny, Shoplifting</td><td class="px-3 py-2 text-slate-700">0 Block SILVER SPRING ST</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2026-07-07 16:58</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">Larceny from Building</td><td class="px-3 py-2 text-slate-700">0 Block HANNAH ST</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex items-center justify-between mt-3 text-sm">
+      <button id="prevPage" class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50">← Prev</button>
+      <span id="pageInfo" class="text-slate-600"></span>
+      <button id="nextPage" class="px-3 py-1 bg-slate-200 rounded disabled:opacity-50">Next →</button>
+    </div>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Providence crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/ri/providence" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Providence alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 22 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-09T17:38:33.839843+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(async function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const res = await fetch('/data/providence.json');
+  const data = await res.json();
+  const incidents = data.incidents;
+
+  // ── Map ─────────────────────────────────────────────────────────────────
+  const map = L.map('map').setView([41.824, -71.4128], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  }).addTo(map);
+
+  const incidentLayer = L.layerGroup();
+  for (const inc of incidents) {
+    const color = CAT_COLORS[inc.category || 'Unclassified'] || '#64748b';
+    const m = L.circleMarker([inc.lat, inc.lng], {
+      radius: 4, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.6,
+    });
+    m.bindPopup(`<div class="text-sm">
+      <div class="font-bold">${inc.category || 'Unclassified'}</div>
+      <div>${inc.description || ''}</div>
+      <div class="text-slate-600">${inc.address || ''}</div>
+      <div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div>
+    </div>`);
+    incidentLayer.addLayer(m);
+  }
+  incidentLayer.addTo(map);
+
+  // ── Predicted risk overlay (optional, per-city) ───────────────────
+  try {
+    const hRes = await fetch('/data/providence_hotspots.geojson');
+    if (hRes.ok) {
+      const hGeo = await hRes.json();
+      function riskColor(r) {
+        if (r >= 0.85) return '#7f1d1d';
+        if (r >= 0.65) return '#b91c1c';
+        if (r >= 0.45) return '#dc2626';
+        return '#f87171';
+      }
+      const hotspotLayer = L.geoJSON(hGeo, {
+        style: (feature) => ({
+          fillColor: riskColor(feature.properties.risk),
+          fillOpacity: 0.45,
+          color: riskColor(feature.properties.risk),
+          weight: 0.5,
+          opacity: 0.8,
+        }),
+        onEachFeature: (feature, layer) => {
+          const p = feature.properties;
+          const rank = p.rank;
+          const rankOf = p.rank_of;
+          const rankStr = (rank && rankOf) ? `#${rank} of ${rankOf} hottest cells` : `Risk ${(p.risk*100).toFixed(0)}/100`;
+          const predStr = (p.pred_count !== undefined)
+            ? `Predicted incidents: ~${p.pred_count.toFixed(1)} per cell`
+            : '';
+          layer.bindPopup(
+            `<div class="text-sm"><div class="font-bold">Predicted hot spot</div>` +
+            `<div>${rankStr}</div>` +
+            (predStr ? `<div class="text-slate-600">${predStr}</div>` : '') +
+            `<div class="text-slate-500 text-xs mt-1">Random-forest model on ${hGeo.properties.n_train || '?'} training incidents</div></div>`
+          );
+        },
+      });
+      L.control.layers(null, {
+        'Incidents': incidentLayer,
+        'Predicted risk': hotspotLayer,
+      }, { collapsed: false }).addTo(map);
+      hotspotLayer.addTo(map);
+      document.getElementById('hotspotInfo').classList.remove('hidden');
+      const help = document.getElementById('hotspotHelp');
+      if (help) {
+        help.addEventListener('click', (e) => {
+          e.preventDefault();
+          const pai = hGeo.properties.metrics && hGeo.properties.metrics.pai;
+          const paiStr = pai ? `PAI = ${pai.toFixed(2)} (a random baseline is 1.0)` : 'Validation PAI not available.';
+          alert(
+            'The Predicted risk layer highlights grid cells the model rates as ' +
+            'most likely to see incidents in the near future.\n\n' +
+            'Method: random-forest regression on kernel density, XY, and ' +
+            'lagged counts (Wheeler & Steenbeek 2021, "Mapping the Risk ' +
+            'Terrain for Crime Using Machine Learning").\n\n' +
+            paiStr + '\n\n' +
+            'Grid: ' + (hGeo.properties.cell_size_m || '?') + 'm cells, ' +
+            (hGeo.properties.n_cells_hot || 0) + ' shown.'
+          );
+        });
+      }
+    }
+  } catch (e) { /* hotspots file not present for this city; ignore */ }
+
+  // ── Table ───────────────────────────────────────────────────────────────
+  const PAGE_SIZE = 25;
+  let filtered = incidents.slice();
+  let page = 0;
+  const catFilter = document.getElementById('catFilter');
+  const searchFilter = document.getElementById('searchFilter');
+  const tbody = document.getElementById('incidentTable');
+  const rowCount = document.getElementById('rowCount');
+  const pageInfo = document.getElementById('pageInfo');
+  const prev = document.getElementById('prevPage');
+  const next = document.getElementById('nextPage');
+
+  const allCats = new Set(incidents.map(i => i.category || 'Unclassified'));
+  for (const c of [...allCats].sort()) {
+    const opt = document.createElement('option'); opt.value = c; opt.textContent = c; catFilter.appendChild(opt);
+  }
+
+  function applyFilters() {
+    const cat = catFilter.value;
+    const q = searchFilter.value.toLowerCase().trim();
+    filtered = incidents.filter(i => {
+      if (cat && (i.category || 'Unclassified') !== cat) return false;
+      if (q) {
+        const hay = ((i.address || '') + ' ' + (i.description || '')).toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+    page = 0;
+    render();
+  }
+
+  function render() {
+    const total = filtered.length;
+    const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    page = Math.min(page, pages - 1);
+    const slice = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
+    tbody.innerHTML = slice.map(i => {
+      const color = CAT_COLORS[i.category || 'Unclassified'] || '#64748b';
+      const dt = i.datetime ? new Date(i.datetime) : null;
+      const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+      return `<tr class="border-b border-slate-100 hover:bg-slate-50">
+        <td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td>
+        <td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:${color}"></span>${i.category || 'Unclassified'}</span></td>
+        <td class="px-3 py-2 text-slate-700">${i.description || ''}</td>
+        <td class="px-3 py-2 text-slate-700">${i.address || ''}</td>
+      </tr>`;
+    }).join('');
+    rowCount.textContent = `${total.toLocaleString()} matching`;
+    pageInfo.textContent = `Page ${page + 1} of ${pages}`;
+    prev.disabled = page <= 0;
+    next.disabled = page >= pages - 1;
+  }
+
+  catFilter.addEventListener('change', applyFilters);
+  searchFilter.addEventListener('input', applyFilters);
+  prev.addEventListener('click', () => { page--; render(); });
+  next.addEventListener('click', () => { page++; render(); });
+  render();
+})();
+</script>

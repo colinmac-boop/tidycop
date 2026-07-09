@@ -91,6 +91,17 @@ HOTSPOT_CONFIG: dict[str, dict] = {
     # Low-volume — smaller cells, tighter bandwidth so the map has
     # contrast instead of one big warm blob.
     "boston":        {"cell_size_m": 200, "bandwidth_m": 350, "top_pct": 0.10},
+    # Wave 5 (2026-07-09) additions.
+    "baltimore":     {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    # LA is geographically huge (503 sq mi); use larger cells so the
+    # grid stays tractable and the risk surface is legible at city zoom.
+    "los_angeles":   {"cell_size_m": 500, "bandwidth_m": 800, "top_pct": 0.10},
+    "kansas_city":   {"cell_size_m": 300, "bandwidth_m": 500, "top_pct": 0.10},
+    "dallas":        {"cell_size_m": 400, "bandwidth_m": 600, "top_pct": 0.10},
+    "providence":    {"cell_size_m": 200, "bandwidth_m": 350, "top_pct": 0.10},
+    # New Orleans post-drop_unclassified has ~130 rows; too thin for a
+    # meaningful RF. Skip until we surface more real-crime rows.
+    # "new_orleans": ...
 }
 
 # Minimum share of the window that must have gone by before we

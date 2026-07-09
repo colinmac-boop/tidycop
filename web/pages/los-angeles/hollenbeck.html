@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#b91c1c">
+  <title>Hollenbeck crime map (Los Angeles, CA) — 29 recent incidents | CityCrimeMap</title>
+  <meta name="description" content="Crime map and incident data for Hollenbeck in Los Angeles, CA. 29 reported incidents in the last 240 days: 9 theft, 8 assault, 6 unclassified. See predicted risk, incident table, and how Hollenbeck compares to other Los Angeles neighborhoods.">
+  <meta name="keywords" content="Hollenbeck crime, Hollenbeck Los Angeles, Hollenbeck crime map, crime near me Hollenbeck, Hollenbeck safety, Los Angeles neighborhood crime">
+  <link rel="canonical" href="https://citycrimemap.us/los-angeles/hollenbeck">
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="CityCrimeMap">
+  <meta property="og:title" content="Hollenbeck crime map (Los Angeles, CA) — 29 recent incidents | CityCrimeMap">
+  <meta property="og:description" content="Crime map and incident data for Hollenbeck in Los Angeles, CA. 29 reported incidents in the last 240 days: 9 theft, 8 assault, 6 unclassified. See predicted risk, incident table, and how Hollenbeck compares to other Los Angeles neighborhoods.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://citycrimemap.us/los-angeles/hollenbeck">
+  <meta property="og:image" content="https://citycrimemap.us/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hollenbeck crime map (Los Angeles, CA) — 29 recent incidents | CityCrimeMap">
+  <meta name="twitter:description" content="Crime map and incident data for Hollenbeck in Los Angeles, CA. 29 reported incidents in the last 240 days: 9 theft, 8 assault, 6 unclassified. See predicted risk, incident table, and how Hollenbeck compares to other Los Angeles neighborhoods.">
+  <meta name="twitter:image" content="https://citycrimemap.us/og-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Perf hints -->
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+  <link rel="preconnect" href="https://tile.openstreetmap.org" crossorigin>
+  <link rel="dns-prefetch" href="https://spotcrime.com">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: {
+      brand: { 50:'#fef2f2', 100:'#fee2e2', 500:'#ef4444', 600:'#dc2626', 700:'#b91c1c', 800:'#991b1b' }
+    } } } };
+  </script>
+  <style>
+    .leaflet-container { background:#1f2937; }
+    .legend-dot { width: 0.75rem; height: 0.75rem; border-radius: 9999px; display:inline-block; margin-right:0.4rem; vertical-align:middle; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CityCrimeMap","url":"https://citycrimemap.us/","logo":"https://citycrimemap.us/og-image.png","sameAs":["https://github.com/colinmac-boop/tidycop","https://spotcrime.com/"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://citycrimemap.us/"},{"@type":"ListItem","position":2,"name":"Los Angeles, CA","item":"https://citycrimemap.us/los-angeles"},{"@type":"ListItem","position":3,"name":"Hollenbeck","item":"https://citycrimemap.us/los-angeles/hollenbeck"}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Place","name":"Hollenbeck, Los Angeles, CA","containedInPlace":{"@type":"City","name":"Los Angeles, CA","url":"https://citycrimemap.us/los-angeles"}}</script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7TPDESB8N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7TPDESB8N', { 'anonymize_ip': true });
+  </script>
+
+</head>
+<body class="bg-slate-50 text-slate-900">
+<header class="bg-brand-700 text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+    <a href="/" class="text-xl font-bold tracking-tight" aria-label="CityCrimeMap home">🚨 CityCrimeMap</a>
+    <nav class="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm" aria-label="Primary">
+      
+      <a href="/" class="text-brand-100/80 hover:text-brand-100">Home</a>
+      <div class="relative group">
+        <button type="button" class="font-bold text-white inline-flex items-center gap-1" aria-haspopup="true">Cities <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg></button>
+        <div class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-2 hidden group-hover:block group-focus-within:block z-30 max-h-[70vh] overflow-y-auto">
+          <a href="/chicago" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Chicago, IL</a><a href="/seattle" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Seattle, WA</a><a href="/san-francisco" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">San Francisco, CA</a><a href="/detroit" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Detroit, MI</a><a href="/pittsburgh" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Pittsburgh, PA</a><a href="/washington-dc" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Washington, DC, DC</a><a href="/houston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Houston, TX</a><a href="/rochester" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Rochester, NY</a><a href="/cleveland" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cleveland, OH</a><a href="/indianapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Indianapolis, IN</a><a href="/hartford" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Hartford, CT</a><a href="/minneapolis" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Minneapolis, MN</a><a href="/cincinnati" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Cincinnati, OH</a><a href="/gainesville" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Gainesville, FL</a><a href="/denver" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Denver, CO</a><a href="/boston" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Boston, MA</a><a href="/baltimore" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Baltimore, MD</a><a href="/los-angeles" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Los Angeles, CA</a><a href="/kansas-city" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Kansas City, MO</a><a href="/dallas" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Dallas, TX</a><a href="/providence" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">Providence, RI</a><a href="/new-orleans" class="block px-3 py-1 text-sm text-slate-700 hover:bg-brand-50 hover:text-brand-800">New Orleans, LA</a>
+          <div class="border-t border-slate-100 mt-1 pt-1">
+            <a href="/" class="block px-3 py-1 text-sm font-semibold text-brand-700 hover:bg-brand-50">All cities →</a>
+          </div>
+        </div>
+      </div>
+      <a href="/predictions" class="text-brand-100/80 hover:text-brand-100">Predictions</a>
+      <a href="/near-me" class="text-brand-100/80 hover:text-brand-100">Crime near me</a>
+      <a href="/methodology" class="text-brand-100/80 hover:text-brand-100">Methodology</a>
+      <a href="/about" class="text-brand-100/80 hover:text-brand-100">About</a>
+      <a href="/faq" class="text-brand-100/80 hover:text-brand-100">FAQ</a>
+    
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 py-8">
+  <nav aria-label="Breadcrumb" class="text-xs text-slate-500 mb-3">
+    <a href="/" class="hover:text-brand-700">Home</a> <span class="mx-1">›</span>
+    <a href="/los-angeles" class="hover:text-brand-700">Los Angeles, CA</a> <span class="mx-1">›</span>
+    <span class="text-slate-700">Hollenbeck</span>
+  </nav>
+
+  <section class="mb-6">
+    <h1 class="text-3xl md:text-4xl font-bold tracking-tight mb-1">Hollenbeck crime map</h1>
+    <p class="text-slate-600">29 reported incidents in Hollenbeck, Los Angeles · last 240 days</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-3 mb-4">
+    <div id="map" style="height: 480px;" class="rounded" aria-label="Interactive crime map of Hollenbeck, Los Angeles"></div>
+    <div class="mt-3"><div class="flex flex-wrap"><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#0891b2"></span><span class="text-slate-700">Theft</span><span class="text-slate-400 ml-1">(9)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ea580c"></span><span class="text-slate-700">Assault</span><span class="text-slate-400 ml-1">(8)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#475569"></span><span class="text-slate-700">Unclassified</span><span class="text-slate-400 ml-1">(6)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#ca8a04"></span><span class="text-slate-700">Burglary</span><span class="text-slate-400 ml-1">(3)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#7c3aed"></span><span class="text-slate-700">Vandalism</span><span class="text-slate-400 ml-1">(2)</span></span><span class="inline-flex items-center text-xs mr-3 mb-1"><span class="legend-dot" style="background:#7f1d1d"></span><span class="text-slate-700">Shooting</span><span class="text-slate-400 ml-1">(1)</span></span></div></div>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-5 mb-8 text-slate-700 text-sm leading-relaxed">
+    <h2 class="text-lg font-bold text-slate-900 mb-2">Crime in Hollenbeck — the last 240 days</h2>
+    <p class="mb-2"><strong>Hollenbeck</strong> is a neighborhood of Los Angeles, CA. Over the last 240 days, 29 reported incidents landed in the neighborhood — which is <strong>near the median for Los Angeles neighborhoods</strong>.</p>
+    <p class='mb-2'>The most common category in Hollenbeck right now is <strong>Theft</strong> (9 incidents).</p>
+    <p class="text-xs text-slate-500">Data source: <a href="https://data.lacity.org/Public-Safety/LAPD-NIBRS-Offenses-Dataset-2024-to-2025/y8y3-fqfu" target="_blank" rel="noopener" class="text-brand-700 hover:underline">LAPD NIBRS Offenses Dataset 2024 to Present (Socrata)</a>. For real-time alerts near a specific address in Hollenbeck, sign up for free daily email alerts on <a href="https://spotcrime.com/ca/los-angeles" target="_blank" rel="noopener" class="text-brand-700 hover:underline">SpotCrime</a>.</p>
+  </section>
+
+  <section class="bg-white border border-slate-200 rounded-lg p-4 mb-8">
+    <h2 class="text-lg font-bold mb-3">Recent incidents in Hollenbeck</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-100 text-slate-700"><tr><th class="px-3 py-2 text-left">Date</th><th class="px-3 py-2 text-left">Category</th><th class="px-3 py-2 text-left">Offense</th><th class="px-3 py-2 text-left">Address</th></tr></thead>
+        <tbody id="incidentTable">
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - BFMV- Burglary From Motor Vehicle  - 23F</td><td class="px-3 py-2 text-slate-700">3900 Berenice</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">243(A) - PC - M - Battery On Person - Simple - 13B</td><td class="px-3 py-2 text-slate-700">2000 Marengo St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">368(C) - PC - M - Elder/Dependent Cruelty - 90F</td><td class="px-3 py-2 text-slate-700">2000 Marengo St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-13 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Non-Residential - 220</td><td class="px-3 py-2 text-slate-700">2800 N Main St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-12 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ca8a04"></span>Burglary</span></td><td class="px-3 py-2 text-slate-700">459 - PC - F - Burglary - Residential - 220</td><td class="px-3 py-2 text-slate-700">3400 Pasadena Ave</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-12 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">484(A) - PC - M - Petty Theft -  Theft From Building - 23D</td><td class="px-3 py-2 text-slate-700">300 N Fickett St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-12 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#475569"></span>Unclassified</span></td><td class="px-3 py-2 text-slate-700">374C - PC - M - Shoot Firearm On Public Highway - 520</td><td class="px-3 py-2 text-slate-700">3700 Portola Ave</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-12 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#0891b2"></span>Theft</span></td><td class="px-3 py-2 text-slate-700">487(D)(1) - PC - F - Grand Theft Auto - GTA  - 240</td><td class="px-3 py-2 text-slate-700">2600 Sichel St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-12 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#7f1d1d"></span>Shooting</span></td><td class="px-3 py-2 text-slate-700">187(A) - PC - F - Murder - 09A</td><td class="px-3 py-2 text-slate-700">1800 Johnston St</td></tr>
+<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">2025-11-12 00:00</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:#ea580c"></span>Assault</span></td><td class="px-3 py-2 text-slate-700">243(E)(1) - PC - M - Intimate Partner Battery - Simple Assault - 13B</td><td class="px-3 py-2 text-slate-700">900 S Breed St</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-lg font-bold text-slate-900 mb-3">Other Los Angeles neighborhoods</h2>
+    <div><a href='/los-angeles/central' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Central <span class='text-xs text-slate-500'>(83)</span></a><a href='/los-angeles/n-hollywood' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>N Hollywood <span class='text-xs text-slate-500'>(73)</span></a><a href='/los-angeles/olympic' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Olympic <span class='text-xs text-slate-500'>(62)</span></a><a href='/los-angeles/77th-street' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>77th Street <span class='text-xs text-slate-500'>(60)</span></a><a href='/los-angeles/southwest' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Southwest <span class='text-xs text-slate-500'>(56)</span></a><a href='/los-angeles/topanga' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Topanga <span class='text-xs text-slate-500'>(55)</span></a><a href='/los-angeles/devonshire' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Devonshire <span class='text-xs text-slate-500'>(55)</span></a><a href='/los-angeles/hollywood' class='inline-block bg-slate-100 hover:bg-brand-50 hover:text-brand-800 text-slate-700 rounded px-3 py-1 text-sm mr-2 mb-2'>Hollywood <span class='text-xs text-slate-500'>(53)</span></a></div>
+    <p class="mt-3"><a href="/los-angeles" class="text-brand-700 font-semibold hover:underline">See all of Los Angeles →</a></p>
+  </section>
+</main>
+
+<section class="bg-gradient-to-br from-brand-700 to-brand-800 text-white">
+  <div class="max-w-5xl mx-auto px-4 py-12 text-center">
+    <p class="uppercase tracking-widest text-xs text-brand-100/80 mb-2">Free email alerts</p>
+    <h2 class="text-3xl md:text-4xl font-bold mb-3">Get Los Angeles crime alerts in your inbox</h2>
+    <p class="text-brand-100 text-base md:text-lg max-w-2xl mx-auto mb-6">
+      SpotCrime sends a daily email with crimes reported near any address you choose.
+      Free, no app required, unsubscribe anytime.
+    </p>
+    <a href="https://spotcrime.com/ca/los-angeles" target="_blank" rel="noopener"
+       class="inline-flex items-center gap-2 bg-white text-brand-700 px-7 py-3 rounded-lg font-bold text-base md:text-lg shadow hover:bg-red-50 transition">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+      Sign up for Los Angeles alerts on SpotCrime →
+    </a>
+    <p class="text-brand-100/70 text-xs mt-4">Opens spotcrime.com in a new tab.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-900 text-slate-300 mt-12">
+  <div class="max-w-7xl mx-auto px-4 py-10 grid md:grid-cols-4 gap-6 text-sm">
+    <div>
+      <p class="font-bold text-white mb-2">🚨 CityCrimeMap</p>
+      <p class="text-slate-400">Free interactive crime maps for major US cities. Built on the open-source <a href="https://github.com/colinmac-boop/tidycop" class="text-brand-500 hover:text-brand-100" target="_blank" rel="noopener">tidycop</a> library — 22 cities and growing.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Explore</p>
+      <ul class="space-y-1 text-slate-400">
+        <li><a class="hover:text-brand-100" href="/">All city crime maps</a></li>
+        <li><a class="hover:text-brand-100" href="/about">About the data</a></li>
+        <li><a class="hover:text-brand-100" href="/faq">FAQ</a></li>
+        <li><a class="hover:text-brand-100" href="/sitemap.xml">Sitemap</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Get crime alerts</p>
+      <p class="text-slate-400"><a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime covers thousands of cities →</a></p>
+      <p class="text-slate-500 text-xs mt-2">Daily email alerts for any US address. Free.</p>
+    </div>
+    <div>
+      <p class="font-bold text-white mb-2">Data freshness</p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-09T17:38:31.706321+00:00</span></p>
+      <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
+    </div>
+  </div>
+  <div class="border-t border-slate-800 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between gap-3">
+      <span>© 2026 CityCrimeMap. Data © respective city open-data portals.</span>
+      <span>Not affiliated with any law enforcement agency.</span>
+    </div>
+  </div>
+</footer>
+</body></html>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(function() {
+  const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
+  const DATA = {"incidents": [{"id": "25214803_23F_0", "lat": 34.0883, "lng": -118.2057, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - BFMV- Burglary From Motor Vehicle  - 23F", "address": "3900 Berenice", "category": "Theft", "neighborhood": "Hollenbeck"}, {"id": "25244340_13B_1", "lat": 34.0571, "lng": -118.2084, "datetime": "2025-11-13T00:00:00-08:00", "description": "243(A) - PC - M - Battery On Person - Simple - 13B", "address": "2000 Marengo St", "category": "Assault", "neighborhood": "Hollenbeck"}, {"id": "25244340_90F_0", "lat": 34.0571, "lng": -118.2084, "datetime": "2025-11-13T00:00:00-08:00", "description": "368(C) - PC - M - Elder/Dependent Cruelty - 90F", "address": "2000 Marengo St", "category": null, "neighborhood": "Hollenbeck"}, {"id": "25218592_220_0", "lat": 34.066, "lng": -118.2128, "datetime": "2025-11-13T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "2800 N Main St", "category": "Burglary", "neighborhood": "Hollenbeck"}, {"id": "25213043_220_0", "lat": 34.0847, "lng": -118.2133, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Residential - 220", "address": "3400 Pasadena Ave", "category": "Burglary", "neighborhood": "Hollenbeck"}, {"id": "25213270_23D_0", "lat": 34.0442, "lng": -118.2062, "datetime": "2025-11-12T00:00:00-08:00", "description": "484(A) - PC - M - Petty Theft -  Theft From Building - 23D", "address": "300 N Fickett St", "category": "Theft", "neighborhood": "Hollenbeck"}, {"id": "25212916_520_0", "lat": 34.0877, "lng": -118.1716, "datetime": "2025-11-12T00:00:00-08:00", "description": "374C - PC - M - Shoot Firearm On Public Highway - 520", "address": "3700 Portola Ave", "category": null, "neighborhood": "Hollenbeck"}, {"id": "25213770_240_0", "lat": 34.0765, "lng": -118.2132, "datetime": "2025-11-12T00:00:00-08:00", "description": "487(D)(1) - PC - F - Grand Theft Auto - GTA  - 240", "address": "2600 Sichel St", "category": "Theft", "neighborhood": "Hollenbeck"}, {"id": "25213421_09A_0", "lat": 34.0653, "lng": -118.2102, "datetime": "2025-11-12T00:00:00-08:00", "description": "187(A) - PC - F - Murder - 09A", "address": "1800 Johnston St", "category": "Shooting", "neighborhood": "Hollenbeck"}, {"id": "25213544_13B_0", "lat": 34.0349, "lng": -118.2169, "datetime": "2025-11-12T00:00:00-08:00", "description": "243(E)(1) - PC - M - Intimate Partner Battery - Simple Assault - 13B", "address": "900 S Breed St", "category": "Assault", "neighborhood": "Hollenbeck"}, {"id": "25213637_13B_0", "lat": 34.0188, "lng": -118.2028, "datetime": "2025-11-12T00:00:00-08:00", "description": "242 - PC - M - Battery On Person - Simple - 13B", "address": "E Olympic Blvd & Spence St", "category": "Assault", "neighborhood": "Hollenbeck"}, {"id": "25212931_220_0", "lat": 34.0737, "lng": -118.2143, "datetime": "2025-11-12T00:00:00-08:00", "description": "459 - PC - F - Burglary - Non-Residential - 220", "address": "2700 N Broadway", "category": "Burglary", "neighborhood": "Hollenbeck"}, {"id": "25212931_290_1", "lat": 34.0737, "lng": -118.2143, "datetime": "2025-11-12T00:00:00-08:00", "description": "594(B)(1) - PC - F - Vandalism ($400 Or More) - Felony - 290", "address": "2700 N Broadway", "category": "Vandalism", "neighborhood": "Hollenbeck"}, {"id": "25213267_90D_0", "lat": 34.0606, "lng": -118.2008, "datetime": "2025-11-12T00:00:00-08:00", "description": "23152(A) - VC - M - Dui Alcohol - 90D", "address": "2200 Norfolk St", "category": null, "neighborhood": "Hollenbeck"}, {"id": "25213460_13A_0", "lat": 34.0859, "lng": -118.1798, "datetime": "2025-11-12T00:00:00-08:00", "description": "245(A)(1) - PC - F - ADW w/Deadly Weapon - (Agg Assault Non-Firearm) - 13A", "address": "4900 N Huntington Dr", "category": "Assault", "neighborhood": "Hollenbeck"}, {"id": "25213342_23F_0", "lat": 34.0468, "lng": -118.2078, "datetime": "2025-11-12T00:00:00-08:00", "description": "487(A) - PC - F - TFMV -Grand Theft from Motor Vehicle (Over $950) - 23F", "address": "300 N Soto St", "category": "Theft", "neighborhood": "Hollenbeck"}, {"id": "C259045730_23F_0", "lat": 34.0467, "lng": -118.1984, "datetime": "2025-11-12T00:00:00-08:00", "description": "487(A) - PC - F - TFMV -Grand Theft from Motor Vehicle (Over $950) - 23F", "address": "3000 Malabar St", "category": "Theft", "neighborhood": "Hollenbeck"}, {"id": "25214050_13C_0", "lat": 34.0421, "lng": -118.206, "datetime": "2025-11-12T00:00:00-08:00", "description": "422(A) - PC - F - Criminal Threats - 13C", "address": "2700 1st", "category": "Assault", "neighborhood": "Hollenbeck"}, {"id": "25213516_13B_0", "lat": 34.0503, "lng": -118.203, "datetime": "2025-11-12T00:00:00-08:00", "description": "243(E)(1) - PC - M - Intimate Partner Battery - Simple Assault - 13B", "address": "Houston St & N Fickett St", "category": "Assault", "neighborhood": "Hollenbeck"}, {"id": "25222560_23G_0", "lat": 34.0675, "lng": -118.2214, "datetime": "2025-11-12T00:00:00-08:00", "description": "484(A) - PC - M - Theft Of Motor Vehicle Parts/Accessories - Petty Theft - 23G", "address": "1800 Darwin Ave", "category": "Theft", "neighborhood": "Hollenbeck"}, {"id": "25212849_13A_0", "lat": 34.0562, "lng": -118.2089, "datetime": "2025-11-11T00:00:00-08:00", "description": "245(A)(1) - PC - F - ADW w/Deadly Weapon - (Agg Assault Non-Firearm) - 13A", "address": "1000 Brittania St", "category": "Assault", "neighborhood": "Hollenbeck"}, {"id": "25212849_35B_1", "lat": 34.0562, "lng": -118.2089, "datetime": "2025-11-11T00:00:00-08:00", "description": "11364(A) - HS - M - Possess Unlawful Paraphernalia - 35B", "address": "1000 Brittania St", "category": null, "neighborhood": "Hollenbeck"}, {"id": "25213521_290_0", "lat": 34.0439, "lng": -118.2013, "datetime": "2025-11-11T00:00:00-08:00", "description": "594(B)(1) - PC - F - Vandalism ($400 Or More) - Felony - 290", "address": "2900 E Cesar E Chavez Ave", "category": "Vandalism", "neighborhood": "Hollenbeck"}, {"id": "25212873_90Z_0", "lat": 34.0431, "lng": -118.2185, "datetime": "2025-11-11T00:00:00-08:00", "description": "978.5 - PC - M - Bench Warrant/Failure To Appear On Misdemeanor Charge - 90Z", "address": "State St & 4th St", "category": null, "neighborhood": "Hollenbeck"}, {"id": "C259045783_23C_0", "lat": 34.0732, "lng": -118.2189, "datetime": "2025-11-11T00:00:00-08:00", "description": "487(A) - PC - F - Grand Theft - Shoplifting - 23C", "address": "2100 N Broadway", "category": "Theft", "neighborhood": "Hollenbeck"}, {"id": "25212857_13B_0", "lat": 34.0361, "lng": -118.2136, "datetime": "2025-11-11T00:00:00-08:00", "description": "243(E)(1) - PC - M - Intimate Partner Battery - Simple Assault - 13B", "address": "600 Penrith Dr", "category": "Assault", "neighborhood": "Hollenbeck"}, {"id": "25212637_23C_0", "lat": 34.0188, "lng": -118.2011, "datetime": "2025-11-11T00:00:00-08:00", "description": "459.5(A) - PC - M - Petty Theft - Shoplifting - 23C", "address": "3600 E Olympic Blvd", "category": "Theft", "neighborhood": "Hollenbeck"}, {"id": "25212460_35A_0", "lat": 34.0173, "lng": -118.2028, "datetime": "2025-11-11T00:00:00-08:00", "description": "11377(A) - HS - M - Possess Controlled Substance - 35A", "address": "Spence & 14th", "category": null, "neighborhood": "Hollenbeck"}, {"id": "25213164_240_0", "lat": 34.0311, "lng": -118.2202, "datetime": "2025-11-11T00:00:00-08:00", "description": "487(D)(1) - PC - F - Grand Theft Auto - GTA  - 240", "address": "1100 S Boyle Ave", "category": "Theft", "neighborhood": "Hollenbeck"}], "center": [34.0522, -118.2437], "zoom": 13};
+  const incidents = DATA.incidents;
+  const map = L.map('map').setView(DATA.center, DATA.zoom);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+  const layer = L.layerGroup();
+  const bounds = [];
+  for (const inc of incidents) {
+    const color = CAT_COLORS[inc.category || 'Unclassified'] || '#64748b';
+    const m = L.circleMarker([inc.lat, inc.lng], { radius: 5, fillColor: color, color: color, weight: 1, opacity: 0.9, fillOpacity: 0.65 });
+    m.bindPopup(`<div class="text-sm"><div class="font-bold">${inc.category || 'Unclassified'}</div><div>${inc.description || ''}</div><div class="text-slate-600">${inc.address || ''}</div><div class="text-slate-500 text-xs">${inc.datetime ? new Date(inc.datetime).toLocaleString() : ''}</div></div>`);
+    layer.addLayer(m);
+    bounds.push([inc.lat, inc.lng]);
+  }
+  layer.addTo(map);
+  if (bounds.length > 1) { try { map.fitBounds(bounds, { padding: [20, 20], maxZoom: 16 }); } catch (e) {} }
+  const tbody = document.getElementById('incidentTable');
+  tbody.innerHTML = incidents.slice(0, 100).map(i => {
+    const color = CAT_COLORS[i.category || 'Unclassified'] || '#64748b';
+    const dt = i.datetime ? new Date(i.datetime) : null;
+    const dtStr = dt && !isNaN(dt) ? dt.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    return `<tr class="border-b border-slate-100"><td class="px-3 py-2 text-slate-700 whitespace-nowrap">${dtStr}</td><td class="px-3 py-2"><span class="inline-flex items-center gap-1"><span class="legend-dot" style="background:${color}"></span>${i.category || 'Unclassified'}</span></td><td class="px-3 py-2 text-slate-700">${i.description || ''}</td><td class="px-3 py-2 text-slate-700">${i.address || ''}</td></tr>`;
+  }).join('');
+})();
+</script>

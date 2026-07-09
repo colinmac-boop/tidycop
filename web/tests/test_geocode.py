@@ -70,6 +70,22 @@ def test_normalize_rejects_empty():
     assert geocode.normalize_address("   ") is None
 
 
+# NOPD block anonymization (New Orleans): "NNNXX <STREET>".
+def test_normalize_nopd_block_standard():
+    assert geocode.normalize_address("027XX Canal St") == "2700 CANAL ST"
+
+
+def test_normalize_nopd_block_with_direction():
+    assert (
+        geocode.normalize_address("039XX N Claiborne Av") == "3900 N CLAIBORNE AV"
+    )
+
+
+def test_normalize_nopd_block_zero():
+    # "000XX" is the low end of the street; treat as house #1.
+    assert geocode.normalize_address("000XX Foo St") == "1 FOO ST"
+
+
 # ────────────────────────── build_oneline ─────────────────────────────
 
 

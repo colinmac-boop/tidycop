@@ -1959,6 +1959,58 @@ cities:
         active_to: null
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        # NOPD CFS feed mixes real incidents with admin calls (AREA
+        # CHECK, BUSINESS CHECK, TRAFFIC INCIDENT, MEDICAL, etc.).
+        # This map covers ~15% of raw rows — the ~85% that stays
+        # unclassified is the admin noise, which downstream consumers
+        # can drop via `drop_unclassified`. "AGGRAVATED BATTERY BY
+        # SHOOTING" and "DEATH"/"UNCLASSIFIED DEATH" collapse into
+        # Shooting per the 2026-05-26 fatal-shooting convention.
+        spotcrime_category_map: &nola_map
+          "AGGRAVATED ASSAULT": "Assault"
+          "AGGRAVATED ASSAULT DOMESTIC": "Assault"
+          "AGGRAVATED BATTERY": "Assault"
+          "AGGRAVATED BATTERY BY CUTTING": "Assault"
+          "AGGRAVATED BATTERY BY SHOOTING": "Shooting"
+          "AGGRAVATED BATTERY DOMESTIC": "Assault"
+          "AGGRAVATED RAPE": "Assault"
+          "ARMED ROBBERY": "Robbery"
+          "ARMED ROBBERY WITH GUN": "Robbery"
+          "ATTEMPTED AGGRAVATED BURGLARY": "Burglary"
+          "ATTEMPTED AUTO THEFT": "Theft"
+          "ATTEMPTED SIMPLE BURGLARY VEHICLE": "Theft"
+          "AUTO THEFT": "Theft"
+          "BICYCLE THEFT": "Theft"
+          "BUSINESS BURGLARY": "Burglary"
+          "CRIMINAL DAMAGE DOMESTIC": "Vandalism"
+          "CRIMINAL MISCHIEF": "Vandalism"
+          "CRUELTY TO ANIMALS": "Assault"
+          "DEATH": "Shooting"
+          "DISCHARGING FIREARM": "Shooting"
+          "DOMESTIC DISTURBANCE": "Assault"
+          "EXTORTION (THREATS)": "Robbery"
+          "EXTORTION (THREATS) DOMESTIC": "Robbery"
+          "FIGHT": "Assault"
+          "HOLD UP ALARM": "Robbery"
+          "HUMAN TRAFFICKING": "Assault"
+          "RECOVERY OF REPORTED STOLEN VEHICLE": "Theft"
+          "RESIDENCE BURGLARY": "Burglary"
+          "SEXUAL BATTERY": "Assault"
+          "SHOPLIFTING": "Theft"
+          "SIMPLE ARSON": "Arson"
+          "SIMPLE ASSAULT": "Assault"
+          "SIMPLE BATTERY": "Assault"
+          "SIMPLE BATTERY DOMESTIC": "Assault"
+          "SIMPLE BURGLARY": "Burglary"
+          "SIMPLE BURGLARY VEHICLE": "Theft"
+          "SIMPLE CRIMINAL DAMAGE": "Vandalism"
+          "SIMPLE RAPE": "Assault"
+          "SIMPLE ROBBERY": "Robbery"
+          "SIMULTANEOS STOLEN/RECOVERY VEHICLE": "Theft"
+          "THEFT": "Theft"
+          "THEFT BY FRAUD": "Theft"
+          "THEFT FROM EXTERIOR OF VEHICLE": "Theft"
+          "UNCLASSIFIED DEATH": "Shooting"
         field_map: &nola_fields
           std_source_record_id: "nopd_item"
           std_incident_id: "nopd_item"
@@ -1987,6 +2039,7 @@ cities:
         active_to: "2025-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2024"
         display_name: "Calls for Service 2024"
@@ -1998,6 +2051,7 @@ cities:
         active_to: "2024-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2023"
         display_name: "Calls for Service 2023"
@@ -2009,6 +2063,7 @@ cities:
         active_to: "2023-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2022"
         display_name: "Calls for Service 2022"
@@ -2020,6 +2075,7 @@ cities:
         active_to: "2022-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2021"
         display_name: "Calls for Service 2021"
@@ -2031,6 +2087,7 @@ cities:
         active_to: "2021-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2020"
         display_name: "Calls for Service 2020"
@@ -2042,6 +2099,7 @@ cities:
         active_to: "2020-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2019"
         display_name: "Calls for Service 2019"
@@ -2053,6 +2111,7 @@ cities:
         active_to: "2019-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2018"
         display_name: "Calls for Service 2018"
@@ -2064,6 +2123,7 @@ cities:
         active_to: "2018-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2017"
         display_name: "Calls for Service 2017"
@@ -2075,6 +2135,7 @@ cities:
         active_to: "2017-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2016"
         display_name: "Calls for Service 2016"
@@ -2086,6 +2147,7 @@ cities:
         active_to: "2016-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2015"
         display_name: "Calls for Service 2015"
@@ -2097,6 +2159,7 @@ cities:
         active_to: "2015-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2014"
         display_name: "Calls for Service 2014"
@@ -2108,6 +2171,7 @@ cities:
         active_to: "2014-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2013"
         display_name: "Calls for Service 2013"
@@ -2119,6 +2183,7 @@ cities:
         active_to: "2013-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2012"
         display_name: "Calls for Service 2012"
@@ -2130,6 +2195,7 @@ cities:
         active_to: "2012-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
       - source_id: "nola_calls_2011"
         display_name: "Calls for Service 2011"
@@ -2141,6 +2207,7 @@ cities:
         active_to: "2011-12-31"
         scope_status: "calls_for_service"
         scope_note: "This source is calls-for-service and may not match report-based incident definitions in other cities."
+        spotcrime_category_map: *nola_map
         field_map: *nola_fields
 
   # ──────────────────────────────────────────────────────────────────────────

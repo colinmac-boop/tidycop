@@ -275,4 +275,112 @@ CITIES = [
         # on the map and (b) save Census batch calls.
         "drop_unclassified": True,
     },
+    # ───────────────────────────────────────────────────────────────
+    # Wave 5 (2026-07-09):
+    # ── Baltimore + Los Angeles via downstream overlay (not in upstream
+    #    R tidycops → web/registry_overlay.yaml + `overlay: True`).
+    # ── Kansas City / Dallas / Providence / New Orleans via the Census
+    #    geocoder pattern established for Boston (Wave 4). All four
+    #    publish street addresses but no coordinates.
+    # ───────────────────────────────────────────────────────────────
+    {
+        "key": "baltimore",
+        "name": "Baltimore",
+        "slug": "baltimore",
+        "state_abbrev": "MD",
+        "state_name": "Maryland",
+        "timezone": "America/New_York",
+        # BPD NIBRS feed lags ~2-3 weeks; 45d window keeps volume up.
+        "window_days": 45,
+        "map_center": [39.2904, -76.6122],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/md/baltimore",
+        "data_source": "BPD NIBRS Group A Crime Data (ArcGIS)",
+        "data_source_url": "https://services1.arcgis.com/UWYHeuuJISiGmgXx/ArcGIS/rest/services/NIBRS_GroupA_Crime_Data/FeatureServer/0",
+        "overlay": True,
+    },
+    {
+        "key": "los_angeles",
+        "name": "Los Angeles",
+        "slug": "los-angeles",
+        "state_abbrev": "CA",
+        "state_name": "California",
+        "timezone": "America/Los_Angeles",
+        # KNOWN LAG: LAPD's NIBRS open-data pipeline is running ~6-8
+        # months behind real time as of 2026-07-09. Widen the window
+        # substantially so we surface a meaningful sample; the frontend
+        # surfaces the last-updated timestamp so the freshness gap is
+        # honest, not hidden.
+        "window_days": 240,
+        "map_center": [34.0522, -118.2437],
+        "map_zoom": 10,
+        "spotcrime_alerts_url": "https://spotcrime.com/ca/los-angeles",
+        "data_source": "LAPD NIBRS Offenses Dataset 2024 to Present (Socrata)",
+        "data_source_url": "https://data.lacity.org/Public-Safety/LAPD-NIBRS-Offenses-Dataset-2024-to-2025/y8y3-fqfu",
+        "overlay": True,
+    },
+    {
+        "key": "kansas_city",
+        "name": "Kansas City",
+        "slug": "kansas-city",
+        "state_abbrev": "MO",
+        "state_name": "Missouri",
+        "timezone": "America/Chicago",
+        # KCPD publishes 12 per-year Socrata layers; upstream registry
+        # picks the active one. Feed lags ~4-6 weeks.
+        "window_days": 45,
+        "map_center": [39.0997, -94.5786],
+        "map_zoom": 11,
+        "spotcrime_alerts_url": "https://spotcrime.com/mo/kansas-city",
+        "data_source": "KCPD Crime Data (Socrata, geocoded via Census)",
+        "data_source_url": "https://data.kcmo.org/browse?tags=police",
+    },
+    {
+        "key": "dallas",
+        "name": "Dallas",
+        "slug": "dallas",
+        "state_abbrev": "TX",
+        "state_name": "Texas",
+        "timezone": "America/Chicago",
+        # DPD Socrata lags ~4-6 weeks; widen accordingly.
+        "window_days": 45,
+        "map_center": [32.7767, -96.7970],
+        "map_zoom": 11,
+        "spotcrime_alerts_url": "https://spotcrime.com/tx/dallas",
+        "data_source": "DPD Police Incidents (Socrata, geocoded via Census)",
+        "data_source_url": "https://www.dallasopendata.com/Public-Safety/Police-Incidents/qv6i-rri7",
+    },
+    {
+        "key": "providence",
+        "name": "Providence",
+        "slug": "providence",
+        "state_abbrev": "RI",
+        "state_name": "Rhode Island",
+        "timezone": "America/New_York",
+        "window_days": 30,
+        "map_center": [41.8240, -71.4128],
+        "map_zoom": 13,
+        "spotcrime_alerts_url": "https://spotcrime.com/ri/providence",
+        "data_source": "Providence PD Case Log (CKAN, geocoded via Census)",
+        "data_source_url": "https://www.providenceri.gov/police/dispatch-log/",
+    },
+    {
+        "key": "new_orleans",
+        "name": "New Orleans",
+        "slug": "new-orleans",
+        "state_abbrev": "LA",
+        "state_name": "Louisiana",
+        "timezone": "America/Chicago",
+        # NOPD CFS feed lags ~4-6 weeks and is ~50% non-criminal admin
+        # calls (BUSINESS CHECK, AREA CHECK, TRAFFIC INCIDENT). Drop
+        # Unclassified rows pre-geocode to save Census calls and keep
+        # the map readable.
+        "window_days": 45,
+        "map_center": [29.9511, -90.0715],
+        "map_zoom": 12,
+        "spotcrime_alerts_url": "https://spotcrime.com/la/new-orleans",
+        "data_source": "NOPD Calls for Service (Socrata, geocoded via Census)",
+        "data_source_url": "https://data.nola.gov/browse?tags=police",
+        "drop_unclassified": True,
+    },
 ]
