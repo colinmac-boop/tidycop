@@ -104,40 +104,35 @@ cities:
   # ──────────────────────────────────────────────────────────────────────────
   # LOS ANGELES — LAPD Socrata NIBRS Offenses
   # ──────────────────────────────────────────────────────────────────────────
-  # LAPD retired the 2020-2024 dataset (2nrs-mtv8) in 2024 when they
-  # transitioned to the FBI's National Incident-Based Reporting System
-  # (NIBRS). The current dataset (y8y3-fqfu) tracks NIBRS offenses
-  # 2024-present.
+  # LAPD publishes NIBRS data as a rolling set of per-period datasets:
+  #   - 2nrs-mtv8: "Crime Data 2020 to 2024" (retired 2024; no updates)
+  #   - y8y3-fqfu: "NIBRS Offenses 2024 to 2025" (historical, frozen
+  #                at 2025-12-31)
+  #   - k7nn-b2ep: "NIBRS Offenses 2026 to Present" (live, ~12 day lag
+  #                verified 2026-07-09)
   #
-  # KNOWN FRESHNESS CAVEAT (2026-07-09): the LAPD public portal is
-  # running ~6 months behind real time. Freshest row available is
-  # 2025-12-31. This is a portal-level lag, not a tidycop bug. LAPD
-  # has been publishing crime stats via annual press releases while
-  # the open-data pipeline catches up. Ship with a wide window so we
-  # surface a meaningful sample, and surface the lag honestly in the
-  # frontend copy.
+  # We ship two sources with active_from/active_to windows so tidycop's
+  # source selector picks the right one for a given date range. The
+  # 2026-present dataset renamed the location fields:
+  #   `lat` → `hndrdth_lat`, `lon` → `hndrdth_lon`,
+  #   `location` → `hndrdth_loc_chk`.
+  # Both share the same NIBRS Group A description shape, so the
+  # classifier map is anchored once (&la_nibrs_map) and reused.
   los_angeles:
     display_name: "Los Angeles"
     timezone: "America/Los_Angeles"
     aliases: ["la", "los_angeles_ca", "lapd"]
     sources:
-      - source_id: "la_nibrs_offenses"
-        display_name: "LAPD NIBRS Offenses Dataset 2024 to Present"
+      # Historical: NIBRS Offenses 2024-2025 (frozen after 2025-12-31)
+      - source_id: "la_nibrs_2024_2025"
+        display_name: "LAPD NIBRS Offenses Dataset 2024 to 2025"
         provider: "socrata"
         dataset_id: "y8y3-fqfu"
         base_url: "https://data.lacity.org/resource/y8y3-fqfu.json"
         date_field: "date_occ"
         active_from: "2024-03-07"  # NIBRS transition date per LAPD
-        active_to: null
-        # LAPD NIBRS descriptions include the CA Penal Code + NIBRS
-        # code in one string, e.g. "594(B)(2)(A) - PC - M - Vandalism
-        # Less Than $400 - Misd - 290". Exact-match mapping is not
-        # practical; the classifier will fall through to
-        # description-based pattern matching. We do map the a few
-        # exact NIBRS group A codes when the feed emits them cleanly.
-        # For coverage we lean on tidycop-spotcrime's NIBRS keyword
-        # matcher (which reads std_offense_description).
-        spotcrime_category_map:
+        active_to: "2025-12-31"
+        spotcrime_category_map: &la_nibrs_map
           "487(D)(1) - PC - F - Grand Theft Auto - GTA  - 240": "Theft"
           "594(B)(1) - PC - F - Vandalism ($400 Or More) - Felony - 290": "Vandalism"
           "243(A) - PC - M - Battery On Person - Simple - 13B": "Assault"
@@ -352,3 +347,33 @@ cities:
           std_division: null
           std_latitude: "lat"
           std_longitude: "lon"
+
+      # Current: NIBRS Offenses 2026-Present (live feed)
+      - source_id: "la_nibrs_2026_present"
+        display_name: "LAPD NIBRS Offenses Dataset 2026 to Present"
+        provider: "socrata"
+        dataset_id: "k7nn-b2ep"
+        base_url: "https://data.lacity.org/resource/k7nn-b2ep.json"
+        date_field: "date_occ"
+        active_from: "2026-01-01"
+        active_to: null
+        spotcrime_category_map: *la_nibrs_map
+        field_map:
+          std_source_record_id: "caseno"
+          std_incident_id: ["uniquenibrno", "caseno"]
+          std_incident_number: "caseno"
+          std_incident_date: "date_occ"
+          std_reported_date: "date_rptd"
+          std_offense_code: "nibr_code"
+          std_offense_description: "nibr_description"
+          std_offense_category: "nibr_description"
+          std_disposition: "status_desc"
+          # Field renames vs the 2024-2025 dataset:
+          std_address: "hndrdth_loc_chk"
+          std_zip_code: null
+          std_neighborhood: "area_name"
+          std_district: "area"
+          std_beat: "rpt_dist_no"
+          std_division: null
+          std_latitude: "hndrdth_lat"
+          std_longitude: "hndrdth_lon"

@@ -306,17 +306,14 @@ CITIES = [
         "state_abbrev": "CA",
         "state_name": "California",
         "timezone": "America/Los_Angeles",
-        # KNOWN LAG: LAPD's NIBRS open-data pipeline is running ~6-8
-        # months behind real time as of 2026-07-09. Widen the window
-        # substantially so we surface a meaningful sample; the frontend
-        # surfaces the last-updated timestamp so the freshness gap is
-        # honest, not hidden.
-        "window_days": 240,
+        # LAPD's live NIBRS dataset (k7nn-b2ep) lags ~10-14 days; 45d
+        # window keeps volume up and matches Baltimore's cadence.
+        "window_days": 45,
         "map_center": [34.0522, -118.2437],
         "map_zoom": 10,
         "spotcrime_alerts_url": "https://spotcrime.com/ca/los-angeles",
-        "data_source": "LAPD NIBRS Offenses Dataset 2024 to Present (Socrata)",
-        "data_source_url": "https://data.lacity.org/Public-Safety/LAPD-NIBRS-Offenses-Dataset-2024-to-2025/y8y3-fqfu",
+        "data_source": "LAPD NIBRS Offenses Dataset 2026 to Present (Socrata)",
+        "data_source_url": "https://data.lacity.org/Public-Safety/LAPD-NIBRS-Offenses-Dataset-2026-to-Present/k7nn-b2ep",
         "overlay": True,
     },
     {

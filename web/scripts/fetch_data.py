@@ -47,6 +47,16 @@ from geocode import CITY_CONFIGS as GEOCODE_CITIES, geocode_addresses  # noqa: E
 OUTPUT_DIR = Path(__file__).parent.parent / "data"
 MAX_INCIDENTS_PER_CITY = 1500  # cap payload so /data/*.json stays browser-friendly
 
+# tidycop.get_incidents pages upstream feeds in date-ASC order for stable
+# pagination. That means limit=1000 on a high-volume city (Chicago, LA,
+# Baltimore, Detroit) returns the OLDEST 1000 rows in the window — the
+# opposite of what a "recent crime map" wants. We ask for a much larger
+# pool so the post-fetch newest-first sort has real recent rows to keep,
+# then cap via MAX_INCIDENTS_PER_CITY. Reversing the upstream order is a
+# library change we haven't made yet; this override is the pragmatic
+# fix. See 2026-07-09 memory note.
+FETCH_LIMIT = 15_000
+
 # Downstream registry overlay for cities not in upstream R tidycops.
 # See AGENTS.md § Hard Boundary: cities like Baltimore and Los Angeles
 # that aren't in upstream `incident_registry.R` can still ship on the
@@ -167,6 +177,7 @@ def fetch_city(city: dict) -> dict:
         start_date=start.isoformat(),
         end_date=end.isoformat(),
         classify_spotcrime=True,
+        limit=FETCH_LIMIT,
     )
     if city.get("overlay"):
         fetch_kwargs["registry_path"] = str(REGISTRY_OVERLAY)
