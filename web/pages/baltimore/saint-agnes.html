@@ -171,7 +171,7 @@
     </div>
     <div>
       <p class="font-bold text-white mb-2">Data freshness</p>
-      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-09T22:18:14.172605+00:00</span></p>
+      <p class="text-slate-400">Last generated: <span class="font-mono">2026-07-13T10:00:58.622972+00:00</span></p>
       <p class="text-slate-500 text-xs mt-2">Data comes from city open-data portals and may lag the real world by days to weeks. For real-time alerts, sign up at <a class="text-brand-500 hover:text-brand-100" href="https://spotcrime.com" target="_blank" rel="noopener">SpotCrime</a>.</p>
     </div>
   </div>
@@ -188,7 +188,7 @@
 <script>
 (function() {
   const CAT_COLORS = {"Shooting": "#7f1d1d", "Robbery": "#dc2626", "Assault": "#ea580c", "Burglary": "#ca8a04", "Theft": "#0891b2", "Arson": "#be185d", "Vandalism": "#7c3aed", "Unclassified": "#475569"};
-  const DATA = {"incidents": [{"id": "260701189", "lat": 39.273379, "lng": -76.675444, "datetime": "2026-07-04T11:09:00-04:00", "description": "VANDALISM", "address": "800 UNETTA AVE", "category": "Vandalism", "neighborhood": "SAINT AGNES"}, {"id": "260700148", "lat": 39.273454, "lng": -76.675343, "datetime": "2026-06-28T22:00:00-04:00", "description": "AUTO THEFT", "address": "700 UNETTA AVE", "category": "Theft", "neighborhood": "SAINT AGNES"}, {"id": "260609654", "lat": 39.274033, "lng": -76.672574, "datetime": "2026-06-28T07:00:00-04:00", "description": "VANDALISM", "address": "3300 WILKENS AVE", "category": "Vandalism", "neighborhood": "SAINT AGNES"}, {"id": "260609655", "lat": 39.274033, "lng": -76.672574, "datetime": "2026-06-28T07:00:00-04:00", "description": "VANDALISM", "address": "3300 WILKENS AVE", "category": "Vandalism", "neighborhood": "SAINT AGNES"}], "center": [39.2904, -76.6122], "zoom": 13};
+  const DATA = {"incidents": [{"id": "260701189", "lat": 39.273379, "lng": -76.675444, "datetime": "2026-07-04T11:09:00-04:00", "description": "VANDALISM", "address": "800 UNETTA AVE", "category": "Vandalism", "neighborhood": "SAINT AGNES"}, {"id": "260700148", "lat": 39.273454, "lng": -76.675343, "datetime": "2026-06-28T22:00:00-04:00", "description": "AUTO THEFT", "address": "700 UNETTA AVE", "category": "Theft", "neighborhood": "SAINT AGNES"}, {"id": "260609655", "lat": 39.274033, "lng": -76.672574, "datetime": "2026-06-28T07:00:00-04:00", "description": "VANDALISM", "address": "3300 WILKENS AVE", "category": "Vandalism", "neighborhood": "SAINT AGNES"}, {"id": "260609654", "lat": 39.274033, "lng": -76.672574, "datetime": "2026-06-28T07:00:00-04:00", "description": "VANDALISM", "address": "3300 WILKENS AVE", "category": "Vandalism", "neighborhood": "SAINT AGNES"}], "center": [39.2904, -76.6122], "zoom": 13};
   const incidents = DATA.incidents;
   const map = L.map('map').setView(DATA.center, DATA.zoom);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
