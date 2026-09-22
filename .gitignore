@@ -60,3 +60,8 @@ MEMORY.md
 memory/
 logs/
 tmp/
+
+# OpenClaw runtime state (blocks gateway startup if tracked; see 2026-09-22)
+openclaw-workspace-state.json*
+.openclaw/workspace-state.json*
+*.pre-v2-residue
